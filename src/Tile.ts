@@ -1,13 +1,15 @@
+import { Rule } from './rules';
+
 class Tile {
   displayText: string;
   isMandatory: boolean;
-  // ruleJson: JSON;
+  rule: Rule;
 
   // todo- coords
-  constructor(displayText: string, isMandatory: boolean, ruleJson: JSON) {
+  constructor(displayText: string, isMandatory: boolean, rule: Rule) {
     this.displayText = displayText;
     this.isMandatory = isMandatory;
-    // this.rule = 
+    this.rule = rule;
   }
 }
 

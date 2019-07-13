@@ -8,5 +8,8 @@ export default {
   },
   plugins: [
     typescript()
-  ]
+  ],
+  watch: {
+    exclude: ['node_modules/**']
+  }
 };

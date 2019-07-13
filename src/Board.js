@@ -1,4 +1,4 @@
-const createTiles = require('./BoardJsonConverter').createTiles;
+import { creatTiles } from './BoardJsonConverter';
 
 class Board {
   constructor(imgSrc, json) {

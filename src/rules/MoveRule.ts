@@ -9,12 +9,16 @@ class MoveRule extends Rule {
   direction: Direction;
   numSpaces: number;
 
-  constructor(json: JSON) {
+  constructor(json: any) { // todo- fix any, create interface
     const { type, playerTarget, diceRolls, direction, numSpaces } = json;
     super(type, playerTarget, diceRolls);
     this.validateRequired(playerTarget, direction, numSpaces);
     this.direction = direction;
     this.numSpaces = numSpaces;
+  }
+
+  execute() {
+    // todo
   }
 }
 

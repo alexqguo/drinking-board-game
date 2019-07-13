@@ -1,11 +1,17 @@
-const Rule = require('./Rule');
+import Rule from './Rule';
 
 class TeleportRule extends Rule {
-  constructor(json) {
+  tileIndex: number;
+
+  constructor(json: any) {
     const { type, playerTarget, diceRolls, tileIndex } = json;
-    this.validateRequired(tileIndex);
     super(type, playerTarget, diceRolls);
+    this.validateRequired(tileIndex);
     this.tileIndex = tileIndex;
+  }
+
+  execute() {
+    // todo
   }
 }
 

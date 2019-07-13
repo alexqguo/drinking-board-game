@@ -1,11 +1,17 @@
-const Rule = require('./Rule');
+import Rule from './Rule';
 
 class SkipTurnRule extends Rule {
-  constructor(json) {
+  numTurns: number;
+
+  constructor(json: any) { // todo- fix any
     const { type, playerTarget, diceRolls, numTurns } = json;
-    this.validateRequired(numTurns);
     super(type, playerTarget, diceRolls);
+    this.validateRequired(numTurns);
     this.numTurns = numTurns;
+  }
+
+  execute() {
+    // todo
   }
 }
 

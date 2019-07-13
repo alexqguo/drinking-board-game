@@ -8,43 +8,36 @@ import {
   SpeedModifierRule
 } from './rules';
 
-// TODO: symbol?
-const RULE_TYPES = {
-  DisplayRule: null,
-  TeleportRule: null,
-  SpeedModifierRule: null,
-  SkipTurnRule: null,
-  MoveRule: null,
+const RULE_MAPPINGS: { 
+  [key: string]: new (...args: any[]) => Rule 
+} = {
+  MoveRule: MoveRule,
+  DisplayRule: DisplayRule,
+  TeleportRule: TeleportRule,
+  SkipTurnRule: SkipTurnRule,
+  SpeedModifierRule: SpeedModifierRule,
 };
 
-function createTiles(tilesJson) {
-  const tiles = tilesJson.map(tileJson => {
+export function createTiles(tilesJson: Array<any>): Array<Tile> {
+  return tilesJson.map(tileJson => {
+    console.log(tileJson);
     const { displayText, isMandatory, diceRolls, rule } = tileJson;
+
+    if (!rule) { // this is temporary
+      console.warn('No rule specified. Was this a todo?');
+      return null;
+    }
+
     return new Tile(displayText, isMandatory, createRule(rule));
   });
 }
 
-// TODO: this needs to be cleaned up
-function createRule(ruleJson): Rule {
+export function createRule(ruleJson: any): Rule { //todo- fix any
   const { type } = ruleJson;
-  switch(type) {
-    case DISPLAY:
-      
-      break;
-    case TELEPORT:
-      break;
-    case SPEED_MODIFIER:
-      break;
-    case SKIP_TURN:
-      break;
-    case MOVE:
-      break;
-    default:
-      throw new Error('Invalid rule type specified');
-  }
-}
 
-module.exports = {
-  createTiles,
-  createRule
+  if (!RULE_MAPPINGS.hasOwnProperty(type)) {
+    throw new Error('Invalid rule type specified');
+  }
+
+  return new RULE_MAPPINGS[type](ruleJson);
 }
