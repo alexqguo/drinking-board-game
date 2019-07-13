@@ -1,0 +1,61 @@
+Structure for board:
+Board
+  String img
+  Tile[] tiles
+
+Tile
+  String displayText
+  Boolean isMandatory
+  Rule rule
+  ??? coordinates
+
+Abstract Rule
+  RuleType type // rule type, should be enum
+  Boolean conditional
+  String playerTarget // self, all, allOther, custom
+  Object diceRollsRequired // optional, if the rule requires a dice roll to determine something
+  {
+    diceRollsRequired: true,
+    numRollsRequired: 1,
+    "1,2,3": SkipTurnRule,
+    "4,5,6": DisplayRule
+  }
+
+DisplayRule
+  // no-op. for things like giving/taking drinks
+
+SpeedModifierRule
+  // to go faster/slower
+  Number multiplier
+  Number numTurns
+
+SkipTurnRule
+  Integer numTurns // number of turns you will lose
+
+ExtraTurnRule
+  Integer numTurns // number of extra turns to take
+
+TeleportRule
+  Number tileIndex // index of the tile to teleport to
+
+MoveRule
+  String direction
+  Number numSpaces
+
+---
+
+Problematic spots:
+  - Zubat: Zubats... they're...they're everywhere! Take a drink. Next turn, if you roll a 1 or 2, stay here and take a drink!
+  - SS ANNE (todo)
+    - maybe make a DrinkDuringLostTurnsRule?
+  - Lapras: Lapras used Confuse Ray! Pick a player, they are now confused. Next turn, they must roll a 1-3 to stop being confused. If not, they are still confused and lose a turn.
+    - maybe just make this a display rule?
+  - Hitmonlee/chan: Challenge someone to a chugging contest. First to finish gets an extra turn, last to finish loses a turn
+  - Cinnabar Gym (todo)
+  - Legendary birds
+
+---
+
+- (will need a skip button, for Gary or if someone is AFK)
+- is it necessary to call out display rule if it's a noop? good to have there for now maybe
+- maybe add a DiceRollRule

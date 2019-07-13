@@ -1,0 +1,199 @@
+{
+  "img": "pokemon.png",
+  "tiles": [
+    {
+      "displayText": "Rattata used Tackle",
+      "rule": {
+        "type": "DisplayRule"
+      }
+    }, {
+      "displayText": "Pidgey used Quick Attack!",
+      "rule": {
+        "type": "DisplayRule"
+      }
+    }, {
+      "displayText": "Caterpie used String Shot!",
+      "rule": {
+        "type": "SpeedModifierRule",
+        "multiplier": 0.5,
+        "numTurns": 1,
+        "playerTarget": "allOthers"
+      }
+    }, {
+      "displayText": "You caught a Pikachu!",
+      "rule": {
+        "type": "DisplayRule"
+      }
+    }, {
+      "displayText": "Beedrill used Twinneedle!",
+      "rule": {
+        "type": "DisplayRule"
+      }
+    }, {
+      "displayText": "PEWTER GYM",
+      "mandatory": true,
+      "rule": {
+        "type": "DisplayRule",
+        "diceRolls": {
+          "numRequired": 1
+        }
+      }
+    }, {
+      "displayText": "If you're a guy, guys drink. If you're a girl, girls drink.",
+      "rule": {
+        "type": "DisplayRule"
+      }
+    }, {
+      "displayText": "Zubats... they're... they're everywhere!",
+      "rule": {
+        "type": "DisplayRule",
+        "TODO": "TODO"
+      }
+    }, {
+      "displayText": "Clefairy used Metronome!",
+      "rule": {
+        "type": "DisplayRule"
+      }
+    }, {
+      "displayText": "Jigglypuff used Sing!",
+      "rule": {
+        "type": "DisplayRule"
+      }
+    }, {
+      "displayText": "Abra used Teleport!",
+      "rule": {
+        "type": "TeleportRule",
+        "tileIndex": 30
+      }
+    }, {
+      "displayText": "GARY",
+      "rule": {
+        "type": "DisplayRule",
+        "diceRolls": {
+          "numRequired": 1
+        }
+      }
+    }, {
+      "displayText": "CERURLEAN GYM",
+      "mandatory": true,
+      "rule": {
+        "type": "DisplayRule"
+      }
+    }, {
+      "displayText": "Slowpoke is slow.",
+      "rule": {
+        "type": "DisplayRule"
+      }
+    }, {
+      "displayText": "Bellsprout used Razor Leaf!",
+      "rule": {
+        "type": "DisplayRule"
+      }
+    }, {
+      "displayText": "Meowth used Pay Day!",
+      "rule": {
+        "type": "DisplayRule"
+      }
+    }, {
+      "displayText": "Diglett used Dig!",
+      "rule": {
+        "type": "DisplayRule"
+      }
+    }, {
+      "displayText": "SS ANNE",
+      "TODO": "TODO"
+    }, {
+      "displayText": "VERMILION GYM",
+      "mandatory": true,
+      "rule": {
+        "type": "DisplayRule",
+        "diceRolls": {
+          "numRequired": 1,
+          "outcomes": [{
+            "2,4,6": {
+              "type": "SkipTurnRule",
+              "numTurns": 1
+            }
+          }]
+        }
+      }
+    }, {
+      "displayText": "I want to ride my BICYCLE!",
+      "rule": {
+        "type": "SpeedModifierRule",
+        "multiplier": 2,
+        "numTurns": 1
+      }
+    }, {
+      "displayText": "Magikarp used Splash!",
+      "rule": {
+        "type": "DisplayRule"
+      }
+    }, {
+      "displayText": "Sandshrew used Sand-Attack!",
+      "rule": {
+        "type": "DisplayRule"
+      }
+    }, {
+      "displayText": "POKEMON TOWER",
+      "rule": {
+        "type": "DisplayRule"
+      }
+    }, {
+      "displayText": "Haunter used Dream Eater!",
+      "rule": {
+        "type": "MoveRule",
+        "direction": "back",
+        "numSpaces": 10,
+        "playerTarget": "custom"
+      }
+    }, {
+      "displayText": "Cubone used \"My mother is dead.\"",
+      "rule": {
+        "type": "DisplayRule"
+      }
+    }, {
+      "displayText": "Abra used Teleport!",
+      "rule": {
+        "type": "TeleportRule",
+        "tileIndex": 15
+      }
+    }, {
+      "displayText": "A sleeping Snorlax blocks your path.",
+      "rule": {
+        "type": "DisplayRule"
+      }
+    }, {
+      "displayText": "GARY -- Roll a die.",
+      "rule": {
+        "type": "DisplayRule",
+        "diceRolls": {
+          "numRequired": 1
+        }
+      }
+    }, {
+      "displayText": "Eeveelution time!",
+      "rule": {
+        "type": "DisplayRule"
+      }
+    }, {
+      "displayText": "CELADON GYM",
+      "mandatory": true,
+      "rule": {
+        "type": "DisplayRule",
+        "diceRolls": {
+          "numRequired": 1,
+          "1,2,3": {
+            "type": "SkipTurnRule",
+            "numTurns": 1
+          }
+        }
+      }
+    }, {
+      "displayText": "Psyduck is slow.",
+      "rule": {
+        "type": "DisplayRule"
+      }
+    }
+  ]
+}
