@@ -183,10 +183,12 @@
         "type": "DisplayRule",
         "diceRolls": {
           "numRequired": 1,
-          "1,2,3": {
-            "type": "SkipTurnRule",
-            "numTurns": 1
-          }
+          "outcomes": [{
+            "1,2,3": {
+              "type": "SkipTurnRule",
+              "numTurns": 1
+            }
+          }]
         }
       }
     }, {

@@ -59,3 +59,7 @@ Problematic spots:
 - (will need a skip button, for Gary or if someone is AFK)
 - is it necessary to call out display rule if it's a noop? good to have there for now maybe
 - maybe add a DiceRollRule
+
+---
+
+boardgame.io has some examples
