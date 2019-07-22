@@ -5,7 +5,20 @@
       "displayText": "Rattata used Tackle",
       "rule": {
         "type": "DisplayRule"
-      }
+      },
+      "position": [{
+        "x": 260,
+        "y": 1770
+      },{
+        "x": 260,
+        "y": 1950
+      },{
+        "x": 450,
+        "y": 1950
+      },{
+        "x": 450,
+        "y": 1770
+      }]
     }, {
       "displayText": "Pidgey used Quick Attack!",
       "rule": {

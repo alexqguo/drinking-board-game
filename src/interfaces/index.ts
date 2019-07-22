@@ -2,6 +2,12 @@ export interface JsonTile {
   displayText: string;
   mandatory?: boolean;
   rule: JsonRule;
+  position?: JsonPosition[]; // optional until I have time to fill them all out
+}
+
+export interface JsonPosition {
+  x: number;
+  y: number;
 }
 
 export enum Direction {
