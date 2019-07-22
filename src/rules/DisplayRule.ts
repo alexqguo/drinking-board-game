@@ -1,7 +1,8 @@
 import Rule from './Rule';
+import { JsonRule } from '../interfaces';
 
 class DisplayRule extends Rule {
-  constructor(json: any) {
+  constructor(json: JsonRule) {
     const { type, playerTarget, diceRolls } = json;
     super(type, playerTarget, diceRolls);
   }

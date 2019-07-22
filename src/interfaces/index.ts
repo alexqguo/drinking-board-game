@@ -4,11 +4,17 @@ export interface JsonTile {
   rule: JsonRule;
 }
 
+export enum Direction {
+  forward = 'forward',
+  back = 'back',
+}
+
 export interface JsonRule {
   type: string;
   tileIndex?: number;
-  direction?: string;
+  direction?: Direction;
   numSpaces?: number;
+  numTurns?: number;
   playerTarget?: JsonPlayerTarget;
   multiplier?: number;
   diceRolls?: JsonDiceRoll;
@@ -31,6 +37,6 @@ export enum JsonPlayerTarget {
 }
 
 export interface JsonBoard {
-  img: string;
+  imgSrc: string;
   tiles: JsonTile[];
 }

@@ -1,15 +1,11 @@
 import Rule from './Rule';
-
-enum Direction {
-  forward = 'forward',
-  back = 'back',
-}
+import { JsonRule, Direction } from '../interfaces';
 
 class MoveRule extends Rule {
   direction: Direction;
   numSpaces: number;
 
-  constructor(json: any) { // todo- fix any, create interface
+  constructor(json: JsonRule) {
     const { type, playerTarget, diceRolls, direction, numSpaces } = json;
     super(type, playerTarget, diceRolls);
     this.validateRequired(playerTarget, direction, numSpaces);

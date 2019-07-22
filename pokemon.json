@@ -1,5 +1,5 @@
 {
-  "img": "pokemon.png",
+  "imgSrc": "pokemon.png",
   "tiles": [
     {
       "displayText": "Rattata used Tackle",

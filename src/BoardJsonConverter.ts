@@ -1,4 +1,5 @@
 import Tile from './Tile';
+import { JsonTile, JsonRule } from './interfaces';
 import {
   Rule,
   MoveRule,
@@ -18,21 +19,21 @@ const RULE_MAPPINGS: {
   SpeedModifierRule: SpeedModifierRule,
 };
 
-export function createTiles(tilesJson: Array<any>): Array<Tile> {
+export function createTiles(tilesJson: Array<JsonTile>): Array<Tile> {
   return tilesJson.map(tileJson => {
     console.log(tileJson);
-    const { displayText, isMandatory, diceRolls, rule } = tileJson;
+    const { displayText, mandatory, rule } = tileJson;
 
     if (!rule) { // this is temporary
       console.warn('No rule specified. Was this a todo?');
       return null;
     }
 
-    return new Tile(displayText, isMandatory, createRule(rule));
+    return new Tile(displayText, mandatory, createRule(rule));
   });
 }
 
-export function createRule(ruleJson: any): Rule { //todo- fix any
+export function createRule(ruleJson: JsonRule): Rule {
   const { type } = ruleJson;
 
   if (!RULE_MAPPINGS.hasOwnProperty(type)) {

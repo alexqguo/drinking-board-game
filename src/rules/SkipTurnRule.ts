@@ -1,9 +1,10 @@
 import Rule from './Rule';
+import { JsonRule } from '../interfaces';
 
 class SkipTurnRule extends Rule {
   numTurns: number;
 
-  constructor(json: any) { // todo- fix any
+  constructor(json: JsonRule) {
     const { type, playerTarget, diceRolls, numTurns } = json;
     super(type, playerTarget, diceRolls);
     this.validateRequired(numTurns);

@@ -1,8 +1,10 @@
+import { JsonDiceRoll } from "../interfaces";
+
 abstract class Rule {
   type: string;
   playerTarget: string; // todo- should be enum or symbol
 
-  constructor(type: string, playerTarget: string, diceRolls: any) {
+  constructor(type: string, playerTarget: string, diceRolls: JsonDiceRoll) {
     this.validateRequired(type);
     this.type = type;
     this.playerTarget = playerTarget;

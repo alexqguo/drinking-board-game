@@ -1,5 +1,6 @@
 import Board from './Board';
 import Player from './Player';
+import { JsonBoard } from './interfaces';
 
 class Game {
   static instance: Game;
@@ -19,7 +20,7 @@ class Game {
     this.players = playerNames.map(name => new Player(name));
     Object.freeze(this.players);
 
-    const boardJson = require(boardSrc); // todo: fix
+    const boardJson: JsonBoard = require(boardSrc);
     this.board = new Board(boardJson, this.players);
   }
 
