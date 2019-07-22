@@ -56,10 +56,29 @@ Problematic spots:
 
 ---
 
-- (will need a skip button, for Gary or if someone is AFK)
+boardgame.io has some examples
+
+---
+
 - is it necessary to call out display rule if it's a noop? good to have there for now maybe
 - maybe add a DiceRollRule
 
 ---
 
-boardgame.io has some examples
+*OVERALL PLAN*
+
+phase 0:
+- game is playable offline with multiple people at the same computer
+- no image scaling
+
+phase 1:
+- keep game state in localstorage in case someone closes the screen
+- skip button
+
+phase 2: 
+- game is playable via websockets OR offline
+- for websockets, keep game state in memory on host as it will only be played
+- can designate drinks on screen and keep track of the counts throughout the game
+
+phase 3:
+- can add/remove players mid game
