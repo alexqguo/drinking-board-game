@@ -70,6 +70,8 @@ boardgame.io has some examples
 phase 0:
 - game is playable offline with multiple people at the same computer
 - no image scaling
+  - image will be displayed via the background css property at full size
+  - window will scroll automatically turn to turn
 
 phase 1:
 - keep game state in localstorage in case someone closes the screen
