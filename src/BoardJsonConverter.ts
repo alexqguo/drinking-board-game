@@ -21,7 +21,6 @@ const RULE_MAPPINGS: {
 
 export function createTiles(tilesJson: Array<JsonTile>): Array<Tile> {
   return tilesJson.map(tileJson => {
-    console.log(tileJson);
     const { displayText, mandatory, rule } = tileJson;
 
     if (!rule) { // this is temporary

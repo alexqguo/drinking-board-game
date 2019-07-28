@@ -1,7 +1,7 @@
 import typescript from 'rollup-plugin-typescript';
 
 export default {
-  input: 'src/test.ts',
+  input: 'src/App.ts',
   output: {
     file: 'dist/dist.js',
     format: 'cjs'

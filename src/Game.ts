@@ -7,6 +7,7 @@ class Game {
   board: Board;
   players: Array<Player>;
   turnIndex: number;
+  canvas: HTMLCanvasElement;
 
   constructor() {
     if (!Game.instance) {
@@ -15,13 +16,12 @@ class Game {
     return Game.instance;
   }
 
-  setup(boardSrc: string, playerNames: Array<string>) {
+  setup(boardSrc: JsonBoard, playerNames: Array<string>, canvas: HTMLCanvasElement) {
     this.turnIndex = 0;
+    this.canvas = canvas;
+    this.board = new Board(boardSrc, this.players);
     this.players = playerNames.map(name => new Player(name));
     Object.freeze(this.players);
-
-    const boardJson: JsonBoard = require(boardSrc);
-    this.board = new Board(boardJson, this.players);
   }
 
   async play() {
@@ -35,6 +35,5 @@ class Game {
 }
 
 const gameInstance = new Game();
-Object.freeze(gameInstance);
 
 export default gameInstance;

@@ -37,6 +37,12 @@ img.addEventListener('load', () => {
   });
 });
 
+// const avg = testPosition.reduce((acc, pos) => {
+//   acc[0] += pos.x;
+//   acc[1] += pos.y;
+//   return acc;
+// }, [0, 0]).map(x => x / 4);
+
 // Option 2: background within the canvas itself
 // const img = new Image();
 // img.src = './public/pokemon/index.png';
