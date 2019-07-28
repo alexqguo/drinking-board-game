@@ -46,7 +46,7 @@ may put an App class in here if necessary
       tilesWithPosition.forEach(tile => {
         tile.position.forEach(pos => {
           ctx.beginPath();
-          ctx.arc(pos.x, pos.y, 4, 0, Math.PI * 2, true);
+          ctx.arc(pos.x, pos.y, 3, 0, Math.PI * 2, true);
           ctx.fill();
         });
       });
@@ -57,7 +57,7 @@ may put an App class in here if necessary
         for (let i = 1; i <= x; i++) {
           positions.push((window as any).pos.map((p: { x: number; y: any; }) => {
             return {
-              x: p.x - ((187 * i) + 2),
+              x: p.x + ((187 * i) + 2),
               y: p.y
             }
           }));

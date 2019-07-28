@@ -7,10 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "roll": "rollup -c",
     "watch": "rollup -c -w",
-    "start": "./node_modules/http-server/bin/http-server ./ -c-1",
-
-
-    "___todo": "caching is weird with http-server, should probably try to fix it. need to hard reload to get JS changes"
+    "start": "./node_modules/http-server/bin/http-server ./ -c-1"
   },
   "author": "",
   "license": "ISC",

@@ -42,7 +42,14 @@ MoveRule
   String direction
   Number numSpaces
 
-RollUntilRule ??
+rules still needed:
+RollUntilRule ?? maybe there should be a generic DiceRollRule with options for number of rolls
+  - numRollsRequired: number, can also be "until" something
+ChoiceRule ("Your pokemon is evolving")
+OffscreenOutcomeRule ("Challenge someone to a chugging contest")
+DiceRollRule (done in Phase 1), will replace the "diceRolls" attribute
+
+also have to implement zones- used in pokemon and zelda games
 
 ---
 
@@ -76,13 +83,20 @@ phase 0:
   - window will scroll automatically turn to turn
 
 phase 1:
-- keep game state in localstorage in case someone closes the screen
+- track game state, store in localstorage in case someone closes the screen
+- queue of who rolled what in the corner
 - skip button
+- DiceRollRule with prompts for rules that require you to roll a die, though not necessarily take actions from it
 
 phase 2: 
 - game is playable via websockets OR offline
 - for websockets, keep game state in memory on host as it will only be played
-- can designate drinks on screen and keep track of the counts throughout the game
 
 phase 3:
+- keep track of the drink counts throughout the game
+- alert players when they are supposed to drink
+- can designate drinks on screen
+- trainer battles
+
+phase 4:
 - can add/remove players mid game

@@ -603,9 +603,267 @@
             }
           }]
         }
-      }
+      },
+      "position": [{
+        "x": 453,
+        "y": 1575
+      }, {
+        "x": 637,
+        "y": 1575
+      }, {
+        "x": 637,
+        "y": 1763
+      }, {
+        "x": 453,
+        "y": 1763
+      }]
     }, {
       "displayText": "Psyduck is slow.",
+      "rule": {
+        "type": "DisplayRule"
+      },
+      "position": [{
+        "x": 453,
+        "y": 1388
+      }, {
+        "x": 637,
+        "y": 1388
+      }, {
+        "x": 637,
+        "y": 1576
+      }, {
+        "x": 453,
+        "y": 1576
+      }]
+    }, {
+      "displayText": "What? Your Pokemon is evolving!",
+      "rule": {
+        "type": "TODO"
+      },
+      "position": [{
+        "x": 453,
+        "y": 1201
+      }, {
+        "x": 637,
+        "y": 1201
+      }, {
+        "x": 637,
+        "y": 1389
+      }, {
+        "x": 453,
+        "y": 1389
+      }]
+    }, {
+      "displayText": "Porygon used Tri Attack!",
+      "rule": {
+        "type": "DisplayRule"
+      },
+      "position": [{
+        "x": 453,
+        "y": 1014
+      }, {
+        "x": 637,
+        "y": 1014
+      }, {
+        "x": 637,
+        "y": 1202
+      }, {
+        "x": 453,
+        "y": 1202
+      }]
+    }, {
+      "displayText": "SILPH CO.",
+      "rule": {
+        "type": "DisplayRule"
+      },
+      "position": [{
+        "x": 453,
+        "y": 827
+      }, {
+        "x": 637,
+        "y": 827
+      }, {
+        "x": 637,
+        "y": 1015
+      }, {
+        "x": 453,
+        "y": 1015
+      }]
+    }, {
+      "displayText": "A Scientist uses his magnet Pokemon!",
+      "rule": {
+        "type": "DisplayRule"
+      },
+      "position": [{
+        "x": 453,
+        "y": 640
+      }, {
+        "x": 637,
+        "y": 640
+      }, {
+        "x": 637,
+        "y": 828
+      }, {
+        "x": 453,
+        "y": 828
+      }]
+    }, {
+      "displayText": "Lapras used Confuse Ray!",
+      "rule": {
+        "type": "TODO - probably a ChoiceRule with custom player target"
+      },
+      "position": [{
+        "x": 453,
+        "y": 453
+      }, {
+        "x": 637,
+        "y": 453
+      }, {
+        "x": 637,
+        "y": 638
+      }, {
+        "x": 453,
+        "y": 638
+      }]
+    }, {
+      "displayText": "It's Team Rocket!",
+      "rule": {
+        "type": "DisplayRule"
+      },
+      "position": [{
+        "x": 642,
+        "y": 453
+      }, {
+        "x": 826,
+        "y": 453
+      }, {
+        "x": 826,
+        "y": 638
+      }, {
+        "x": 642,
+        "y": 638
+      }]
+    }, {
+      "displayText": "GIOVANNI",
+      "rule": {
+        "type": "DisplayRule"
+      },
+      "position": [{
+        "x": 829,
+        "y": 453
+      }, {
+        "x": 1013,
+        "y": 453
+      }, {
+        "x": 1013,
+        "y": 638
+      }, {
+        "x": 829,
+        "y": 638
+      }]
+    }, {
+      "displayText": "Rare Candy - Level up!",
+      "rule": {
+        "type": "ExtraTurnRule"
+      },
+      "position": [{
+        "x": 1016,
+        "y": 453
+      }, {
+        "x": 1200,
+        "y": 453
+      }, {
+        "x": 1200,
+        "y": 638
+      }, {
+        "x": 1016,
+        "y": 638
+      }]
+    }, {
+      "displayText": "GARY",
+      "rule": {
+        "type": "DisplayRule"
+      },
+      "position": [{
+        "x": 1203,
+        "y": 453
+      }, {
+        "x": 1387,
+        "y": 453
+      }, {
+        "x": 1387,
+        "y": 638
+      }, {
+        "x": 1203,
+        "y": 638
+      }]
+    }, {
+      "displayText": "SAFFRON GYM",
+      "mandatory": true,
+      "rule": {
+        "type": "DisplayRule"
+      },
+      "position": [{
+        "x": 1390,
+        "y": 453
+      }, {
+        "x": 1574,
+        "y": 453
+      }, {
+        "x": 1574,
+        "y": 638
+      }, {
+        "x": 1390,
+        "y": 638
+      }]
+    }, {
+      "displayText": "Challenge someone to a chugging contest",
+      "rule": {
+        "type": "TODO"
+      },
+      "position": [{
+        "x": 1577,
+        "y": 453
+      }, {
+        "x": 1763,
+        "y": 453
+      }, {
+        "x": 1763,
+        "y": 638
+      }, {
+        "x": 1577,
+        "y": 638
+      }]
+    }, {
+      "displayText": "Krabby used Crabhammer!",
+      "rule": {
+        "type": "DisplayRule"
+      }
+    }, {
+      "displayText": "Ditto used Transform!",
+      "rule": {
+        "type": "DisplayRule"
+      }
+    }, {
+      "displayText": "Doduo used Double-Edge!",
+      "rule": {
+        "type": "DisplayRule"
+      }
+    }, {
+      "displayText": "SAFARI ZONE",
+      "rule": {
+        "type": "DisplayRule"
+      }
+    }, {
+      "displayText": "Gone fishin'... a wild Dratini appeared!",
+      "rule": {
+        "type": "DisplayRule",
+        "diceRolls": {
+          "numRequired": 1
+        }
+      }
+    }, {
+      "displayText": "A wild Tauros appeared... but instantly fled.",
       "rule": {
         "type": "DisplayRule"
       }
