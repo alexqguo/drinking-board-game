@@ -42,6 +42,8 @@ MoveRule
   String direction
   Number numSpaces
 
+RollUntilRule ??
+
 ---
 
 Problematic spots:

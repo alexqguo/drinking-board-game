@@ -37,6 +37,8 @@ img.addEventListener('load', () => {
   });
 });
 
+
+
 // const avg = testPosition.reduce((acc, pos) => {
 //   acc[0] += pos.x;
 //   acc[1] += pos.y;

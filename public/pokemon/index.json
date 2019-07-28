@@ -7,23 +7,36 @@
         "type": "DisplayRule"
       },
       "position": [{
-        "x": 260,
-        "y": 1770
+        "x": 262,
+        "y": 1580
       },{
-        "x": 260,
-        "y": 1950
+        "x": 448,
+        "y": 1580
       },{
-        "x": 450,
-        "y": 1950
+        "x": 448,
+        "y": 1764
       },{
-        "x": 450,
-        "y": 1770
+        "x": 262,
+        "y": 1764
       }]
     }, {
       "displayText": "Pidgey used Quick Attack!",
       "rule": {
         "type": "DisplayRule"
-      }
+      },
+      "position": [{
+        "x": 262,
+        "y": 1392
+      },{
+        "x": 448,
+        "y": 1392
+      },{
+        "x": 448,
+        "y": 1576
+      },{
+        "x": 262,
+        "y": 1576
+      }]
     }, {
       "displayText": "Caterpie used String Shot!",
       "rule": {
@@ -31,17 +44,56 @@
         "multiplier": 0.5,
         "numTurns": 1,
         "playerTarget": "allOthers"
-      }
+      },
+      "position": [{
+        "x": 262,
+        "y": 1204
+      }, {
+        "x": 448,
+        "y": 1204
+      }, {
+        "x": 448,
+        "y": 1388
+      }, {
+        "x": 262,
+        "y": 1388
+      }]
     }, {
       "displayText": "You caught a Pikachu!",
       "rule": {
         "type": "DisplayRule"
-      }
+      },
+      "position": [{
+        "x": 262,
+        "y": 1016
+      }, {
+        "x": 448,
+        "y": 1016
+      }, {
+        "x": 448,
+        "y": 1200
+      }, {
+        "x": 262,
+        "y": 1200
+      }]
     }, {
       "displayText": "Beedrill used Twinneedle!",
       "rule": {
         "type": "DisplayRule"
-      }
+      },
+      "position": [{
+        "x": 262,
+        "y": 828
+      }, {
+        "x": 448,
+        "y": 828
+      }, {
+        "x": 448,
+        "y": 1012
+      }, {
+        "x": 262,
+        "y": 1012
+      }]
     }, {
       "displayText": "PEWTER GYM",
       "mandatory": true,
@@ -50,34 +102,112 @@
         "diceRolls": {
           "numRequired": 1
         }
-      }
+      },
+      "position": [{
+        "x": 262,
+        "y": 640
+      }, {
+        "x": 448,
+        "y": 640
+      }, {
+        "x": 448,
+        "y": 828
+      }, {
+        "x": 262,
+        "y": 828
+      }]
     }, {
       "displayText": "If you're a guy, guys drink. If you're a girl, girls drink.",
       "rule": {
         "type": "DisplayRule"
-      }
+      },
+      "position": [{
+        "x": 262,
+        "y": 448
+      }, {
+        "x": 448,
+        "y": 448
+      }, {
+        "x": 448,
+        "y": 638
+      }, {
+        "x": 262,
+        "y": 638
+      }]
     }, {
       "displayText": "Zubats... they're... they're everywhere!",
       "rule": {
         "type": "DisplayRule",
         "TODO": "TODO"
-      }
+      },
+      "position": [{
+        "x": 262,
+        "y": 262
+      }, {
+        "x": 448,
+        "y": 262
+      }, {
+        "x": 448,
+        "y": 450
+      }, {
+        "x": 262,
+        "y": 450
+      }]
     }, {
       "displayText": "Clefairy used Metronome!",
       "rule": {
         "type": "DisplayRule"
-      }
+      },
+      "position": [{
+        "x": 450,
+        "y": 262
+      }, {
+        "x": 636,
+        "y": 262
+      }, {
+        "x": 636,
+        "y": 450
+      }, {
+        "x": 450,
+        "y": 450
+      }]
     }, {
       "displayText": "Jigglypuff used Sing!",
       "rule": {
         "type": "DisplayRule"
-      }
+      },
+      "position": [{
+        "x": 640,
+        "y": 262
+      }, {
+        "x": 824,
+        "y": 262
+      }, {
+        "x": 824,
+        "y": 450
+      }, {
+        "x": 640,
+        "y": 450
+      }]
     }, {
       "displayText": "Abra used Teleport!",
       "rule": {
         "type": "TeleportRule",
         "tileIndex": 30
-      }
+      },
+      "position": [{
+        "x": 830,
+        "y": 262
+      }, {
+        "x": 1014,
+        "y": 262
+      }, {
+        "x": 1014,
+        "y": 450
+      }, {
+        "x": 830,
+        "y": 450
+      }]
     }, {
       "displayText": "GARY",
       "rule": {
@@ -85,36 +215,127 @@
         "diceRolls": {
           "numRequired": 1
         }
-      }
+      },
+      "position": [{
+        "x": 1016,
+        "y": 262
+      }, {
+        "x": 1200,
+        "y": 262
+      }, {
+        "x": 1200,
+        "y": 450
+      }, {
+        "x": 1016,
+        "y": 450
+      }]
     }, {
       "displayText": "CERURLEAN GYM",
       "mandatory": true,
       "rule": {
         "type": "DisplayRule"
-      }
+      },
+      "position": [{
+        "x": 1202,
+        "y": 262
+      }, {
+        "x": 1388,
+        "y": 262
+      }, {
+        "x": 1388,
+        "y": 450
+      }, {
+        "x": 1202,
+        "y": 450
+      }]
     }, {
       "displayText": "Slowpoke is slow.",
       "rule": {
         "type": "DisplayRule"
-      }
+      },
+      "position": [{
+        "x": 1390,
+        "y": 262
+      }, {
+        "x": 1574,
+        "y": 262
+      }, {
+        "x": 1574,
+        "y": 450
+      }, {
+        "x": 1390,
+        "y": 450
+      }]
     }, {
       "displayText": "Bellsprout used Razor Leaf!",
       "rule": {
         "type": "DisplayRule"
-      }
+      },
+      "position": [{
+        "x": 1576,
+        "y": 262
+      }, {
+        "x": 1762,
+        "y": 262
+      }, {
+        "x": 1762,
+        "y": 450
+      }, {
+        "x": 1576,
+        "y": 450
+      }]
     }, {
       "displayText": "Meowth used Pay Day!",
       "rule": {
         "type": "DisplayRule"
-      }
+      },
+      "position": [{
+        "x": 1766,
+        "y": 262
+      }, {
+        "x": 1950,
+        "y": 262
+      }, {
+        "x": 1950,
+        "y": 450
+      }, {
+        "x": 1766,
+        "y": 450
+      }]
     }, {
       "displayText": "Diglett used Dig!",
       "rule": {
         "type": "DisplayRule"
-      }
+      },
+      "position": [{
+        "x": 1766,
+        "y": 450
+      }, {
+        "x": 1950,
+        "y": 450
+      }, {
+        "x": 1950,
+        "y": 638
+      }, {
+        "x": 1766,
+        "y": 638
+      }]
     }, {
       "displayText": "SS ANNE",
-      "TODO": "TODO"
+      "TODO": "TODO",
+      "position": [{
+        "x": 1766,
+        "y": 638
+      }, {
+        "x": 1950,
+        "y": 638
+      }, {
+        "x": 1950,
+        "y": 826
+      }, {
+        "x": 1766,
+        "y": 826
+      }]
     }, {
       "displayText": "VERMILION GYM",
       "mandatory": true,
@@ -129,53 +350,206 @@
             }
           }]
         }
-      }
+      },
+      "position": [{
+        "x": 1766,
+        "y": 824
+      }, {
+        "x": 1950,
+        "y": 824
+      }, {
+        "x": 1950,
+        "y": 1012
+      }, {
+        "x": 1766,
+        "y": 1012
+      }]
     }, {
       "displayText": "I want to ride my BICYCLE!",
       "rule": {
         "type": "SpeedModifierRule",
         "multiplier": 2,
         "numTurns": 1
-      }
+      },
+      "position": [{
+        "x": 1766,
+        "y": 1010
+      }, {
+        "x": 1950,
+        "y": 1010
+      }, {
+        "x": 1950,
+        "y": 1198
+      }, {
+        "x": 1766,
+        "y": 1198
+      }]
     }, {
       "displayText": "Magikarp used Splash!",
       "rule": {
         "type": "DisplayRule"
-      }
+      },
+      "position": [{
+        "x": 1766,
+        "y": 1200
+      }, {
+        "x": 1950,
+        "y": 1200
+      }, {
+        "x": 1950,
+        "y": 1388
+      }, {
+        "x": 1766,
+        "y": 1388
+      }]
     }, {
       "displayText": "Sandshrew used Sand-Attack!",
       "rule": {
         "type": "DisplayRule"
-      }
+      },
+      "position": [{
+        "x": 1766,
+        "y": 1388
+      }, {
+        "x": 1950,
+        "y": 1388
+      }, {
+        "x": 1950,
+        "y": 1576
+      }, {
+        "x": 1766,
+        "y": 1576
+      }]
     }, {
       "displayText": "POKEMON TOWER",
       "rule": {
         "type": "DisplayRule"
-      }
+      },
+      "position": [{
+        "x": 1766,
+        "y": 1574
+      }, {
+        "x": 1950,
+        "y": 1574
+      }, {
+        "x": 1950,
+        "y": 1762
+      }, {
+        "x": 1766,
+        "y": 1762
+      }]
     }, {
+      "displayText": "A possessed Channeler",
+      "rule": {
+        "type": "DisplayRule"
+      },
+      "position": [{
+        "x": 1766,
+        "y": 1764
+      }, {
+        "x": 1950,
+        "y": 1764
+      }, {
+        "x": 1950,
+        "y": 1952
+      }, {
+        "x": 1766,
+        "y": 1952
+      }]
+    },{
       "displayText": "Haunter used Dream Eater!",
       "rule": {
         "type": "MoveRule",
         "direction": "back",
         "numSpaces": 10,
         "playerTarget": "custom"
-      }
+      },
+      "position": [{
+        "x": 1577,
+        "y": 1764
+      }, {
+        "x": 1761,
+        "y": 1764
+      }, {
+        "x": 1761,
+        "y": 1952
+      }, {
+        "x": 1577,
+        "y": 1952
+      }]
     }, {
       "displayText": "Cubone used \"My mother is dead.\"",
       "rule": {
         "type": "DisplayRule"
-      }
+      },
+      "position": [{
+        "x": 1390,
+        "y": 1764
+      }, {
+        "x": 1574,
+        "y": 1764
+      }, {
+        "x": 1574,
+        "y": 1952
+      }, {
+        "x": 1390,
+        "y": 1952
+      }]
     }, {
+      "displayText": "If someone is in Silph Co...",
+      "rule": {
+        "type": "DisplayRule"
+      },
+      "position": [{
+        "x": 1203,
+        "y": 1764
+      }, {
+        "x": 1387,
+        "y": 1764
+      }, {
+        "x": 1387,
+        "y": 1952
+      }, {
+        "x": 1203,
+        "y": 1952
+      }]
+    },{
       "displayText": "Abra used Teleport!",
       "rule": {
         "type": "TeleportRule",
         "tileIndex": 15
-      }
+      },
+      "position": [{
+        "x": 1014,
+        "y": 1764
+      }, {
+        "x": 1198,
+        "y": 1764
+      }, {
+        "x": 1198,
+        "y": 1952
+      }, {
+        "x": 1014,
+        "y": 1952
+      }]
     }, {
       "displayText": "A sleeping Snorlax blocks your path.",
       "rule": {
         "type": "DisplayRule"
-      }
+      },
+      "position": [{
+        "x": 827,
+        "y": 1764
+      }, {
+        "x": 1011,
+        "y": 1764
+      }, {
+        "x": 1011,
+        "y": 1952
+      }, {
+        "x": 827,
+        "y": 1952
+      }]
     }, {
       "displayText": "GARY -- Roll a die.",
       "rule": {
@@ -183,12 +557,38 @@
         "diceRolls": {
           "numRequired": 1
         }
-      }
+      },
+      "position": [{
+        "x": 640,
+        "y": 1764
+      }, {
+        "x": 824,
+        "y": 1764
+      }, {
+        "x": 824,
+        "y": 1952
+      }, {
+        "x": 640,
+        "y": 1952
+      }]
     }, {
       "displayText": "Eeveelution time!",
       "rule": {
         "type": "DisplayRule"
-      }
+      },
+      "position": [{
+        "x": 453,
+        "y": 1764
+      }, {
+        "x": 637,
+        "y": 1764
+      }, {
+        "x": 637,
+        "y": 1952
+      }, {
+        "x": 453,
+        "y": 1952
+      }]
     }, {
       "displayText": "CELADON GYM",
       "mandatory": true,
