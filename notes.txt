@@ -62,6 +62,7 @@ Problematic spots:
   - Hitmonlee/chan: Challenge someone to a chugging contest. First to finish gets an extra turn, last to finish loses a turn
   - Cinnabar Gym (todo)
   - Legendary birds
+  - Missingno
 
 ---
 
@@ -69,23 +70,19 @@ boardgame.io has some examples
 
 ---
 
-- is it necessary to call out display rule if it's a noop? good to have there for now maybe
-- maybe add a DiceRollRule
-
----
-
 *OVERALL PLAN*
 
 phase 0:
 - game is playable offline with multiple people at the same computer
+- zones
 - no image scaling
   - image will be displayed via the background css property at full size
   - window will scroll automatically turn to turn
+- skip button (required for Gary as you don't move on until you're done with your drink)
 
 phase 1:
 - track game state, store in localstorage in case someone closes the screen
 - queue of who rolled what in the corner
-- skip button
 - DiceRollRule with prompts for rules that require you to roll a die, though not necessarily take actions from it
 
 phase 2: 

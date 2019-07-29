@@ -43,6 +43,6 @@ export enum JsonPlayerTarget {
 }
 
 export interface JsonBoard {
-  imgSrc: string;
+  imgSrc?: string;
   tiles: JsonTile[];
 }

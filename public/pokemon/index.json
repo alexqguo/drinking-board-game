@@ -1,5 +1,4 @@
 {
-  "imgSrc": "pokemon.png",
   "tiles": [
     {
       "displayText": "Rattata used Tackle",
@@ -838,22 +837,74 @@
       "displayText": "Krabby used Crabhammer!",
       "rule": {
         "type": "DisplayRule"
-      }
+      },
+      "position": [{
+        "x": 1579,
+        "y": 641
+      }, {
+        "x": 1763,
+        "y": 641
+      }, {
+        "x": 1763,
+        "y": 825
+      }, {
+        "x": 1579,
+        "y": 825
+      }]
     }, {
       "displayText": "Ditto used Transform!",
       "rule": {
         "type": "DisplayRule"
-      }
+      },
+      "position": [{
+        "x": 1579,
+        "y": 830
+      }, {
+        "x": 1763,
+        "y": 830
+      }, {
+        "x": 1763,
+        "y": 1014
+      }, {
+        "x": 1579,
+        "y": 1014
+      }]
     }, {
       "displayText": "Doduo used Double-Edge!",
       "rule": {
         "type": "DisplayRule"
-      }
+      },
+      "position": [{
+        "x": 1579,
+        "y": 1017
+      }, {
+        "x": 1763,
+        "y": 1017
+      }, {
+        "x": 1763,
+        "y": 1201
+      }, {
+        "x": 1579,
+        "y": 1201
+      }]
     }, {
       "displayText": "SAFARI ZONE",
       "rule": {
         "type": "DisplayRule"
-      }
+      },
+      "position": [{
+        "x": 1579,
+        "y": 1204
+      }, {
+        "x": 1763,
+        "y": 1204
+      }, {
+        "x": 1763,
+        "y": 1388
+      }, {
+        "x": 1579,
+        "y": 1388
+      }]
     }, {
       "displayText": "Gone fishin'... a wild Dratini appeared!",
       "rule": {
@@ -861,12 +912,435 @@
         "diceRolls": {
           "numRequired": 1
         }
-      }
+      },
+      "position": [{
+        "x": 1579,
+        "y": 1391
+      }, {
+        "x": 1763,
+        "y": 1391
+      }, {
+        "x": 1763,
+        "y": 1575
+      }, {
+        "x": 1579,
+        "y": 1575
+      }]
     }, {
       "displayText": "A wild Tauros appeared... but instantly fled.",
       "rule": {
         "type": "DisplayRule"
-      }
+      },
+      "position": [{
+        "x": 1579,
+        "y": 1578
+      }, {
+        "x": 1763,
+        "y": 1578
+      }, {
+        "x": 1763,
+        "y": 1762
+      }, {
+        "x": 1579,
+        "y": 1762
+      }]
+    }, {
+      "displayText": "(Chansey) Roll the die.",
+      "rule": {
+        "type": "DisplayRule",
+        "diceRolls": {
+          "numRequired": 1
+        }
+      },
+      "position": [{
+        "x": 1390,
+        "y": 1578
+      }, {
+        "x": 1574,
+        "y": 1578
+      }, {
+        "x": 1574,
+        "y": 1762
+      }, {
+        "x": 1390,
+        "y": 1762
+      }]
+    }, {
+      "displayText": "FUCHSIA GYM",
+      "mandatory": true,
+      "rule": {
+        "type": "DisplayRule"
+      },
+      "position": [{
+        "x": 1203,
+        "y": 1578
+      }, {
+        "x": 1387,
+        "y": 1578
+      }, {
+        "x": 1387,
+        "y": 1762
+      }, {
+        "x": 1203,
+        "y": 1762
+      }]
+    }, {
+      "displayText": "Electrode used Explosion! Everybody finish their drinks.",
+      "rule": {
+        "type": "DisplayRule"
+      },
+      "position": [{
+        "x": 1016,
+        "y": 1578
+      }, {
+        "x": 1200,
+        "y": 1578
+      }, {
+        "x": 1200,
+        "y": 1762
+      }, {
+        "x": 1016,
+        "y": 1762
+      }]
+    }, {
+      "displayText": "Electabuzz used Thunder Punch!",
+      "rule": {
+        "type": "SkipTurnRule"
+      },
+      "position": [{
+        "x": 829,
+        "y": 1578
+      }, {
+        "x": 1013,
+        "y": 1578
+      }, {
+        "x": 1013,
+        "y": 1762
+      }, {
+        "x": 829,
+        "y": 1762
+      }]
+    }, {
+      "displayText": "Poliwag used Hydro Pump! Shotgun a beer.",
+      "rule": {
+        "type": "DisplayRule"
+      },
+      "position": [{
+        "x": 640,
+        "y": 1578
+      }, {
+        "x": 826,
+        "y": 1578
+      }, {
+        "x": 826,
+        "y": 1762
+      }, {
+        "x": 640,
+        "y": 1762
+      }]
+    }, {
+      "displayText": "Seaking used Waterfall! ...do a waterfall",
+      "rule": {
+        "type": "DisplayRule"
+      },
+      "position": [{
+        "x": 640,
+        "y": 1389
+      }, {
+        "x": 824,
+        "y": 1389
+      }, {
+        "x": 824,
+        "y": 1573
+      }, {
+        "x": 640,
+        "y": 1573
+      }]
+    }, {
+      "displayText": "A wild Missingno!",
+      "rule": {
+        "type": "TODO"
+      },
+      "position": [{
+        "x": 640,
+        "y": 1202
+      }, {
+        "x": 824,
+        "y": 1202
+      }, {
+        "x": 824,
+        "y": 1388
+      }, {
+        "x": 640,
+        "y": 1388
+      }]
+    }, {
+      "displayText": "CINNABAR GYM",
+      "rule": {
+        "type": "TODO (roll until)"
+      },
+      "position": [{
+        "x": 640,
+        "y": 1013
+      }, {
+        "x": 824,
+        "y": 1013
+      }, {
+        "x": 824,
+        "y": 1200
+      }, {
+        "x": 640,
+        "y": 1200
+      }]
+    }, {
+      "displayText": "Koffing used Haze!",
+      "rule": {
+        "type": "DisplayRule"
+      },
+      "position": [{
+        "x": 640,
+        "y": 826
+      }, {
+        "x": 824,
+        "y": 826
+      }, {
+        "x": 824,
+        "y": 1010
+      }, {
+        "x": 640,
+        "y": 1010
+      }]
+    }, {
+      "displayText": "You resurrected a Fossil Pokemon! Everyone older than you drinks 2.",
+      "rule": {
+        "type": "DisplayRule"
+      },
+      "position": [{
+        "x": 640,
+        "y": 639
+      }, {
+        "x": 824,
+        "y": 639
+      }, {
+        "x": 824,
+        "y": 823
+      }, {
+        "x": 640,
+        "y": 823
+      }]
+    }, {
+      "displayText": "You throw a Pokeball!",
+      "rule": {
+        "type": "DisplayRule",
+        "diceRolls": {
+          "numRequired": 1
+        }
+      },
+      "position": [{
+        "x": 829,
+        "y": 639
+      }, {
+        "x": 1013,
+        "y": 639
+      }, {
+        "x": 1013,
+        "y": 823
+      }, {
+        "x": 829,
+        "y": 823
+      }]
+    }, {
+      "displayText": "Persian used Fury Swipes!",
+      "rule": {
+        "type": "DisplayRule",
+        "diceRolls": {
+          "numRequired": 1
+        }
+      },
+      "position": [{
+        "x": 1016,
+        "y": 639
+      }, {
+        "x": 1200,
+        "y": 639
+      }, {
+        "x": 1200,
+        "y": 823
+      }, {
+        "x": 1016,
+        "y": 823
+      }]
+    }, {
+      "displayText": "VIRIDIAN GYM",
+      "mandatory": true,
+      "rule": {
+        "type": "DisplayRule"
+      },
+      "position": [{
+        "x": 1203,
+        "y": 639
+      }, {
+        "x": 1387,
+        "y": 639
+      }, {
+        "x": 1387,
+        "y": 823
+      }, {
+        "x": 1203,
+        "y": 823
+      }]
+    }, {
+      "displayText": "Fearow used Mirror Move!",
+      "rule": {
+        "type": "DisplayRule"
+      },
+      "position": [{
+        "x": 1390,
+        "y": 639
+      }, {
+        "x": 1574,
+        "y": 639
+      }, {
+        "x": 1574,
+        "y": 823
+      }, {
+        "x": 1390,
+        "y": 823
+      }]
+    }, {
+      "displayText": "Graveler used Defense Curl!",
+      "rule": {
+        "type": "SkipTurnRule",
+        "numTurns": 2
+      },
+      "position": [{
+        "x": 1390,
+        "y": 828
+      }, {
+        "x": 1574,
+        "y": 828
+      }, {
+        "x": 1574,
+        "y": 1012
+      }, {
+        "x": 1390,
+        "y": 1012
+      }]
+    }, {
+      "displayText": "Gyarados used Dragon Rage!",
+      "rule": {
+        "type": "DisplayRule"
+      },
+      "position": [{
+        "x": 1390,
+        "y": 1015
+      }, {
+        "x": 1574,
+        "y": 1015
+      }, {
+        "x": 1574,
+        "y": 1199
+      }, {
+        "x": 1390,
+        "y": 1199
+      }]
+    }, {
+      "displayText": "Dragonite used Hyper Beam! Give 5 drinks, but lose a turn to recharge.",
+      "rule": {
+        "type": "DisplayRule"
+      },
+      "position": [{
+        "x": 1390,
+        "y": 1202
+      }, {
+        "x": 1574,
+        "y": 1202
+      }, {
+        "x": 1574,
+        "y": 1388
+      }, {
+        "x": 1390,
+        "y": 1388
+      }]
+    }, {
+      "displayText": "(Birds)",
+      "mandatory": true,
+      "rule": {
+        "type": "TODO"
+      },
+      "position": [{
+        "x": 1390,
+        "y": 1391
+      }, {
+        "x": 1574,
+        "y": 1391
+      }, {
+        "x": 1574,
+        "y": 1577
+      }, {
+        "x": 1390,
+        "y": 1577
+      }]
+    }, {
+      "displayText": "THE ELITE FOUR",
+      "mandatory": true,
+      "rule": {
+        "type": "DisplayRule",
+        "diceRolls": {
+          "numRequired": 1
+        }
+      },
+      "position": [{
+        "x": 1201,
+        "y": 1391
+      }, {
+        "x": 1385,
+        "y": 1391
+      }, {
+        "x": 1385,
+        "y": 1577
+      }, {
+        "x": 1201,
+        "y": 1577
+      }]
+    }, {
+      "displayText": "CHAMPION GARY",
+      "mandatory": true,
+      "rule": {
+        "type": "DisplayRule"
+      },
+      "position": [{
+        "x": 1014,
+        "y": 1391
+      }, {
+        "x": 1198,
+        "y": 1391
+      }, {
+        "x": 1198,
+        "y": 1577
+      }, {
+        "x": 1014,
+        "y": 1577
+      }]
+    }, {
+      "displayText": "POKEMON MASTER",
+      "mandatory": true,
+      "rule": {
+        "type": "DisplayRule"
+      },
+      "position": [{
+        "x": 827,
+        "y": 1391
+      }, {
+        "x": 1011,
+        "y": 1391
+      }, {
+        "x": 1011,
+        "y": 1577
+      }, {
+        "x": 827,
+        "y": 1577
+      }]
     }
   ]
 }

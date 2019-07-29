@@ -33,7 +33,7 @@
         tilesWithPosition.forEach(function (tile) {
             tile.position.forEach(function (pos) {
                 ctx.beginPath();
-                ctx.arc(pos.x, pos.y, 3, 0, Math.PI * 2, true);
+                ctx.arc(pos.x, pos.y, 4, 0, Math.PI * 2, true);
                 ctx.fill();
             });
         });
@@ -43,7 +43,7 @@
             var _loop_1 = function (i) {
                 positions.push(window.pos.map(function (p) {
                     return {
-                        x: p.x + ((187 * i) + 2),
+                        x: p.x - ((187 * i) + 2),
                         y: p.y
                     };
                 }));
