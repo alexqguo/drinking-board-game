@@ -36,7 +36,9 @@ export function createRule(ruleJson: JsonRule): Rule {
   const { type } = ruleJson;
 
   if (!RULE_MAPPINGS.hasOwnProperty(type)) {
-    throw new Error('Invalid rule type specified');
+    console.warn(`Invalid rule type specified: ${type}`);
+    // TODO: throw error instead of warn. warn is just for debugging
+    return null;
   }
 
   return new RULE_MAPPINGS[type](ruleJson);

@@ -4,9 +4,65 @@
   <title>Let's drink</title>
   <meta charset="utf-8">
   <link rel="icon" href="./favicon.png">
+  <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,700&display=swap" rel="stylesheet">
+
+  <style>
+    body {
+      margin: 0;
+      font-family: "Open Sans", sans-serif;
+    }
+    #modal-background {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background: #000;
+      opacity: 0.5;
+    }
+    #modal-background.hidden {
+      display: none;
+    }
+    .modal-content {
+      position: absolute;
+      z-index: 1;
+      top: 30px;
+      left: 0;
+      right: 0;
+      margin: 0 auto;
+      width: 400px;
+      display: inline-block;
+      background: white;
+      padding: 30px;
+      border-radius: 3px;
+      transition: 0.5s;
+    }
+    .modal-content.hidden {
+      top: -200px;
+    }
+  </style>
 </head>
 <body>
   <canvas id="canvas" style="display: block; margin: auto;"></canvas>
+
+  <form id="setup" class="modal-content">
+    <div id="game-input">
+      <label for="game">
+        <strong>Select a game:</strong>
+      </label>
+      <select name="game" id="game">
+        <option value="public/pokemon">Pokémon (gen. 1)</option>
+      </select>
+    </div>
+    <div id="player-input">
+      <strong>Enter players:</strong> <a href="#" id="add-player">Add player</a><br>
+      <input type="text">
+    </div>
+
+    <button id="submit">Go</button>
+  </form>
+
+  <div id="modal-background"></div>
 
   <!-- <script src="./src/test.js"></script> -->
   <script src="dist/dist.js"></script>

@@ -18,7 +18,7 @@ abstract class Rule {
       .filter(arg => typeof arg === 'undefined' || arg === null || arg === '');
     
     if (errors.length) {
-      throw new Error('TODO - missing fields for whatever class this is');
+      throw new Error('TODO - alert missing fields for whatever class this is');
     }
   }
 }

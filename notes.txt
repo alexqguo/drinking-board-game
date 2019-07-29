@@ -79,6 +79,7 @@ phase 0:
   - image will be displayed via the background css property at full size
   - window will scroll automatically turn to turn
 - skip button (required for Gary as you don't move on until you're done with your drink)
+- asset minification
 
 phase 1:
 - track game state, store in localstorage in case someone closes the screen

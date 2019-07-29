@@ -22,6 +22,8 @@ class Game {
     this.board = new Board(boardSrc, this.players);
     this.players = playerNames.map(name => new Player(name));
     Object.freeze(this.players);
+
+    console.log(this.board);
   }
 
   async play() {

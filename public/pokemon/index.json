@@ -1005,7 +1005,8 @@
     }, {
       "displayText": "Electabuzz used Thunder Punch!",
       "rule": {
-        "type": "SkipTurnRule"
+        "type": "SkipTurnRule",
+        "numTurns": 1
       },
       "position": [{
         "x": 829,
