@@ -20,7 +20,7 @@ class Tile {
 
   placePlayer(player: Player): void {
     this.currentPlayers.push(player);
-    player.currentPos = this.generateCenterPosition();
+    player.destinationPos = this.generateCenterPosition();
   }
 
   // Generates an average position based on the corners of the tile

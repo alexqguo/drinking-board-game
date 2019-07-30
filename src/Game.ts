@@ -1,12 +1,14 @@
 import Board from './Board';
 import Player from './Player';
 import { JsonBoard } from './interfaces';
+import { DiceLink } from './UIHelper';
 
 class Game {
   static instance: Game;
   board: Board;
   players: Array<Player>;
   turnIndex: number;
+  diceLink: DiceLink;
   canvas: HTMLCanvasElement;
   ctx: CanvasRenderingContext2D;
 
@@ -17,21 +19,24 @@ class Game {
     return Game.instance;
   }
 
-  setup(boardSrc: JsonBoard, playerNames: Array<string>, canvas: HTMLCanvasElement) {
+  setup(boardSrc: JsonBoard, playerNames: Array<string>, canvas: HTMLCanvasElement): void {
     this.turnIndex = 0;
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
     this.board = new Board(boardSrc, this.players);
     this.players = playerNames.map((name: string) => new Player(name));
-    Object.freeze(this.players); // May want to remove this if we add/remove players mid game
-    this.players.forEach((p: Player) => p.placeOnBoard(0));
+    this.diceLink = new DiceLink('#dice');
 
-    console.log(this.board);
+    this.players.forEach((p: Player) => p.moveToTile(0));
   }
 
-  async play() {
+  play() {
     const player = this.players[this.turnIndex % this.players.length];
-    const roll = await player.getRoll();
+
+    this.diceLink.enable(player.name, (roll: number) => {
+      this.diceLink.disable();
+      player.moveToTile(player.currentTileIndex + roll);
+    });
   }
 
   endTurn() {

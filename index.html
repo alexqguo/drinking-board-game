@@ -11,41 +11,26 @@
       margin: 0;
       font-family: "Open Sans", sans-serif;
     }
-    #modal-background {
-      position: absolute;
-      width: 100%;
-      height: 100%;
+    #setup {
+      width: 300px;
+      margin: auto;
+    }
+    #overlay {
+      padding: 15px;
+      position: fixed;
       top: 0;
       left: 0;
-      background: #000;
-      opacity: 0.5;
-    }
-    #modal-background.hidden {
-      display: none;
-    }
-    .modal-content {
-      position: absolute;
-      z-index: 1;
-      top: 30px;
-      left: 0;
-      right: 0;
-      margin: 0 auto;
-      width: 400px;
-      display: inline-block;
+      border: 1px solid blue;
+      width: 100px;
       background: white;
-      padding: 30px;
-      border-radius: 3px;
-      transition: 0.5s;
-    }
-    .modal-content.hidden {
-      top: -200px;
+      display: none;
     }
   </style>
 </head>
 <body>
   <canvas id="canvas" style="display: block; margin: auto;"></canvas>
 
-  <form id="setup" class="modal-content">
+  <form id="setup">
     <div id="game-input">
       <label for="game">
         <strong>Select a game:</strong>
@@ -62,7 +47,12 @@
     <button id="submit">Go</button>
   </form>
 
-  <div id="modal-background"></div>
+  <section id="overlay">
+    <div id="dice">
+      <a href="#">Roll</a><br>
+      <span></span>
+    </div>
+  </section>
 
   <!-- <script src="./src/test.js"></script> -->
   <script src="dist/dist.js"></script>
