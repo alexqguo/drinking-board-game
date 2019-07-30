@@ -51,6 +51,9 @@ DiceRollRule (done in Phase 1), will replace the "diceRolls" attribute
 
 also have to implement zones- used in pokemon and zelda games
 
+create a UI class/util to deal with the modal and popping up windows or something. the initial loading screen in App.ts should use this too
+this should be the only place we do serious rendering to the page
+
 ---
 
 Problematic spots:
@@ -98,3 +101,4 @@ phase 3:
 
 phase 4:
 - can add/remove players mid game
+- mobile friendly

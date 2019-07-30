@@ -2,10 +2,10 @@ export interface JsonTile {
   displayText: string;
   mandatory?: boolean;
   rule: JsonRule;
-  position?: JsonPosition[]; // optional until I have time to fill them all out
+  position: Position[]; // optional until I have time to fill them all out
 }
 
-export interface JsonPosition {
+export interface Position {
   x: number;
   y: number;
 }

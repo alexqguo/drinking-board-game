@@ -67,11 +67,25 @@ function __generator(thisArg, body) {
 }
 
 var Tile = (function () {
-    function Tile(displayText, isMandatory, rule) {
+    function Tile(displayText, isMandatory, rule, coordinates) {
         this.displayText = displayText;
         this.isMandatory = isMandatory;
         this.rule = rule;
+        this.currentPlayers = [];
+        this.coordinates = coordinates;
     }
+    Tile.prototype.placePlayer = function (player) {
+        this.currentPlayers.push(player);
+        player.currentPos = this.generateCenterPosition();
+    };
+    Tile.prototype.generateCenterPosition = function () {
+        var total = this.coordinates.reduce(function (prev, cur) {
+            return { x: prev.x + cur.x, y: prev.y + cur.y };
+        }, { x: 0, y: 0 });
+        total.x /= this.coordinates.length;
+        total.y /= this.coordinates.length;
+        return total;
+    };
     return Tile;
 }());
 //# sourceMappingURL=Tile.js.map
@@ -186,12 +200,12 @@ var RULE_MAPPINGS = {
 };
 function createTiles(tilesJson) {
     return tilesJson.map(function (tileJson) {
-        var displayText = tileJson.displayText, mandatory = tileJson.mandatory, rule = tileJson.rule;
+        var displayText = tileJson.displayText, mandatory = tileJson.mandatory, rule = tileJson.rule, position = tileJson.position;
         if (!rule) {
             console.warn('No rule specified. Was this a todo?');
             return null;
         }
-        return new Tile(displayText, mandatory, createRule(rule));
+        return new Tile(displayText, mandatory, createRule(rule), position);
     });
 }
 function createRule(ruleJson) {
@@ -214,10 +228,26 @@ var Board = (function () {
 }());
 //# sourceMappingURL=Board.js.map
 
+var RADIUS = 30;
+var FONT_SIZE = 20;
 var Player = (function () {
     function Player(name) {
         this.name = name;
     }
+    Player.prototype.placeOnBoard = function (initialPosition) {
+        if (initialPosition === void 0) { initialPosition = 0; }
+        gameInstance.board.tiles[initialPosition].placePlayer(this);
+        this.draw();
+    };
+    Player.prototype.draw = function () {
+        gameInstance.ctx.fillStyle = 'rgba(0,0,0,0.5)';
+        gameInstance.ctx.beginPath();
+        gameInstance.ctx.arc(this.currentPos.x, this.currentPos.y, RADIUS, 0, Math.PI * 2, true);
+        gameInstance.ctx.fill();
+        gameInstance.ctx.fillStyle = 'white';
+        gameInstance.ctx.font = FONT_SIZE + "px \"Open Sans\"";
+        gameInstance.ctx.fillText(this.name[0].toUpperCase(), this.currentPos.x - 6, this.currentPos.y + 6);
+    };
     Player.prototype.getRoll = function () {
         return __awaiter(this, void 0, void 0, function () {
             return __generator(this, function (_a) {
@@ -239,9 +269,11 @@ var Game = (function () {
     Game.prototype.setup = function (boardSrc, playerNames, canvas) {
         this.turnIndex = 0;
         this.canvas = canvas;
+        this.ctx = canvas.getContext('2d');
         this.board = new Board(boardSrc, this.players);
         this.players = playerNames.map(function (name) { return new Player(name); });
         Object.freeze(this.players);
+        this.players.forEach(function (p) { return p.placeOnBoard(0); });
         console.log(this.board);
     };
     Game.prototype.play = function () {

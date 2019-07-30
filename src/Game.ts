@@ -8,6 +8,7 @@ class Game {
   players: Array<Player>;
   turnIndex: number;
   canvas: HTMLCanvasElement;
+  ctx: CanvasRenderingContext2D;
 
   constructor() {
     if (!Game.instance) {
@@ -19,9 +20,11 @@ class Game {
   setup(boardSrc: JsonBoard, playerNames: Array<string>, canvas: HTMLCanvasElement) {
     this.turnIndex = 0;
     this.canvas = canvas;
+    this.ctx = canvas.getContext('2d');
     this.board = new Board(boardSrc, this.players);
-    this.players = playerNames.map(name => new Player(name));
-    Object.freeze(this.players);
+    this.players = playerNames.map((name: string) => new Player(name));
+    Object.freeze(this.players); // May want to remove this if we add/remove players mid game
+    this.players.forEach((p: Player) => p.placeOnBoard(0));
 
     console.log(this.board);
   }

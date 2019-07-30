@@ -1,6 +1,24 @@
 {
   "tiles": [
     {
+      "displayText": "Pick one, dude.",
+      "rule": {
+        "type": "DisplayRule"
+      },
+      "position": [{
+        "x": 262,
+        "y": 1764
+      },{
+        "x": 448,
+        "y": 1764
+      },{
+        "x": 448,
+        "y": 1948
+      },{
+        "x": 262,
+        "y": 1948
+      }]
+    }, {
       "displayText": "Rattata used Tackle",
       "rule": {
         "type": "DisplayRule"
