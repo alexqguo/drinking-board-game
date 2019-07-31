@@ -45,8 +45,7 @@ may put an App class in here if necessary
     
     Promise.all([fetchImage(imgSrc, canvas), fetchBoard(boardSrc)])
       .then((values) => {
-        Game.setup(values[1], players, canvas); // values[1] is the result of the fetchBoard promise
-        Game.play();
+        Game.start(values[1], players, canvas); // values[1] is the result of the fetchBoard promise
       })
       .catch(err => console.error(err));
   }

@@ -227,6 +227,7 @@ var Player = (function () {
     };
     return Player;
 }());
+//# sourceMappingURL=Player.js.map
 
 var DiceLink = (function () {
     function DiceLink(selector) {
@@ -260,14 +261,63 @@ var DiceLink = (function () {
 }());
 //# sourceMappingURL=UIHelper.js.map
 
+var TURN_START = 'TURN_START';
+var ROLL_START = 'ROLL_START';
+var ROLL_END = 'ROLL_END';
+var MOVE_START = 'MOVE_START';
+var MOVE_END = 'MOVE_END';
+var RULE_TRIGGER = 'RULE_TRIGGER';
+var TURN_END = 'TURN_END';
+var GAME_OVER = 'GAME_OVER';
+var TURN_SKIP = 'TURN_SKIP';
+var ALL_EVENTS = [
+    TURN_START, ROLL_START, ROLL_END, MOVE_START, MOVE_END, RULE_TRIGGER, TURN_END,
+    GAME_OVER, TURN_SKIP,
+];
+var GameEvents = (function () {
+    function GameEvents() {
+        var _this = this;
+        if (!GameEvents.instance) {
+            GameEvents.instance = this;
+        }
+        this.eventHandlerMap = new Map();
+        ALL_EVENTS.forEach(function (event) {
+            _this.eventHandlerMap.set(event, []);
+        });
+        return GameEvents.instance;
+    }
+    GameEvents.prototype.on = function (eventName, callback) {
+        this.validateEvent(eventName);
+        this.eventHandlerMap.get(eventName).push(callback);
+    };
+    GameEvents.prototype.trigger = function (eventName, eventValues) {
+        this.validateEvent(eventName);
+        this.eventHandlerMap.get(eventName).forEach(function (eventHandler) {
+            eventHandler.apply(null, eventValues);
+        });
+    };
+    GameEvents.prototype.validateEvent = function (eventName) {
+        if (!this.eventHandlerMap.has(eventName)) {
+            throw new Error(eventName + " is not a valid event");
+        }
+    };
+    return GameEvents;
+}());
+var gameEventsInstance = new GameEvents();
+//# sourceMappingURL=GameEvents.js.map
+
 var Game = (function () {
     function Game() {
         if (!Game.instance) {
             Game.instance = this;
         }
+        gameEventsInstance.on(TURN_START, this.startTurn.bind(this));
+        gameEventsInstance.on(TURN_END, this.endTurn.bind(this));
+        gameEventsInstance.on(ROLL_START, this.enableDiceRoll.bind(this));
+        gameEventsInstance.on(ROLL_END, this.endDiceRoll.bind(this));
         return Game.instance;
     }
-    Game.prototype.setup = function (boardSrc, playerNames, canvas) {
+    Game.prototype.start = function (boardSrc, playerNames, canvas) {
         this.turnIndex = 0;
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d');
@@ -275,14 +325,22 @@ var Game = (function () {
         this.players = playerNames.map(function (name) { return new Player(name); });
         this.diceLink = new DiceLink('#dice');
         this.players.forEach(function (p) { return p.moveToTile(0); });
+        gameEventsInstance.trigger(TURN_START);
     };
-    Game.prototype.play = function () {
-        var _this = this;
+    Game.prototype.startTurn = function () {
         var player = this.players[this.turnIndex % this.players.length];
-        this.diceLink.enable(player.name, function (roll) {
+        this.currentPlayer = player;
+        gameEventsInstance.trigger(ROLL_START);
+    };
+    Game.prototype.enableDiceRoll = function () {
+        var _this = this;
+        this.diceLink.enable(this.currentPlayer.name, function (roll) {
             _this.diceLink.disable();
-            player.moveToTile(player.currentTileIndex + roll);
+            gameEventsInstance.trigger(ROLL_END, [roll]);
         });
+    };
+    Game.prototype.endDiceRoll = function (roll) {
+        this.currentPlayer.moveToTile(this.currentPlayer.currentTileIndex + roll);
     };
     Game.prototype.endTurn = function () {
     };
@@ -325,8 +383,7 @@ var gameInstance = new Game();
         var boardSrc = boardPrefix + "/index.json";
         Promise.all([fetchImage(imgSrc, canvas), fetchBoard(boardSrc)])
             .then(function (values) {
-            gameInstance.setup(values[1], players, canvas);
-            gameInstance.play();
+            gameInstance.start(values[1], players, canvas);
         })["catch"](function (err) { return console.error(err); });
     }
     document.getElementById('add-player').addEventListener('click', function (e) {
