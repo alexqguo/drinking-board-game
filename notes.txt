@@ -88,6 +88,7 @@ phase 1:
 - track game state, store in localstorage in case someone closes the screen
 - queue of who rolled what in the corner
 - DiceRollRule with prompts for rules that require you to roll a die, though not necessarily take actions from it
+- players move along the board (animation should not cut corners)
 
 phase 2: 
 - game is playable via websockets OR offline
@@ -98,6 +99,7 @@ phase 3:
 - alert players when they are supposed to drink
 - can designate drinks on screen
 - trainer battles
+- unit tests
 
 phase 4:
 - can add/remove players mid game

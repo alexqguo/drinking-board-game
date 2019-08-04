@@ -1,8 +1,11 @@
 import Board from './Board';
 import Player from './Player';
+import { Rule } from './rules';
 import { JsonBoard } from './interfaces';
-import { DiceLink } from './UIHelper';
-import GameEvents, { TURN_START, TURN_END, ROLL_START, ROLL_END } from './GameEvents';
+import { DiceLink, Painter } from './UIHelper';
+import GameEvents, { 
+  TURN_START, TURN_END, ROLL_START, ROLL_END, MOVE_END, RULE_TRIGGER, MOVE_START
+} from './GameEvents';
 
 class Game {
   static instance: Game;
@@ -13,6 +16,7 @@ class Game {
   diceLink: DiceLink;
   canvas: HTMLCanvasElement;
   ctx: CanvasRenderingContext2D;
+  painter: Painter;
 
   constructor() {
     if (!Game.instance) {
@@ -23,6 +27,8 @@ class Game {
     GameEvents.on(TURN_END, this.endTurn.bind(this));
     GameEvents.on(ROLL_START, this.enableDiceRoll.bind(this));
     GameEvents.on(ROLL_END, this.endDiceRoll.bind(this));
+    GameEvents.on(MOVE_END, this.endMovement.bind(this));
+    GameEvents.on(RULE_TRIGGER, this.triggerRule.bind(this));
 
     return Game.instance;
   }
@@ -34,8 +40,11 @@ class Game {
     this.board = new Board(boardSrc, this.players);
     this.players = playerNames.map((name: string) => new Player(name));
     this.diceLink = new DiceLink('#dice');
+    this.painter = new Painter(this.canvas, this.ctx);
 
     this.players.forEach((p: Player) => p.moveToTile(0));
+    this.painter.drawPlayers();
+
     GameEvents.trigger(TURN_START);
   }
 
@@ -43,26 +52,36 @@ class Game {
     const player = this.players[this.turnIndex % this.players.length];
     this.currentPlayer = player;
     GameEvents.trigger(ROLL_START);
-
-    // this.diceLink.enable(player.name, (roll: number) => {
-    //   this.diceLink.disable();
-    //   player.moveToTile(player.currentTileIndex + roll);
-    // });
   }
 
-  enableDiceRoll(): void {
+  enableDiceRoll(next: Function): void {
     this.diceLink.enable(this.currentPlayer.name, (roll: number) => {
       this.diceLink.disable();
       GameEvents.trigger(ROLL_END, [roll]);
+      next();
     });
   }
 
-  endDiceRoll(roll: number): void {
+  endDiceRoll(next: Function, roll: number): void {
+    // todo- fix this naming. this doesn't actually move anything in the UI
     this.currentPlayer.moveToTile(this.currentPlayer.currentTileIndex + roll);
+    GameEvents.trigger(MOVE_START);
+    next();
   }
 
-  endTurn(): void {
+  endMovement(next: Function): void {
+    GameEvents.trigger(RULE_TRIGGER);
+  }
 
+  triggerRule(next: Function): void {
+    console.log(this.board.tiles[this.currentPlayer.currentTileIndex]);
+    next();
+    GameEvents.trigger(TURN_END);
+  }
+
+  endTurn(next: Function): void {
+    next();
+    GameEvents.trigger(TURN_START);
   }
 }
 

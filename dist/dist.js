@@ -193,8 +193,7 @@ var Board = (function () {
 
 var RADIUS = 30;
 var FONT_SIZE = 20;
-var VELO = 6;
-var raf;
+var VELO = 12;
 var Player = (function () {
     function Player(name) {
         this.name = name;
@@ -206,28 +205,67 @@ var Player = (function () {
         if (!this.currentPos && this.destinationPos) {
             this.currentPos = this.destinationPos;
         }
-        this.draw();
-    };
-    Player.prototype.draw = function () {
-        gameInstance.ctx.clearRect(0, 0, gameInstance.canvas.width, gameInstance.canvas.height);
-        gameInstance.ctx.fillStyle = 'rgba(0,0,0,0.5)';
-        gameInstance.ctx.beginPath();
-        gameInstance.ctx.arc(this.currentPos.x, this.currentPos.y, RADIUS, 0, Math.PI * 2, true);
-        gameInstance.ctx.closePath();
-        gameInstance.ctx.fill();
-        gameInstance.ctx.fillStyle = 'white';
-        gameInstance.ctx.font = FONT_SIZE + "px \"Open Sans\"";
-        gameInstance.ctx.fillText(this.name[0].toUpperCase(), this.currentPos.x - 6, this.currentPos.y + 6);
-        if (this.currentPos.y <= this.destinationPos.y) {
-            window.cancelAnimationFrame(raf);
-            return;
-        }
-        this.currentPos.y -= VELO;
-        raf = window.requestAnimationFrame(this.draw.bind(this));
     };
     return Player;
 }());
 //# sourceMappingURL=Player.js.map
+
+var TURN_START = 'TURN_START';
+var ROLL_START = 'ROLL_START';
+var ROLL_END = 'ROLL_END';
+var MOVE_START = 'MOVE_START';
+var MOVE_END = 'MOVE_END';
+var RULE_TRIGGER = 'RULE_TRIGGER';
+var TURN_END = 'TURN_END';
+var GAME_OVER = 'GAME_OVER';
+var TURN_SKIP = 'TURN_SKIP';
+var ALL_EVENTS = [
+    TURN_START, ROLL_START, ROLL_END, MOVE_START, MOVE_END, RULE_TRIGGER, TURN_END,
+    GAME_OVER, TURN_SKIP,
+];
+var GameEvents = (function () {
+    function GameEvents() {
+        var _this = this;
+        if (!GameEvents.instance) {
+            GameEvents.instance = this;
+        }
+        this.eventHandlerMap = new Map();
+        ALL_EVENTS.forEach(function (event) {
+            _this.eventHandlerMap.set(event, []);
+        });
+        return GameEvents.instance;
+    }
+    GameEvents.prototype.on = function (eventName, callback) {
+        console.log("Setting an event: " + eventName);
+        this.validateEvent(eventName);
+        this.eventHandlerMap.get(eventName).push(callback);
+    };
+    GameEvents.prototype.trigger = function (eventName, eventValues) {
+        console.log("Triggering event: " + eventName);
+        this.validateEvent(eventName);
+        var eventFunctions = this.eventHandlerMap.get(eventName);
+        if (!eventFunctions.length)
+            return;
+        var functionIdx = 0;
+        var next = function () {
+            if (eventFunctions[++functionIdx]) {
+                invokeEventFunction();
+            }
+        };
+        var invokeEventFunction = function () {
+            eventFunctions[functionIdx].apply(null, [next].concat(eventValues));
+        };
+        invokeEventFunction();
+    };
+    GameEvents.prototype.validateEvent = function (eventName) {
+        if (!this.eventHandlerMap.has(eventName)) {
+            throw new Error(eventName + " is not a valid event");
+        }
+    };
+    return GameEvents;
+}());
+var gameEventsInstance = new GameEvents();
+//# sourceMappingURL=GameEvents.js.map
 
 var DiceLink = (function () {
     function DiceLink(selector) {
@@ -259,52 +297,46 @@ var DiceLink = (function () {
     };
     return DiceLink;
 }());
-//# sourceMappingURL=UIHelper.js.map
-
-var TURN_START = 'TURN_START';
-var ROLL_START = 'ROLL_START';
-var ROLL_END = 'ROLL_END';
-var MOVE_START = 'MOVE_START';
-var MOVE_END = 'MOVE_END';
-var RULE_TRIGGER = 'RULE_TRIGGER';
-var TURN_END = 'TURN_END';
-var GAME_OVER = 'GAME_OVER';
-var TURN_SKIP = 'TURN_SKIP';
-var ALL_EVENTS = [
-    TURN_START, ROLL_START, ROLL_END, MOVE_START, MOVE_END, RULE_TRIGGER, TURN_END,
-    GAME_OVER, TURN_SKIP,
-];
-var GameEvents = (function () {
-    function GameEvents() {
-        var _this = this;
-        if (!GameEvents.instance) {
-            GameEvents.instance = this;
-        }
-        this.eventHandlerMap = new Map();
-        ALL_EVENTS.forEach(function (event) {
-            _this.eventHandlerMap.set(event, []);
-        });
-        return GameEvents.instance;
+var Painter = (function () {
+    function Painter(canvas, ctx) {
+        this.canvas = canvas;
+        this.ctx = ctx;
+        gameEventsInstance.on(MOVE_START, this.draw.bind(this));
     }
-    GameEvents.prototype.on = function (eventName, callback) {
-        this.validateEvent(eventName);
-        this.eventHandlerMap.get(eventName).push(callback);
+    Painter.prototype.draw = function () {
+        this.drawPlayers();
+        var x1 = gameInstance.currentPlayer.currentPos.x;
+        var y1 = gameInstance.currentPlayer.currentPos.y;
+        var x2 = gameInstance.currentPlayer.destinationPos.x;
+        var y2 = gameInstance.currentPlayer.destinationPos.y;
+        var dx = x2 - x1;
+        var dy = y2 - y1;
+        if (Math.abs(dx) < VELO && Math.abs(dy) < VELO) {
+            window.cancelAnimationFrame(this.raf);
+            gameEventsInstance.trigger(MOVE_END);
+            return;
+        }
+        var totalDistance = Math.sqrt(dx * dx + dy * dy);
+        gameInstance.currentPlayer.currentPos.x += (dx / totalDistance) * VELO;
+        gameInstance.currentPlayer.currentPos.y += (dy / totalDistance) * VELO;
+        this.raf = window.requestAnimationFrame(this.draw.bind(this));
     };
-    GameEvents.prototype.trigger = function (eventName, eventValues) {
-        this.validateEvent(eventName);
-        this.eventHandlerMap.get(eventName).forEach(function (eventHandler) {
-            eventHandler.apply(null, eventValues);
-        });
-    };
-    GameEvents.prototype.validateEvent = function (eventName) {
-        if (!this.eventHandlerMap.has(eventName)) {
-            throw new Error(eventName + " is not a valid event");
+    Painter.prototype.drawPlayers = function () {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+        this.ctx.font = FONT_SIZE + "px \"Open Sans\"";
+        for (var i = 0; i < gameInstance.players.length; i++) {
+            var player = gameInstance.players[i];
+            this.ctx.beginPath();
+            this.ctx.arc(player.currentPos.x, player.currentPos.y, RADIUS, 0, Math.PI * 2, true);
+            this.ctx.closePath();
+            this.ctx.fill();
+            this.ctx.fillStyle = 'white';
+            this.ctx.fillText(player.name[0].toUpperCase(), player.currentPos.x - 6, player.currentPos.y + 6);
         }
     };
-    return GameEvents;
+    return Painter;
 }());
-var gameEventsInstance = new GameEvents();
-//# sourceMappingURL=GameEvents.js.map
 
 var Game = (function () {
     function Game() {
@@ -315,6 +347,8 @@ var Game = (function () {
         gameEventsInstance.on(TURN_END, this.endTurn.bind(this));
         gameEventsInstance.on(ROLL_START, this.enableDiceRoll.bind(this));
         gameEventsInstance.on(ROLL_END, this.endDiceRoll.bind(this));
+        gameEventsInstance.on(MOVE_END, this.endMovement.bind(this));
+        gameEventsInstance.on(RULE_TRIGGER, this.triggerRule.bind(this));
         return Game.instance;
     }
     Game.prototype.start = function (boardSrc, playerNames, canvas) {
@@ -324,7 +358,9 @@ var Game = (function () {
         this.board = new Board(boardSrc, this.players);
         this.players = playerNames.map(function (name) { return new Player(name); });
         this.diceLink = new DiceLink('#dice');
+        this.painter = new Painter(this.canvas, this.ctx);
         this.players.forEach(function (p) { return p.moveToTile(0); });
+        this.painter.drawPlayers();
         gameEventsInstance.trigger(TURN_START);
     };
     Game.prototype.startTurn = function () {
@@ -332,17 +368,30 @@ var Game = (function () {
         this.currentPlayer = player;
         gameEventsInstance.trigger(ROLL_START);
     };
-    Game.prototype.enableDiceRoll = function () {
+    Game.prototype.enableDiceRoll = function (next) {
         var _this = this;
         this.diceLink.enable(this.currentPlayer.name, function (roll) {
             _this.diceLink.disable();
             gameEventsInstance.trigger(ROLL_END, [roll]);
+            next();
         });
     };
-    Game.prototype.endDiceRoll = function (roll) {
+    Game.prototype.endDiceRoll = function (next, roll) {
         this.currentPlayer.moveToTile(this.currentPlayer.currentTileIndex + roll);
+        gameEventsInstance.trigger(MOVE_START);
+        next();
     };
-    Game.prototype.endTurn = function () {
+    Game.prototype.endMovement = function (next) {
+        gameEventsInstance.trigger(RULE_TRIGGER);
+    };
+    Game.prototype.triggerRule = function (next) {
+        console.log(this.board.tiles[this.currentPlayer.currentTileIndex]);
+        next();
+        gameEventsInstance.trigger(TURN_END);
+    };
+    Game.prototype.endTurn = function (next) {
+        next();
+        gameEventsInstance.trigger(TURN_START);
     };
     return Game;
 }());

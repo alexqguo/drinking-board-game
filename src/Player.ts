@@ -1,9 +1,9 @@
 import Game from './Game';
 import { Position } from './interfaces';
 
-const RADIUS = 30;
-const FONT_SIZE = 20;
-const VELO = 6;
+export const RADIUS = 30;
+export const FONT_SIZE = 20;
+export const VELO = 12;
 let raf: number;
 
 class Player {
@@ -23,10 +23,10 @@ class Player {
     if (!this.currentPos && this.destinationPos) {
       this.currentPos = this.destinationPos;
     }
-    this.draw();
   }
 
   // Should be static? need to persist the other players when moving one of them, can't clear the entire canvas
+  /*
   draw(): void {
     // if at destination, cancel frame and return
     // console.log('drawing');
@@ -53,6 +53,7 @@ class Player {
     this.currentPos.y -= VELO;
     raf = window.requestAnimationFrame(this.draw.bind(this));
   }
+  */
 }
 
 export default Player;

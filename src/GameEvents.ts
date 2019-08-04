@@ -13,6 +13,12 @@ const ALL_EVENTS = [
   GAME_OVER, TURN_SKIP,
 ];
 
+// Should next events be handled here instead? 
+// Each event has a nextEvent type of property, the next() function can trigger it if there's
+// no next function left
+// Just have to consider skipping turns. It could have a next event of turn end
+// Should probably refactor it to be this way.
+
 class GameEvents {
   static instance: GameEvents;
   eventHandlerMap: Map<string, Function[]>;
@@ -31,15 +37,29 @@ class GameEvents {
   }
 
   on(eventName: string, callback: Function): void {
+    console.log(`Setting an event: ${eventName}`);
     this.validateEvent(eventName);
     this.eventHandlerMap.get(eventName).push(callback);
   }
 
   trigger(eventName: string, eventValues?: any[]): void {
+    console.log(`Triggering event: ${eventName}`);
     this.validateEvent(eventName);
-    this.eventHandlerMap.get(eventName).forEach((eventHandler: Function) => {
-      eventHandler.apply(null, eventValues);
-    });
+
+    const eventFunctions: Function[] = this.eventHandlerMap.get(eventName);
+    if (!eventFunctions.length) return;
+
+    let functionIdx: number = 0;
+    const next: Function = () => {
+      if (eventFunctions[++functionIdx]) {
+        invokeEventFunction();
+      }
+    }
+    const invokeEventFunction: Function = () => {
+      eventFunctions[functionIdx].apply(null, [next, ...eventValues]);
+    }
+
+    invokeEventFunction();
   }
 
   validateEvent(eventName: string) {
