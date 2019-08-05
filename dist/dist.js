@@ -337,6 +337,7 @@ var Painter = (function () {
     };
     return Painter;
 }());
+//# sourceMappingURL=UIHelper.js.map
 
 var Game = (function () {
     function Game() {
@@ -377,7 +378,13 @@ var Game = (function () {
         });
     };
     Game.prototype.endDiceRoll = function (next, roll) {
-        this.currentPlayer.moveToTile(this.currentPlayer.currentTileIndex + roll);
+        var firstMandatoryIndex = this.board.tiles
+            .slice(this.currentPlayer.currentTileIndex + 1, this.currentPlayer.currentTileIndex + 1 + roll)
+            .findIndex(function (tile) {
+            return tile.isMandatory;
+        });
+        var numSpacesToAdvance = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
+        this.currentPlayer.moveToTile(this.currentPlayer.currentTileIndex + numSpacesToAdvance);
         gameEventsInstance.trigger(MOVE_START);
         next();
     };
@@ -391,6 +398,7 @@ var Game = (function () {
     };
     Game.prototype.endTurn = function (next) {
         next();
+        this.turnIndex++;
         gameEventsInstance.trigger(TURN_START);
     };
     return Game;

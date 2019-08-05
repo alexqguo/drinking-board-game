@@ -339,7 +339,9 @@
       }]
     }, {
       "displayText": "SS ANNE",
-      "TODO": "TODO",
+      "rule": {
+        "type": "TODO"
+      },
       "position": [{
         "x": 1766,
         "y": 638

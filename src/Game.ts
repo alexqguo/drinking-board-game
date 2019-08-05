@@ -6,6 +6,7 @@ import { DiceLink, Painter } from './UIHelper';
 import GameEvents, { 
   TURN_START, TURN_END, ROLL_START, ROLL_END, MOVE_END, RULE_TRIGGER, MOVE_START
 } from './GameEvents';
+import Tile from './Tile';
 
 class Game {
   static instance: Game;
@@ -63,8 +64,16 @@ class Game {
   }
 
   endDiceRoll(next: Function, roll: number): void {
+    // Check for mandatory spaces
+    const firstMandatoryIndex = this.board.tiles
+      .slice(this.currentPlayer.currentTileIndex + 1, this.currentPlayer.currentTileIndex + 1 + roll)
+      .findIndex((tile: Tile) => {
+        return tile.isMandatory;
+      });
+    const numSpacesToAdvance = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
+
     // todo- fix this naming. this doesn't actually move anything in the UI
-    this.currentPlayer.moveToTile(this.currentPlayer.currentTileIndex + roll);
+    this.currentPlayer.moveToTile(this.currentPlayer.currentTileIndex + numSpacesToAdvance);
     GameEvents.trigger(MOVE_START);
     next();
   }
@@ -81,6 +90,7 @@ class Game {
 
   endTurn(next: Function): void {
     next();
+    this.turnIndex++;
     GameEvents.trigger(TURN_START);
   }
 }

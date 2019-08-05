@@ -17,7 +17,7 @@ const ALL_EVENTS = [
 // Each event has a nextEvent type of property, the next() function can trigger it if there's
 // no next function left
 // Just have to consider skipping turns. It could have a next event of turn end
-// Should probably refactor it to be this way.
+// Should refactor it to be this way? It's more rigid though
 
 class GameEvents {
   static instance: GameEvents;
