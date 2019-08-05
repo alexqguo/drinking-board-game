@@ -13,6 +13,7 @@ class TeleportRule extends Rule {
 
   execute() {
     // todo
+    console.log('Executing teleport rule');
   }
 }
 

@@ -83,7 +83,10 @@ class Game {
   }
 
   triggerRule(next: Function): void {
-    console.log(this.board.tiles[this.currentPlayer.currentTileIndex]);
+    const currentTile = this.board.tiles[this.currentPlayer.currentTileIndex];
+    const currentRule = currentTile.rule;
+    console.log(currentTile);
+    if (currentRule) currentRule.execute(); // TODO - remove if check, it's just to not NPE on the placeholders
     next();
     GameEvents.trigger(TURN_END);
   }
@@ -92,6 +95,10 @@ class Game {
     next();
     this.turnIndex++;
     GameEvents.trigger(TURN_START);
+  }
+
+  gameOver(): void {
+    alert(`Game over!\n\n Winner: ${this.currentPlayer.name}`);
   }
 }
 

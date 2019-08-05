@@ -83,6 +83,7 @@ var DisplayRule = (function (_super) {
         return _this;
     }
     DisplayRule.prototype.execute = function () {
+        console.log('executing display rule');
     };
     return DisplayRule;
 }(Rule));
@@ -100,6 +101,7 @@ var MoveRule = (function (_super) {
         return _this;
     }
     MoveRule.prototype.execute = function () {
+        console.log('executing move rule');
     };
     return MoveRule;
 }(Rule));
@@ -116,6 +118,7 @@ var SkipTurnRule = (function (_super) {
         return _this;
     }
     SkipTurnRule.prototype.execute = function () {
+        console.log('Executing Skip turn rule');
     };
     return SkipTurnRule;
 }(Rule));
@@ -133,6 +136,7 @@ var SpeedModifierRule = (function (_super) {
         return _this;
     }
     SpeedModifierRule.prototype.execute = function () {
+        console.log('Executing speed modifier rule');
     };
     return SpeedModifierRule;
 }(Rule));
@@ -149,17 +153,35 @@ var TeleportRule = (function (_super) {
         return _this;
     }
     TeleportRule.prototype.execute = function () {
+        console.log('Executing teleport rule');
     };
     return TeleportRule;
 }(Rule));
 //# sourceMappingURL=TeleportRule.js.map
+
+var GameOverRule = (function (_super) {
+    __extends(GameOverRule, _super);
+    function GameOverRule(json) {
+        var _this = this;
+        var type = json.type, playerTarget = json.playerTarget, diceRolls = json.diceRolls;
+        _this = _super.call(this, type, playerTarget, diceRolls) || this;
+        return _this;
+    }
+    GameOverRule.prototype.execute = function () {
+        console.log('Game over!');
+        gameInstance.gameOver();
+    };
+    return GameOverRule;
+}(Rule));
+//# sourceMappingURL=GameOverRule.js.map
 
 var RULE_MAPPINGS = {
     MoveRule: MoveRule,
     DisplayRule: DisplayRule,
     TeleportRule: TeleportRule,
     SkipTurnRule: SkipTurnRule,
-    SpeedModifierRule: SpeedModifierRule
+    SpeedModifierRule: SpeedModifierRule,
+    GameOverRule: GameOverRule
 };
 function createTiles(tilesJson) {
     return tilesJson.map(function (tileJson) {
@@ -391,7 +413,11 @@ var Game = (function () {
         gameEventsInstance.trigger(RULE_TRIGGER);
     };
     Game.prototype.triggerRule = function (next) {
-        console.log(this.board.tiles[this.currentPlayer.currentTileIndex]);
+        var currentTile = this.board.tiles[this.currentPlayer.currentTileIndex];
+        var currentRule = currentTile.rule;
+        console.log(currentTile);
+        if (currentRule)
+            currentRule.execute();
         next();
         gameEventsInstance.trigger(TURN_END);
     };
@@ -399,6 +425,9 @@ var Game = (function () {
         next();
         this.turnIndex++;
         gameEventsInstance.trigger(TURN_START);
+    };
+    Game.prototype.gameOver = function () {
+        alert("Game over!\n\n Winner: " + this.currentPlayer.name);
     };
     return Game;
 }());

@@ -11,6 +11,7 @@ abstract class Rule {
     // todo - dice rolls
   }
 
+  // Should this return a promise instead?
   abstract execute(): void;
 
   validateRequired(...args: any[]): void {

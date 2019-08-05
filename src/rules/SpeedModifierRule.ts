@@ -15,6 +15,7 @@ class SpeedModifierRule extends Rule {
 
   execute() {
     // todo
+    console.log('Executing speed modifier rule');
   }
 }
 

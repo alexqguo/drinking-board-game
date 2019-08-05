@@ -6,7 +6,8 @@ import {
   DisplayRule,
   TeleportRule,
   SkipTurnRule,
-  SpeedModifierRule
+  SpeedModifierRule,
+  GameOverRule
 } from './rules';
 
 const RULE_MAPPINGS: { 
@@ -17,6 +18,7 @@ const RULE_MAPPINGS: {
   TeleportRule: TeleportRule,
   SkipTurnRule: SkipTurnRule,
   SpeedModifierRule: SpeedModifierRule,
+  GameOverRule: GameOverRule,
 };
 
 export function createTiles(tilesJson: Array<JsonTile>): Array<Tile> {

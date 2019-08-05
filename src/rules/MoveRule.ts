@@ -15,6 +15,7 @@ class MoveRule extends Rule {
 
   execute() {
     // todo
+    console.log('executing move rule');
   }
 }
 

@@ -13,6 +13,7 @@ class SkipTurnRule extends Rule {
 
   execute() {
     // todo
+    console.log('Executing Skip turn rule');
   }
 }
 
