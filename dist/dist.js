@@ -84,10 +84,10 @@ var DisplayRule = (function (_super) {
     }
     DisplayRule.prototype.execute = function () {
         console.log('executing display rule');
+        alert(this.displayText);
     };
     return DisplayRule;
 }(Rule));
-//# sourceMappingURL=DisplayRule.js.map
 
 var MoveRule = (function (_super) {
     __extends(MoveRule, _super);
@@ -157,6 +157,7 @@ var TeleportRule = (function (_super) {
     };
     return TeleportRule;
 }(Rule));
+//# sourceMappingURL=TeleportRule.js.map
 
 var GameOverRule = (function (_super) {
     __extends(GameOverRule, _super);

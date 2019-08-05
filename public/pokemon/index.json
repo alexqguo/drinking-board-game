@@ -114,9 +114,9 @@
     }, {
       "mandatory": true,
       "rule": {
+        "displayText": "PEWTER GYM",
         "type": "DisplayRule",
         "diceRolls": {
-          "displayText": "PEWTER GYM",
           "numRequired": 1
         }
       },

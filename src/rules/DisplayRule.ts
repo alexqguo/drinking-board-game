@@ -10,6 +10,7 @@ class DisplayRule extends Rule {
   execute() {
     // todo
     console.log('executing display rule');
+    alert(this.displayText);
   }
 }
 
