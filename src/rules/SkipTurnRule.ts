@@ -5,8 +5,8 @@ class SkipTurnRule extends Rule {
   numTurns: number;
 
   constructor(json: JsonRule) {
-    const { type, playerTarget, diceRolls, numTurns } = json;
-    super(type, playerTarget, diceRolls);
+    const { displayText, type, playerTarget, diceRolls, numTurns } = json;
+    super(displayText, type, playerTarget, diceRolls);
     this.validateRequired(numTurns);
     this.numTurns = numTurns;
   }

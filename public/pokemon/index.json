@@ -1,8 +1,8 @@
 {
   "tiles": [
     {
-      "displayText": "Pick one, dude.",
       "rule": {
+        "displayText": "Pick one, dude.",
         "type": "DisplayRule"
       },
       "position": [{
@@ -19,8 +19,8 @@
         "y": 1948
       }]
     }, {
-      "displayText": "Rattata used Tackle",
       "rule": {
+        "displayText": "Rattata used Tackle",
         "type": "DisplayRule"
       },
       "position": [{
@@ -37,8 +37,8 @@
         "y": 1764
       }]
     }, {
-      "displayText": "Pidgey used Quick Attack!",
       "rule": {
+        "displayText": "Pidgey used Quick Attack!",
         "type": "DisplayRule"
       },
       "position": [{
@@ -55,8 +55,8 @@
         "y": 1576
       }]
     }, {
-      "displayText": "Caterpie used String Shot!",
       "rule": {
+        "displayText": "Caterpie used String Shot!",
         "type": "SpeedModifierRule",
         "multiplier": 0.5,
         "numTurns": 1,
@@ -76,8 +76,8 @@
         "y": 1388
       }]
     }, {
-      "displayText": "You caught a Pikachu!",
       "rule": {
+        "displayText": "You caught a Pikachu!",
         "type": "DisplayRule"
       },
       "position": [{
@@ -94,8 +94,8 @@
         "y": 1200
       }]
     }, {
-      "displayText": "Beedrill used Twinneedle!",
       "rule": {
+        "displayText": "Beedrill used Twinneedle!",
         "type": "DisplayRule"
       },
       "position": [{
@@ -112,11 +112,11 @@
         "y": 1012
       }]
     }, {
-      "displayText": "PEWTER GYM",
       "mandatory": true,
       "rule": {
         "type": "DisplayRule",
         "diceRolls": {
+          "displayText": "PEWTER GYM",
           "numRequired": 1
         }
       },
@@ -134,8 +134,8 @@
         "y": 828
       }]
     }, {
-      "displayText": "If you're a guy, guys drink. If you're a girl, girls drink.",
       "rule": {
+        "displayText": "If you're a guy, guys drink. If you're a girl, girls drink.",
         "type": "DisplayRule"
       },
       "position": [{
@@ -152,28 +152,27 @@
         "y": 638
       }]
     }, {
-      "displayText": "Zubats... they're... they're everywhere!",
+      "rule": {
+        "displayText": "Zubats... they're... they're everywhere!",
+        "type": "TODO"
+      },
+      "position": [{
+        "x": 262,
+        "y": 262
+      }, {
+        "x": 448,
+        "y": 262
+      }, {
+        "x": 448,
+        "y": 450
+      }, {
+        "x": 262,
+        "y": 450
+      }]
+    }, {
       "rule": {
         "type": "DisplayRule",
-        "TODO": "TODO"
-      },
-      "position": [{
-        "x": 262,
-        "y": 262
-      }, {
-        "x": 448,
-        "y": 262
-      }, {
-        "x": 448,
-        "y": 450
-      }, {
-        "x": 262,
-        "y": 450
-      }]
-    }, {
-      "displayText": "Clefairy used Metronome!",
-      "rule": {
-        "type": "DisplayRule"
+        "displayText": "Clefairy used Metronome!"
       },
       "position": [{
         "x": 450,
@@ -189,8 +188,8 @@
         "y": 450
       }]
     }, {
-      "displayText": "Jigglypuff used Sing!",
       "rule": {
+        "displayText": "Jigglypuff used Sing!",
         "type": "DisplayRule"
       },
       "position": [{
@@ -207,8 +206,8 @@
         "y": 450
       }]
     }, {
-      "displayText": "Abra used Teleport!",
       "rule": {
+        "displayText": "Abra used Teleport!",
         "type": "TeleportRule",
         "tileIndex": 30
       },
@@ -226,8 +225,8 @@
         "y": 450
       }]
     }, {
-      "displayText": "GARY",
       "rule": {
+        "displayText": "GARY",
         "type": "DisplayRule",
         "diceRolls": {
           "numRequired": 1
@@ -247,9 +246,9 @@
         "y": 450
       }]
     }, {
-      "displayText": "CERURLEAN GYM",
       "mandatory": true,
       "rule": {
+        "displayText": "CERURLEAN GYM",
         "type": "DisplayRule"
       },
       "position": [{
@@ -266,8 +265,8 @@
         "y": 450
       }]
     }, {
-      "displayText": "Slowpoke is slow.",
       "rule": {
+        "displayText": "Slowpoke is slow.",
         "type": "DisplayRule"
       },
       "position": [{
@@ -284,8 +283,8 @@
         "y": 450
       }]
     }, {
-      "displayText": "Bellsprout used Razor Leaf!",
       "rule": {
+        "displayText": "Bellsprout used Razor Leaf!",
         "type": "DisplayRule"
       },
       "position": [{
@@ -302,8 +301,8 @@
         "y": 450
       }]
     }, {
-      "displayText": "Meowth used Pay Day!",
       "rule": {
+        "displayText": "Meowth used Pay Day!",
         "type": "DisplayRule"
       },
       "position": [{
@@ -320,8 +319,8 @@
         "y": 450
       }]
     }, {
-      "displayText": "Diglett used Dig!",
       "rule": {
+        "displayText": "Diglett used Dig!",
         "type": "DisplayRule"
       },
       "position": [{
@@ -338,8 +337,8 @@
         "y": 638
       }]
     }, {
-      "displayText": "SS ANNE",
       "rule": {
+        "displayText": "SS ANNE",
         "type": "TODO"
       },
       "position": [{
@@ -356,9 +355,9 @@
         "y": 826
       }]
     }, {
-      "displayText": "VERMILION GYM",
       "mandatory": true,
       "rule": {
+        "displayText": "VERMILION GYM",
         "type": "DisplayRule",
         "diceRolls": {
           "numRequired": 1,
@@ -384,8 +383,8 @@
         "y": 1012
       }]
     }, {
-      "displayText": "I want to ride my BICYCLE!",
       "rule": {
+        "displayText": "I want to ride my BICYCLE!",
         "type": "SpeedModifierRule",
         "multiplier": 2,
         "numTurns": 1
@@ -404,8 +403,8 @@
         "y": 1198
       }]
     }, {
-      "displayText": "Magikarp used Splash!",
       "rule": {
+        "displayText": "Magikarp used Splash!",
         "type": "DisplayRule"
       },
       "position": [{
@@ -422,8 +421,8 @@
         "y": 1388
       }]
     }, {
-      "displayText": "Sandshrew used Sand-Attack!",
       "rule": {
+        "displayText": "Sandshrew used Sand-Attack!",
         "type": "DisplayRule"
       },
       "position": [{
@@ -440,8 +439,8 @@
         "y": 1576
       }]
     }, {
-      "displayText": "POKEMON TOWER",
       "rule": {
+        "displayText": "POKEMON TOWER",
         "type": "DisplayRule"
       },
       "position": [{
@@ -458,8 +457,8 @@
         "y": 1762
       }]
     }, {
-      "displayText": "A possessed Channeler",
       "rule": {
+        "displayText": "A possessed Channeler",
         "type": "DisplayRule"
       },
       "position": [{
@@ -476,8 +475,8 @@
         "y": 1952
       }]
     },{
-      "displayText": "Haunter used Dream Eater!",
       "rule": {
+        "displayText": "Haunter used Dream Eater!",
         "type": "MoveRule",
         "direction": "back",
         "numSpaces": 10,
@@ -497,8 +496,8 @@
         "y": 1952
       }]
     }, {
-      "displayText": "Cubone used \"My mother is dead.\"",
       "rule": {
+        "displayText": "Cubone used \"My mother is dead.\"",
         "type": "DisplayRule"
       },
       "position": [{
@@ -515,8 +514,8 @@
         "y": 1952
       }]
     }, {
-      "displayText": "If someone is in Silph Co...",
       "rule": {
+        "displayText": "If someone is in Silph Co...",
         "type": "DisplayRule"
       },
       "position": [{
@@ -533,8 +532,8 @@
         "y": 1952
       }]
     },{
-      "displayText": "Abra used Teleport!",
       "rule": {
+        "displayText": "Abra used Teleport!",
         "type": "TeleportRule",
         "tileIndex": 15
       },
@@ -552,8 +551,8 @@
         "y": 1952
       }]
     }, {
-      "displayText": "A sleeping Snorlax blocks your path.",
       "rule": {
+        "displayText": "A sleeping Snorlax blocks your path.",
         "type": "DisplayRule"
       },
       "position": [{
@@ -570,8 +569,8 @@
         "y": 1952
       }]
     }, {
-      "displayText": "GARY -- Roll a die.",
       "rule": {
+        "displayText": "GARY -- Roll a die.",
         "type": "DisplayRule",
         "diceRolls": {
           "numRequired": 1
@@ -591,8 +590,8 @@
         "y": 1952
       }]
     }, {
-      "displayText": "Eeveelution time!",
       "rule": {
+        "displayText": "Eeveelution time!",
         "type": "DisplayRule"
       },
       "position": [{
@@ -609,9 +608,9 @@
         "y": 1952
       }]
     }, {
-      "displayText": "CELADON GYM",
       "mandatory": true,
       "rule": {
+        "displayText": "CELADON GYM",
         "type": "DisplayRule",
         "diceRolls": {
           "numRequired": 1,
@@ -637,8 +636,8 @@
         "y": 1763
       }]
     }, {
-      "displayText": "Psyduck is slow.",
       "rule": {
+        "displayText": "Psyduck is slow.",
         "type": "DisplayRule"
       },
       "position": [{
@@ -655,8 +654,8 @@
         "y": 1576
       }]
     }, {
-      "displayText": "What? Your Pokemon is evolving!",
       "rule": {
+        "displayText": "What? Your Pokemon is evolving!",
         "type": "TODO"
       },
       "position": [{
@@ -673,8 +672,8 @@
         "y": 1389
       }]
     }, {
-      "displayText": "Porygon used Tri Attack!",
       "rule": {
+        "displayText": "Porygon used Tri Attack!",
         "type": "DisplayRule"
       },
       "position": [{
@@ -691,8 +690,8 @@
         "y": 1202
       }]
     }, {
-      "displayText": "SILPH CO.",
       "rule": {
+        "displayText": "SILPH CO.",
         "type": "DisplayRule"
       },
       "position": [{
@@ -709,8 +708,8 @@
         "y": 1015
       }]
     }, {
-      "displayText": "A Scientist uses his magnet Pokemon!",
       "rule": {
+        "displayText": "A Scientist uses his magnet Pokemon!",
         "type": "DisplayRule"
       },
       "position": [{
@@ -727,8 +726,8 @@
         "y": 828
       }]
     }, {
-      "displayText": "Lapras used Confuse Ray!",
       "rule": {
+        "displayText": "Lapras used Confuse Ray!",
         "type": "TODO - probably a ChoiceRule with custom player target"
       },
       "position": [{
@@ -745,8 +744,8 @@
         "y": 638
       }]
     }, {
-      "displayText": "It's Team Rocket!",
       "rule": {
+        "displayText": "It's Team Rocket!",
         "type": "DisplayRule"
       },
       "position": [{
@@ -763,8 +762,8 @@
         "y": 638
       }]
     }, {
-      "displayText": "GIOVANNI",
       "rule": {
+        "displayText": "GIOVANNI",
         "type": "DisplayRule"
       },
       "position": [{
@@ -781,8 +780,8 @@
         "y": 638
       }]
     }, {
-      "displayText": "Rare Candy - Level up!",
       "rule": {
+        "displayText": "Rare Candy - Level up!",
         "type": "ExtraTurnRule"
       },
       "position": [{
@@ -799,8 +798,8 @@
         "y": 638
       }]
     }, {
-      "displayText": "GARY",
       "rule": {
+        "displayText": "GARY",
         "type": "DisplayRule"
       },
       "position": [{
@@ -817,9 +816,9 @@
         "y": 638
       }]
     }, {
-      "displayText": "SAFFRON GYM",
       "mandatory": true,
       "rule": {
+        "displayText": "SAFFRON GYM",
         "type": "DisplayRule"
       },
       "position": [{
@@ -836,8 +835,8 @@
         "y": 638
       }]
     }, {
-      "displayText": "Challenge someone to a chugging contest",
       "rule": {
+        "displayText": "Challenge someone to a chugging contest",
         "type": "TODO"
       },
       "position": [{
@@ -854,8 +853,8 @@
         "y": 638
       }]
     }, {
-      "displayText": "Krabby used Crabhammer!",
       "rule": {
+        "displayText": "Krabby used Crabhammer!",
         "type": "DisplayRule"
       },
       "position": [{
@@ -872,8 +871,8 @@
         "y": 825
       }]
     }, {
-      "displayText": "Ditto used Transform!",
       "rule": {
+        "displayText": "Ditto used Transform!",
         "type": "DisplayRule"
       },
       "position": [{
@@ -890,8 +889,8 @@
         "y": 1014
       }]
     }, {
-      "displayText": "Doduo used Double-Edge!",
       "rule": {
+        "displayText": "Doduo used Double-Edge!",
         "type": "DisplayRule"
       },
       "position": [{
@@ -908,8 +907,8 @@
         "y": 1201
       }]
     }, {
-      "displayText": "SAFARI ZONE",
       "rule": {
+        "displayText": "SAFARI ZONE",
         "type": "DisplayRule"
       },
       "position": [{
@@ -926,8 +925,8 @@
         "y": 1388
       }]
     }, {
-      "displayText": "Gone fishin'... a wild Dratini appeared!",
       "rule": {
+        "displayText": "Gone fishin'... a wild Dratini appeared!",
         "type": "DisplayRule",
         "diceRolls": {
           "numRequired": 1
@@ -947,8 +946,8 @@
         "y": 1575
       }]
     }, {
-      "displayText": "A wild Tauros appeared... but instantly fled.",
       "rule": {
+        "displayText": "A wild Tauros appeared... but instantly fled.",
         "type": "DisplayRule"
       },
       "position": [{
@@ -965,8 +964,8 @@
         "y": 1762
       }]
     }, {
-      "displayText": "(Chansey) Roll the die.",
       "rule": {
+        "displayText": "(Chansey) Roll the die.",
         "type": "DisplayRule",
         "diceRolls": {
           "numRequired": 1
@@ -986,9 +985,9 @@
         "y": 1762
       }]
     }, {
-      "displayText": "FUCHSIA GYM",
       "mandatory": true,
       "rule": {
+        "displayText": "FUCHSIA GYM",
         "type": "DisplayRule"
       },
       "position": [{
@@ -1005,8 +1004,8 @@
         "y": 1762
       }]
     }, {
-      "displayText": "Electrode used Explosion! Everybody finish their drinks.",
       "rule": {
+        "displayText": "Electrode used Explosion! Everybody finish their drinks.",
         "type": "DisplayRule"
       },
       "position": [{
@@ -1023,8 +1022,8 @@
         "y": 1762
       }]
     }, {
-      "displayText": "Electabuzz used Thunder Punch!",
       "rule": {
+        "displayText": "Electabuzz used Thunder Punch!",
         "type": "SkipTurnRule",
         "numTurns": 1
       },
@@ -1042,8 +1041,8 @@
         "y": 1762
       }]
     }, {
-      "displayText": "Poliwag used Hydro Pump! Shotgun a beer.",
       "rule": {
+        "displayText": "Poliwag used Hydro Pump! Shotgun a beer.",
         "type": "DisplayRule"
       },
       "position": [{
@@ -1060,8 +1059,8 @@
         "y": 1762
       }]
     }, {
-      "displayText": "Seaking used Waterfall! ...do a waterfall",
       "rule": {
+        "displayText": "Seaking used Waterfall! ...do a waterfall",
         "type": "DisplayRule"
       },
       "position": [{
@@ -1078,8 +1077,8 @@
         "y": 1573
       }]
     }, {
-      "displayText": "A wild Missingno!",
       "rule": {
+        "displayText": "A wild Missingno!",
         "type": "TODO"
       },
       "position": [{
@@ -1096,9 +1095,9 @@
         "y": 1388
       }]
     }, {
-      "displayText": "CINNABAR GYM",
       "mandatory": true,
       "rule": {
+        "displayText": "CINNABAR GYM",
         "type": "TODO (roll until)"
       },
       "position": [{
@@ -1115,8 +1114,8 @@
         "y": 1200
       }]
     }, {
-      "displayText": "Koffing used Haze!",
       "rule": {
+        "displayText": "Koffing used Haze!",
         "type": "DisplayRule"
       },
       "position": [{
@@ -1133,8 +1132,8 @@
         "y": 1010
       }]
     }, {
-      "displayText": "You resurrected a Fossil Pokemon! Everyone older than you drinks 2.",
       "rule": {
+        "displayText": "You resurrected a Fossil Pokemon! Everyone older than you drinks 2.",
         "type": "DisplayRule"
       },
       "position": [{
@@ -1151,8 +1150,8 @@
         "y": 823
       }]
     }, {
-      "displayText": "You throw a Pokeball!",
       "rule": {
+        "displayText": "You throw a Pokeball!",
         "type": "DisplayRule",
         "diceRolls": {
           "numRequired": 1
@@ -1172,8 +1171,8 @@
         "y": 823
       }]
     }, {
-      "displayText": "Persian used Fury Swipes!",
       "rule": {
+        "displayText": "Persian used Fury Swipes!",
         "type": "DisplayRule",
         "diceRolls": {
           "numRequired": 1
@@ -1193,9 +1192,9 @@
         "y": 823
       }]
     }, {
-      "displayText": "VIRIDIAN GYM",
       "mandatory": true,
       "rule": {
+        "displayText": "VIRIDIAN GYM",
         "type": "DisplayRule"
       },
       "position": [{
@@ -1212,8 +1211,8 @@
         "y": 823
       }]
     }, {
-      "displayText": "Fearow used Mirror Move!",
       "rule": {
+        "displayText": "Fearow used Mirror Move!",
         "type": "DisplayRule"
       },
       "position": [{
@@ -1230,8 +1229,8 @@
         "y": 823
       }]
     }, {
-      "displayText": "Graveler used Defense Curl!",
       "rule": {
+        "displayText": "Graveler used Defense Curl!",
         "type": "SkipTurnRule",
         "numTurns": 2
       },
@@ -1249,8 +1248,8 @@
         "y": 1012
       }]
     }, {
-      "displayText": "Gyarados used Dragon Rage!",
       "rule": {
+        "displayText": "Gyarados used Dragon Rage!",
         "type": "DisplayRule"
       },
       "position": [{
@@ -1267,8 +1266,8 @@
         "y": 1199
       }]
     }, {
-      "displayText": "Dragonite used Hyper Beam! Give 5 drinks, but lose a turn to recharge.",
       "rule": {
+        "displayText": "Dragonite used Hyper Beam! Give 5 drinks, but lose a turn to recharge.",
         "type": "DisplayRule"
       },
       "position": [{
@@ -1285,9 +1284,9 @@
         "y": 1388
       }]
     }, {
-      "displayText": "(Birds)",
       "mandatory": true,
       "rule": {
+        "displayText": "(Birds)",
         "type": "TODO"
       },
       "position": [{
@@ -1304,9 +1303,9 @@
         "y": 1577
       }]
     }, {
-      "displayText": "THE ELITE FOUR",
       "mandatory": true,
       "rule": {
+        "displayText": "THE ELITE FOUR",
         "type": "DisplayRule",
         "diceRolls": {
           "numRequired": 1
@@ -1326,9 +1325,9 @@
         "y": 1577
       }]
     }, {
-      "displayText": "CHAMPION GARY",
       "mandatory": true,
       "rule": {
+        "displayText": "CHAMPION GARY",
         "type": "DisplayRule"
       },
       "position": [{
@@ -1345,9 +1344,9 @@
         "y": 1577
       }]
     }, {
-      "displayText": "POKEMON MASTER",
       "mandatory": true,
       "rule": {
+        "displayText": "POKEMON MASTER",
         "type": "GameOverRule"
       },
       "position": [{

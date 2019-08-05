@@ -6,8 +6,8 @@ class SpeedModifierRule extends Rule {
   numTurns: number;
 
   constructor(json: JsonRule) {
-    const { type, playerTarget, diceRolls, multiplier, numTurns } = json;
-    super(type, playerTarget, diceRolls);
+    const { displayText, type, playerTarget, diceRolls, multiplier, numTurns } = json;
+    super(displayText, type, playerTarget, diceRolls);
     this.validateRequired(multiplier, numTurns); // TODO: playerTarget as well?
     this.multiplier = multiplier;
     this.numTurns = numTurns;

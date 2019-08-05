@@ -3,15 +3,13 @@ import Player from './Player';
 import { Position } from './interfaces';
 
 class Tile {
-  displayText: string;
   isMandatory: boolean;
   rule: Rule;
   currentPlayers: Player[];
   coordinates: Position[];
   center: Position;
 
-  constructor(displayText: string, isMandatory: boolean, rule: Rule, coordinates: Position[]) {
-    this.displayText = displayText;
+  constructor(isMandatory: boolean, rule: Rule, coordinates: Position[]) {
     this.isMandatory = isMandatory;
     this.rule = rule;
     this.currentPlayers = [];

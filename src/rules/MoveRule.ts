@@ -6,8 +6,8 @@ class MoveRule extends Rule {
   numSpaces: number;
 
   constructor(json: JsonRule) {
-    const { type, playerTarget, diceRolls, direction, numSpaces } = json;
-    super(type, playerTarget, diceRolls);
+    const { displayText, type, playerTarget, diceRolls, direction, numSpaces } = json;
+    super(displayText, type, playerTarget, diceRolls);
     this.validateRequired(playerTarget, direction, numSpaces);
     this.direction = direction;
     this.numSpaces = numSpaces;

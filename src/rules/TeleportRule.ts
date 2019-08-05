@@ -5,8 +5,8 @@ class TeleportRule extends Rule {
   tileIndex: number;
 
   constructor(json: JsonRule) {
-    const { type, playerTarget, diceRolls, tileIndex } = json;
-    super(type, playerTarget, diceRolls);
+    const { displayText, type, playerTarget, diceRolls, tileIndex } = json;
+    super(displayText, type, playerTarget, diceRolls);
     this.validateRequired(tileIndex);
     this.tileIndex = tileIndex;
   }

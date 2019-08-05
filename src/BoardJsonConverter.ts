@@ -23,14 +23,14 @@ const RULE_MAPPINGS: {
 
 export function createTiles(tilesJson: Array<JsonTile>): Array<Tile> {
   return tilesJson.map((tileJson: JsonTile) => {
-    const { displayText, mandatory, rule, position } = tileJson;
+    const { mandatory, rule, position } = tileJson;
 
     if (!rule) { // this is temporary
       console.warn('No rule specified. Was this a todo?');
       return null;
     }
 
-    return new Tile(displayText, mandatory, createRule(rule), position);
+    return new Tile(mandatory, createRule(rule), position);
   });
 }
 

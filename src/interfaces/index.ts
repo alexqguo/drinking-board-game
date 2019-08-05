@@ -1,5 +1,4 @@
 export interface JsonTile {
-  displayText: string;
   mandatory?: boolean;
   rule: JsonRule;
   position: Position[]; // optional until I have time to fill them all out
@@ -16,6 +15,7 @@ export enum Direction {
 }
 
 export interface JsonRule {
+  displayText: string;
   type: string;
   tileIndex?: number;
   direction?: Direction;

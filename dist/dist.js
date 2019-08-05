@@ -1,8 +1,7 @@
 'use strict';
 
 var Tile = (function () {
-    function Tile(displayText, isMandatory, rule, coordinates) {
-        this.displayText = displayText;
+    function Tile(isMandatory, rule, coordinates) {
         this.isMandatory = isMandatory;
         this.rule = rule;
         this.currentPlayers = [];
@@ -25,9 +24,10 @@ var Tile = (function () {
 //# sourceMappingURL=Tile.js.map
 
 var Rule = (function () {
-    function Rule(type, playerTarget, diceRolls) {
+    function Rule(displayText, type, playerTarget, diceRolls) {
         this.validateRequired(type);
         this.type = type;
+        this.displayText = displayText;
         this.playerTarget = playerTarget;
     }
     Rule.prototype.validateRequired = function () {
@@ -78,8 +78,8 @@ var DisplayRule = (function (_super) {
     __extends(DisplayRule, _super);
     function DisplayRule(json) {
         var _this = this;
-        var type = json.type, playerTarget = json.playerTarget, diceRolls = json.diceRolls;
-        _this = _super.call(this, type, playerTarget, diceRolls) || this;
+        var displayText = json.displayText, type = json.type, playerTarget = json.playerTarget, diceRolls = json.diceRolls;
+        _this = _super.call(this, displayText, type, playerTarget, diceRolls) || this;
         return _this;
     }
     DisplayRule.prototype.execute = function () {
@@ -93,8 +93,8 @@ var MoveRule = (function (_super) {
     __extends(MoveRule, _super);
     function MoveRule(json) {
         var _this = this;
-        var type = json.type, playerTarget = json.playerTarget, diceRolls = json.diceRolls, direction = json.direction, numSpaces = json.numSpaces;
-        _this = _super.call(this, type, playerTarget, diceRolls) || this;
+        var displayText = json.displayText, type = json.type, playerTarget = json.playerTarget, diceRolls = json.diceRolls, direction = json.direction, numSpaces = json.numSpaces;
+        _this = _super.call(this, displayText, type, playerTarget, diceRolls) || this;
         _this.validateRequired(playerTarget, direction, numSpaces);
         _this.direction = direction;
         _this.numSpaces = numSpaces;
@@ -111,8 +111,8 @@ var SkipTurnRule = (function (_super) {
     __extends(SkipTurnRule, _super);
     function SkipTurnRule(json) {
         var _this = this;
-        var type = json.type, playerTarget = json.playerTarget, diceRolls = json.diceRolls, numTurns = json.numTurns;
-        _this = _super.call(this, type, playerTarget, diceRolls) || this;
+        var displayText = json.displayText, type = json.type, playerTarget = json.playerTarget, diceRolls = json.diceRolls, numTurns = json.numTurns;
+        _this = _super.call(this, displayText, type, playerTarget, diceRolls) || this;
         _this.validateRequired(numTurns);
         _this.numTurns = numTurns;
         return _this;
@@ -128,8 +128,8 @@ var SpeedModifierRule = (function (_super) {
     __extends(SpeedModifierRule, _super);
     function SpeedModifierRule(json) {
         var _this = this;
-        var type = json.type, playerTarget = json.playerTarget, diceRolls = json.diceRolls, multiplier = json.multiplier, numTurns = json.numTurns;
-        _this = _super.call(this, type, playerTarget, diceRolls) || this;
+        var displayText = json.displayText, type = json.type, playerTarget = json.playerTarget, diceRolls = json.diceRolls, multiplier = json.multiplier, numTurns = json.numTurns;
+        _this = _super.call(this, displayText, type, playerTarget, diceRolls) || this;
         _this.validateRequired(multiplier, numTurns);
         _this.multiplier = multiplier;
         _this.numTurns = numTurns;
@@ -146,8 +146,8 @@ var TeleportRule = (function (_super) {
     __extends(TeleportRule, _super);
     function TeleportRule(json) {
         var _this = this;
-        var type = json.type, playerTarget = json.playerTarget, diceRolls = json.diceRolls, tileIndex = json.tileIndex;
-        _this = _super.call(this, type, playerTarget, diceRolls) || this;
+        var displayText = json.displayText, type = json.type, playerTarget = json.playerTarget, diceRolls = json.diceRolls, tileIndex = json.tileIndex;
+        _this = _super.call(this, displayText, type, playerTarget, diceRolls) || this;
         _this.validateRequired(tileIndex);
         _this.tileIndex = tileIndex;
         return _this;
@@ -157,14 +157,13 @@ var TeleportRule = (function (_super) {
     };
     return TeleportRule;
 }(Rule));
-//# sourceMappingURL=TeleportRule.js.map
 
 var GameOverRule = (function (_super) {
     __extends(GameOverRule, _super);
     function GameOverRule(json) {
         var _this = this;
-        var type = json.type, playerTarget = json.playerTarget, diceRolls = json.diceRolls;
-        _this = _super.call(this, type, playerTarget, diceRolls) || this;
+        var displayText = json.displayText, type = json.type, playerTarget = json.playerTarget, diceRolls = json.diceRolls;
+        _this = _super.call(this, displayText, type, playerTarget, diceRolls) || this;
         return _this;
     }
     GameOverRule.prototype.execute = function () {
@@ -185,12 +184,12 @@ var RULE_MAPPINGS = {
 };
 function createTiles(tilesJson) {
     return tilesJson.map(function (tileJson) {
-        var displayText = tileJson.displayText, mandatory = tileJson.mandatory, rule = tileJson.rule, position = tileJson.position;
+        var mandatory = tileJson.mandatory, rule = tileJson.rule, position = tileJson.position;
         if (!rule) {
             console.warn('No rule specified. Was this a todo?');
             return null;
         }
-        return new Tile(displayText, mandatory, createRule(rule), position);
+        return new Tile(mandatory, createRule(rule), position);
     });
 }
 function createRule(ruleJson) {
@@ -359,6 +358,7 @@ var Painter = (function () {
     };
     return Painter;
 }());
+//# sourceMappingURL=UIHelper.js.map
 
 var Game = (function () {
     function Game() {

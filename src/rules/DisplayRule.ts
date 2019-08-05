@@ -3,8 +3,8 @@ import { JsonRule } from '../interfaces';
 
 class DisplayRule extends Rule {
   constructor(json: JsonRule) {
-    const { type, playerTarget, diceRolls } = json;
-    super(type, playerTarget, diceRolls);
+    const { displayText, type, playerTarget, diceRolls } = json;
+    super(displayText, type, playerTarget, diceRolls);
   }
 
   execute() {
