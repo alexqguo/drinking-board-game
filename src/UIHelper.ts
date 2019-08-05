@@ -82,11 +82,11 @@ export class Painter {
 
   drawPlayers(): void {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); // TODO: need to also draw the other players back in when this happens
-    this.ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
     this.ctx.font = `${FONT_SIZE}px "Open Sans"`;
 
     for (let i = 0; i < Game.players.length; i++) {
       const player: Player = Game.players[i];
+      this.ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
       this.ctx.beginPath();
       this.ctx.arc(player.currentPos.x, player.currentPos.y, RADIUS, 0, Math.PI * 2, true);
       this.ctx.closePath();

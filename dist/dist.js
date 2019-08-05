@@ -323,10 +323,10 @@ var Painter = (function () {
     };
     Painter.prototype.drawPlayers = function () {
         this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-        this.ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
         this.ctx.font = FONT_SIZE + "px \"Open Sans\"";
         for (var i = 0; i < gameInstance.players.length; i++) {
             var player = gameInstance.players[i];
+            this.ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
             this.ctx.beginPath();
             this.ctx.arc(player.currentPos.x, player.currentPos.y, RADIUS, 0, Math.PI * 2, true);
             this.ctx.closePath();
@@ -337,7 +337,6 @@ var Painter = (function () {
     };
     return Painter;
 }());
-//# sourceMappingURL=UIHelper.js.map
 
 var Game = (function () {
     function Game() {
