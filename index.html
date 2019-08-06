@@ -25,6 +25,18 @@
       display: none;
       box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.5);
     }
+
+    /* Here begins the shitty CSS overrides */
+    .modal article {
+      min-width: 500px;
+      top: 20% !important;
+    }
+    .modal .overlay {
+      background: rgba(15,15,15,0.5);
+    }
+    .button.sm {
+      font-size: 0.75em;
+    }
   </style>
 </head>
 <body>
@@ -54,7 +66,27 @@
     </div>
   </section>
 
-  <!-- <script src="./src/test.js"></script> -->
+  <!-- Picnic modal -->
+  <div class="modal">
+    <input id="game-modal" type="checkbox" />
+    <label for="game-modal" class="overlay"></label>
+    <article>
+      <header>
+        <h3></h3>
+        <label for="game-modal" class="close">&times;</label>
+      </header>
+
+      <section class="content"></section>
+      
+      <footer>
+        <!-- <a class="button sm" href="#">Done</a> -->
+        <!-- <label for="game-modal" class="button dangerous sm">
+          Close
+        </label> -->
+      </footer>
+    </article>
+  </div>
+
   <script src="dist/dist.js"></script>
 </body>
 </html>

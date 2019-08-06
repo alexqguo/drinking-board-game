@@ -1,5 +1,7 @@
 import Rule from './Rule';
+import Game from '../Game';
 import { JsonRule } from '../interfaces';
+import { showModal } from '../UIHelper';
 
 class DisplayRule extends Rule {
   constructor(json: JsonRule) {
@@ -8,9 +10,7 @@ class DisplayRule extends Rule {
   }
 
   execute() {
-    // todo
-    console.log('executing display rule');
-    alert(this.displayText);
+    showModal(this.displayText);
   }
 }
 

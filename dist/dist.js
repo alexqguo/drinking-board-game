@@ -21,6 +21,7 @@ var Tile = (function () {
     };
     return Tile;
 }());
+//# sourceMappingURL=Tile.js.map
 
 var Rule = (function () {
     function Rule(displayText, type, playerTarget, diceRolls) {
@@ -42,6 +43,7 @@ var Rule = (function () {
     };
     return Rule;
 }());
+//# sourceMappingURL=Rule.js.map
 
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation. All rights reserved.
@@ -72,6 +74,45 @@ function __extends(d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 }
 
+var DiceLink = (function () {
+    function DiceLink(selector) {
+        var _this = this;
+        this.link = document.querySelector(selector + " a");
+        this.resultContainer = document.querySelector(selector + " span");
+        this.rollText = this.link.innerText;
+        this.link.addEventListener('click', function (e) {
+            e.preventDefault();
+            var roll = Math.floor(Math.random() * 6) + 1;
+            _this.resultContainer.innerText = '' + roll;
+            if (_this.rollCallback) {
+                _this.rollCallback(roll);
+            }
+            return false;
+        });
+    }
+    DiceLink.prototype.enable = function (playerName, callback) {
+        this.link.style.fontWeight = 'bold';
+        this.link.innerText = playerName + " - " + this.rollText;
+        this.link.dataset.playerTarget = playerName;
+        this.rollCallback = callback;
+    };
+    DiceLink.prototype.disable = function () {
+        this.link.style.fontWeight = 'normal';
+        this.link.innerText = this.rollText;
+        this.link.dataset.playerTarget = null;
+        this.rollCallback = null;
+    };
+    return DiceLink;
+}());
+function showModal(displayText) {
+    var modalTrigger = document.querySelector('#game-modal');
+    var modalHeader = document.querySelector('.modal h3');
+    var modalContent = document.querySelector('.modal .content');
+    modalHeader.innerText = gameInstance.currentPlayer.name;
+    modalContent.innerText = displayText;
+    modalTrigger.checked = true;
+}
+
 var DisplayRule = (function (_super) {
     __extends(DisplayRule, _super);
     function DisplayRule(json) {
@@ -81,11 +122,11 @@ var DisplayRule = (function (_super) {
         return _this;
     }
     DisplayRule.prototype.execute = function () {
-        console.log('executing display rule');
-        alert(this.displayText);
+        showModal(this.displayText);
     };
     return DisplayRule;
 }(Rule));
+//# sourceMappingURL=DisplayRule.js.map
 
 var MoveRule = (function (_super) {
     __extends(MoveRule, _super);
@@ -103,6 +144,7 @@ var MoveRule = (function (_super) {
     };
     return MoveRule;
 }(Rule));
+//# sourceMappingURL=MoveRule.js.map
 
 var SkipTurnRule = (function (_super) {
     __extends(SkipTurnRule, _super);
@@ -119,6 +161,7 @@ var SkipTurnRule = (function (_super) {
     };
     return SkipTurnRule;
 }(Rule));
+//# sourceMappingURL=SkipTurnRule.js.map
 
 var SpeedModifierRule = (function (_super) {
     __extends(SpeedModifierRule, _super);
@@ -136,6 +179,7 @@ var SpeedModifierRule = (function (_super) {
     };
     return SpeedModifierRule;
 }(Rule));
+//# sourceMappingURL=SpeedModifierRule.js.map
 
 var TeleportRule = (function (_super) {
     __extends(TeleportRule, _super);
@@ -152,6 +196,7 @@ var TeleportRule = (function (_super) {
     };
     return TeleportRule;
 }(Rule));
+//# sourceMappingURL=TeleportRule.js.map
 
 var GameOverRule = (function (_super) {
     __extends(GameOverRule, _super);
@@ -167,6 +212,7 @@ var GameOverRule = (function (_super) {
     };
     return GameOverRule;
 }(Rule));
+//# sourceMappingURL=GameOverRule.js.map
 
 var RULE_MAPPINGS = {
     MoveRule: MoveRule,
@@ -194,6 +240,7 @@ function createRule(ruleJson) {
     }
     return new RULE_MAPPINGS[type](ruleJson);
 }
+//# sourceMappingURL=BoardJsonConverter.js.map
 
 var Board = (function () {
     function Board(json, players) {
@@ -203,6 +250,7 @@ var Board = (function () {
     }
     return Board;
 }());
+//# sourceMappingURL=Board.js.map
 
 var RADIUS = 30;
 var FONT_SIZE = 20;
@@ -221,6 +269,7 @@ var Player = (function () {
     };
     return Player;
 }());
+//# sourceMappingURL=Player.js.map
 
 var TURN_START = 'TURN_START';
 var ROLL_START = 'ROLL_START';
@@ -277,37 +326,8 @@ var GameEvents = (function () {
     return GameEvents;
 }());
 var gameEventsInstance = new GameEvents();
+//# sourceMappingURL=GameEvents.js.map
 
-var DiceLink = (function () {
-    function DiceLink(selector) {
-        var _this = this;
-        this.link = document.querySelector(selector + " a");
-        this.resultContainer = document.querySelector(selector + " span");
-        this.rollText = this.link.innerText;
-        this.link.addEventListener('click', function (e) {
-            e.preventDefault();
-            var roll = Math.floor(Math.random() * 6) + 1;
-            _this.resultContainer.innerText = '' + roll;
-            if (_this.rollCallback) {
-                _this.rollCallback(roll);
-            }
-            return false;
-        });
-    }
-    DiceLink.prototype.enable = function (playerName, callback) {
-        this.link.style.fontWeight = 'bold';
-        this.link.innerText = playerName + " - " + this.rollText;
-        this.link.dataset.playerTarget = playerName;
-        this.rollCallback = callback;
-    };
-    DiceLink.prototype.disable = function () {
-        this.link.style.fontWeight = 'normal';
-        this.link.innerText = this.rollText;
-        this.link.dataset.playerTarget = null;
-        this.rollCallback = null;
-    };
-    return DiceLink;
-}());
 var Painter = (function () {
     function Painter(canvas, ctx) {
         this.canvas = canvas;
@@ -348,6 +368,7 @@ var Painter = (function () {
     };
     return Painter;
 }());
+//# sourceMappingURL=Painter.js.map
 
 var Game = (function () {
     function Game() {
@@ -421,6 +442,7 @@ var Game = (function () {
     return Game;
 }());
 var gameInstance = new Game();
+//# sourceMappingURL=Game.js.map
 
 (function () {
     function fetchImage(src, canvas) {
@@ -480,3 +502,4 @@ var gameInstance = new Game();
         document.getElementById('overlay').style.display = 'block';
     });
 }());
+//# sourceMappingURL=App.js.map

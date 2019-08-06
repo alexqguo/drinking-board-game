@@ -2,7 +2,8 @@ import Board from './Board';
 import Player from './Player';
 import { Rule } from './rules';
 import { JsonBoard } from './interfaces';
-import { DiceLink, Painter } from './UIHelper';
+import Painter from './Painter';
+import { DiceLink } from './UIHelper';
 import GameEvents, { 
   TURN_START, TURN_END, ROLL_START, ROLL_END, MOVE_END, RULE_TRIGGER, MOVE_START
 } from './GameEvents';
