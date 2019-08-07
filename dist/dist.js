@@ -91,14 +91,13 @@ var DiceLink = (function () {
         });
     }
     DiceLink.prototype.enable = function (playerName, callback) {
-        this.link.style.fontWeight = 'bold';
         this.link.innerText = playerName + " - " + this.rollText;
+        this.resultContainer.innerText = '';
         this.link.dataset.playerTarget = playerName;
         this.rollCallback = callback;
     };
     DiceLink.prototype.disable = function () {
-        this.link.style.fontWeight = 'normal';
-        this.link.innerText = this.rollText;
+        this.link.innerText = '🎲';
         this.link.dataset.playerTarget = null;
         this.rollCallback = null;
     };
@@ -159,8 +158,8 @@ var SkipTurnRule = (function (_super) {
         return _this;
     }
     SkipTurnRule.prototype.execute = function () {
-        console.log('Executing Skip turn rule');
-        showModal("(todo) " + this.displayText);
+        showModal(this.displayText);
+        gameInstance.currentPlayer.skippedTurns += this.numTurns;
     };
     return SkipTurnRule;
 }(Rule));
@@ -282,7 +281,15 @@ var VELO = 12;
 var Player = (function () {
     function Player(name) {
         this.name = name;
+        this.skippedTurns = 0;
     }
+    Player.prototype.canTakeTurn = function () {
+        if (this.skippedTurns > 0) {
+            this.skippedTurns--;
+            return false;
+        }
+        return true;
+    };
     Player.prototype.moveToTile = function (tileIndex) {
         if (tileIndex === void 0) { tileIndex = 0; }
         this.currentTileIndex = tileIndex;
@@ -418,13 +425,18 @@ var Game = (function () {
         this.players.forEach(function (p) { return p.moveToTile(0); });
         this.playerTurns = this.players.slice();
         this.painter.drawPlayers();
+        document.querySelector('#skip a').addEventListener('click', function (e) {
+            e.preventDefault();
+            gameEventsInstance.trigger(TURN_END);
+            return false;
+        });
         gameEventsInstance.trigger(TURN_START);
     };
     Game.prototype.startTurn = function () {
         if (!this.playerTurns.length)
             this.playerTurns = this.players.slice();
         this.currentPlayer = this.playerTurns.shift();
-        gameEventsInstance.trigger(ROLL_START);
+        gameEventsInstance.trigger(this.currentPlayer.canTakeTurn() ? ROLL_START : TURN_END);
     };
     Game.prototype.enableDiceRoll = function (next) {
         var _this = this;
@@ -441,8 +453,10 @@ var Game = (function () {
             return tile.isMandatory;
         });
         var numSpacesToAdvance = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
-        this.currentPlayer.moveToTile(this.currentPlayer.currentTileIndex + numSpacesToAdvance);
-        gameEventsInstance.trigger(MOVE_START);
+        if (numSpacesToAdvance > 0) {
+            this.currentPlayer.moveToTile(this.currentPlayer.currentTileIndex + numSpacesToAdvance);
+            gameEventsInstance.trigger(MOVE_START);
+        }
         next();
     };
     Game.prototype.endMovement = function (next) {

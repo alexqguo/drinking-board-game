@@ -3,7 +3,7 @@ import Player from './Player';
 import { Rule } from './rules';
 import { JsonBoard } from './interfaces';
 import Painter from './Painter';
-import { DiceLink } from './UIHelper';
+import { DiceLink, SkipLink } from './UIHelper';
 import GameEvents, { 
   TURN_START, TURN_END, ROLL_START, ROLL_END, MOVE_END, RULE_TRIGGER, MOVE_START
 } from './GameEvents';
@@ -49,6 +49,13 @@ class Game {
     this.playerTurns = [...this.players];
     this.painter.drawPlayers();
 
+    // TODO - this should be more organized. need to enable the link only sometimes
+    document.querySelector('#skip a').addEventListener('click', (e: Event) => {
+      e.preventDefault();
+      GameEvents.trigger(TURN_END);
+      return false;
+    });
+
     GameEvents.trigger(TURN_START);
   }
 
@@ -57,7 +64,7 @@ class Game {
     if (!this.playerTurns.length) this.playerTurns = [...this.players];
 
     this.currentPlayer = this.playerTurns.shift();
-    GameEvents.trigger(ROLL_START);
+    GameEvents.trigger(this.currentPlayer.canTakeTurn() ? ROLL_START : TURN_END);
   }
 
   enableDiceRoll(next: Function): void {
@@ -75,14 +82,17 @@ class Game {
       .findIndex((tile: Tile) => {
         return tile.isMandatory;
       });
-    const numSpacesToAdvance: number = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
+    let numSpacesToAdvance: number = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
     
     // uncomment this line for testing
-    // const numSpacesToAdvance: number = 2;
+    // if (this.currentPlayer.name === 'asdf') numSpacesToAdvance = 2;
 
-    // todo- fix this naming. this doesn't actually move anything in the UI
-    this.currentPlayer.moveToTile(this.currentPlayer.currentTileIndex + numSpacesToAdvance);
-    GameEvents.trigger(MOVE_START);
+    if (numSpacesToAdvance > 0) {
+      // todo- fix this naming. this doesn't actually move anything in the UI
+      this.currentPlayer.moveToTile(this.currentPlayer.currentTileIndex + numSpacesToAdvance);
+      GameEvents.trigger(MOVE_START);
+    }
+
     next();
   }
 

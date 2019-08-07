@@ -81,8 +81,7 @@ Player
 
 What can be an effect? how will this work? effects fire before the turn
   - speed modifier rule will be an effect
-  - skip turn rule will be an effect
-  - what about extra turn?
+  - skip turn rule will be an effect (done)
   - zubat rule will be an effect
   - zones would be an effect
 

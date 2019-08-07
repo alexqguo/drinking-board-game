@@ -1,6 +1,12 @@
 import Game from './Game';
 
-// TODO: fix this file, it's shit
+/**
+ * PLEASE READ
+ * This file is on my short list of the most horrible things I've coded in this project
+ * which need to change immediately. I am aware of how bad this is, and I'm not exactly sure why
+ * I did this in the first place.
+ */
+
 export class DiceLink {
   link: HTMLAnchorElement;
   resultContainer: HTMLSpanElement;
@@ -26,18 +32,16 @@ export class DiceLink {
   }
 
   enable(playerName: string, callback: Function) {
-    this.link.style.fontWeight = 'bold';
     this.link.innerText = `${playerName} - ${this.rollText}`;
+    this.resultContainer.innerText = '';
     this.link.dataset.playerTarget = playerName;
     this.rollCallback = callback;
   }
 
   disable() {
-    this.link.style.fontWeight = 'normal';
-    this.link.innerText = this.rollText;
+    this.link.innerText = '🎲';
     this.link.dataset.playerTarget = null;
     this.rollCallback = null;
-    // this.resultContainer.innerText = '';
   }
 }
 
