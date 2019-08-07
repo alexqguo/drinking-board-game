@@ -142,6 +142,7 @@ var MoveRule = (function (_super) {
     }
     MoveRule.prototype.execute = function () {
         console.log('executing move rule');
+        showModal("(todo) " + this.displayText);
     };
     return MoveRule;
 }(Rule));
@@ -159,6 +160,7 @@ var SkipTurnRule = (function (_super) {
     }
     SkipTurnRule.prototype.execute = function () {
         console.log('Executing Skip turn rule');
+        showModal("(todo) " + this.displayText);
     };
     return SkipTurnRule;
 }(Rule));
@@ -177,6 +179,7 @@ var SpeedModifierRule = (function (_super) {
     }
     SpeedModifierRule.prototype.execute = function () {
         console.log('Executing speed modifier rule');
+        showModal("(todo) " + this.displayText);
     };
     return SpeedModifierRule;
 }(Rule));
@@ -218,13 +221,30 @@ var GameOverRule = (function (_super) {
 }(Rule));
 //# sourceMappingURL=GameOverRule.js.map
 
+var ExtraTurnRule = (function (_super) {
+    __extends(ExtraTurnRule, _super);
+    function ExtraTurnRule(json) {
+        var _this = this;
+        var displayText = json.displayText, type = json.type, playerTarget = json.playerTarget;
+        _this = _super.call(this, displayText, type, playerTarget) || this;
+        return _this;
+    }
+    ExtraTurnRule.prototype.execute = function () {
+        showModal(this.displayText);
+        gameInstance.playerTurns.unshift(gameInstance.currentPlayer);
+    };
+    return ExtraTurnRule;
+}(Rule));
+//# sourceMappingURL=ExtraTurnRule.js.map
+
 var RULE_MAPPINGS = {
     MoveRule: MoveRule,
     DisplayRule: DisplayRule,
     TeleportRule: TeleportRule,
     SkipTurnRule: SkipTurnRule,
     SpeedModifierRule: SpeedModifierRule,
-    GameOverRule: GameOverRule
+    GameOverRule: GameOverRule,
+    ExtraTurnRule: ExtraTurnRule
 };
 function createTiles(tilesJson) {
     return tilesJson.map(function (tileJson) {
@@ -396,12 +416,14 @@ var Game = (function () {
         this.diceLink = new DiceLink('#dice');
         this.painter = new Painter(this.canvas, this.ctx);
         this.players.forEach(function (p) { return p.moveToTile(0); });
+        this.playerTurns = this.players.slice();
         this.painter.drawPlayers();
         gameEventsInstance.trigger(TURN_START);
     };
     Game.prototype.startTurn = function () {
-        var player = this.players[this.turnIndex % this.players.length];
-        this.currentPlayer = player;
+        if (!this.playerTurns.length)
+            this.playerTurns = this.players.slice();
+        this.currentPlayer = this.playerTurns.shift();
         gameEventsInstance.trigger(ROLL_START);
     };
     Game.prototype.enableDiceRoll = function (next) {

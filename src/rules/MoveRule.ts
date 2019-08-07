@@ -1,5 +1,6 @@
 import Rule from './Rule';
 import { JsonRule, Direction } from '../interfaces';
+import { showModal } from '../UIHelper';
 
 class MoveRule extends Rule {
   direction: Direction;
@@ -16,6 +17,7 @@ class MoveRule extends Rule {
   execute() {
     // todo
     console.log('executing move rule');
+    showModal(`(todo) ${this.displayText}`);
   }
 }
 

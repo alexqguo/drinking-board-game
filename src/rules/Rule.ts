@@ -5,7 +5,7 @@ abstract class Rule {
   type: string;
   playerTarget: string; // todo- should be enum or symbol
 
-  constructor(displayText: string, type: string, playerTarget: string, diceRolls: JsonDiceRoll) {
+  constructor(displayText: string, type: string, playerTarget: string, diceRolls?: JsonDiceRoll) {
     this.validateRequired(type);
     this.type = type;
     this.displayText = displayText;

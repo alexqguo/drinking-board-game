@@ -12,7 +12,8 @@ import Tile from './Tile';
 class Game {
   static instance: Game;
   board: Board;
-  players: Array<Player>;
+  players: Player[];
+  playerTurns: Player[];
   currentPlayer: Player;
   turnIndex: number;
   diceLink: DiceLink;
@@ -45,14 +46,17 @@ class Game {
     this.painter = new Painter(this.canvas, this.ctx);
 
     this.players.forEach((p: Player) => p.moveToTile(0));
+    this.playerTurns = [...this.players];
     this.painter.drawPlayers();
 
     GameEvents.trigger(TURN_START);
   }
 
   startTurn(): void {
-    const player = this.players[this.turnIndex % this.players.length];
-    this.currentPlayer = player;
+    // Restart at the beginning 
+    if (!this.playerTurns.length) this.playerTurns = [...this.players];
+
+    this.currentPlayer = this.playerTurns.shift();
     GameEvents.trigger(ROLL_START);
   }
 
@@ -74,7 +78,7 @@ class Game {
     const numSpacesToAdvance: number = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
     
     // uncomment this line for testing
-    // const numSpacesToAdvance: number = 11;
+    // const numSpacesToAdvance: number = 2;
 
     // todo- fix this naming. this doesn't actually move anything in the UI
     this.currentPlayer.moveToTile(this.currentPlayer.currentTileIndex + numSpacesToAdvance);

@@ -39,7 +39,7 @@
     }, {
       "rule": {
         "displayText": "Pidgey used Quick Attack!",
-        "type": "DisplayRule"
+        "type": "ExtraTurnRule"
       },
       "position": [{
         "x": 262,

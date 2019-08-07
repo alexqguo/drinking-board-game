@@ -1,5 +1,6 @@
 import Rule from './Rule';
 import { JsonRule } from '../interfaces';
+import { showModal } from '../UIHelper';
 
 class SpeedModifierRule extends Rule {
   multiplier: number;
@@ -16,6 +17,7 @@ class SpeedModifierRule extends Rule {
   execute() {
     // todo
     console.log('Executing speed modifier rule');
+    showModal(`(todo) ${this.displayText}`);
   }
 }
 

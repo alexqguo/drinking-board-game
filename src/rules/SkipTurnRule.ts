@@ -1,5 +1,6 @@
 import Rule from './Rule';
 import { JsonRule } from '../interfaces';
+import { showModal } from '../UIHelper';
 
 class SkipTurnRule extends Rule {
   numTurns: number;
@@ -14,6 +15,7 @@ class SkipTurnRule extends Rule {
   execute() {
     // todo
     console.log('Executing Skip turn rule');
+    showModal(`(todo) ${this.displayText}`);
   }
 }
 
