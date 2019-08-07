@@ -112,6 +112,7 @@ function showModal(displayText) {
     modalContent.innerText = displayText;
     modalTrigger.checked = true;
 }
+//# sourceMappingURL=UIHelper.js.map
 
 var DisplayRule = (function (_super) {
     __extends(DisplayRule, _super);
@@ -192,7 +193,10 @@ var TeleportRule = (function (_super) {
         return _this;
     }
     TeleportRule.prototype.execute = function () {
-        console.log('Executing teleport rule');
+        showModal(this.displayText);
+        gameInstance.currentPlayer.moveToTile(this.tileIndex);
+        gameInstance.currentPlayer.currentPos = gameInstance.currentPlayer.destinationPos;
+        gameInstance.painter.drawPlayers();
     };
     return TeleportRule;
 }(Rule));
@@ -442,7 +446,6 @@ var Game = (function () {
     return Game;
 }());
 var gameInstance = new Game();
-//# sourceMappingURL=Game.js.map
 
 (function () {
     function fetchImage(src, canvas) {

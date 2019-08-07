@@ -1,5 +1,7 @@
 import Rule from './Rule';
 import { JsonRule } from '../interfaces';
+import { showModal } from '../UIHelper';
+import Game from '../Game';
 
 class TeleportRule extends Rule {
   tileIndex: number;
@@ -12,8 +14,10 @@ class TeleportRule extends Rule {
   }
 
   execute() {
-    // todo
-    console.log('Executing teleport rule');
+    showModal(this.displayText);
+    Game.currentPlayer.moveToTile(this.tileIndex);
+    Game.currentPlayer.currentPos = Game.currentPlayer.destinationPos;
+    Game.painter.drawPlayers();
   }
 }
 

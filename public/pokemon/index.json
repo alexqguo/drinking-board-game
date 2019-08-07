@@ -209,7 +209,7 @@
       "rule": {
         "displayText": "Abra used Teleport!",
         "type": "TeleportRule",
-        "tileIndex": 30
+        "tileIndex": 28
       },
       "position": [{
         "x": 830,

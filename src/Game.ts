@@ -71,7 +71,10 @@ class Game {
       .findIndex((tile: Tile) => {
         return tile.isMandatory;
       });
-    const numSpacesToAdvance = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
+    const numSpacesToAdvance: number = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
+    
+    // uncomment this line for testing
+    // const numSpacesToAdvance: number = 11;
 
     // todo- fix this naming. this doesn't actually move anything in the UI
     this.currentPlayer.moveToTile(this.currentPlayer.currentTileIndex + numSpacesToAdvance);
