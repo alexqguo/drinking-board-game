@@ -463,6 +463,7 @@ var Modal = (function () {
     };
     return Modal;
 }());
+//# sourceMappingURL=UIHelper.js.map
 
 var Game = (function () {
     function Game() {
@@ -502,6 +503,7 @@ var Game = (function () {
             this.playerTurns = this.players.slice();
         this.currentPlayer = this.playerTurns.shift();
         gameEventsInstance.trigger(this.currentPlayer.canTakeTurn() ? ROLL_START : TURN_END);
+        document.querySelector('#overlay h4').innerHTML = this.currentPlayer.name;
     };
     Game.prototype.enableDiceRoll = function (next) {
         var _this = this;
@@ -558,7 +560,6 @@ var Game = (function () {
     return Game;
 }());
 var gameInstance = new Game();
-//# sourceMappingURL=Game.js.map
 
 (function () {
     function fetchImage(src, canvas) {

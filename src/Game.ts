@@ -67,6 +67,7 @@ class Game {
 
     this.currentPlayer = this.playerTurns.shift();
     GameEvents.trigger(this.currentPlayer.canTakeTurn() ? ROLL_START : TURN_END);
+    document.querySelector('#overlay h4').innerHTML = this.currentPlayer.name;
   }
 
   enableDiceRoll(next: Function): void {
@@ -77,7 +78,7 @@ class Game {
       next();
       this.diceLink.removeEventListener('roll', handleRoll);
     }
-    
+
     (this.diceLink as any).reset(); // TODO: just import the component?
     this.diceLink.addEventListener('roll', handleRoll);
   }
