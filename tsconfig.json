@@ -2,6 +2,7 @@
   "compilerOptions": {
     "noImplicitAny": true,
     "removeComments": true,
-    "lib": ["es5", "es6", "dom"]
+    "lib": ["es5", "es6", "dom"],
+    "target": "es5"
   }
 }

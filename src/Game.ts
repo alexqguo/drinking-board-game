@@ -2,7 +2,7 @@ import Board from './Board';
 import Player from './Player';
 import { JsonBoard } from './interfaces';
 import Painter from './Painter';
-import { DiceLink, Modal } from './UIHelper';
+import { Modal } from './UIHelper';
 import GameEvents, { 
   TURN_START, TURN_END, ROLL_START, ROLL_END, MOVE_END, RULE_TRIGGER, MOVE_START, RULE_END
 } from './GameEvents';
@@ -15,7 +15,7 @@ class Game {
   playerTurns: Player[];
   currentPlayer: Player;
   turnIndex: number;
-  diceLink: DiceLink;
+  diceLink: HTMLElement;
   modal: Modal;
   canvas: HTMLCanvasElement;
   ctx: CanvasRenderingContext2D;
@@ -43,7 +43,7 @@ class Game {
     this.ctx = canvas.getContext('2d');
     this.board = new Board(boardSrc, this.players);
     this.players = playerNames.map((name: string) => new Player(name));
-    this.diceLink = new DiceLink('#dice');
+    this.diceLink = document.querySelector('#overlay dice-roll');
     this.modal = new Modal();
     this.painter = new Painter(this.canvas, this.ctx);
 
@@ -70,11 +70,16 @@ class Game {
   }
 
   enableDiceRoll(next: Function): void {
-    this.diceLink.enable(this.currentPlayer.name, (roll: number) => {
-      this.diceLink.disable();
+    const handleRoll = (e: CustomEvent) => {
+      const roll = e.detail.roll;
+      console.log(`roll: ${roll}`); 
       GameEvents.trigger(ROLL_END, [roll]);
       next();
-    });
+      this.diceLink.removeEventListener('roll', handleRoll);
+    }
+    
+    (this.diceLink as any).reset(); // TODO: just import the component?
+    this.diceLink.addEventListener('roll', handleRoll);
   }
 
   endDiceRoll(next: Function, roll: number): void {
@@ -94,6 +99,8 @@ class Game {
     // uncomment this line for testing
     // if (this.currentPlayer.name === 'asdf') numSpacesToAdvance = 3;
     // if (this.currentPlayer.name === 'blah') numS
+
+    console.log(`advancing: ${numSpacesToAdvance}`);
 
     if (numSpacesToAdvance > 0) {
       // todo- fix this naming. this doesn't actually move anything in the UI

@@ -322,7 +322,7 @@ var RULE_MAPPINGS = {
     SpeedModifierRule: SpeedModifierRule,
     GameOverRule: GameOverRule,
     ExtraTurnRule: ExtraTurnRule,
-    DrinkDuringLostTurnsRule: DrinkDuringLostTurnsRule
+    DrinkDuringLostTurnsRule: DrinkDuringLostTurnsRule,
 };
 function createTiles(tilesJson) {
     return tilesJson.map(function (tileJson) {
@@ -424,35 +424,6 @@ var Painter = (function () {
 }());
 //# sourceMappingURL=Painter.js.map
 
-var DiceLink = (function () {
-    function DiceLink(selector) {
-        var _this = this;
-        this.link = document.querySelector(selector + " a");
-        this.resultContainer = document.querySelector(selector + " span");
-        this.rollText = this.link.innerText;
-        this.link.addEventListener('click', function (e) {
-            e.preventDefault();
-            var roll = Math.floor(Math.random() * 6) + 1;
-            _this.resultContainer.innerText = '' + roll;
-            if (_this.rollCallback) {
-                _this.rollCallback(roll);
-            }
-            return false;
-        });
-    }
-    DiceLink.prototype.enable = function (playerName, callback) {
-        this.link.innerText = playerName + " - " + this.rollText;
-        this.resultContainer.innerText = '';
-        this.link.dataset.playerTarget = playerName;
-        this.rollCallback = callback;
-    };
-    DiceLink.prototype.disable = function () {
-        this.link.innerText = '🎲';
-        this.link.dataset.playerTarget = null;
-        this.rollCallback = null;
-    };
-    return DiceLink;
-}());
 var Modal = (function () {
     function Modal() {
         var _this = this;
@@ -513,7 +484,7 @@ var Game = (function () {
         this.ctx = canvas.getContext('2d');
         this.board = new Board(boardSrc, this.players);
         this.players = playerNames.map(function (name) { return new Player(name); });
-        this.diceLink = new DiceLink('#dice');
+        this.diceLink = document.querySelector('#overlay dice-roll');
         this.modal = new Modal();
         this.painter = new Painter(this.canvas, this.ctx);
         this.players.forEach(function (p) { return p.moveToTile(0); });
@@ -534,11 +505,15 @@ var Game = (function () {
     };
     Game.prototype.enableDiceRoll = function (next) {
         var _this = this;
-        this.diceLink.enable(this.currentPlayer.name, function (roll) {
-            _this.diceLink.disable();
+        var handleRoll = function (e) {
+            var roll = e.detail.roll;
+            console.log("roll: " + roll);
             gameEventsInstance.trigger(ROLL_END, [roll]);
             next();
-        });
+            _this.diceLink.removeEventListener('roll', handleRoll);
+        };
+        this.diceLink.reset();
+        this.diceLink.addEventListener('roll', handleRoll);
     };
     Game.prototype.endDiceRoll = function (next, roll) {
         if (this.currentPlayer.speedModifiers.length) {
@@ -551,6 +526,7 @@ var Game = (function () {
             return tile.isMandatory;
         });
         var numSpacesToAdvance = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
+        console.log("advancing: " + numSpacesToAdvance);
         if (numSpacesToAdvance > 0) {
             this.currentPlayer.moveToTile(this.currentPlayer.currentTileIndex + numSpacesToAdvance);
             gameEventsInstance.trigger(MOVE_START);
@@ -619,7 +595,8 @@ var gameInstance = new Game();
         Promise.all([fetchImage(imgSrc, canvas), fetchBoard(boardSrc)])
             .then(function (values) {
             gameInstance.start(values[1], players, canvas);
-        })["catch"](function (err) { return console.error(err); });
+        })
+            .catch(function (err) { return console.error(err); });
     }
     document.getElementById('add-player').addEventListener('click', function (e) {
         e.preventDefault();
