@@ -87,6 +87,7 @@ var Rule = (function () {
         this.type = type;
         this.displayText = displayText;
         this.playerTarget = playerTarget;
+        this.diceRolls = diceRolls;
     }
     Rule.prototype.end = function () {
         gameEventsInstance.trigger(RULE_END);
@@ -309,6 +310,12 @@ var DrinkDuringLostTurnsRule = (function (_super) {
     }
     DrinkDuringLostTurnsRule.prototype.execute = function () {
         gameInstance.modal.show(this.displayText);
+        gameInstance.modal.disableClose();
+        gameInstance.modal.whenClosed(this.end);
+        gameInstance.modal.requireDiceRolls(this.diceRolls.numRequired, function (rolls) {
+            gameInstance.currentPlayer.skippedTurns += rolls[0];
+            gameInstance.modal.enableClose();
+        });
     };
     return DrinkDuringLostTurnsRule;
 }(Rule));
@@ -456,14 +463,27 @@ var Modal = (function () {
             control.setAttribute('for', _this.triggerId);
         });
     };
-    Modal.prototype.requireDiceRolls = function (n) {
+    Modal.prototype.requireDiceRolls = function (n, cb) {
+        var rolls = [];
+        var frag = document.createDocumentFragment();
+        for (var i = 0; i < n; i++) {
+            frag.appendChild(document.createElement('dice-roll'));
+        }
+        this.content.appendChild(frag);
+        Array.from(this.content.querySelectorAll('dice-roll')).forEach(function (el) {
+            el.addEventListener('roll', function (e) {
+                rolls.push(e.detail.roll);
+                if (rolls.length === n) {
+                    cb(rolls);
+                }
+            });
+        });
     };
     Modal.prototype.whenClosed = function (cb) {
         this.closeCb = cb;
     };
     return Modal;
 }());
-//# sourceMappingURL=UIHelper.js.map
 
 var Game = (function () {
     function Game() {
@@ -528,6 +548,8 @@ var Game = (function () {
             return tile.isMandatory;
         });
         var numSpacesToAdvance = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
+        if (this.currentPlayer.name === 'asdf')
+            numSpacesToAdvance = 18;
         console.log("advancing: " + numSpacesToAdvance);
         if (numSpacesToAdvance > 0) {
             this.currentPlayer.moveToTile(this.currentPlayer.currentTileIndex + numSpacesToAdvance);
@@ -560,6 +582,7 @@ var Game = (function () {
     return Game;
 }());
 var gameInstance = new Game();
+//# sourceMappingURL=Game.js.map
 
 (function () {
     function fetchImage(src, canvas) {

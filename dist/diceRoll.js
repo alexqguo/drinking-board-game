@@ -11,16 +11,6 @@ class DiceRoll extends HTMLElement {
 
   constructor() {
     super();
-
-    this.innerHTML = DiceRoll.content;
-    this.link = this.querySelector('a');
-    this.resultContainer = this.querySelector('span');
-
-    this.link.addEventListener('click', (e) => {
-      e.preventDefault();
-      this.roll();
-      return false;
-    });
   }
 
   attributeChangedCallback(attrName, oldVal, newVal) {
@@ -31,6 +21,18 @@ class DiceRoll extends HTMLElement {
         this.reset();
       }
     }
+  }
+
+  connectedCallback() {
+    this.innerHTML = DiceRoll.content;
+    this.link = this.querySelector('a');
+    this.resultContainer = this.querySelector('span');
+
+    this.link.addEventListener('click', (e) => {
+      e.preventDefault();
+      this.roll();
+      return false;
+    });
   }
 
   roll() {

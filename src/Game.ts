@@ -2,7 +2,7 @@ import Board from './Board';
 import Player from './Player';
 import { JsonBoard } from './interfaces';
 import Painter from './Painter';
-import { Modal } from './UIHelper';
+import { Modal } from './Modal';
 import GameEvents, { 
   TURN_START, TURN_END, ROLL_START, ROLL_END, MOVE_END, RULE_TRIGGER, MOVE_START, RULE_END
 } from './GameEvents';
@@ -98,7 +98,7 @@ class Game {
     let numSpacesToAdvance: number = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
     
     // uncomment this line for testing
-    // if (this.currentPlayer.name === 'asdf') numSpacesToAdvance = 3;
+    if (this.currentPlayer.name === 'asdf') numSpacesToAdvance = 18;
     // if (this.currentPlayer.name === 'blah') numS
 
     console.log(`advancing: ${numSpacesToAdvance}`);

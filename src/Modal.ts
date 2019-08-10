@@ -1,12 +1,5 @@
 import Game from './Game';
 
-/**
- * PLEASE READ
- * This file is on my short list of the most horrible things I've coded in this project
- * which need to change immediately. I am aware of how bad this is, and I'm not exactly sure why
- * I did this in the first place.
- */
-
 export class Modal {
   triggerId: string;
   trigger: HTMLInputElement;
@@ -48,9 +41,24 @@ export class Modal {
     });
   }
 
-  requireDiceRolls(n: number) {
-    const rolls = [];
+  requireDiceRolls(n: number, cb: Function) {
+    const rolls: number[] = [];
+    const frag: DocumentFragment = document.createDocumentFragment();
 
+    for (let i = 0; i < n; i++) {
+      frag.appendChild(document.createElement('dice-roll'));
+    }
+    this.content.appendChild(frag);
+
+    Array.from(this.content.querySelectorAll('dice-roll')).forEach((el: HTMLElement) => {
+      el.addEventListener('roll', (e: CustomEvent) => {
+        rolls.push(e.detail.roll);
+        
+        if (rolls.length === n) {
+          cb(rolls);
+        }
+      });
+    });
   }
 
   whenClosed(cb: Function): void {

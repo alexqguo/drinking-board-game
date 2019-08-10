@@ -5,13 +5,14 @@ abstract class Rule {
   displayText: string;
   type: string;
   playerTarget: string; // todo- should be enum or symbol
+  diceRolls: JsonDiceRoll;
 
   constructor(displayText: string, type: string, playerTarget: string, diceRolls?: JsonDiceRoll) {
     this.validateRequired(type);
     this.type = type;
     this.displayText = displayText;
     this.playerTarget = playerTarget;
-    // todo - dice rolls
+    this.diceRolls = diceRolls;
   }
 
   // Should this return a promise instead?
