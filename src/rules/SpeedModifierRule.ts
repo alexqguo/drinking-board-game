@@ -1,6 +1,5 @@
 import Rule from './Rule';
 import { JsonRule, PlayerTarget } from '../interfaces';
-import { showModal } from '../UIHelper';
 import Player from '../Player';
 import Game from '../Game';
 
@@ -17,7 +16,6 @@ class SpeedModifierRule extends Rule {
   }
 
   execute() {
-    showModal(this.displayText);
     const targetPlayers: Player[] = [];
     
     switch(this.playerTarget) {
@@ -43,6 +41,10 @@ class SpeedModifierRule extends Rule {
         p.speedModifiers.push(this.multiplier);
       }
     });
+
+    Game.modal.show(this.displayText);
+    Game.modal.enableClose();
+    Game.modal.whenClosed(this.end);
   }
 }
 

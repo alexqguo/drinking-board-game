@@ -23,6 +23,64 @@ var Tile = (function () {
 }());
 //# sourceMappingURL=Tile.js.map
 
+var TURN_START = 'TURN_START';
+var ROLL_START = 'ROLL_START';
+var ROLL_END = 'ROLL_END';
+var MOVE_START = 'MOVE_START';
+var MOVE_END = 'MOVE_END';
+var RULE_TRIGGER = 'RULE_TRIGGER';
+var RULE_END = 'RULE_END';
+var TURN_END = 'TURN_END';
+var GAME_OVER = 'GAME_OVER';
+var TURN_SKIP = 'TURN_SKIP';
+var ALL_EVENTS = [
+    TURN_START, ROLL_START, ROLL_END, MOVE_START, MOVE_END, RULE_TRIGGER, RULE_END,
+    TURN_END, GAME_OVER, TURN_SKIP,
+];
+var GameEvents = (function () {
+    function GameEvents() {
+        var _this = this;
+        if (!GameEvents.instance) {
+            GameEvents.instance = this;
+        }
+        this.eventHandlerMap = new Map();
+        ALL_EVENTS.forEach(function (event) {
+            _this.eventHandlerMap.set(event, []);
+        });
+        return GameEvents.instance;
+    }
+    GameEvents.prototype.on = function (eventName, callback) {
+        console.log("Setting an event: " + eventName);
+        this.validateEvent(eventName);
+        this.eventHandlerMap.get(eventName).push(callback);
+    };
+    GameEvents.prototype.trigger = function (eventName, eventValues) {
+        console.log("Triggering event: " + eventName);
+        this.validateEvent(eventName);
+        var eventFunctions = this.eventHandlerMap.get(eventName);
+        if (!eventFunctions.length)
+            return;
+        var functionIdx = 0;
+        var next = function () {
+            if (eventFunctions[++functionIdx]) {
+                invokeEventFunction();
+            }
+        };
+        var invokeEventFunction = function () {
+            eventFunctions[functionIdx].apply(null, [next].concat(eventValues));
+        };
+        invokeEventFunction();
+    };
+    GameEvents.prototype.validateEvent = function (eventName) {
+        if (!this.eventHandlerMap.has(eventName)) {
+            throw new Error(eventName + " is not a valid event");
+        }
+    };
+    return GameEvents;
+}());
+var gameEventsInstance = new GameEvents();
+//# sourceMappingURL=GameEvents.js.map
+
 var Rule = (function () {
     function Rule(displayText, type, playerTarget, diceRolls) {
         this.validateRequired(type);
@@ -30,6 +88,9 @@ var Rule = (function () {
         this.displayText = displayText;
         this.playerTarget = playerTarget;
     }
+    Rule.prototype.end = function () {
+        gameEventsInstance.trigger(RULE_END);
+    };
     Rule.prototype.validateRequired = function () {
         var args = [];
         for (var _i = 0; _i < arguments.length; _i++) {
@@ -74,45 +135,6 @@ function __extends(d, b) {
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 }
 
-var DiceLink = (function () {
-    function DiceLink(selector) {
-        var _this = this;
-        this.link = document.querySelector(selector + " a");
-        this.resultContainer = document.querySelector(selector + " span");
-        this.rollText = this.link.innerText;
-        this.link.addEventListener('click', function (e) {
-            e.preventDefault();
-            var roll = Math.floor(Math.random() * 6) + 1;
-            _this.resultContainer.innerText = '' + roll;
-            if (_this.rollCallback) {
-                _this.rollCallback(roll);
-            }
-            return false;
-        });
-    }
-    DiceLink.prototype.enable = function (playerName, callback) {
-        this.link.innerText = playerName + " - " + this.rollText;
-        this.resultContainer.innerText = '';
-        this.link.dataset.playerTarget = playerName;
-        this.rollCallback = callback;
-    };
-    DiceLink.prototype.disable = function () {
-        this.link.innerText = '🎲';
-        this.link.dataset.playerTarget = null;
-        this.rollCallback = null;
-    };
-    return DiceLink;
-}());
-function showModal(displayText) {
-    var modalTrigger = document.querySelector('#game-modal');
-    var modalHeader = document.querySelector('.modal h3');
-    var modalContent = document.querySelector('.modal .content');
-    modalHeader.innerText = gameInstance.currentPlayer.name;
-    modalContent.innerText = displayText;
-    modalTrigger.checked = true;
-}
-//# sourceMappingURL=UIHelper.js.map
-
 var DisplayRule = (function (_super) {
     __extends(DisplayRule, _super);
     function DisplayRule(json) {
@@ -122,7 +144,9 @@ var DisplayRule = (function (_super) {
         return _this;
     }
     DisplayRule.prototype.execute = function () {
-        showModal(this.displayText);
+        gameInstance.modal.show(this.displayText);
+        gameInstance.modal.enableClose();
+        gameInstance.modal.whenClosed(this.end);
     };
     return DisplayRule;
 }(Rule));
@@ -141,7 +165,7 @@ var MoveRule = (function (_super) {
     }
     MoveRule.prototype.execute = function () {
         console.log('executing move rule');
-        showModal("(todo) " + this.displayText);
+        gameInstance.modal.show("(todo) " + this.displayText);
     };
     return MoveRule;
 }(Rule));
@@ -158,8 +182,10 @@ var SkipTurnRule = (function (_super) {
         return _this;
     }
     SkipTurnRule.prototype.execute = function () {
-        showModal(this.displayText);
         gameInstance.currentPlayer.skippedTurns += this.numTurns;
+        gameInstance.modal.show(this.displayText);
+        gameInstance.modal.enableClose();
+        gameInstance.modal.whenClosed(this.end);
     };
     return SkipTurnRule;
 }(Rule));
@@ -191,7 +217,6 @@ var SpeedModifierRule = (function (_super) {
     }
     SpeedModifierRule.prototype.execute = function () {
         var _this = this;
-        showModal(this.displayText);
         var targetPlayers = [];
         switch (this.playerTarget) {
             case PlayerTarget.allOthers:
@@ -210,9 +235,13 @@ var SpeedModifierRule = (function (_super) {
                 p.speedModifiers.push(_this.multiplier);
             }
         });
+        gameInstance.modal.show(this.displayText);
+        gameInstance.modal.enableClose();
+        gameInstance.modal.whenClosed(this.end);
     };
     return SpeedModifierRule;
 }(Rule));
+//# sourceMappingURL=SpeedModifierRule.js.map
 
 var TeleportRule = (function (_super) {
     __extends(TeleportRule, _super);
@@ -225,10 +254,12 @@ var TeleportRule = (function (_super) {
         return _this;
     }
     TeleportRule.prototype.execute = function () {
-        showModal(this.displayText);
         gameInstance.currentPlayer.moveToTile(this.tileIndex);
         gameInstance.currentPlayer.currentPos = gameInstance.currentPlayer.destinationPos;
         gameInstance.painter.drawPlayers();
+        gameInstance.modal.show(this.displayText);
+        gameInstance.modal.enableClose();
+        gameInstance.modal.whenClosed(this.end);
     };
     return TeleportRule;
 }(Rule));
@@ -259,12 +290,29 @@ var ExtraTurnRule = (function (_super) {
         return _this;
     }
     ExtraTurnRule.prototype.execute = function () {
-        showModal(this.displayText);
+        gameInstance.modal.show(this.displayText);
         gameInstance.playerTurns.unshift(gameInstance.currentPlayer);
+        gameInstance.modal.enableClose();
+        gameInstance.modal.whenClosed(this.end);
     };
     return ExtraTurnRule;
 }(Rule));
 //# sourceMappingURL=ExtraTurnRule.js.map
+
+var DrinkDuringLostTurnsRule = (function (_super) {
+    __extends(DrinkDuringLostTurnsRule, _super);
+    function DrinkDuringLostTurnsRule(json) {
+        var _this = this;
+        var displayText = json.displayText, type = json.type, playerTarget = json.playerTarget, diceRolls = json.diceRolls;
+        _this = _super.call(this, displayText, type, playerTarget, diceRolls) || this;
+        return _this;
+    }
+    DrinkDuringLostTurnsRule.prototype.execute = function () {
+        gameInstance.modal.show(this.displayText);
+    };
+    return DrinkDuringLostTurnsRule;
+}(Rule));
+//# sourceMappingURL=DrinkDuringLostTurnsRule.js.map
 
 var RULE_MAPPINGS = {
     MoveRule: MoveRule,
@@ -273,7 +321,8 @@ var RULE_MAPPINGS = {
     SkipTurnRule: SkipTurnRule,
     SpeedModifierRule: SpeedModifierRule,
     GameOverRule: GameOverRule,
-    ExtraTurnRule: ExtraTurnRule
+    ExtraTurnRule: ExtraTurnRule,
+    DrinkDuringLostTurnsRule: DrinkDuringLostTurnsRule
 };
 function createTiles(tilesJson) {
     return tilesJson.map(function (tileJson) {
@@ -333,63 +382,6 @@ var Player = (function () {
 }());
 //# sourceMappingURL=Player.js.map
 
-var TURN_START = 'TURN_START';
-var ROLL_START = 'ROLL_START';
-var ROLL_END = 'ROLL_END';
-var MOVE_START = 'MOVE_START';
-var MOVE_END = 'MOVE_END';
-var RULE_TRIGGER = 'RULE_TRIGGER';
-var TURN_END = 'TURN_END';
-var GAME_OVER = 'GAME_OVER';
-var TURN_SKIP = 'TURN_SKIP';
-var ALL_EVENTS = [
-    TURN_START, ROLL_START, ROLL_END, MOVE_START, MOVE_END, RULE_TRIGGER, TURN_END,
-    GAME_OVER, TURN_SKIP,
-];
-var GameEvents = (function () {
-    function GameEvents() {
-        var _this = this;
-        if (!GameEvents.instance) {
-            GameEvents.instance = this;
-        }
-        this.eventHandlerMap = new Map();
-        ALL_EVENTS.forEach(function (event) {
-            _this.eventHandlerMap.set(event, []);
-        });
-        return GameEvents.instance;
-    }
-    GameEvents.prototype.on = function (eventName, callback) {
-        console.log("Setting an event: " + eventName);
-        this.validateEvent(eventName);
-        this.eventHandlerMap.get(eventName).push(callback);
-    };
-    GameEvents.prototype.trigger = function (eventName, eventValues) {
-        console.log("Triggering event: " + eventName);
-        this.validateEvent(eventName);
-        var eventFunctions = this.eventHandlerMap.get(eventName);
-        if (!eventFunctions.length)
-            return;
-        var functionIdx = 0;
-        var next = function () {
-            if (eventFunctions[++functionIdx]) {
-                invokeEventFunction();
-            }
-        };
-        var invokeEventFunction = function () {
-            eventFunctions[functionIdx].apply(null, [next].concat(eventValues));
-        };
-        invokeEventFunction();
-    };
-    GameEvents.prototype.validateEvent = function (eventName) {
-        if (!this.eventHandlerMap.has(eventName)) {
-            throw new Error(eventName + " is not a valid event");
-        }
-    };
-    return GameEvents;
-}());
-var gameEventsInstance = new GameEvents();
-//# sourceMappingURL=GameEvents.js.map
-
 var Painter = (function () {
     function Painter(canvas, ctx) {
         this.canvas = canvas;
@@ -432,6 +424,74 @@ var Painter = (function () {
 }());
 //# sourceMappingURL=Painter.js.map
 
+var DiceLink = (function () {
+    function DiceLink(selector) {
+        var _this = this;
+        this.link = document.querySelector(selector + " a");
+        this.resultContainer = document.querySelector(selector + " span");
+        this.rollText = this.link.innerText;
+        this.link.addEventListener('click', function (e) {
+            e.preventDefault();
+            var roll = Math.floor(Math.random() * 6) + 1;
+            _this.resultContainer.innerText = '' + roll;
+            if (_this.rollCallback) {
+                _this.rollCallback(roll);
+            }
+            return false;
+        });
+    }
+    DiceLink.prototype.enable = function (playerName, callback) {
+        this.link.innerText = playerName + " - " + this.rollText;
+        this.resultContainer.innerText = '';
+        this.link.dataset.playerTarget = playerName;
+        this.rollCallback = callback;
+    };
+    DiceLink.prototype.disable = function () {
+        this.link.innerText = '🎲';
+        this.link.dataset.playerTarget = null;
+        this.rollCallback = null;
+    };
+    return DiceLink;
+}());
+var Modal = (function () {
+    function Modal() {
+        var _this = this;
+        this.triggerId = 'game-modal';
+        this.trigger = document.querySelector("#" + this.triggerId);
+        this.controls = Array.from(document.querySelectorAll('label[for="game-modal"]'));
+        this.header = document.querySelector('.modal h3');
+        this.content = document.querySelector('.modal .content');
+        this.trigger.addEventListener('change', function (e) {
+            if (_this.trigger.checked === false && _this.closeCb) {
+                _this.closeCb();
+                _this.closeCb = null;
+            }
+        });
+    }
+    Modal.prototype.show = function (displayText) {
+        this.header.innerText = gameInstance.currentPlayer.name;
+        this.content.innerText = displayText;
+        this.trigger.checked = true;
+    };
+    Modal.prototype.disableClose = function () {
+        var _this = this;
+        this.controls.forEach(function (control) {
+            control.setAttribute('for', _this.triggerId + "__DISABLED");
+        });
+    };
+    Modal.prototype.enableClose = function () {
+        var _this = this;
+        this.controls.forEach(function (control) {
+            control.setAttribute('for', _this.triggerId);
+        });
+    };
+    Modal.prototype.whenClosed = function (cb) {
+        this.closeCb = cb;
+    };
+    return Modal;
+}());
+//# sourceMappingURL=UIHelper.js.map
+
 var Game = (function () {
     function Game() {
         if (!Game.instance) {
@@ -443,6 +503,7 @@ var Game = (function () {
         gameEventsInstance.on(ROLL_END, this.endDiceRoll.bind(this));
         gameEventsInstance.on(MOVE_END, this.endMovement.bind(this));
         gameEventsInstance.on(RULE_TRIGGER, this.triggerRule.bind(this));
+        gameEventsInstance.on(RULE_END, this.endRule.bind(this));
         return Game.instance;
     }
     Game.prototype.start = function (boardSrc, playerNames, canvas) {
@@ -452,6 +513,7 @@ var Game = (function () {
         this.board = new Board(boardSrc, this.players);
         this.players = playerNames.map(function (name) { return new Player(name); });
         this.diceLink = new DiceLink('#dice');
+        this.modal = new Modal();
         this.painter = new Painter(this.canvas, this.ctx);
         this.players.forEach(function (p) { return p.moveToTile(0); });
         this.playerTurns = this.players.slice();
@@ -488,8 +550,6 @@ var Game = (function () {
             return tile.isMandatory;
         });
         var numSpacesToAdvance = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
-        if (this.currentPlayer.name === 'asdf')
-            numSpacesToAdvance = 3;
         if (numSpacesToAdvance > 0) {
             this.currentPlayer.moveToTile(this.currentPlayer.currentTileIndex + numSpacesToAdvance);
             gameEventsInstance.trigger(MOVE_START);
@@ -502,9 +562,11 @@ var Game = (function () {
     Game.prototype.triggerRule = function (next) {
         var currentTile = this.board.tiles[this.currentPlayer.currentTileIndex];
         var currentRule = currentTile.rule;
-        console.log(currentTile);
         if (currentRule)
             currentRule.execute();
+        next();
+    };
+    Game.prototype.endRule = function (next) {
         next();
         gameEventsInstance.trigger(TURN_END);
     };

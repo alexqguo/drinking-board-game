@@ -1,6 +1,5 @@
 import Rule from './Rule';
 import { JsonRule } from '../interfaces';
-import { showModal } from '../UIHelper';
 import Game from '../Game';
 
 class TeleportRule extends Rule {
@@ -14,10 +13,13 @@ class TeleportRule extends Rule {
   }
 
   execute() {
-    showModal(this.displayText);
     Game.currentPlayer.moveToTile(this.tileIndex);
     Game.currentPlayer.currentPos = Game.currentPlayer.destinationPos;
     Game.painter.drawPlayers();
+
+    Game.modal.show(this.displayText);
+    Game.modal.enableClose();
+    Game.modal.whenClosed(this.end);
   }
 }
 

@@ -1,7 +1,6 @@
 import Rule from './Rule';
 import Game from '../Game';
 import { JsonRule } from '../interfaces';
-import { showModal } from '../UIHelper';
 
 export default class ExtraTurnRule extends Rule {
   constructor(json: JsonRule) {
@@ -11,7 +10,9 @@ export default class ExtraTurnRule extends Rule {
   }
 
   execute(): void {
-    showModal(this.displayText);
+    Game.modal.show(this.displayText);
     Game.playerTurns.unshift(Game.currentPlayer);
+    Game.modal.enableClose();
+    Game.modal.whenClosed(this.end);
   }
 }

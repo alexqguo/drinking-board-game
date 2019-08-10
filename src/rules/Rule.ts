@@ -1,4 +1,5 @@
-import { JsonDiceRoll } from "../interfaces";
+import { JsonDiceRoll } from '../interfaces';
+import GameEvents, { RULE_END } from '../GameEvents';
 
 abstract class Rule {
   displayText: string;
@@ -15,6 +16,10 @@ abstract class Rule {
 
   // Should this return a promise instead?
   abstract execute(): void;
+
+  end(): void {
+    GameEvents.trigger(RULE_END);
+  }
 
   validateRequired(...args: any[]): void {
     const errors = args

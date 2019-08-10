@@ -45,14 +45,48 @@ export class DiceLink {
   }
 }
 
-export function showModal(displayText: string) {
-  const modalTrigger: HTMLInputElement = document.querySelector('#game-modal');
-  const modalHeader: HTMLHeadingElement = document.querySelector('.modal h3');
-  const modalContent: HTMLElement = document.querySelector('.modal .content');
-  modalHeader.innerText = Game.currentPlayer.name;
-  modalContent.innerText = displayText;
+export class Modal {
+  triggerId: string;
+  trigger: HTMLInputElement;
+  controls: HTMLLabelElement[];
+  header: HTMLHeadingElement;
+  content: HTMLElement;
+  closeCb: Function;
 
-  modalTrigger.checked = true;
+  constructor() {
+    this.triggerId = 'game-modal';
+    this.trigger = document.querySelector(`#${this.triggerId}`);
+    this.controls = Array.from(document.querySelectorAll('label[for="game-modal"]'));
+    this.header = document.querySelector('.modal h3');
+    this.content = document.querySelector('.modal .content');
+
+    this.trigger.addEventListener('change', (e: Event) => {
+      if (this.trigger.checked === false && this.closeCb) {
+        this.closeCb();
+        this.closeCb = null; // Immediately remove it
+      }
+    });
+  }
+
+  show(displayText: string): void {
+    this.header.innerText = Game.currentPlayer.name;
+    this.content.innerText = displayText;
+    this.trigger.checked = true;
+  }
+
+  disableClose(): void {
+    this.controls.forEach((control: HTMLLabelElement) => {
+      control.setAttribute('for', `${this.triggerId}__DISABLED`);
+    });
+  }
+
+  enableClose(): void {
+    this.controls.forEach((control: HTMLLabelElement) => {
+      control.setAttribute('for', this.triggerId);
+    });
+  }
+
+  whenClosed(cb: Function): void {
+    this.closeCb = cb;
+  }
 }
-// (window as any).sm = showModal; //debugging
-

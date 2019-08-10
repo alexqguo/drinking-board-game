@@ -4,13 +4,14 @@ export const ROLL_END = 'ROLL_END';
 export const MOVE_START = 'MOVE_START';
 export const MOVE_END = 'MOVE_END';
 export const RULE_TRIGGER = 'RULE_TRIGGER';
+export const RULE_END = 'RULE_END';
 export const TURN_END = 'TURN_END';
 export const GAME_OVER = 'GAME_OVER';
 export const TURN_SKIP = 'TURN_SKIP';
 
 const ALL_EVENTS = [
-  TURN_START, ROLL_START, ROLL_END, MOVE_START, MOVE_END, RULE_TRIGGER, TURN_END,
-  GAME_OVER, TURN_SKIP,
+  TURN_START, ROLL_START, ROLL_END, MOVE_START, MOVE_END, RULE_TRIGGER, RULE_END,
+  TURN_END, GAME_OVER, TURN_SKIP,
 ];
 
 // Should next events be handled here instead? 

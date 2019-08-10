@@ -8,7 +8,8 @@ import {
   SkipTurnRule,
   SpeedModifierRule,
   GameOverRule,
-  ExtraTurnRule
+  ExtraTurnRule,
+  DrinkDuringLostTurnsRule,
 } from './rules';
 
 const RULE_MAPPINGS: { 
@@ -21,6 +22,7 @@ const RULE_MAPPINGS: {
   SpeedModifierRule: SpeedModifierRule,
   GameOverRule: GameOverRule,
   ExtraTurnRule: ExtraTurnRule,
+  DrinkDuringLostTurnsRule: DrinkDuringLostTurnsRule,
 };
 
 export function createTiles(tilesJson: Array<JsonTile>): Array<Tile> {

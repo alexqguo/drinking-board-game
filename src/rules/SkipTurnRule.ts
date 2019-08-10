@@ -1,7 +1,6 @@
 import Rule from './Rule';
 import Game from '../Game';
 import { JsonRule } from '../interfaces';
-import { showModal } from '../UIHelper';
 
 class SkipTurnRule extends Rule {
   numTurns: number;
@@ -14,8 +13,11 @@ class SkipTurnRule extends Rule {
   }
 
   execute() {
-    showModal(this.displayText);
     Game.currentPlayer.skippedTurns += this.numTurns;
+    
+    Game.modal.show(this.displayText);
+    Game.modal.enableClose();
+    Game.modal.whenClosed(this.end);
   }
 }
 

@@ -339,7 +339,10 @@
     }, {
       "rule": {
         "displayText": "Enjoy your cruise aboard the S.S. Anne! Roll a die, you lose that many turns aboard the luxury cruise liner. Roll again and drink that number during each lost turn.",
-        "type": "TODO"
+        "type": "DrinkDuringLostTurnsRule",
+        "diceRolls": {
+          "numRequired": 2
+        }
       },
       "position": [{
         "x": 1766,

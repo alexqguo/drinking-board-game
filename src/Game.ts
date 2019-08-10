@@ -1,11 +1,10 @@
 import Board from './Board';
 import Player from './Player';
-import { Rule } from './rules';
 import { JsonBoard } from './interfaces';
 import Painter from './Painter';
-import { DiceLink, SkipLink } from './UIHelper';
+import { DiceLink, Modal } from './UIHelper';
 import GameEvents, { 
-  TURN_START, TURN_END, ROLL_START, ROLL_END, MOVE_END, RULE_TRIGGER, MOVE_START
+  TURN_START, TURN_END, ROLL_START, ROLL_END, MOVE_END, RULE_TRIGGER, MOVE_START, RULE_END
 } from './GameEvents';
 import Tile from './Tile';
 
@@ -17,6 +16,7 @@ class Game {
   currentPlayer: Player;
   turnIndex: number;
   diceLink: DiceLink;
+  modal: Modal;
   canvas: HTMLCanvasElement;
   ctx: CanvasRenderingContext2D;
   painter: Painter;
@@ -32,6 +32,7 @@ class Game {
     GameEvents.on(ROLL_END, this.endDiceRoll.bind(this));
     GameEvents.on(MOVE_END, this.endMovement.bind(this));
     GameEvents.on(RULE_TRIGGER, this.triggerRule.bind(this));
+    GameEvents.on(RULE_END, this.endRule.bind(this));
 
     return Game.instance;
   }
@@ -43,6 +44,7 @@ class Game {
     this.board = new Board(boardSrc, this.players);
     this.players = playerNames.map((name: string) => new Player(name));
     this.diceLink = new DiceLink('#dice');
+    this.modal = new Modal();
     this.painter = new Painter(this.canvas, this.ctx);
 
     this.players.forEach((p: Player) => p.moveToTile(0));
@@ -90,7 +92,7 @@ class Game {
     let numSpacesToAdvance: number = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
     
     // uncomment this line for testing
-    if (this.currentPlayer.name === 'asdf') numSpacesToAdvance = 3;
+    // if (this.currentPlayer.name === 'asdf') numSpacesToAdvance = 3;
     // if (this.currentPlayer.name === 'blah') numS
 
     if (numSpacesToAdvance > 0) {
@@ -109,8 +111,13 @@ class Game {
   triggerRule(next: Function): void {
     const currentTile = this.board.tiles[this.currentPlayer.currentTileIndex];
     const currentRule = currentTile.rule;
-    console.log(currentTile);
-    if (currentRule) currentRule.execute(); // TODO - remove if check, it's just to not NPE on the placeholders
+    // TODO - remove if check, it's just to not NPE on the placeholders
+    if (currentRule) currentRule.execute();
+    // currentRule.execute() should trigger rule end
+    next();
+  }
+
+  endRule(next: Function): void {
     next();
     GameEvents.trigger(TURN_END);
   }
