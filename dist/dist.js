@@ -485,12 +485,13 @@ var Modal = (function () {
             control.setAttribute('for', _this.triggerId);
         });
     };
+    Modal.prototype.requireDiceRolls = function (n) {
+    };
     Modal.prototype.whenClosed = function (cb) {
         this.closeCb = cb;
     };
     return Modal;
 }());
-//# sourceMappingURL=UIHelper.js.map
 
 var Game = (function () {
     function Game() {

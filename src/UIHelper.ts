@@ -7,6 +7,7 @@ import Game from './Game';
  * I did this in the first place.
  */
 
+// Really needs to be a web component
 export class DiceLink {
   link: HTMLAnchorElement;
   resultContainer: HTMLSpanElement;
@@ -84,6 +85,11 @@ export class Modal {
     this.controls.forEach((control: HTMLLabelElement) => {
       control.setAttribute('for', this.triggerId);
     });
+  }
+
+  requireDiceRolls(n: number) {
+    const rolls = [];
+
   }
 
   whenClosed(cb: Function): void {
