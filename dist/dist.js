@@ -21,7 +21,6 @@ var Tile = (function () {
     };
     return Tile;
 }());
-//# sourceMappingURL=Tile.js.map
 
 var Rule = (function () {
     function Rule(displayText, type, playerTarget, diceRolls) {
@@ -43,7 +42,6 @@ var Rule = (function () {
     };
     return Rule;
 }());
-//# sourceMappingURL=Rule.js.map
 
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation. All rights reserved.
@@ -111,7 +109,6 @@ function showModal(displayText) {
     modalContent.innerText = displayText;
     modalTrigger.checked = true;
 }
-//# sourceMappingURL=UIHelper.js.map
 
 var DisplayRule = (function (_super) {
     __extends(DisplayRule, _super);
@@ -126,7 +123,6 @@ var DisplayRule = (function (_super) {
     };
     return DisplayRule;
 }(Rule));
-//# sourceMappingURL=DisplayRule.js.map
 
 var MoveRule = (function (_super) {
     __extends(MoveRule, _super);
@@ -145,7 +141,6 @@ var MoveRule = (function (_super) {
     };
     return MoveRule;
 }(Rule));
-//# sourceMappingURL=MoveRule.js.map
 
 var SkipTurnRule = (function (_super) {
     __extends(SkipTurnRule, _super);
@@ -163,7 +158,6 @@ var SkipTurnRule = (function (_super) {
     };
     return SkipTurnRule;
 }(Rule));
-//# sourceMappingURL=SkipTurnRule.js.map
 
 var SpeedModifierRule = (function (_super) {
     __extends(SpeedModifierRule, _super);
@@ -182,7 +176,6 @@ var SpeedModifierRule = (function (_super) {
     };
     return SpeedModifierRule;
 }(Rule));
-//# sourceMappingURL=SpeedModifierRule.js.map
 
 var TeleportRule = (function (_super) {
     __extends(TeleportRule, _super);
@@ -202,7 +195,6 @@ var TeleportRule = (function (_super) {
     };
     return TeleportRule;
 }(Rule));
-//# sourceMappingURL=TeleportRule.js.map
 
 var GameOverRule = (function (_super) {
     __extends(GameOverRule, _super);
@@ -218,7 +210,6 @@ var GameOverRule = (function (_super) {
     };
     return GameOverRule;
 }(Rule));
-//# sourceMappingURL=GameOverRule.js.map
 
 var ExtraTurnRule = (function (_super) {
     __extends(ExtraTurnRule, _super);
@@ -234,7 +225,6 @@ var ExtraTurnRule = (function (_super) {
     };
     return ExtraTurnRule;
 }(Rule));
-//# sourceMappingURL=ExtraTurnRule.js.map
 
 var RULE_MAPPINGS = {
     MoveRule: MoveRule,
@@ -263,7 +253,6 @@ function createRule(ruleJson) {
     }
     return new RULE_MAPPINGS[type](ruleJson);
 }
-//# sourceMappingURL=BoardJsonConverter.js.map
 
 var Board = (function () {
     function Board(json, players) {
@@ -273,7 +262,6 @@ var Board = (function () {
     }
     return Board;
 }());
-//# sourceMappingURL=Board.js.map
 
 var RADIUS = 30;
 var FONT_SIZE = 20;
@@ -300,7 +288,6 @@ var Player = (function () {
     };
     return Player;
 }());
-//# sourceMappingURL=Player.js.map
 
 var TURN_START = 'TURN_START';
 var ROLL_START = 'ROLL_START';
@@ -357,7 +344,6 @@ var GameEvents = (function () {
     return GameEvents;
 }());
 var gameEventsInstance = new GameEvents();
-//# sourceMappingURL=GameEvents.js.map
 
 var Painter = (function () {
     function Painter(canvas, ctx) {
@@ -399,7 +385,6 @@ var Painter = (function () {
     };
     return Painter;
 }());
-//# sourceMappingURL=Painter.js.map
 
 var Game = (function () {
     function Game() {
@@ -541,4 +526,3 @@ var gameInstance = new Game();
         document.getElementById('overlay').style.display = 'block';
     });
 }());
-//# sourceMappingURL=App.js.map

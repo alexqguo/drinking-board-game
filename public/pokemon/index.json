@@ -20,7 +20,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "Rattata used Tackle",
+        "displayText": "Rattata used Tackle! ...wait, you seriously rolled a 1? You fainted. Finish your drink.",
         "type": "DisplayRule"
       },
       "position": [{
@@ -38,7 +38,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "Pidgey used Quick Attack!",
+        "displayText": "Pidgey used Quick Attack! Use that quickness to give 1 drink and take an extra turn.",
         "type": "ExtraTurnRule"
       },
       "position": [{
@@ -56,7 +56,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "Caterpie used String Shot!",
+        "displayText": "Caterpie used String Shot! It was super effective! All other players may only move 1/2 of what they roll on their next turn (round up).",
         "type": "SpeedModifierRule",
         "multiplier": 0.5,
         "numTurns": 1,
@@ -77,7 +77,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "You caught a Pikachu!",
+        "displayText": "You caught a Pikachu! Drink 2 and replace your starter with this walking electric franchise.",
         "type": "DisplayRule"
       },
       "position": [{
@@ -95,7 +95,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "Beedrill used Twinneedle!",
+        "displayText": "Beedrill used Twinneedle! Pick two people to drink.",
         "type": "DisplayRule"
       },
       "position": [{
@@ -114,7 +114,7 @@
     }, {
       "mandatory": true,
       "rule": {
-        "displayText": "PEWTER GYM",
+        "displayText": "PEWTER GYM. Roll a die. Even: Give a drink. Odd: Take a drink.",
         "type": "DisplayRule",
         "diceRolls": {
           "numRequired": 1
@@ -153,7 +153,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "Zubats... they're... they're everywhere!",
+        "displayText": "Zubats... they're... they're everywhere! Take a drink. Next turn, if you roll a 1 or 2, stay here and take a drink.",
         "type": "TODO"
       },
       "position": [{
@@ -172,7 +172,7 @@
     }, {
       "rule": {
         "type": "DisplayRule",
-        "displayText": "Clefairy used Metronome!"
+        "displayText": "Clefairy used Metronome! Close your eyes, point to a random square, and drink or give what it says. If no drink is given or taken, just drink 2."
       },
       "position": [{
         "x": 450,
@@ -189,8 +189,8 @@
       }]
     }, {
       "rule": {
-        "displayText": "Jigglypuff used Sing!",
-        "type": "DisplayRule"
+        "displayText": "Jigglypuff used Sing! Everyone else fell asleep! Take an extra turn!",
+        "type": "ExtraTurnRule"
       },
       "position": [{
         "x": 640,
@@ -207,7 +207,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "Abra used Teleport!",
+        "displayText": "Abra used Teleport! Teleport to the other abra",
         "type": "TeleportRule",
         "tileIndex": 28
       },
@@ -226,7 +226,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "GARY",
+        "displayText": "GARY. Roll a die. Drink half, give half (round up). What's this guy's deal, anyway?",
         "type": "DisplayRule",
         "diceRolls": {
           "numRequired": 1
@@ -248,7 +248,7 @@
     }, {
       "mandatory": true,
       "rule": {
-        "displayText": "CERURLEAN GYM",
+        "displayText": "CERURLEAN GYM. Misty's water attacks caused splash damage. You drink 2, eveyone else drinks 1.",
         "type": "DisplayRule"
       },
       "position": [{
@@ -266,7 +266,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "Slowpoke is slow.",
+        "displayText": "Slowpoke is slow. For the first one here, make up a gesture. For the rest of the game, when you do it, the last to mimic you takes a drink.",
         "type": "DisplayRule"
       },
       "position": [{
@@ -284,7 +284,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "Bellsprout used Razor Leaf!",
+        "displayText": "Bellsprout used Razor Leaf! Shred someone's dignity with a reckless callout. They drink 1 in shame.",
         "type": "DisplayRule"
       },
       "position": [{
@@ -302,7 +302,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "Meowth used Pay Day!",
+        "displayText": "Meowth used Pay Day! Everybody but you takes a drink.",
         "type": "DisplayRule"
       },
       "position": [{
@@ -320,7 +320,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "Diglett used Dig!",
+        "displayText": "Diglett used Dig! Dig deep and finish your drink.",
         "type": "DisplayRule"
       },
       "position": [{
@@ -338,7 +338,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "SS ANNE",
+        "displayText": "Enjoy your cruise aboard the S.S. Anne! Roll a die, you lose that many turns aboard the luxury cruise liner. Roll again and drink that number during each lost turn.",
         "type": "TODO"
       },
       "position": [{
@@ -357,7 +357,7 @@
     }, {
       "mandatory": true,
       "rule": {
-        "displayText": "VERMILION GYM",
+        "displayText": "VERMILION GYM. Roll a die. Even, you're paralyzed; take 2 drinks and miss your next turn. Odd, take a drink.",
         "type": "DisplayRule",
         "diceRolls": {
           "numRequired": 1,
@@ -384,7 +384,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "I want to ride my BICYCLE!",
+        "displayText": "I want to ride my BICYCLE! BICYCLE! BICYCLE! On your next turn, roll the die and move twice that number.",
         "type": "SpeedModifierRule",
         "multiplier": 2,
         "numTurns": 1
@@ -404,7 +404,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "Magikarp used Splash!",
+        "displayText": "Magikarp used Splash! ...but nothing happened...",
         "type": "DisplayRule"
       },
       "position": [{
@@ -422,7 +422,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "Sandshrew used Sand-Attack!",
+        "displayText": "Sandshrew used Sand-Attack! Your accuracy is lowered. For the rest of the game, you may only drink with your non-dominant hand.",
         "type": "DisplayRule"
       },
       "position": [{
@@ -440,7 +440,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "POKEMON TOWER",
+        "displayText": "POKEMON TOWER. While in the Pokemon Tower, out of respect for the dead, you should not speak. Doing so results in a drink each time. Take a drink now for your fallen comrades.",
         "type": "DisplayRule"
       },
       "position": [{
@@ -458,7 +458,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "A possessed Channeler",
+        "displayText": "A possessed Channeler. Now you're possessed too! While you are on this space, anyone may make you get them a drink.",
         "type": "DisplayRule"
       },
       "position": [{
@@ -476,7 +476,7 @@
       }]
     },{
       "rule": {
-        "displayText": "Haunter used Dream Eater!",
+        "displayText": "Haunter used Dream Eater! Devour someone else's dreams by moving them back 10 spaces.",
         "type": "MoveRule",
         "direction": "back",
         "numSpaces": 10,
@@ -497,7 +497,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "Cubone used \"My mother is dead.\"",
+        "displayText": "Cubone used \"My mother is dead.\" Share a depressing story with the group. Then everyone take a drink.",
         "type": "DisplayRule"
       },
       "position": [{
@@ -515,7 +515,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "If someone is in Silph Co...",
+        "displayText": "If someone is in Silph Co, you use the Silph Scope to beat the ghost and everyone else drinks. Otherwise take 3 drinks to appease the dead.",
         "type": "DisplayRule"
       },
       "position": [{
@@ -533,7 +533,7 @@
       }]
     },{
       "rule": {
-        "displayText": "Abra used Teleport!",
+        "displayText": "Abra used Teleport! Teleport to the other Abra.",
         "type": "TeleportRule",
         "tileIndex": 15
       },
@@ -552,7 +552,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "A sleeping Snorlax blocks your path.",
+        "displayText": "A sleeping Snorlax blocks your path. Belt out a song of the group's choice to wake him, or take 4 drinks.",
         "type": "DisplayRule"
       },
       "position": [{
@@ -570,7 +570,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "GARY -- Roll a die.",
+        "displayText": "GARY. Roll a die. Drink that number minus one. Seriously though, is this dude following you or something?",
         "type": "DisplayRule",
         "diceRolls": {
           "numRequired": 1
@@ -591,7 +591,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "Eeveelution time!",
+        "displayText": "Eeveelution time! You choose a new rule! Any rule violations result in a drink.",
         "type": "DisplayRule"
       },
       "position": [{
@@ -610,7 +610,7 @@
     }, {
       "mandatory": true,
       "rule": {
-        "displayText": "CELADON GYM",
+        "displayText": "CELADON GYM. Roll a die. 1-3: Stun Spore; Lose a turn. 4-6: Mega Drain; Finish your drink.",
         "type": "DisplayRule",
         "diceRolls": {
           "numRequired": 1,

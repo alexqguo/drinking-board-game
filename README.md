@@ -29,6 +29,7 @@ This project is not ready yet.
 * DiceRollRule with prompts for rules that require you to roll a die, though not necessarily take actions from it
 * players move along the board (animation should not cut corners)
 * proper positioning when two or more players are at the same space
+* can consider removing the display text from the JSON in lieu of a blown up version of the tile itself. since we have the coordinates, can probably create a new Image and use background position on it to target the current tile
 
 ### M2
 * track game state, store in localstorage in case someone closes the screen
