@@ -21,6 +21,7 @@ var Tile = (function () {
     };
     return Tile;
 }());
+//# sourceMappingURL=Tile.js.map
 
 var Rule = (function () {
     function Rule(displayText, type, playerTarget, diceRolls) {
@@ -42,6 +43,7 @@ var Rule = (function () {
     };
     return Rule;
 }());
+//# sourceMappingURL=Rule.js.map
 
 /*! *****************************************************************************
 Copyright (c) Microsoft Corporation. All rights reserved.
@@ -109,6 +111,7 @@ function showModal(displayText) {
     modalContent.innerText = displayText;
     modalTrigger.checked = true;
 }
+//# sourceMappingURL=UIHelper.js.map
 
 var DisplayRule = (function (_super) {
     __extends(DisplayRule, _super);
@@ -123,6 +126,7 @@ var DisplayRule = (function (_super) {
     };
     return DisplayRule;
 }(Rule));
+//# sourceMappingURL=DisplayRule.js.map
 
 var MoveRule = (function (_super) {
     __extends(MoveRule, _super);
@@ -141,6 +145,7 @@ var MoveRule = (function (_super) {
     };
     return MoveRule;
 }(Rule));
+//# sourceMappingURL=MoveRule.js.map
 
 var SkipTurnRule = (function (_super) {
     __extends(SkipTurnRule, _super);
@@ -158,6 +163,20 @@ var SkipTurnRule = (function (_super) {
     };
     return SkipTurnRule;
 }(Rule));
+//# sourceMappingURL=SkipTurnRule.js.map
+
+var Direction;
+(function (Direction) {
+    Direction["forward"] = "forward";
+    Direction["back"] = "back";
+})(Direction || (Direction = {}));
+var PlayerTarget;
+(function (PlayerTarget) {
+    PlayerTarget["custom"] = "custom";
+    PlayerTarget["self"] = "self";
+    PlayerTarget["allOthers"] = "allOthers";
+})(PlayerTarget || (PlayerTarget = {}));
+//# sourceMappingURL=index.js.map
 
 var SpeedModifierRule = (function (_super) {
     __extends(SpeedModifierRule, _super);
@@ -171,8 +190,26 @@ var SpeedModifierRule = (function (_super) {
         return _this;
     }
     SpeedModifierRule.prototype.execute = function () {
-        console.log('Executing speed modifier rule');
-        showModal("(todo) " + this.displayText);
+        var _this = this;
+        showModal(this.displayText);
+        var targetPlayers = [];
+        switch (this.playerTarget) {
+            case PlayerTarget.allOthers:
+                targetPlayers.push.apply(targetPlayers, gameInstance.players.filter(function (p) {
+                    return p !== gameInstance.currentPlayer;
+                }));
+                break;
+            case PlayerTarget.custom:
+                break;
+            default:
+                targetPlayers.push(gameInstance.currentPlayer);
+        }
+        targetPlayers.forEach(function (p) {
+            p.speedModifiers = [];
+            for (var i = 0; i < _this.numTurns; i++) {
+                p.speedModifiers.push(_this.multiplier);
+            }
+        });
     };
     return SpeedModifierRule;
 }(Rule));
@@ -195,6 +232,7 @@ var TeleportRule = (function (_super) {
     };
     return TeleportRule;
 }(Rule));
+//# sourceMappingURL=TeleportRule.js.map
 
 var GameOverRule = (function (_super) {
     __extends(GameOverRule, _super);
@@ -210,6 +248,7 @@ var GameOverRule = (function (_super) {
     };
     return GameOverRule;
 }(Rule));
+//# sourceMappingURL=GameOverRule.js.map
 
 var ExtraTurnRule = (function (_super) {
     __extends(ExtraTurnRule, _super);
@@ -225,6 +264,7 @@ var ExtraTurnRule = (function (_super) {
     };
     return ExtraTurnRule;
 }(Rule));
+//# sourceMappingURL=ExtraTurnRule.js.map
 
 var RULE_MAPPINGS = {
     MoveRule: MoveRule,
@@ -253,6 +293,7 @@ function createRule(ruleJson) {
     }
     return new RULE_MAPPINGS[type](ruleJson);
 }
+//# sourceMappingURL=BoardJsonConverter.js.map
 
 var Board = (function () {
     function Board(json, players) {
@@ -262,6 +303,7 @@ var Board = (function () {
     }
     return Board;
 }());
+//# sourceMappingURL=Board.js.map
 
 var RADIUS = 30;
 var FONT_SIZE = 20;
@@ -270,6 +312,7 @@ var Player = (function () {
     function Player(name) {
         this.name = name;
         this.skippedTurns = 0;
+        this.speedModifiers = [];
     }
     Player.prototype.canTakeTurn = function () {
         if (this.skippedTurns > 0) {
@@ -288,6 +331,7 @@ var Player = (function () {
     };
     return Player;
 }());
+//# sourceMappingURL=Player.js.map
 
 var TURN_START = 'TURN_START';
 var ROLL_START = 'ROLL_START';
@@ -344,6 +388,7 @@ var GameEvents = (function () {
     return GameEvents;
 }());
 var gameEventsInstance = new GameEvents();
+//# sourceMappingURL=GameEvents.js.map
 
 var Painter = (function () {
     function Painter(canvas, ctx) {
@@ -385,6 +430,7 @@ var Painter = (function () {
     };
     return Painter;
 }());
+//# sourceMappingURL=Painter.js.map
 
 var Game = (function () {
     function Game() {
@@ -432,12 +478,18 @@ var Game = (function () {
         });
     };
     Game.prototype.endDiceRoll = function (next, roll) {
+        if (this.currentPlayer.speedModifiers.length) {
+            var modifier = this.currentPlayer.speedModifiers.shift();
+            roll = Math.ceil(modifier * roll);
+        }
         var firstMandatoryIndex = this.board.tiles
             .slice(this.currentPlayer.currentTileIndex + 1, this.currentPlayer.currentTileIndex + 1 + roll)
             .findIndex(function (tile) {
             return tile.isMandatory;
         });
         var numSpacesToAdvance = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
+        if (this.currentPlayer.name === 'asdf')
+            numSpacesToAdvance = 3;
         if (numSpacesToAdvance > 0) {
             this.currentPlayer.moveToTile(this.currentPlayer.currentTileIndex + numSpacesToAdvance);
             gameEventsInstance.trigger(MOVE_START);
@@ -467,6 +519,7 @@ var Game = (function () {
     return Game;
 }());
 var gameInstance = new Game();
+//# sourceMappingURL=Game.js.map
 
 (function () {
     function fetchImage(src, canvas) {
@@ -526,3 +579,4 @@ var gameInstance = new Game();
         document.getElementById('overlay').style.display = 'block';
     });
 }());
+//# sourceMappingURL=App.js.map

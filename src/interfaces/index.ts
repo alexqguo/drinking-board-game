@@ -21,7 +21,7 @@ export interface JsonRule {
   direction?: Direction;
   numSpaces?: number;
   numTurns?: number;
-  playerTarget?: JsonPlayerTarget;
+  playerTarget?: PlayerTarget;
   multiplier?: number;
   diceRolls?: JsonDiceRoll;
 }
@@ -36,7 +36,7 @@ export interface JsonDiceRollOutcome {
   [propName: string]: JsonRule;
 }
 
-export enum JsonPlayerTarget {
+export enum PlayerTarget {
   custom = 'custom',
   self = 'self',
   allOthers = 'allOthers',

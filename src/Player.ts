@@ -11,10 +11,12 @@ class Player {
   destinationPos: Position;
   currentTileIndex: number;
   skippedTurns: number;
+  speedModifiers: number[];
 
   constructor(name: string) {
     this.name = name;
     this.skippedTurns = 0;
+    this.speedModifiers = [];
   }
 
   canTakeTurn(): boolean {

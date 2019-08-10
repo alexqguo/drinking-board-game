@@ -76,6 +76,11 @@ class Game {
   }
 
   endDiceRoll(next: Function, roll: number): void {
+    if (this.currentPlayer.speedModifiers.length) {
+      const modifier: number = this.currentPlayer.speedModifiers.shift();
+      roll = Math.ceil(modifier * roll); // TODO - may not always be multiplication
+    }
+
     // Check for mandatory spaces
     const firstMandatoryIndex = this.board.tiles
       .slice(this.currentPlayer.currentTileIndex + 1, this.currentPlayer.currentTileIndex + 1 + roll)
@@ -85,7 +90,8 @@ class Game {
     let numSpacesToAdvance: number = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
     
     // uncomment this line for testing
-    // if (this.currentPlayer.name === 'asdf') numSpacesToAdvance = 2;
+    if (this.currentPlayer.name === 'asdf') numSpacesToAdvance = 3;
+    // if (this.currentPlayer.name === 'blah') numS
 
     if (numSpacesToAdvance > 0) {
       // todo- fix this naming. this doesn't actually move anything in the UI
