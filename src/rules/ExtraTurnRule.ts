@@ -10,9 +10,9 @@ export default class ExtraTurnRule extends Rule {
   }
 
   execute(): void {
-    Game.modal.show(this.displayText);
+    super.execute();
+    
     Game.playerTurns.unshift(Game.currentPlayer);
     Game.modal.enableClose();
-    Game.modal.whenClosed(this.end);
   }
 }

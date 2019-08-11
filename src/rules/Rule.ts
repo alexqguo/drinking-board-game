@@ -1,5 +1,7 @@
-import { JsonDiceRoll } from '../interfaces';
+import { JsonDiceRoll, PlayerTarget } from '../interfaces';
 import GameEvents, { RULE_END } from '../GameEvents';
+import Game from '../Game';
+import Player from '../Player';
 
 abstract class Rule {
   displayText: string;
@@ -16,10 +18,38 @@ abstract class Rule {
   }
 
   // Should this return a promise instead?
-  abstract execute(): void;
+  execute(): void {
+    Game.modal.show(this.displayText);
+    Game.modal.disableClose();
+    Game.modal.whenClosed(this.end);
+  };
 
   end(): void {
     GameEvents.trigger(RULE_END);
+  }
+
+  selectPlayers(): Promise<Player[]> {
+    const targetPlayers: Player[] = [];
+    
+    return new Promise((resolve: Function) => {
+      switch(this.playerTarget) {
+        case PlayerTarget.allOthers:
+          targetPlayers.push(...Game.getInactivePlayers());
+          resolve(targetPlayers);
+          break;
+
+        case PlayerTarget.custom:
+          Game.modal.requirePlayerSelection(Game.getInactivePlayers())
+            .then((playerList: Player[]) => {
+              resolve(playerList);
+            });
+          break;
+
+        default:
+          targetPlayers.push(Game.currentPlayer);
+          resolve(targetPlayers);
+      }
+    });
   }
 
   validateRequired(...args: any[]): void {

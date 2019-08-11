@@ -23,6 +23,19 @@ var Tile = (function () {
 }());
 //# sourceMappingURL=Tile.js.map
 
+var Direction;
+(function (Direction) {
+    Direction["forward"] = "forward";
+    Direction["back"] = "back";
+})(Direction || (Direction = {}));
+var PlayerTarget;
+(function (PlayerTarget) {
+    PlayerTarget["custom"] = "custom";
+    PlayerTarget["self"] = "self";
+    PlayerTarget["allOthers"] = "allOthers";
+})(PlayerTarget || (PlayerTarget = {}));
+//# sourceMappingURL=index.js.map
+
 var TURN_START = 'TURN_START';
 var ROLL_START = 'ROLL_START';
 var ROLL_END = 'ROLL_END';
@@ -89,8 +102,34 @@ var Rule = (function () {
         this.playerTarget = playerTarget;
         this.diceRolls = diceRolls;
     }
+    Rule.prototype.execute = function () {
+        gameInstance.modal.show(this.displayText);
+        gameInstance.modal.disableClose();
+        gameInstance.modal.whenClosed(this.end);
+    };
     Rule.prototype.end = function () {
         gameEventsInstance.trigger(RULE_END);
+    };
+    Rule.prototype.selectPlayers = function () {
+        var _this = this;
+        var targetPlayers = [];
+        return new Promise(function (resolve) {
+            switch (_this.playerTarget) {
+                case PlayerTarget.allOthers:
+                    targetPlayers.push.apply(targetPlayers, gameInstance.getInactivePlayers());
+                    resolve(targetPlayers);
+                    break;
+                case PlayerTarget.custom:
+                    gameInstance.modal.requirePlayerSelection(gameInstance.getInactivePlayers())
+                        .then(function (playerList) {
+                        resolve(playerList);
+                    });
+                    break;
+                default:
+                    targetPlayers.push(gameInstance.currentPlayer);
+                    resolve(targetPlayers);
+            }
+        });
     };
     Rule.prototype.validateRequired = function () {
         var args = [];
@@ -145,9 +184,8 @@ var DisplayRule = (function (_super) {
         return _this;
     }
     DisplayRule.prototype.execute = function () {
-        gameInstance.modal.show(this.displayText);
+        _super.prototype.execute.call(this);
         gameInstance.modal.enableClose();
-        gameInstance.modal.whenClosed(this.end);
     };
     return DisplayRule;
 }(Rule));
@@ -165,8 +203,17 @@ var MoveRule = (function (_super) {
         return _this;
     }
     MoveRule.prototype.execute = function () {
-        console.log('executing move rule');
-        gameInstance.modal.show("(todo) " + this.displayText);
+        var _this = this;
+        _super.prototype.execute.call(this);
+        this.selectPlayers()
+            .then(function (value) {
+            var targetPlayer = value[0];
+            var targetTileIndex = Math.max(0, targetPlayer.currentTileIndex + _this.numSpaces);
+            targetPlayer.moveToTile(targetTileIndex);
+            targetPlayer.currentPos = targetPlayer.destinationPos;
+            gameInstance.painter.drawPlayers();
+            gameInstance.modal.close();
+        });
     };
     return MoveRule;
 }(Rule));
@@ -183,27 +230,13 @@ var SkipTurnRule = (function (_super) {
         return _this;
     }
     SkipTurnRule.prototype.execute = function () {
+        _super.prototype.execute.call(this);
         gameInstance.currentPlayer.skippedTurns += this.numTurns;
-        gameInstance.modal.show(this.displayText);
         gameInstance.modal.enableClose();
-        gameInstance.modal.whenClosed(this.end);
     };
     return SkipTurnRule;
 }(Rule));
 //# sourceMappingURL=SkipTurnRule.js.map
-
-var Direction;
-(function (Direction) {
-    Direction["forward"] = "forward";
-    Direction["back"] = "back";
-})(Direction || (Direction = {}));
-var PlayerTarget;
-(function (PlayerTarget) {
-    PlayerTarget["custom"] = "custom";
-    PlayerTarget["self"] = "self";
-    PlayerTarget["allOthers"] = "allOthers";
-})(PlayerTarget || (PlayerTarget = {}));
-//# sourceMappingURL=index.js.map
 
 var SpeedModifierRule = (function (_super) {
     __extends(SpeedModifierRule, _super);
@@ -218,27 +251,17 @@ var SpeedModifierRule = (function (_super) {
     }
     SpeedModifierRule.prototype.execute = function () {
         var _this = this;
-        var targetPlayers = [];
-        switch (this.playerTarget) {
-            case PlayerTarget.allOthers:
-                targetPlayers.push.apply(targetPlayers, gameInstance.players.filter(function (p) {
-                    return p !== gameInstance.currentPlayer;
-                }));
-                break;
-            case PlayerTarget.custom:
-                break;
-            default:
-                targetPlayers.push(gameInstance.currentPlayer);
-        }
-        targetPlayers.forEach(function (p) {
-            p.speedModifiers = [];
-            for (var i = 0; i < _this.numTurns; i++) {
-                p.speedModifiers.push(_this.multiplier);
-            }
+        _super.prototype.execute.call(this);
+        this.selectPlayers()
+            .then(function (value) {
+            value.forEach(function (p) {
+                p.speedModifiers = [];
+                for (var i = 0; i < _this.numTurns; i++) {
+                    p.speedModifiers.push(_this.multiplier);
+                }
+                gameInstance.modal.enableClose();
+            });
         });
-        gameInstance.modal.show(this.displayText);
-        gameInstance.modal.enableClose();
-        gameInstance.modal.whenClosed(this.end);
     };
     return SpeedModifierRule;
 }(Rule));
@@ -255,12 +278,10 @@ var TeleportRule = (function (_super) {
         return _this;
     }
     TeleportRule.prototype.execute = function () {
+        _super.prototype.execute.call(this);
         gameInstance.currentPlayer.moveToTile(this.tileIndex);
         gameInstance.currentPlayer.currentPos = gameInstance.currentPlayer.destinationPos;
         gameInstance.painter.drawPlayers();
-        gameInstance.modal.show(this.displayText);
-        gameInstance.modal.enableClose();
-        gameInstance.modal.whenClosed(this.end);
     };
     return TeleportRule;
 }(Rule));
@@ -275,7 +296,7 @@ var GameOverRule = (function (_super) {
         return _this;
     }
     GameOverRule.prototype.execute = function () {
-        console.log('Game over!');
+        alert('Game over!');
         gameInstance.gameOver();
     };
     return GameOverRule;
@@ -291,10 +312,9 @@ var ExtraTurnRule = (function (_super) {
         return _this;
     }
     ExtraTurnRule.prototype.execute = function () {
-        gameInstance.modal.show(this.displayText);
+        _super.prototype.execute.call(this);
         gameInstance.playerTurns.unshift(gameInstance.currentPlayer);
         gameInstance.modal.enableClose();
-        gameInstance.modal.whenClosed(this.end);
     };
     return ExtraTurnRule;
 }(Rule));
@@ -309,9 +329,7 @@ var DrinkDuringLostTurnsRule = (function (_super) {
         return _this;
     }
     DrinkDuringLostTurnsRule.prototype.execute = function () {
-        gameInstance.modal.show(this.displayText);
-        gameInstance.modal.disableClose();
-        gameInstance.modal.whenClosed(this.end);
+        _super.prototype.execute.call(this);
         gameInstance.modal.requireDiceRolls(this.diceRolls.numRequired, function (rolls) {
             gameInstance.currentPlayer.skippedTurns += rolls[0];
             gameInstance.modal.enableClose();
@@ -451,6 +469,11 @@ var Modal = (function () {
         this.content.innerText = displayText;
         this.trigger.checked = true;
     };
+    Modal.prototype.close = function () {
+        this.enableClose();
+        this.trigger.checked = false;
+        this.trigger.dispatchEvent(new Event('change'));
+    };
     Modal.prototype.disableClose = function () {
         var _this = this;
         this.controls.forEach(function (control) {
@@ -479,11 +502,44 @@ var Modal = (function () {
             });
         });
     };
+    Modal.prototype.requirePlayerSelection = function (playerList) {
+        var _this = this;
+        if (!playerList || playerList.length === 0)
+            return Promise.resolve([]);
+        var names = playerList.map(function (p) { return p.name; });
+        var frag = document.createDocumentFragment();
+        var header = document.createElement('h4');
+        header.innerText = 'Choose a player';
+        frag.appendChild(header);
+        names.forEach(function (name) {
+            var playerLink = document.createElement('a');
+            playerLink.classList.add('sm');
+            playerLink.href = '#';
+            playerLink.innerText = name;
+            playerLink.dataset.name = name;
+            frag.appendChild(playerLink);
+            frag.appendChild(document.createTextNode('\u00A0\u00A0'));
+        });
+        this.content.appendChild(frag);
+        return new Promise(function (resolve) {
+            Array.from(_this.content.querySelectorAll('a')).forEach(function (el) {
+                el.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    var selectedPlayer = playerList.find(function (p) {
+                        return p.name === e.currentTarget.dataset.name;
+                    });
+                    resolve([selectedPlayer]);
+                    return false;
+                });
+            });
+        });
+    };
     Modal.prototype.whenClosed = function (cb) {
         this.closeCb = cb;
     };
     return Modal;
 }());
+//# sourceMappingURL=Modal.js.map
 
 var Game = (function () {
     function Game() {
@@ -529,7 +585,6 @@ var Game = (function () {
         var _this = this;
         var handleRoll = function (e) {
             var roll = e.detail.roll;
-            console.log("roll: " + roll);
             gameEventsInstance.trigger(ROLL_END, [roll]);
             next();
             _this.diceLink.removeEventListener('roll', handleRoll);
@@ -548,9 +603,6 @@ var Game = (function () {
             return tile.isMandatory;
         });
         var numSpacesToAdvance = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
-        if (this.currentPlayer.name === 'asdf')
-            numSpacesToAdvance = 18;
-        console.log("advancing: " + numSpacesToAdvance);
         if (numSpacesToAdvance > 0) {
             this.currentPlayer.moveToTile(this.currentPlayer.currentTileIndex + numSpacesToAdvance);
             gameEventsInstance.trigger(MOVE_START);
@@ -579,10 +631,15 @@ var Game = (function () {
     Game.prototype.gameOver = function () {
         alert("Game over!\n\n Winner: " + this.currentPlayer.name);
     };
+    Game.prototype.getInactivePlayers = function () {
+        var _this = this;
+        return this.players.filter(function (p) {
+            return p !== _this.currentPlayer;
+        });
+    };
     return Game;
 }());
 var gameInstance = new Game();
-//# sourceMappingURL=Game.js.map
 
 (function () {
     function fetchImage(src, canvas) {

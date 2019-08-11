@@ -1,7 +1,6 @@
 import Rule from './Rule';
 import { JsonRule } from '../interfaces';
 import Game from '../Game';
-import GameEvents, { RULE_END } from '../GameEvents';
 
 class DisplayRule extends Rule {
   constructor(json: JsonRule) {
@@ -10,9 +9,8 @@ class DisplayRule extends Rule {
   }
 
   execute() {
-    Game.modal.show(this.displayText);
-    Game.modal.enableClose();
-    Game.modal.whenClosed(this.end);
+    super.execute()
+    Game.modal.enableClose(); // Nothing to do
   }
 }
 

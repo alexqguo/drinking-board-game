@@ -9,7 +9,7 @@ export default class GameOverRule extends Rule {
   }
 
   execute(): void {
-    console.log('Game over!');
+    alert('Game over!');
     Game.gameOver();
   }
 }

@@ -12,14 +12,12 @@ class TeleportRule extends Rule {
     this.tileIndex = tileIndex;
   }
 
-  execute() {
+  execute(): void {
+    super.execute();
+
     Game.currentPlayer.moveToTile(this.tileIndex);
     Game.currentPlayer.currentPos = Game.currentPlayer.destinationPos;
     Game.painter.drawPlayers();
-
-    Game.modal.show(this.displayText);
-    Game.modal.enableClose();
-    Game.modal.whenClosed(this.end);
   }
 }
 

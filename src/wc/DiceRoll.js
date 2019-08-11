@@ -1,10 +1,17 @@
+// TODO: move to ts
 class DiceRoll extends HTMLElement {
-  // content: string;
-  // link: HTMLAnchorElement;
-  // resultContainer: HTMLSpanElement;
 
   static get observedAttributes() {
-    return ['result'];
+    return ['result', 'roll-text'];
+  }
+
+  static getInitialContent(rollText = DiceRoll.defaultRollText) {
+    return `
+      <div>
+        <a class="button sm" href="#">${rollText}</a>
+        <span></span>
+      </div>
+    `;
   }
 
   constructor() {
@@ -18,11 +25,13 @@ class DiceRoll extends HTMLElement {
       } else {
         this.reset();
       }
+    } else if (attrName === 'roll-text') {
+      // no-op. no need for a handler here right now 
     }
   }
 
   connectedCallback() {
-    this.innerHTML = DiceRoll.content;
+    this.innerHTML = DiceRoll.getInitialContent(this.getAttribute('roll-text') || DiceRoll.defaultRollText);
     this.link = this.querySelector('a');
     this.resultContainer = this.querySelector('span');
 
@@ -30,6 +39,10 @@ class DiceRoll extends HTMLElement {
       e.preventDefault();
       this.roll();
       return false;
+    });
+
+    this.resultContainer.addEventListener('click', (e) => {
+      this.reset();
     });
   }
 
@@ -52,12 +65,6 @@ class DiceRoll extends HTMLElement {
   }
 }
 
-DiceRoll.rollText = 'Roll';
-DiceRoll.content = `
-  <div>
-    <a href="#">${DiceRoll.rollText}</a>
-    <span></span>
-  </div>
-`;
+DiceRoll.defaultRollText = 'Roll';
 
 window.customElements.define('dice-roll', DiceRoll);

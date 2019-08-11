@@ -1,4 +1,5 @@
 import Game from './Game';
+import Player from './Player';
 
 export class Modal {
   triggerId: string;
@@ -29,6 +30,12 @@ export class Modal {
     this.trigger.checked = true;
   }
 
+  close(): void {
+    this.enableClose();
+    this.trigger.checked = false;
+    this.trigger.dispatchEvent(new Event('change'));
+  }
+
   disableClose(): void {
     this.controls.forEach((control: HTMLLabelElement) => {
       control.setAttribute('for', `${this.triggerId}__DISABLED`);
@@ -41,7 +48,8 @@ export class Modal {
     });
   }
 
-  requireDiceRolls(n: number, cb: Function) {
+  // TODO: change to promise in case a rule needs more than one player action
+  requireDiceRolls(n: number, cb: Function): void {
     const rolls: number[] = [];
     const frag: DocumentFragment = document.createDocumentFragment();
 
@@ -57,6 +65,41 @@ export class Modal {
         if (rolls.length === n) {
           cb(rolls);
         }
+      });
+    });
+  }
+
+  // TODO: implement number of players user can choose
+  requirePlayerSelection(playerList: Player[]): Promise<Player[]> {
+    if (!playerList || playerList.length === 0) return Promise.resolve([]);
+
+    const names = playerList.map(p => p.name);
+    const frag: DocumentFragment = document.createDocumentFragment();
+    const header: HTMLHeadingElement = document.createElement('h4');
+    header.innerText = 'Choose a player';
+    frag.appendChild(header);
+
+    names.forEach((name: string) => {
+      const playerLink: HTMLAnchorElement = document.createElement('a');
+      playerLink.classList.add('sm');
+      playerLink.href = '#';
+      playerLink.innerText = name;
+      playerLink.dataset.name = name;
+      frag.appendChild(playerLink);
+      frag.appendChild(document.createTextNode('\u00A0\u00A0'));
+    });
+    this.content.appendChild(frag);
+
+    return new Promise((resolve) => {
+      Array.from(this.content.querySelectorAll('a')).forEach((el: HTMLElement) => {
+        el.addEventListener('click', (e: Event) => {
+          e.preventDefault();
+          const selectedPlayer = playerList.find((p: Player) =>  {
+            return p.name === (e.currentTarget as HTMLElement).dataset.name
+          });
+          resolve([selectedPlayer]);
+          return false;
+        });
       });
     });
   }

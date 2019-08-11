@@ -482,7 +482,7 @@
         "displayText": "Haunter used Dream Eater! Devour someone else's dreams by moving them back 10 spaces.",
         "type": "MoveRule",
         "direction": "back",
-        "numSpaces": 10,
+        "numSpaces": -10,
         "playerTarget": "custom"
       },
       "position": [{

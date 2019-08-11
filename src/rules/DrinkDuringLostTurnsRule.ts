@@ -9,13 +9,10 @@ class DrinkDuringLostTurnsRule extends Rule {
   }
 
   execute() {
-    Game.modal.show(this.displayText);
-    Game.modal.disableClose();
-    Game.modal.whenClosed(this.end);
+    super.execute();
 
     Game.modal.requireDiceRolls(this.diceRolls.numRequired, (rolls: number[]) => {
-      Game.currentPlayer.skippedTurns += rolls[0];
-      // no-op on the second roll
+      Game.currentPlayer.skippedTurns += rolls[0]; // no-op on the second roll
       Game.modal.enableClose();
     });
   }

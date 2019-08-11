@@ -15,36 +15,21 @@ class SpeedModifierRule extends Rule {
     this.numTurns = numTurns;
   }
 
-  execute() {
-    const targetPlayers: Player[] = [];
+  execute(): void {
+    super.execute();
+
+    this.selectPlayers()
+      .then((value: Player[]) => {
+        value.forEach((p: Player) => {
+          // If somehow a user gets multiple modifiers on them, just cancel the original
+          p.speedModifiers = [];
     
-    switch(this.playerTarget) {
-      case PlayerTarget.allOthers:
-        targetPlayers.push(
-          ...Game.players.filter((p: Player) => {
-            return p !== Game.currentPlayer;
-          })
-        );
-        break;
-      case PlayerTarget.custom:
-        // TODO - prompt for choice of player
-        break;
-      default:
-        targetPlayers.push(Game.currentPlayer);
-    }
-
-    targetPlayers.forEach((p: Player) => {
-      // If somehow a user gets multiple modifiers on them, just cancel the original
-      p.speedModifiers = [];
-
-      for (let i = 0; i < this.numTurns; i ++) {
-        p.speedModifiers.push(this.multiplier);
-      }
-    });
-
-    Game.modal.show(this.displayText);
-    Game.modal.enableClose();
-    Game.modal.whenClosed(this.end);
+          for (let i = 0; i < this.numTurns; i ++) {
+            p.speedModifiers.push(this.multiplier);
+          }
+          Game.modal.enableClose();
+        });
+      });
   }
 }
 

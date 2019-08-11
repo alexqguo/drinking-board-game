@@ -73,7 +73,6 @@ class Game {
   enableDiceRoll(next: Function): void {
     const handleRoll = (e: CustomEvent) => {
       const roll = e.detail.roll;
-      console.log(`roll: ${roll}`); 
       GameEvents.trigger(ROLL_END, [roll]);
       next();
       this.diceLink.removeEventListener('roll', handleRoll);
@@ -98,10 +97,8 @@ class Game {
     let numSpacesToAdvance: number = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
     
     // uncomment this line for testing
-    if (this.currentPlayer.name === 'asdf') numSpacesToAdvance = 18;
+    // if (this.currentPlayer.name === 'asdf') numSpacesToAdvance = 3;
     // if (this.currentPlayer.name === 'blah') numS
-
-    console.log(`advancing: ${numSpacesToAdvance}`);
 
     if (numSpacesToAdvance > 0) {
       // todo- fix this naming. this doesn't actually move anything in the UI
@@ -138,6 +135,12 @@ class Game {
 
   gameOver(): void {
     alert(`Game over!\n\n Winner: ${this.currentPlayer.name}`);
+  }
+
+  getInactivePlayers(): Player[] {
+    return this.players.filter((p: Player) => {
+      return p !== this.currentPlayer;
+    });
   }
 }
 
