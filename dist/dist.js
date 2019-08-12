@@ -427,9 +427,11 @@ var Painter = (function () {
             return;
         }
         var totalDistance = Math.sqrt(dx * dx + dy * dy);
-        gameInstance.currentPlayer.currentPos.x += (dx / totalDistance) * VELO;
-        gameInstance.currentPlayer.currentPos.y += (dy / totalDistance) * VELO;
-        window.scrollBy((dx / totalDistance) * VELO, (dy / totalDistance) * VELO);
+        var incrementX = (dx / totalDistance) * VELO;
+        var incrementY = (dy / totalDistance) * VELO;
+        gameInstance.currentPlayer.currentPos.x += incrementX;
+        gameInstance.currentPlayer.currentPos.y += incrementY;
+        window.scrollBy(incrementX, incrementY);
         this.raf = window.requestAnimationFrame(this.draw.bind(this));
     };
     Painter.prototype.drawPlayers = function () {

@@ -32,10 +32,12 @@ export default class Painter {
     }
 
     const totalDistance = Math.sqrt(dx * dx + dy * dy);
-    Game.currentPlayer.currentPos.x += (dx / totalDistance) * VELO;
-    Game.currentPlayer.currentPos.y += (dy / totalDistance) * VELO;
+    const incrementX = (dx / totalDistance) * VELO;
+    const incrementY = (dy / totalDistance) * VELO;
+    Game.currentPlayer.currentPos.x += incrementX;
+    Game.currentPlayer.currentPos.y += incrementY;
 
-    window.scrollBy((dx / totalDistance) * VELO, (dy / totalDistance) * VELO);
+    window.scrollBy(incrementX, incrementY);
     this.raf = window.requestAnimationFrame(this.draw.bind(this));
   }
 
