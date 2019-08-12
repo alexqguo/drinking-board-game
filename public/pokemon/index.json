@@ -538,7 +538,7 @@
       "rule": {
         "displayText": "Abra used Teleport! Teleport to the other Abra.",
         "type": "TeleportRule",
-        "tileIndex": 15
+        "tileIndex": 11
       },
       "position": [{
         "x": 1014,

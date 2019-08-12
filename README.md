@@ -24,6 +24,7 @@ This project is not ready yet.
 
 ### M1
 * enforce name uniqueness
+* Stencil!
 * expand indicator in top left
   * queue of who rolled what in the corner
   * indication of who is in what zone
