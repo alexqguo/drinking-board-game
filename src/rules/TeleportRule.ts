@@ -18,6 +18,7 @@ class TeleportRule extends Rule {
     Game.currentPlayer.moveToTile(this.tileIndex);
     Game.currentPlayer.currentPos = Game.currentPlayer.destinationPos;
     Game.painter.drawPlayers();
+    Game.modal.enableClose();
   }
 }
 
