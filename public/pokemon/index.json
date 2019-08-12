@@ -839,7 +839,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "Challenge someone to a chugging contest",
+        "displayText": "Challenge someone to a chugging contest. First to finish gets an extra turn, last to finish loses a turn.",
         "type": "TODO"
       },
       "position": [{
@@ -857,7 +857,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "Krabby used Crabhammer!",
+        "displayText": "Krabby used Crabhammer! Bring down the Crabhammer on someone; they must finish their drink.",
         "type": "DisplayRule"
       },
       "position": [{
@@ -875,7 +875,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "Ditto used Transform!",
+        "displayText": "Ditto used Transform! During the next person's turn, you must copy everything they do!",
         "type": "DisplayRule"
       },
       "position": [{
@@ -893,7 +893,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "Doduo used Double-Edge!",
+        "displayText": "Doduo used Double-Edge! You give 4 drinks, but you drink 1.",
         "type": "DisplayRule"
       },
       "position": [{
@@ -911,7 +911,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "SAFARI ZONE",
+        "displayText": "SAFARI ZONE. Before each turn in the Safari Zone, roll a die. 1-2: You throw bait. Give 1 drink to someone. 3-4: You throw a rock, dick. Lose your turn, drink 4. 5-6: You throw a safari ball. Drink 2 in sadness, because safari balls are just awful.",
         "type": "DisplayRule"
       },
       "position": [{
@@ -929,7 +929,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "Gone fishin'... a wild Dratini appeared!",
+        "displayText": "Gone fishin'... a wild Dratini appeared! Roll a 1 to catch. Otherwise, drink 1.",
         "type": "DisplayRule",
         "diceRolls": {
           "numRequired": 1
@@ -950,7 +950,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "A wild Tauros appeared... but instantly fled.",
+        "displayText": "A wild Tauros appeared... but instantly fled. Drinrk 2 for not being quick enough.",
         "type": "DisplayRule"
       },
       "position": [{
@@ -968,7 +968,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "(Chansey) Roll the die.",
+        "displayText": "Roll the die. If it's 1-3 Chansey eludes you, drink 1. If 4-6, you capture Chansey, give 2.",
         "type": "DisplayRule",
         "diceRolls": {
           "numRequired": 1
@@ -990,7 +990,7 @@
     }, {
       "mandatory": true,
       "rule": {
-        "displayText": "FUCHSIA GYM",
+        "displayText": "FUCHSIA GYM. Poison Pokemon are Toxic! Better get intoxicated! Drink 3.",
         "type": "DisplayRule"
       },
       "position": [{
@@ -1026,7 +1026,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "Electabuzz used Thunder Punch!",
+        "displayText": "Electabuzz used Thunder Punch! You're paralyzed; miss your next turn.",
         "type": "SkipTurnRule",
         "numTurns": 1
       },
@@ -1063,7 +1063,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "Seaking used Waterfall! ...do a waterfall",
+        "displayText": "Seaking used Waterfall! ...do a waterfall!",
         "type": "DisplayRule"
       },
       "position": [{
@@ -1081,7 +1081,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "A wild Missingno!",
+        "displayText": "A wild Missingno! Roll 3 times. Get a 5 or 6, and you continue. If not, you glitched. Restart at Pallet Town.",
         "type": "TODO"
       },
       "position": [{
@@ -1100,7 +1100,7 @@
     }, {
       "mandatory": true,
       "rule": {
-        "displayText": "CINNABAR GYM",
+        "displayText": "CINNABAR GYM. Roll a die. Even, roll again. Odd, drink twice as many times as you rolled evens.",
         "type": "TODO (roll until)"
       },
       "position": [{
@@ -1118,7 +1118,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "Koffing used Haze!",
+        "displayText": "Koffing used Haze! If there's anything nearby to smoke, smoke it to avoid taking 2 drinks.",
         "type": "DisplayRule"
       },
       "position": [{
@@ -1154,7 +1154,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "You throw a Pokeball!",
+        "displayText": "You throw a Pokeball! If your favorite Pokemon is on the board, roll a 1-3 to catch it! Roll a 4-6 and it got away, drink 3. If your favorite is not on the board, sadly drink 3.",
         "type": "DisplayRule",
         "diceRolls": {
           "numRequired": 1
@@ -1175,7 +1175,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "Persian used Fury Swipes!",
+        "displayText": "Persian used Fury Swipes! Roll a die, and give out that many drinks.",
         "type": "DisplayRule",
         "diceRolls": {
           "numRequired": 1
@@ -1197,7 +1197,7 @@
     }, {
       "mandatory": true,
       "rule": {
-        "displayText": "VIRIDIAN GYM",
+        "displayText": "VIRIDIAN GYM. First, take a drink. Then, if you're a guy, guys take 3. If you're a girl, girls take 3.",
         "type": "DisplayRule"
       },
       "position": [{
@@ -1215,7 +1215,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "Fearow used Mirror Move!",
+        "displayText": "Fearow used Mirror Move!. Drink what the last person did during his/her turn.",
         "type": "DisplayRule"
       },
       "position": [{
@@ -1233,7 +1233,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "Graveler used Defense Curl!",
+        "displayText": "Graveler used Defense Curl! Lose two turns, but you do not have to take any drinks until you go again.",
         "type": "SkipTurnRule",
         "numTurns": 2
       },
@@ -1252,7 +1252,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "Gyarados used Dragon Rage!",
+        "displayText": "Gyarados used Dragon Rage! Take 4 drinks unless you landed on magikarp, in which case you give 4 drinks.",
         "type": "DisplayRule"
       },
       "position": [{
@@ -1289,7 +1289,7 @@
     }, {
       "mandatory": true,
       "rule": {
-        "displayText": "(Birds)",
+        "displayText": "Gotta catch 'em all! Roll a die. 1-3: Why are you throwing Great Balls at it? Take a drink! 4-6: You got one! You may only move on once you've caught all 3 birds.",
         "type": "TODO"
       },
       "position": [{
@@ -1308,7 +1308,7 @@
     }, {
       "mandatory": true,
       "rule": {
-        "displayText": "THE ELITE FOUR",
+        "displayText": "THE ELITE FOUR. Challenge the land's greatest trainers: the Elite Four! Roll a 4 to defeat the Elite Four! For any other number, drink 4!",
         "type": "DisplayRule",
         "diceRolls": {
           "numRequired": 1
@@ -1330,7 +1330,7 @@
     }, {
       "mandatory": true,
       "rule": {
-        "displayText": "CHAMPION GARY",
+        "displayText": "CHAMPION GARY. Finish a full drink to take down this bastard for the last time! You cannot move on until your drink is finished.",
         "type": "DisplayRule"
       },
       "position": [{
@@ -1349,7 +1349,7 @@
     }, {
       "mandatory": true,
       "rule": {
-        "displayText": "POKEMON MASTER",
+        "displayText": "POKEMON MASTER. Throw that masterball and take a victory drink. All other players toast to your glory! You are a Pokemon Master!",
         "type": "GameOverRule"
       },
       "position": [{
