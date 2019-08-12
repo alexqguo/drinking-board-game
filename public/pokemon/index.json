@@ -640,7 +640,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "Psyduck is slow.",
+        "displayText": "Psyduck is slow. For the first one here, make up a gesture. For the rest of the game, when you do it, the last to mimic you takes a drink.",
         "type": "DisplayRule"
       },
       "position": [{
@@ -658,8 +658,8 @@
       }]
     }, {
       "rule": {
-        "displayText": "What? Your Pokemon is evolving!",
-        "type": "TODO"
+        "displayText": "What? Your Pokemon is evolving! Let it evolve: Drink 4 and skip the next gym. Stop evolution: Take an extra turn.",
+        "type": "TODO - CHOICE RULE"
       },
       "position": [{
         "x": 453,
@@ -676,7 +676,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "Porygon used Tri Attack!",
+        "displayText": "Porygon used Tri Attack! While on this space, for each drink you are given, the giver must drink 3.",
         "type": "DisplayRule"
       },
       "position": [{
@@ -694,7 +694,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "SILPH CO.",
+        "displayText": "SILPH CO. You've infiltrated the headquarters of the infamous Team Rocket! You will need all your courage to make it to their leader. Drink an extra 2 every turn to calm your nerves.",
         "type": "DisplayRule"
       },
       "position": [{
@@ -712,7 +712,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "A Scientist uses his magnet Pokemon!",
+        "displayText": "A Scientist uses his magnet Pokemon! You magnetically attract 1 drink per player in the game.",
         "type": "DisplayRule"
       },
       "position": [{
@@ -730,7 +730,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "Lapras used Confuse Ray!",
+        "displayText": "Lapras used Confuse Ray! Pick a player; they are now confused. Next turn, they must roll a 1-3 to stop being confused. If not, they are still confused, and lose a turn.",
         "type": "TODO - probably a ChoiceRule with custom player target"
       },
       "position": [{
@@ -748,7 +748,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "It's Team Rocket!",
+        "displayText": "It's Team Rocket! Watch them defeat themselves with incompetence, and everyone drink to them blasting off.",
         "type": "DisplayRule"
       },
       "position": [{
@@ -766,7 +766,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "GIOVANNI",
+        "displayText": "GIOVANNI. Roll a die. 1-3: Give that number. 4-6: Drink that number.",
         "type": "DisplayRule"
       },
       "position": [{
@@ -784,7 +784,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "Rare Candy - Level up!",
+        "displayText": "Rare Candy - Level up! You get an extra turn.",
         "type": "ExtraTurnRule"
       },
       "position": [{
@@ -802,7 +802,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "GARY",
+        "displayText": "GARY. Roll a die and take that many drinks. The next time this punk hassles you will be the last.",
         "type": "DisplayRule"
       },
       "position": [{
@@ -821,7 +821,7 @@
     }, {
       "mandatory": true,
       "rule": {
-        "displayText": "SAFFRON GYM",
+        "displayText": "SAFFRON GYM. Use psychic powers to pick a number, then roll the die. If It's your number, take an extra turn. If not, drink 2.",
         "type": "DisplayRule"
       },
       "position": [{
