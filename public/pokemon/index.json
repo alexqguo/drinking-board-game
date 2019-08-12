@@ -1082,7 +1082,16 @@
     }, {
       "rule": {
         "displayText": "A wild Missingno! Roll 3 times. Get a 5 or 6, and you continue. If not, you glitched. Restart at Pallet Town.",
-        "type": "TODO"
+        "type": "DisplayRule",
+        "diceRolls": {
+          "numRequired": 3,
+          "outcomes": [{
+            "5,6": {
+              "type": "TeleportRule",
+              "tileIndex": 0
+            }
+          }]
+        }
       },
       "position": [{
         "x": 640,
