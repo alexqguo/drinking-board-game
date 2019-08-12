@@ -68,6 +68,12 @@ class Game {
     this.currentPlayer = this.playerTurns.shift();
     GameEvents.trigger(this.currentPlayer.canTakeTurn() ? ROLL_START : TURN_END);
     document.querySelector('#overlay h4').innerHTML = this.currentPlayer.name;
+    
+    window.scrollTo({
+      top: this.currentPlayer.currentPos.y - (window.outerHeight / 2),
+      left: this.currentPlayer.currentPos.x - (window.outerWidth / 2),
+      behavior: 'smooth'
+    });
   }
 
   enableDiceRoll(next: Function): void {

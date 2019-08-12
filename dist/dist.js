@@ -429,6 +429,7 @@ var Painter = (function () {
         var totalDistance = Math.sqrt(dx * dx + dy * dy);
         gameInstance.currentPlayer.currentPos.x += (dx / totalDistance) * VELO;
         gameInstance.currentPlayer.currentPos.y += (dy / totalDistance) * VELO;
+        window.scrollBy((dx / totalDistance) * VELO, (dy / totalDistance) * VELO);
         this.raf = window.requestAnimationFrame(this.draw.bind(this));
     };
     Painter.prototype.drawPlayers = function () {
@@ -447,7 +448,6 @@ var Painter = (function () {
     };
     return Painter;
 }());
-//# sourceMappingURL=Painter.js.map
 
 var Modal = (function () {
     function Modal() {
@@ -580,6 +580,11 @@ var Game = (function () {
         this.currentPlayer = this.playerTurns.shift();
         gameEventsInstance.trigger(this.currentPlayer.canTakeTurn() ? ROLL_START : TURN_END);
         document.querySelector('#overlay h4').innerHTML = this.currentPlayer.name;
+        window.scrollTo({
+            top: this.currentPlayer.currentPos.y - (window.outerHeight / 2),
+            left: this.currentPlayer.currentPos.x - (window.outerWidth / 2),
+            behavior: 'smooth'
+        });
     };
     Game.prototype.enableDiceRoll = function (next) {
         var _this = this;
@@ -640,6 +645,7 @@ var Game = (function () {
     return Game;
 }());
 var gameInstance = new Game();
+//# sourceMappingURL=Game.js.map
 
 (function () {
     function fetchImage(src, canvas) {

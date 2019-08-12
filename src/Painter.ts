@@ -35,6 +35,7 @@ export default class Painter {
     Game.currentPlayer.currentPos.x += (dx / totalDistance) * VELO;
     Game.currentPlayer.currentPos.y += (dy / totalDistance) * VELO;
 
+    window.scrollBy((dx / totalDistance) * VELO, (dy / totalDistance) * VELO);
     this.raf = window.requestAnimationFrame(this.draw.bind(this));
   }
 
