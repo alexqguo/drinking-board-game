@@ -348,8 +348,6 @@ var ApplyMoveConditionRule = (function (_super) {
             value.forEach(function (p) {
                 _this.successes.set(p, 0);
                 var canPlayerMove = function (roll) {
-                    console.log("roll: " + roll);
-                    console.log(_this.condition);
                     if (_this.condition.criteria.indexOf(roll) === -1) {
                         if (!_this.condition.numSuccessesRequired) {
                             p.moveCondition = null;
@@ -368,8 +366,13 @@ var ApplyMoveConditionRule = (function (_super) {
                     return false;
                 };
                 p.moveCondition = canPlayerMove;
-                gameInstance.modal.enableClose();
             });
+            if (_this.playerTarget === PlayerTarget.custom) {
+                gameInstance.modal.close();
+            }
+            else {
+                gameInstance.modal.enableClose();
+            }
         });
     };
     return ApplyMoveConditionRule;
@@ -430,6 +433,32 @@ var DiceRollRule = (function (_super) {
 }(Rule));
 //# sourceMappingURL=DiceRollRule.js.map
 
+var RollUntilRule = (function (_super) {
+    __extends(RollUntilRule, _super);
+    function RollUntilRule(json) {
+        var _this = _super.call(this, json) || this;
+        _this.validateRequired(json.displayText);
+        return _this;
+    }
+    RollUntilRule.prototype.execute = function () {
+        var _this = this;
+        _super.prototype.execute.call(this);
+        var rollUntilFn = function () {
+            gameInstance.modal.requireDiceRolls(1, function (rolls) {
+                if (_this.criteria.indexOf(rolls[0]) !== -1) {
+                    gameInstance.modal.enableClose();
+                }
+                else {
+                    rollUntilFn();
+                }
+            });
+        };
+        rollUntilFn();
+    };
+    return RollUntilRule;
+}(Rule));
+//# sourceMappingURL=RollUntilRule.js.map
+
 var RULE_MAPPINGS = {
     MoveRule: MoveRule,
     DisplayRule: DisplayRule,
@@ -441,6 +470,7 @@ var RULE_MAPPINGS = {
     DrinkDuringLostTurnsRule: DrinkDuringLostTurnsRule,
     ApplyMoveConditionRule: ApplyMoveConditionRule,
     DiceRollRule: DiceRollRule,
+    RollUntilRule: RollUntilRule,
 };
 function createTiles(tilesJson) {
     return tilesJson.map(function (tileJson) {
@@ -713,8 +743,6 @@ var Game = (function () {
             return tile.isMandatory;
         });
         var numSpacesToAdvance = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
-        if (this.currentPlayer.name === 'asdf')
-            numSpacesToAdvance = 57;
         if (numSpacesToAdvance > 0) {
             this.currentPlayer.moveToTile(this.currentPlayer.currentTileIndex + numSpacesToAdvance);
             gameEventsInstance.trigger(MOVE_START);
@@ -752,7 +780,6 @@ var Game = (function () {
     return Game;
 }());
 var gameInstance = new Game();
-//# sourceMappingURL=Game.js.map
 
 (function () {
     function fetchImage(src, canvas) {
@@ -817,3 +844,4 @@ var gameInstance = new Game();
         document.getElementById('overlay').style.display = 'block';
     });
 }());
+//# sourceMappingURL=App.js.map

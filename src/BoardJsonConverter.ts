@@ -12,6 +12,7 @@ import {
   DrinkDuringLostTurnsRule,
   ApplyMoveConditionRule,
   DiceRollRule,
+  RollUntilRule
 } from './rules';
 
 const RULE_MAPPINGS: { 
@@ -27,6 +28,7 @@ const RULE_MAPPINGS: {
   DrinkDuringLostTurnsRule: DrinkDuringLostTurnsRule,
   ApplyMoveConditionRule: ApplyMoveConditionRule,
   DiceRollRule: DiceRollRule,
+  RollUntilRule: RollUntilRule,
 };
 
 export function createTiles(tilesJson: Array<JsonTile>): Array<Tile> {

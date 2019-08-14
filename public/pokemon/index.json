@@ -210,7 +210,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "Abra used Teleport! Teleport to the other abra",
+        "displayText": "Abra used Teleport! Teleport to the other Abra.",
         "type": "TeleportRule",
         "tileIndex": 28
       },
@@ -369,7 +369,7 @@
           "numRequired": 1,
           "outcomes": [{
             "type": "SkipTurnRule",
-            "displayText": "Even, you're paralyzed; take 2 drinks and miss your next turn",
+            "displayText": "You're paralyzed; take 2 drinks and miss your next turn",
             "numTurns": 1,
             "criteria": [2, 4, 6]
           }]
@@ -622,6 +622,7 @@
           "numRequired": 1,
           "outcomes": [{
             "type": "SkipTurnRule",
+            "displayText": "Stun Spore; Lose a turn.",
             "numTurns": 1,
             "criteria": [1, 2, 3]
           }, {
@@ -831,7 +832,7 @@
       "mandatory": true,
       "rule": {
         "displayText": "SAFFRON GYM. Use psychic powers to pick a number, then roll the die. If It's your number, take an extra turn. If not, drink 2.",
-        "type": "DisplayRule"
+        "type": "TODO - CHOICE RULE with a dice roll? "
       },
       "position": [{
         "x": 1390,
@@ -849,7 +850,7 @@
     }, {
       "rule": {
         "displayText": "Challenge someone to a chugging contest. First to finish gets an extra turn, last to finish loses a turn.",
-        "type": "TODO - ???"
+        "type": "TODO - Some sort of weird choice rule"
       },
       "position": [{
         "x": 1577,
@@ -1123,7 +1124,8 @@
       "mandatory": true,
       "rule": {
         "displayText": "CINNABAR GYM. Roll a die. Even, roll again. Odd, drink twice as many times as you rolled evens.",
-        "type": "TODO (roll until)"
+        "type": "RollUntilRule",
+        "criteria": [1, 3, 5]
       },
       "position": [{
         "x": 640,
@@ -1198,7 +1200,7 @@
     }, {
       "rule": {
         "displayText": "Persian used Fury Swipes! Roll a die, and give out that many drinks.",
-        "type": "DisplayRule",
+        "type": "DiceRollRule",
         "diceRolls": {
           "numRequired": 1
         }
@@ -1293,7 +1295,8 @@
     }, {
       "rule": {
         "displayText": "Dragonite used Hyper Beam! Give 5 drinks, but lose a turn to recharge.",
-        "type": "DisplayRule"
+        "type": "SkipTurnRule",
+        "numTurns": 1
       },
       "position": [{
         "x": 1390,

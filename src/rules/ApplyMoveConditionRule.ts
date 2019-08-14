@@ -1,5 +1,5 @@
 import Rule from './Rule';
-import { JsonRule, MoveCondition } from '../interfaces';
+import { JsonRule, MoveCondition, PlayerTarget } from '../interfaces';
 import Player from '../Player';
 import Game from '../Game';
 
@@ -32,8 +32,6 @@ class ApplyMoveConditionRule extends Rule {
            * Could be a roll type, or something else.
            */
           const canPlayerMove: Function = (roll: number) => {
-            console.log(`roll: ${roll}`);
-            console.log(this.condition);
             if (this.condition.criteria.indexOf(roll) === -1) {
               /**
                * A bit confusing. If successes are required, you still have to achieve the criteria on your next turn.
@@ -62,8 +60,15 @@ class ApplyMoveConditionRule extends Rule {
           };
 
           p.moveCondition = canPlayerMove;
-          Game.modal.enableClose();
         });
+
+        if (this.playerTarget === PlayerTarget.custom) {
+          // If it was a click, close the modal immediately
+          Game.modal.close();
+        } else {
+          // Otherwise, just enable the user to close it themself
+          Game.modal.enableClose();
+        }
       });
   }
 }
