@@ -10,13 +10,16 @@ class Player {
   currentPos: Position;
   destinationPos: Position;
   currentTileIndex: number;
+  // TODO: consider puttting the following into a containing "effects" map or list
   skippedTurns: number;
   speedModifiers: number[];
-
+  moveConditions: Function[];
+  
   constructor(name: string) {
     this.name = name;
     this.skippedTurns = 0;
     this.speedModifiers = [];
+    this.moveConditions = [];
   }
 
   canTakeTurn(): boolean {

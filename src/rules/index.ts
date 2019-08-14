@@ -7,3 +7,4 @@ export { default as TeleportRule } from './TeleportRule';
 export { default as GameOverRule } from './GameOverRule';
 export { default as ExtraTurnRule } from './ExtraTurnRule';
 export { default as DrinkDuringLostTurnsRule } from './DrinkDuringLostTurnsRule';
+export { default as ApplyMoveConditionRule } from './ApplyMoveConditionRule';

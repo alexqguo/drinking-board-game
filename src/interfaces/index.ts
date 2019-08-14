@@ -24,6 +24,11 @@ export interface JsonRule {
   playerTarget?: PlayerTarget;
   multiplier?: number;
   diceRolls?: JsonDiceRoll;
+  condition?: MoveCondition;
+}
+
+export interface MoveCondition {
+
 }
 
 export interface JsonDiceRoll {

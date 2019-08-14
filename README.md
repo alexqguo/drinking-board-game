@@ -28,7 +28,6 @@ This project is not ready yet.
 * expand indicator in top left
   * queue of who rolled what in the corner
   * indication of who is in what zone
-  * improve dice UI
 * DiceRollRule with prompts for rules that require you to roll a die, though not necessarily take actions from it
 * players move along the board (animation should not cut corners)
 * proper positioning when two or more players are at the same space

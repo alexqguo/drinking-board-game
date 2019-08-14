@@ -154,7 +154,10 @@
     }, {
       "rule": {
         "displayText": "Zubats... they're... they're everywhere! Take a drink. Next turn, if you roll a 1 or 2, stay here and take a drink.",
-        "type": "TODO"
+        "type": "ApplyMoveConditionRule",
+        "condition": {
+          "criteria": [1, 2]
+        }
       },
       "position": [{
         "x": 262,
@@ -1299,7 +1302,7 @@
       "mandatory": true,
       "rule": {
         "displayText": "Gotta catch 'em all! Roll a die. 1-3: Why are you throwing Great Balls at it? Take a drink! 4-6: You got one! You may only move on once you've caught all 3 birds.",
-        "type": "TODO"
+        "type": "TODO - applymovecondition"
       },
       "position": [{
         "x": 1390,
@@ -1320,7 +1323,16 @@
         "displayText": "THE ELITE FOUR. Challenge the land's greatest trainers: the Elite Four! Roll a 4 to defeat the Elite Four! For any other number, drink 4!",
         "type": "DisplayRule",
         "diceRolls": {
-          "numRequired": 1
+          "numRequired": 1,
+          "outcomes": [{
+            "4": {
+              "type": "DisplayRule"
+            },
+            "1,2,3,5,6": {
+              "type": "SkipTurnRule",
+              "numTurns": 1
+            }
+          }]
         }
       },
       "position": [{

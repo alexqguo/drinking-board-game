@@ -89,6 +89,8 @@ class Game {
   }
 
   endDiceRoll(next: Function, roll: number): void {
+    // TODO: check move condition
+
     if (this.currentPlayer.speedModifiers.length) {
       const modifier: number = this.currentPlayer.speedModifiers.shift();
       roll = Math.ceil(modifier * roll); // TODO - may not always be multiplication
