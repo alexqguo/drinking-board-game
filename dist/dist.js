@@ -595,6 +595,7 @@ var Painter = (function () {
         var incrementY = (dy / totalDistance) * VELO;
         gameInstance.currentPlayer.currentPos.x += incrementX;
         gameInstance.currentPlayer.currentPos.y += incrementY;
+        window.scrollBy(incrementX, incrementY);
         this.raf = window.requestAnimationFrame(this.draw.bind(this));
     };
     Painter.prototype.drawPlayers = function () {
@@ -613,7 +614,6 @@ var Painter = (function () {
     };
     return Painter;
 }());
-//# sourceMappingURL=Painter.js.map
 
 var Modal = (function () {
     function Modal() {
@@ -727,6 +727,7 @@ var Modal = (function () {
     };
     return Modal;
 }());
+//# sourceMappingURL=Modal.js.map
 
 var Game = (function () {
     function Game() {
@@ -805,8 +806,6 @@ var Game = (function () {
             return tile.isMandatory;
         });
         var numSpacesToAdvance = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
-        if (this.currentPlayer.name === 'asdf')
-            numSpacesToAdvance = 43;
         if (numSpacesToAdvance > 0) {
             this.currentPlayer.moveToTile(this.currentPlayer.currentTileIndex + numSpacesToAdvance);
             gameEventsInstance.trigger(MOVE_START);

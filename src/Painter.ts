@@ -37,7 +37,7 @@ export default class Painter {
     Game.currentPlayer.currentPos.x += incrementX;
     Game.currentPlayer.currentPos.y += incrementY;
 
-    // window.scrollBy(incrementX, incrementY);
+    window.scrollBy(incrementX, incrementY);
     this.raf = window.requestAnimationFrame(this.draw.bind(this));
   }
 
