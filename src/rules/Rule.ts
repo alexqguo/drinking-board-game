@@ -1,4 +1,4 @@
-import { JsonDiceRoll, PlayerTarget } from '../interfaces';
+import { DiceRoll, PlayerTarget, JsonRule } from '../interfaces';
 import GameEvents, { RULE_END } from '../GameEvents';
 import Game from '../Game';
 import Player from '../Player';
@@ -6,15 +6,17 @@ import Player from '../Player';
 abstract class Rule {
   displayText: string;
   type: string;
-  playerTarget: string; // todo- should be enum or symbol
-  diceRolls: JsonDiceRoll;
+  playerTarget: PlayerTarget;
+  criteria: number[];
 
-  constructor(displayText: string, type: string, playerTarget: string, diceRolls?: JsonDiceRoll) {
+  constructor(json: JsonRule/*displayText: string, type: string, playerTarget: PlayerTarget, diceRolls?: DiceRoll*/) {
+    const { displayText, type, playerTarget, criteria } = json;
     this.validateRequired(type);
+
     this.type = type;
     this.displayText = displayText;
     this.playerTarget = playerTarget;
-    this.diceRolls = diceRolls;
+    this.criteria = criteria;
   }
 
   // Should this return a promise instead?

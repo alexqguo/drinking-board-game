@@ -1,6 +1,7 @@
 import Game from './Game';
 import Player from './Player';
 
+// TODO: stencil
 export class Modal {
   triggerId: string;
   trigger: HTMLInputElement;
@@ -63,7 +64,8 @@ export class Modal {
         rolls.push(e.detail.roll);
         
         if (rolls.length === n) {
-          cb(rolls);
+          // bad
+          setTimeout(() => { cb(rolls) }, 1000);
         }
       });
     });

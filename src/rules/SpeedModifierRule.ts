@@ -8,8 +8,8 @@ class SpeedModifierRule extends Rule {
   numTurns: number;
 
   constructor(json: JsonRule) {
-    const { displayText, type, playerTarget, diceRolls, multiplier, numTurns } = json;
-    super(displayText, type, playerTarget, diceRolls);
+    super(json);
+    const { multiplier, numTurns } = json;
     this.validateRequired(multiplier, numTurns); // TODO: playerTarget as well?
     this.multiplier = multiplier;
     this.numTurns = numTurns;
@@ -27,8 +27,9 @@ class SpeedModifierRule extends Rule {
           for (let i = 0; i < this.numTurns; i ++) {
             p.speedModifiers.push(this.multiplier);
           }
-          Game.modal.enableClose();
         });
+        
+        Game.modal.enableClose();
       });
   }
 }

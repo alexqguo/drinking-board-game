@@ -115,7 +115,7 @@
       "mandatory": true,
       "rule": {
         "displayText": "PEWTER GYM. Roll a die. Even: Give a drink. Odd: Take a drink.",
-        "type": "DisplayRule",
+        "type": "DiceRollRule",
         "diceRolls": {
           "numRequired": 1
         }
@@ -230,7 +230,7 @@
     }, {
       "rule": {
         "displayText": "GARY. Roll a die. Drink half, give half (round up). What's this guy's deal, anyway?",
-        "type": "DisplayRule",
+        "type": "DiceRollRule",
         "diceRolls": {
           "numRequired": 1
         }
@@ -364,14 +364,14 @@
       "mandatory": true,
       "rule": {
         "displayText": "VERMILION GYM. Roll a die. Even, you're paralyzed; take 2 drinks and miss your next turn. Odd, take a drink.",
-        "type": "DisplayRule",
+        "type": "DiceRollRule",
         "diceRolls": {
           "numRequired": 1,
           "outcomes": [{
-            "2,4,6": {
-              "type": "SkipTurnRule",
-              "numTurns": 1
-            }
+            "type": "SkipTurnRule",
+            "displayText": "Even, you're paralyzed; take 2 drinks and miss your next turn",
+            "numTurns": 1,
+            "criteria": [2, 4, 6]
           }]
         }
       },
@@ -577,7 +577,7 @@
     }, {
       "rule": {
         "displayText": "GARY. Roll a die. Drink that number minus one. Seriously though, is this dude following you or something?",
-        "type": "DisplayRule",
+        "type": "DiceRollRule",
         "diceRolls": {
           "numRequired": 1
         }
@@ -617,14 +617,16 @@
       "mandatory": true,
       "rule": {
         "displayText": "CELADON GYM. Roll a die. 1-3: Stun Spore; Lose a turn. 4-6: Mega Drain; Finish your drink.",
-        "type": "DisplayRule",
+        "type": "DiceRollRule",
         "diceRolls": {
           "numRequired": 1,
           "outcomes": [{
-            "1,2,3": {
-              "type": "SkipTurnRule",
-              "numTurns": 1
-            }
+            "type": "SkipTurnRule",
+            "numTurns": 1,
+            "criteria": [1, 2, 3]
+          }, {
+            "type": "DisplayRule",
+            "displayText": "Mega Drain; Finish your drink."
           }]
         }
       },
@@ -734,7 +736,11 @@
     }, {
       "rule": {
         "displayText": "Lapras used Confuse Ray! Pick a player; they are now confused. Next turn, they must roll a 1-3 to stop being confused. If not, they are still confused, and lose a turn.",
-        "type": "TODO - probably a ChoiceRule with custom player target"
+        "type": "ApplyMoveConditionRule",
+        "playerTarget": "custom",
+        "condition": {
+          "criteria": [1, 2, 3]
+        }
       },
       "position": [{
         "x": 453,
@@ -843,7 +849,7 @@
     }, {
       "rule": {
         "displayText": "Challenge someone to a chugging contest. First to finish gets an extra turn, last to finish loses a turn.",
-        "type": "TODO"
+        "type": "TODO - ???"
       },
       "position": [{
         "x": 1577,
@@ -933,7 +939,7 @@
     }, {
       "rule": {
         "displayText": "Gone fishin'... a wild Dratini appeared! Roll a 1 to catch. Otherwise, drink 1.",
-        "type": "DisplayRule",
+        "type": "DiceRollRule",
         "diceRolls": {
           "numRequired": 1
         }
@@ -972,7 +978,7 @@
     }, {
       "rule": {
         "displayText": "Roll the die. If it's 1-3 Chansey eludes you, drink 1. If 4-6, you capture Chansey, give 2.",
-        "type": "DisplayRule",
+        "type": "DiceRollRule",
         "diceRolls": {
           "numRequired": 1
         }
@@ -1085,15 +1091,19 @@
     }, {
       "rule": {
         "displayText": "A wild Missingno! Roll 3 times. Get a 5 or 6, and you continue. If not, you glitched. Restart at Pallet Town.",
-        "type": "DisplayRule",
+        "type": "DiceRollRule",
         "diceRolls": {
           "numRequired": 3,
           "outcomes": [{
-            "5,6": {
-              "type": "TeleportRule",
-              "tileIndex": 0
-            }
-          }]
+            "type": "TeleportRule",
+            "tileIndex": 0,
+            "criteria": [1, 2, 3, 4]
+          }],
+          "any": {
+            "type": "DisplayRule",
+            "displayText": "Phew",
+            "criteria": [5, 6]
+          }
         }
       },
       "position": [{
@@ -1167,7 +1177,7 @@
     }, {
       "rule": {
         "displayText": "You throw a Pokeball! If your favorite Pokemon is on the board, roll a 1-3 to catch it! Roll a 4-6 and it got away, drink 3. If your favorite is not on the board, sadly drink 3.",
-        "type": "DisplayRule",
+        "type": "DiceRollRule",
         "diceRolls": {
           "numRequired": 1
         }
@@ -1302,7 +1312,11 @@
       "mandatory": true,
       "rule": {
         "displayText": "Gotta catch 'em all! Roll a die. 1-3: Why are you throwing Great Balls at it? Take a drink! 4-6: You got one! You may only move on once you've caught all 3 birds.",
-        "type": "TODO - applymovecondition"
+        "type": "ApplyMoveConditionRule",
+        "condition": {
+          "criteria": [4, 5, 6],
+          "numSuccessesRequired": 3
+        }
       },
       "position": [{
         "x": 1390,
@@ -1321,18 +1335,9 @@
       "mandatory": true,
       "rule": {
         "displayText": "THE ELITE FOUR. Challenge the land's greatest trainers: the Elite Four! Roll a 4 to defeat the Elite Four! For any other number, drink 4!",
-        "type": "DisplayRule",
+        "type": "DiceRollRule",
         "diceRolls": {
-          "numRequired": 1,
-          "outcomes": [{
-            "4": {
-              "type": "DisplayRule"
-            },
-            "1,2,3,5,6": {
-              "type": "SkipTurnRule",
-              "numTurns": 1
-            }
-          }]
+          "numRequired": 1
         }
       },
       "position": [{

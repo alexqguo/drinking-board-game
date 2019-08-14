@@ -4,12 +4,12 @@ import { JsonRule } from '../interfaces';
 
 export default class GameOverRule extends Rule {
   constructor(json: JsonRule) {
-    const { displayText, type, playerTarget, diceRolls } = json;
-    super(displayText, type, playerTarget, diceRolls);
+    super(json);
   }
 
   execute(): void {
     alert('Game over!');
     Game.gameOver();
+    Game.modal.enableClose();
   }
 }

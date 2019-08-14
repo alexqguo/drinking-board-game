@@ -8,8 +8,8 @@ class ApplyMoveConditionRule extends Rule {
   successes: Map<Player, number>;
 
   constructor(json: JsonRule) {
-    const { displayText, type, playerTarget, diceRolls, condition } = json;
-    super(displayText, type, playerTarget, diceRolls);
+    super(json);
+    const { condition } = json;
     this.validateRequired(condition);
     // Tracks successes per player for this particular tile/rule instance. One success = one turn
     this.successes = new Map();

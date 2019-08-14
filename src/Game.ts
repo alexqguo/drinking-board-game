@@ -89,7 +89,6 @@ class Game {
   }
 
   endDiceRoll(next: Function, roll: number): void {
-    // TODO: check move condition
     if (this.currentPlayer.moveCondition) {
       const canMove = this.currentPlayer.moveCondition(roll);
 
@@ -117,7 +116,7 @@ class Game {
     let numSpacesToAdvance: number = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
     
     // uncomment this line for testing
-    if (this.currentPlayer.name === 'asdf') numSpacesToAdvance = 8;
+    if (this.currentPlayer.name === 'asdf') numSpacesToAdvance = 57;
     // if (this.currentPlayer.name === 'blah') numSpacesToAdvance = 25;
 
     if (numSpacesToAdvance > 0) {
@@ -148,6 +147,7 @@ class Game {
   }
 
   endTurn(next: Function): void {
+    // TODO: check here if the user gets an extra turn
     next();
     this.turnIndex++;
     GameEvents.trigger(TURN_START);

@@ -95,12 +95,13 @@ var gameEventsInstance = new GameEvents();
 //# sourceMappingURL=GameEvents.js.map
 
 var Rule = (function () {
-    function Rule(displayText, type, playerTarget, diceRolls) {
+    function Rule(json) {
+        var displayText = json.displayText, type = json.type, playerTarget = json.playerTarget, criteria = json.criteria;
         this.validateRequired(type);
         this.type = type;
         this.displayText = displayText;
         this.playerTarget = playerTarget;
-        this.diceRolls = diceRolls;
+        this.criteria = criteria;
     }
     Rule.prototype.execute = function () {
         gameInstance.modal.show(this.displayText);
@@ -178,9 +179,8 @@ function __extends(d, b) {
 var DisplayRule = (function (_super) {
     __extends(DisplayRule, _super);
     function DisplayRule(json) {
-        var _this = this;
-        var displayText = json.displayText, type = json.type, playerTarget = json.playerTarget, diceRolls = json.diceRolls;
-        _this = _super.call(this, displayText, type, playerTarget, diceRolls) || this;
+        var _this = _super.call(this, json) || this;
+        _this.validateRequired(json.displayText);
         return _this;
     }
     DisplayRule.prototype.execute = function () {
@@ -194,9 +194,8 @@ var DisplayRule = (function (_super) {
 var MoveRule = (function (_super) {
     __extends(MoveRule, _super);
     function MoveRule(json) {
-        var _this = this;
-        var displayText = json.displayText, type = json.type, playerTarget = json.playerTarget, diceRolls = json.diceRolls, direction = json.direction, numSpaces = json.numSpaces;
-        _this = _super.call(this, displayText, type, playerTarget, diceRolls) || this;
+        var _this = _super.call(this, json) || this;
+        var playerTarget = json.playerTarget, direction = json.direction, numSpaces = json.numSpaces;
         _this.validateRequired(playerTarget, direction, numSpaces);
         _this.direction = direction;
         _this.numSpaces = numSpaces;
@@ -222,9 +221,8 @@ var MoveRule = (function (_super) {
 var SkipTurnRule = (function (_super) {
     __extends(SkipTurnRule, _super);
     function SkipTurnRule(json) {
-        var _this = this;
-        var displayText = json.displayText, type = json.type, playerTarget = json.playerTarget, diceRolls = json.diceRolls, numTurns = json.numTurns;
-        _this = _super.call(this, displayText, type, playerTarget, diceRolls) || this;
+        var _this = _super.call(this, json) || this;
+        var numTurns = json.numTurns;
         _this.validateRequired(numTurns);
         _this.numTurns = numTurns;
         return _this;
@@ -241,9 +239,8 @@ var SkipTurnRule = (function (_super) {
 var SpeedModifierRule = (function (_super) {
     __extends(SpeedModifierRule, _super);
     function SpeedModifierRule(json) {
-        var _this = this;
-        var displayText = json.displayText, type = json.type, playerTarget = json.playerTarget, diceRolls = json.diceRolls, multiplier = json.multiplier, numTurns = json.numTurns;
-        _this = _super.call(this, displayText, type, playerTarget, diceRolls) || this;
+        var _this = _super.call(this, json) || this;
+        var multiplier = json.multiplier, numTurns = json.numTurns;
         _this.validateRequired(multiplier, numTurns);
         _this.multiplier = multiplier;
         _this.numTurns = numTurns;
@@ -259,8 +256,8 @@ var SpeedModifierRule = (function (_super) {
                 for (var i = 0; i < _this.numTurns; i++) {
                     p.speedModifiers.push(_this.multiplier);
                 }
-                gameInstance.modal.enableClose();
             });
+            gameInstance.modal.enableClose();
         });
     };
     return SpeedModifierRule;
@@ -270,9 +267,8 @@ var SpeedModifierRule = (function (_super) {
 var TeleportRule = (function (_super) {
     __extends(TeleportRule, _super);
     function TeleportRule(json) {
-        var _this = this;
-        var displayText = json.displayText, type = json.type, playerTarget = json.playerTarget, diceRolls = json.diceRolls, tileIndex = json.tileIndex;
-        _this = _super.call(this, displayText, type, playerTarget, diceRolls) || this;
+        var _this = _super.call(this, json) || this;
+        var tileIndex = json.tileIndex;
         _this.validateRequired(tileIndex);
         _this.tileIndex = tileIndex;
         return _this;
@@ -291,14 +287,12 @@ var TeleportRule = (function (_super) {
 var GameOverRule = (function (_super) {
     __extends(GameOverRule, _super);
     function GameOverRule(json) {
-        var _this = this;
-        var displayText = json.displayText, type = json.type, playerTarget = json.playerTarget, diceRolls = json.diceRolls;
-        _this = _super.call(this, displayText, type, playerTarget, diceRolls) || this;
-        return _this;
+        return _super.call(this, json) || this;
     }
     GameOverRule.prototype.execute = function () {
         alert('Game over!');
         gameInstance.gameOver();
+        gameInstance.modal.enableClose();
     };
     return GameOverRule;
 }(Rule));
@@ -307,10 +301,7 @@ var GameOverRule = (function (_super) {
 var ExtraTurnRule = (function (_super) {
     __extends(ExtraTurnRule, _super);
     function ExtraTurnRule(json) {
-        var _this = this;
-        var displayText = json.displayText, type = json.type, playerTarget = json.playerTarget;
-        _this = _super.call(this, displayText, type, playerTarget) || this;
-        return _this;
+        return _super.call(this, json) || this;
     }
     ExtraTurnRule.prototype.execute = function () {
         _super.prototype.execute.call(this);
@@ -324,9 +315,8 @@ var ExtraTurnRule = (function (_super) {
 var DrinkDuringLostTurnsRule = (function (_super) {
     __extends(DrinkDuringLostTurnsRule, _super);
     function DrinkDuringLostTurnsRule(json) {
-        var _this = this;
-        var displayText = json.displayText, type = json.type, playerTarget = json.playerTarget, diceRolls = json.diceRolls;
-        _this = _super.call(this, displayText, type, playerTarget, diceRolls) || this;
+        var _this = _super.call(this, json) || this;
+        _this.diceRolls = json.diceRolls;
         return _this;
     }
     DrinkDuringLostTurnsRule.prototype.execute = function () {
@@ -343,9 +333,8 @@ var DrinkDuringLostTurnsRule = (function (_super) {
 var ApplyMoveConditionRule = (function (_super) {
     __extends(ApplyMoveConditionRule, _super);
     function ApplyMoveConditionRule(json) {
-        var _this = this;
-        var displayText = json.displayText, type = json.type, playerTarget = json.playerTarget, diceRolls = json.diceRolls, condition = json.condition;
-        _this = _super.call(this, displayText, type, playerTarget, diceRolls) || this;
+        var _this = _super.call(this, json) || this;
+        var condition = json.condition;
         _this.validateRequired(condition);
         _this.successes = new Map();
         _this.condition = condition;
@@ -385,6 +374,61 @@ var ApplyMoveConditionRule = (function (_super) {
     };
     return ApplyMoveConditionRule;
 }(Rule));
+//# sourceMappingURL=ApplyMoveConditionRule.js.map
+
+var DiceRollRule = (function (_super) {
+    __extends(DiceRollRule, _super);
+    function DiceRollRule(json) {
+        var _this = _super.call(this, json) || this;
+        _this.diceRolls = json.diceRolls;
+        _this.outcomeRules = [];
+        if (_this.diceRolls.outcomes && _this.diceRolls.outcomes.length) {
+            _this.diceRolls.outcomes.forEach(function (rule) {
+                _this.outcomeRules.push(createRule(rule));
+            });
+        }
+        if (_this.diceRolls.any) {
+            _this.any = createRule(_this.diceRolls.any);
+        }
+        return _this;
+    }
+    DiceRollRule.prototype.getOutcomeForRolls = function (rolls) {
+        var _this = this;
+        var outcomeRule = null;
+        if (!this.outcomeRules && !this.any)
+            return null;
+        if (this.any) {
+            for (var i = 0; i < rolls.length; i++) {
+                if (this.any.criteria.indexOf(rolls[i]) !== -1) {
+                    return this.any;
+                }
+            }
+        }
+        rolls.forEach(function (roll) {
+            _this.outcomeRules.forEach(function (rule) {
+                if (rule.criteria && rule.criteria.length && rule.criteria.indexOf(roll) !== -1) {
+                    outcomeRule = rule;
+                }
+            });
+        });
+        return outcomeRule;
+    };
+    DiceRollRule.prototype.execute = function () {
+        var _this = this;
+        _super.prototype.execute.call(this);
+        gameInstance.modal.requireDiceRolls(this.diceRolls.numRequired, function (rolls) {
+            var outcomeRule = _this.getOutcomeForRolls(rolls);
+            if (outcomeRule) {
+                outcomeRule.execute();
+            }
+            else {
+                gameInstance.modal.enableClose();
+            }
+        });
+    };
+    return DiceRollRule;
+}(Rule));
+//# sourceMappingURL=DiceRollRule.js.map
 
 var RULE_MAPPINGS = {
     MoveRule: MoveRule,
@@ -396,6 +440,7 @@ var RULE_MAPPINGS = {
     ExtraTurnRule: ExtraTurnRule,
     DrinkDuringLostTurnsRule: DrinkDuringLostTurnsRule,
     ApplyMoveConditionRule: ApplyMoveConditionRule,
+    DiceRollRule: DiceRollRule,
 };
 function createTiles(tilesJson) {
     return tilesJson.map(function (tileJson) {
@@ -547,7 +592,7 @@ var Modal = (function () {
             el.addEventListener('roll', function (e) {
                 rolls.push(e.detail.roll);
                 if (rolls.length === n) {
-                    cb(rolls);
+                    setTimeout(function () { cb(rolls); }, 1000);
                 }
             });
         });
@@ -589,7 +634,6 @@ var Modal = (function () {
     };
     return Modal;
 }());
-//# sourceMappingURL=Modal.js.map
 
 var Game = (function () {
     function Game() {
@@ -669,7 +713,7 @@ var Game = (function () {
         });
         var numSpacesToAdvance = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
         if (this.currentPlayer.name === 'asdf')
-            numSpacesToAdvance = 8;
+            numSpacesToAdvance = 57;
         if (numSpacesToAdvance > 0) {
             this.currentPlayer.moveToTile(this.currentPlayer.currentTileIndex + numSpacesToAdvance);
             gameEventsInstance.trigger(MOVE_START);

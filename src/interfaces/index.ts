@@ -23,8 +23,9 @@ export interface JsonRule {
   numTurns?: number;
   playerTarget?: PlayerTarget;
   multiplier?: number;
-  diceRolls?: JsonDiceRoll;
+  diceRolls?: DiceRoll;
   condition?: MoveCondition;
+  criteria?: number[];
 }
 
 export interface MoveCondition {
@@ -32,14 +33,10 @@ export interface MoveCondition {
   numSuccessesRequired: number;
 }
 
-export interface JsonDiceRoll {
-  outcomes?: JsonDiceRollOutcome[];
+export interface DiceRoll {
+  outcomes?: JsonRule[];
+  any?: JsonRule; // I got lazy. Any match on an "any" will override all other rules
   numRequired: number;
-}
-
-export interface JsonDiceRollOutcome {
-  // Prop name is a comma separated string of numbers to trigger the particular rule
-  [propName: string]: JsonRule;
 }
 
 export enum PlayerTarget {

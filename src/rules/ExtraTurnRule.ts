@@ -4,14 +4,14 @@ import { JsonRule } from '../interfaces';
 
 export default class ExtraTurnRule extends Rule {
   constructor(json: JsonRule) {
-    const { displayText, type, playerTarget } = json;
-    super(displayText, type, playerTarget);
-    // TODO - specify number of extra turns
+    super(json);
+    // TODO - specify number of extra turns? need to involve playerTarget here
   }
 
   execute(): void {
     super.execute();
     
+    // can specify now or later?
     Game.playerTurns.unshift(Game.currentPlayer);
     Game.modal.enableClose();
   }

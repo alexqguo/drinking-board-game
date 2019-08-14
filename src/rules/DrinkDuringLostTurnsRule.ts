@@ -1,11 +1,16 @@
 import Rule from './Rule';
 import Game from '../Game';
-import { JsonRule } from '../interfaces';
+import { JsonRule, DiceRoll } from '../interfaces';
 
+/**
+ * TODO: Delete this entirely and use DiceRollRule instead
+ */
 class DrinkDuringLostTurnsRule extends Rule {
+  diceRolls: DiceRoll;
+
   constructor(json: JsonRule) {
-    const { displayText, type, playerTarget, diceRolls } = json;
-    super(displayText, type, playerTarget, diceRolls);
+    super(json);
+    this.diceRolls = json.diceRolls;
   }
 
   execute() {

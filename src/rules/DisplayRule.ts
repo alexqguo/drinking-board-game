@@ -4,8 +4,8 @@ import Game from '../Game';
 
 class DisplayRule extends Rule {
   constructor(json: JsonRule) {
-    const { displayText, type, playerTarget, diceRolls } = json;
-    super(displayText, type, playerTarget, diceRolls);
+    super(json);
+    this.validateRequired(json.displayText);
   }
 
   execute() {
