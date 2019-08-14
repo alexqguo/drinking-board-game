@@ -13,13 +13,12 @@ class Player {
   // TODO: consider puttting the following into a containing "effects" map or list
   skippedTurns: number;
   speedModifiers: number[];
-  moveConditions: Function[];
+  moveCondition: Function; // As of right now, player can only have one active move condition
   
   constructor(name: string) {
     this.name = name;
     this.skippedTurns = 0;
     this.speedModifiers = [];
-    this.moveConditions = [];
   }
 
   canTakeTurn(): boolean {

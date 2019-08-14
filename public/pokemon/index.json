@@ -156,7 +156,7 @@
         "displayText": "Zubats... they're... they're everywhere! Take a drink. Next turn, if you roll a 1 or 2, stay here and take a drink.",
         "type": "ApplyMoveConditionRule",
         "condition": {
-          "criteria": [1, 2]
+          "criteria": [3, 4, 5, 6]
         }
       },
       "position": [{

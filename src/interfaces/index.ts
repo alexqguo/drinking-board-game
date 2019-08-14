@@ -28,7 +28,8 @@ export interface JsonRule {
 }
 
 export interface MoveCondition {
-
+  criteria: number[];
+  numSuccessesRequired: number;
 }
 
 export interface JsonDiceRoll {

@@ -34,6 +34,7 @@ var PlayerTarget;
     PlayerTarget["self"] = "self";
     PlayerTarget["allOthers"] = "allOthers";
 })(PlayerTarget || (PlayerTarget = {}));
+//# sourceMappingURL=index.js.map
 
 var TURN_START = 'TURN_START';
 var ROLL_START = 'ROLL_START';
@@ -343,17 +344,47 @@ var ApplyMoveConditionRule = (function (_super) {
     __extends(ApplyMoveConditionRule, _super);
     function ApplyMoveConditionRule(json) {
         var _this = this;
-        var displayText = json.displayText, type = json.type, playerTarget = json.playerTarget, diceRolls = json.diceRolls;
+        var displayText = json.displayText, type = json.type, playerTarget = json.playerTarget, diceRolls = json.diceRolls, condition = json.condition;
         _this = _super.call(this, displayText, type, playerTarget, diceRolls) || this;
-        _this.validateRequired();
+        _this.validateRequired(condition);
+        _this.successes = new Map();
+        _this.condition = condition;
         return _this;
     }
     ApplyMoveConditionRule.prototype.execute = function () {
+        var _this = this;
         _super.prototype.execute.call(this);
+        this.selectPlayers()
+            .then(function (value) {
+            value.forEach(function (p) {
+                _this.successes.set(p, 0);
+                var canPlayerMove = function (roll) {
+                    console.log("roll: " + roll);
+                    console.log(_this.condition);
+                    if (_this.condition.criteria.indexOf(roll) === -1) {
+                        if (!_this.condition.numSuccessesRequired) {
+                            p.moveCondition = null;
+                            _this.successes.delete(p);
+                        }
+                        return false;
+                    }
+                    var currentSuccesses = _this.successes.get(p);
+                    _this.successes.set(p, currentSuccesses + 1);
+                    if (!_this.condition.numSuccessesRequired ||
+                        _this.successes.get(p) >= _this.condition.numSuccessesRequired) {
+                        p.moveCondition = null;
+                        _this.successes.delete(p);
+                        return true;
+                    }
+                    return false;
+                };
+                p.moveCondition = canPlayerMove;
+                gameInstance.modal.enableClose();
+            });
+        });
     };
     return ApplyMoveConditionRule;
 }(Rule));
-//# sourceMappingURL=ApplyMoveConditionRule.js.map
 
 var RULE_MAPPINGS = {
     MoveRule: MoveRule,
@@ -404,7 +435,6 @@ var Player = (function () {
         this.name = name;
         this.skippedTurns = 0;
         this.speedModifiers = [];
-        this.moveConditions = [];
     }
     Player.prototype.canTakeTurn = function () {
         if (this.skippedTurns > 0) {
@@ -449,7 +479,6 @@ var Painter = (function () {
         var incrementY = (dy / totalDistance) * VELO;
         gameInstance.currentPlayer.currentPos.x += incrementX;
         gameInstance.currentPlayer.currentPos.y += incrementY;
-        window.scrollBy(incrementX, incrementY);
         this.raf = window.requestAnimationFrame(this.draw.bind(this));
     };
     Painter.prototype.drawPlayers = function () {
@@ -619,6 +648,16 @@ var Game = (function () {
         this.diceLink.addEventListener('roll', handleRoll);
     };
     Game.prototype.endDiceRoll = function (next, roll) {
+        if (this.currentPlayer.moveCondition) {
+            var canMove = this.currentPlayer.moveCondition(roll);
+            if (!canMove) {
+                setTimeout(function () {
+                    gameEventsInstance.trigger(TURN_END);
+                }, 2000);
+                next();
+                return;
+            }
+        }
         if (this.currentPlayer.speedModifiers.length) {
             var modifier = this.currentPlayer.speedModifiers.shift();
             roll = Math.ceil(modifier * roll);
@@ -629,6 +668,8 @@ var Game = (function () {
             return tile.isMandatory;
         });
         var numSpacesToAdvance = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
+        if (this.currentPlayer.name === 'asdf')
+            numSpacesToAdvance = 8;
         if (numSpacesToAdvance > 0) {
             this.currentPlayer.moveToTile(this.currentPlayer.currentTileIndex + numSpacesToAdvance);
             gameEventsInstance.trigger(MOVE_START);

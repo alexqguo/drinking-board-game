@@ -90,6 +90,18 @@ class Game {
 
   endDiceRoll(next: Function, roll: number): void {
     // TODO: check move condition
+    if (this.currentPlayer.moveCondition) {
+      const canMove = this.currentPlayer.moveCondition(roll);
+
+      if (!canMove) {
+        // So that it doesn't jump immediately. Not sure of a good way to do this right now.
+        setTimeout(() => {
+          GameEvents.trigger(TURN_END);
+        }, 2000);
+        next();
+        return;
+      }
+    }
 
     if (this.currentPlayer.speedModifiers.length) {
       const modifier: number = this.currentPlayer.speedModifiers.shift();
@@ -105,7 +117,7 @@ class Game {
     let numSpacesToAdvance: number = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
     
     // uncomment this line for testing
-    // if (this.currentPlayer.name === 'asdf') numSpacesToAdvance = 15;
+    if (this.currentPlayer.name === 'asdf') numSpacesToAdvance = 8;
     // if (this.currentPlayer.name === 'blah') numSpacesToAdvance = 25;
 
     if (numSpacesToAdvance > 0) {
