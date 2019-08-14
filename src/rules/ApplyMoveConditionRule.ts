@@ -60,6 +60,13 @@ class ApplyMoveConditionRule extends Rule {
           };
 
           p.moveCondition = canPlayerMove;
+
+          // WIll fail with a custom player target as the modal will close immediately
+          if (this.condition.immediate) {
+            Game.modal.requireDiceRolls(1, (rolls: number[]) => {
+              canPlayerMove(rolls[0]);
+            });
+          }
         });
 
         if (this.playerTarget === PlayerTarget.custom) {

@@ -1318,7 +1318,8 @@
         "type": "ApplyMoveConditionRule",
         "condition": {
           "criteria": [4, 5, 6],
-          "numSuccessesRequired": 3
+          "numSuccessesRequired": 3,
+          "immediate": true
         }
       },
       "position": [{
