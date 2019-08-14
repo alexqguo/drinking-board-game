@@ -69,6 +69,11 @@ may put an App class in here if necessary
       return;
     }
 
+    if (new Set(gameSetupInfo[1]).size < gameSetupInfo[1].length) {
+      alert('Player names must be unique');
+      return;
+    }
+
     initGame(gameSetupInfo[0], gameSetupInfo[1]);
     document.getElementById('setup').style.display = 'none';
     document.getElementById('overlay').style.display = 'block';

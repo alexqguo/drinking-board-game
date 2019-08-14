@@ -52,15 +52,12 @@ class DiceRollRule extends Rule {
   execute() {
     super.execute();
 
-    // set the outcome, once you find one then break
-    // set the any
-
     Game.modal.requireDiceRolls(this.diceRolls.numRequired, (rolls: number[]) => {
       const outcomeRule = this.getOutcomeForRolls(rolls);
 
       if (outcomeRule) {
         outcomeRule.execute();
-        // the rule will call enableClose on the modal itself
+        // The outcome rule will call enableClose on the modal itself
       } else {
         Game.modal.enableClose();
       }

@@ -634,6 +634,7 @@ var Modal = (function () {
     };
     return Modal;
 }());
+//# sourceMappingURL=Modal.js.map
 
 var Game = (function () {
     function Game() {
@@ -807,9 +808,12 @@ var gameInstance = new Game();
             alert('You need players to play this game');
             return;
         }
+        if (new Set(gameSetupInfo[1]).size < gameSetupInfo[1].length) {
+            alert('Player names must be unique');
+            return;
+        }
         initGame(gameSetupInfo[0], gameSetupInfo[1]);
         document.getElementById('setup').style.display = 'none';
         document.getElementById('overlay').style.display = 'block';
     });
 }());
-//# sourceMappingURL=App.js.map
