@@ -21,6 +21,7 @@ class ApplyMoveConditionRule extends Rule {
 
     this.selectPlayers()
       .then((value: Player[]) => {
+
         value.forEach((p: Player) => {
 
           // Initialize (or reset) successes for the selected player
@@ -69,6 +70,7 @@ class ApplyMoveConditionRule extends Rule {
           }
         });
 
+        console.log(`${this.playerTarget} ${PlayerTarget.custom}`)
         if (this.playerTarget === PlayerTarget.custom) {
           // If it was a click, close the modal immediately
           Game.modal.close();

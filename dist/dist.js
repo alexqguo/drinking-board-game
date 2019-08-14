@@ -372,6 +372,7 @@ var ApplyMoveConditionRule = (function (_super) {
                     });
                 }
             });
+            console.log(_this.playerTarget + " " + PlayerTarget.custom);
             if (_this.playerTarget === PlayerTarget.custom) {
                 gameInstance.modal.close();
             }
@@ -382,6 +383,7 @@ var ApplyMoveConditionRule = (function (_super) {
     };
     return ApplyMoveConditionRule;
 }(Rule));
+//# sourceMappingURL=ApplyMoveConditionRule.js.map
 
 var DiceRollRule = (function (_super) {
     __extends(DiceRollRule, _super);
@@ -463,6 +465,40 @@ var RollUntilRule = (function (_super) {
 }(Rule));
 //# sourceMappingURL=RollUntilRule.js.map
 
+var ChoiceRule = (function (_super) {
+    __extends(ChoiceRule, _super);
+    function ChoiceRule(json) {
+        var _this = _super.call(this, json) || this;
+        var choices = json.choices, diceRolls = json.diceRolls;
+        _this.validateRequired(choices);
+        _this.choiceRules = [];
+        _this.diceRolls = diceRolls;
+        if (choices && choices.length) {
+            choices.forEach(function (rule) {
+                _this.choiceRules.push(createRule(rule));
+            });
+        }
+        return _this;
+    }
+    ChoiceRule.prototype.execute = function () {
+        _super.prototype.execute.call(this);
+        if (this.diceRolls) {
+            gameInstance.modal.requireDiceRolls(this.diceRolls.numRequired, function () { });
+        }
+        gameInstance.modal.requireChoice(this.choiceRules)
+            .then(function (value) {
+            if (!value) {
+                gameInstance.modal.enableClose();
+                return;
+            }
+            console.log(value);
+            value.execute();
+        });
+    };
+    return ChoiceRule;
+}(Rule));
+//# sourceMappingURL=ChoiceRule.js.map
+
 var RULE_MAPPINGS = {
     MoveRule: MoveRule,
     DisplayRule: DisplayRule,
@@ -475,6 +511,7 @@ var RULE_MAPPINGS = {
     ApplyMoveConditionRule: ApplyMoveConditionRule,
     DiceRollRule: DiceRollRule,
     RollUntilRule: RollUntilRule,
+    ChoiceRule: ChoiceRule,
 };
 function createTiles(tilesJson) {
     return tilesJson.map(function (tileJson) {
@@ -632,26 +669,11 @@ var Modal = (function () {
         });
     };
     Modal.prototype.requirePlayerSelection = function (playerList) {
-        var _this = this;
         if (!playerList || playerList.length === 0)
             return Promise.resolve([]);
-        var names = playerList.map(function (p) { return p.name; });
-        var frag = document.createDocumentFragment();
-        var header = document.createElement('h4');
-        header.innerText = 'Choose a player';
-        frag.appendChild(header);
-        names.forEach(function (name) {
-            var playerLink = document.createElement('a');
-            playerLink.classList.add('sm');
-            playerLink.href = '#';
-            playerLink.innerText = name;
-            playerLink.dataset.name = name;
-            frag.appendChild(playerLink);
-            frag.appendChild(document.createTextNode('\u00A0\u00A0'));
-        });
-        this.content.appendChild(frag);
+        var links = this.addLinks('Choose a player', playerList.map(function (p) { return p.name; }));
         return new Promise(function (resolve) {
-            Array.from(_this.content.querySelectorAll('a')).forEach(function (el) {
+            Array.from(links).forEach(function (el) {
                 el.addEventListener('click', function (e) {
                     e.preventDefault();
                     var selectedPlayer = playerList.find(function (p) {
@@ -663,12 +685,48 @@ var Modal = (function () {
             });
         });
     };
+    Modal.prototype.requireChoice = function (rules) {
+        if (!rules || rules.length === 0)
+            return Promise.resolve(null);
+        var links = this.addLinks('Choose an outcome', rules.map(function (r) { return r.displayText; }));
+        console.log(links);
+        return new Promise(function (resolve) {
+            Array.from(links).forEach(function (el) {
+                el.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    var selectedRule = rules.find(function (r) {
+                        return r.displayText === e.currentTarget.dataset.name;
+                    });
+                    resolve(selectedRule);
+                    return false;
+                });
+            });
+        });
+    };
+    Modal.prototype.addLinks = function (headerText, descriptions) {
+        var links = [];
+        var frag = document.createDocumentFragment();
+        var header = document.createElement('h4');
+        header.innerText = headerText;
+        frag.appendChild(header);
+        descriptions.forEach(function (desc) {
+            var playerLink = document.createElement('a');
+            playerLink.classList.add('sm');
+            playerLink.href = '#';
+            playerLink.innerText = desc;
+            playerLink.dataset.name = desc;
+            frag.appendChild(playerLink);
+            frag.appendChild(document.createTextNode('\u00A0\u00A0'));
+            links.push(playerLink);
+        });
+        this.content.appendChild(frag);
+        return links;
+    };
     Modal.prototype.whenClosed = function (cb) {
         this.closeCb = cb;
     };
     return Modal;
 }());
-//# sourceMappingURL=Modal.js.map
 
 var Game = (function () {
     function Game() {
@@ -748,7 +806,7 @@ var Game = (function () {
         });
         var numSpacesToAdvance = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
         if (this.currentPlayer.name === 'asdf')
-            numSpacesToAdvance = 68;
+            numSpacesToAdvance = 43;
         if (numSpacesToAdvance > 0) {
             this.currentPlayer.moveToTile(this.currentPlayer.currentTileIndex + numSpacesToAdvance);
             gameEventsInstance.trigger(MOVE_START);

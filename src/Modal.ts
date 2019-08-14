@@ -1,5 +1,6 @@
 import Game from './Game';
 import Player from './Player';
+import { Rule } from './rules';
 
 // TODO: stencil
 export class Modal {
@@ -75,25 +76,10 @@ export class Modal {
   requirePlayerSelection(playerList: Player[]): Promise<Player[]> {
     if (!playerList || playerList.length === 0) return Promise.resolve([]);
 
-    const names = playerList.map(p => p.name);
-    const frag: DocumentFragment = document.createDocumentFragment();
-    const header: HTMLHeadingElement = document.createElement('h4');
-    header.innerText = 'Choose a player';
-    frag.appendChild(header);
-
-    names.forEach((name: string) => {
-      const playerLink: HTMLAnchorElement = document.createElement('a');
-      playerLink.classList.add('sm');
-      playerLink.href = '#';
-      playerLink.innerText = name;
-      playerLink.dataset.name = name;
-      frag.appendChild(playerLink);
-      frag.appendChild(document.createTextNode('\u00A0\u00A0'));
-    });
-    this.content.appendChild(frag);
+    const links = this.addLinks('Choose a player', playerList.map(p => p.name));
 
     return new Promise((resolve) => {
-      Array.from(this.content.querySelectorAll('a')).forEach((el: HTMLElement) => {
+      Array.from(links).forEach((el: HTMLElement) => {
         el.addEventListener('click', (e: Event) => {
           e.preventDefault();
           const selectedPlayer = playerList.find((p: Player) =>  {
@@ -104,6 +90,48 @@ export class Modal {
         });
       });
     });
+  }
+
+  requireChoice(rules: Rule[]): Promise<Rule> {
+    if (!rules || rules.length === 0) return Promise.resolve(null);
+
+    const links = this.addLinks('Choose an outcome', rules.map(r => r.displayText));
+    console.log(links);
+
+    return new Promise((resolve) => {
+      Array.from(links).forEach((el: HTMLElement) => {
+        el.addEventListener('click', (e: Event) => {
+          e.preventDefault();
+          const selectedRule = rules.find((r: Rule) => {
+            return r.displayText === (e.currentTarget as HTMLElement).dataset.name
+          });
+          resolve(selectedRule);
+          return false;
+        });
+      });
+    });
+  }
+
+  addLinks(headerText: string, descriptions: string[]) {
+    const links: HTMLAnchorElement[] = [];
+    const frag: DocumentFragment = document.createDocumentFragment();
+    const header: HTMLHeadingElement = document.createElement('h4');
+    header.innerText = headerText;
+    frag.appendChild(header);
+
+    descriptions.forEach((desc: string) => {
+      const playerLink: HTMLAnchorElement = document.createElement('a');
+      playerLink.classList.add('sm');
+      playerLink.href = '#';
+      playerLink.innerText = desc;
+      playerLink.dataset.name = desc;
+      frag.appendChild(playerLink);
+      frag.appendChild(document.createTextNode('\u00A0\u00A0'));
+      links.push(playerLink);
+    });
+    this.content.appendChild(frag);
+    
+    return links;
   }
 
   whenClosed(cb: Function): void {

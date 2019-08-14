@@ -665,7 +665,16 @@
     }, {
       "rule": {
         "displayText": "What? Your Pokemon is evolving! Let it evolve: Drink 4 and skip the next gym. Stop evolution: Take an extra turn.",
-        "type": "TODO - CHOICE RULE"
+        "type": "ChoiceRule",
+        "choices": [{
+          "displayText": "Skip the next gym",
+          "type": "TODO - SkipNextMandatoryRule",
+          "numSpaces": 1
+        }, {
+          "displayText": "Take an extra turn",
+          "type": "ExtraTurnRule",
+          "numTurns": 1
+        }]
       },
       "position": [{
         "x": 453,
@@ -832,7 +841,17 @@
       "mandatory": true,
       "rule": {
         "displayText": "SAFFRON GYM. Use psychic powers to pick a number, then roll the die. If It's your number, take an extra turn. If not, drink 2.",
-        "type": "TODO - CHOICE RULE with a dice roll? "
+        "type": "ChoiceRule",
+        "diceRolls": {
+          "numRequired": 1
+        },
+        "choices": [{
+          "type": "ExtraTurnRule",
+          "displayText": "Take an extra turn"
+        }, {
+          "type": "DisplayRule",
+          "displayText": "Drink 2"
+        }]
       },
       "position": [{
         "x": 1390,

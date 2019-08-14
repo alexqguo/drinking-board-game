@@ -26,6 +26,7 @@ export interface JsonRule {
   diceRolls?: DiceRoll;
   condition?: MoveCondition;
   criteria?: number[];
+  choices?: JsonRule[];
 }
 
 export interface MoveCondition {
