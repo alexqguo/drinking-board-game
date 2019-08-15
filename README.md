@@ -13,7 +13,7 @@ This project is not ready yet.
 ----
 ## milestones
 
-### MVP (in progress)
+### MVP (✅ 8/15/2019)
 * game is playable offline with multiple people at the same computer
 * no image scaling
   * image will be displayed via the background css property at full size
