@@ -985,7 +985,7 @@
       }]
     }, {
       "rule": {
-        "displayText": "A wild Tauros appeared... but instantly fled. Drinrk 2 for not being quick enough.",
+        "displayText": "A wild Tauros appeared... but instantly fled. Drink 2 for not being quick enough.",
         "type": "DisplayRule"
       },
       "position": [{
