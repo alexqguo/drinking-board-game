@@ -110,22 +110,27 @@ class Game {
     }
 
     // Check for mandatory spaces
-    const firstMandatoryIndex = this.board.tiles
+    let firstMandatoryIndex = this.board.tiles
       .slice(this.currentPlayer.currentTileIndex + 1, this.currentPlayer.currentTileIndex + 1 + roll)
       .findIndex((tile: Tile) => {
         return tile.isMandatory;
       });
+
+    if (this.currentPlayer.mandatorySkips > 0 && firstMandatoryIndex !== -1) {
+      this.currentPlayer.mandatorySkips--;
+      firstMandatoryIndex = -1;
+    }
+
     let numSpacesToAdvance: number = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
     
-    // uncomment this line for testing
-    // if (this.currentPlayer.name === 'asdf' && !(window as any).asdf) {
-    //   numSpacesToAdvance = 70;
-    //   (window as any).asdf = true;
-    // }
-    // if (this.currentPlayer.name === 'blah') numSpacesToAdvance = 25;
+    // Uncomment this section for testing
+    if (this.currentPlayer.name === 'asdf' && !(window as any).asdf) {
+      numSpacesToAdvance = 34;
+      (window as any).asdf = true;
+    }
 
     if (numSpacesToAdvance > 0) {
-      // todo- fix this naming. this doesn't actually move anything in the UI
+      // TODO: fix this naming. this doesn't actually move anything in the UI
       this.currentPlayer.moveToTile(this.currentPlayer.currentTileIndex + numSpacesToAdvance);
       GameEvents.trigger(MOVE_START);
     }

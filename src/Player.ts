@@ -10,7 +10,9 @@ class Player {
   currentPos: Position;
   destinationPos: Position;
   currentTileIndex: number;
-  // TODO: consider puttting the following into a containing "effects" map or list
+  // TODO: consider puttting the following into a containing "effects" map or list.
+  // That can then be read super easily and displayed into a nice UI
+  mandatorySkips: number;
   skippedTurns: number;
   speedModifiers: number[];
   moveCondition: Function; // As of right now, player can only have one active move condition
@@ -18,6 +20,7 @@ class Player {
   constructor(name: string) {
     this.name = name;
     this.skippedTurns = 0;
+    this.mandatorySkips = 0;
     this.speedModifiers = [];
   }
 

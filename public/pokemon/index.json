@@ -668,7 +668,7 @@
         "type": "ChoiceRule",
         "choices": [{
           "displayText": "Skip the next gym",
-          "type": "TODO - SkipNextMandatoryRule",
+          "type": "SkipNextMandatoryRule",
           "numSpaces": 1
         }, {
           "displayText": "Take an extra turn",
@@ -786,7 +786,10 @@
     }, {
       "rule": {
         "displayText": "GIOVANNI. Roll a die. 1-3: Give that number. 4-6: Drink that number.",
-        "type": "DisplayRule"
+        "type": "DiceRollRule",
+        "diceRolls": {
+          "numRequired": 1
+        }
       },
       "position": [{
         "x": 829,

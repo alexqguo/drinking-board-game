@@ -11,3 +11,4 @@ export { default as ApplyMoveConditionRule } from './ApplyMoveConditionRule';
 export { default as DiceRollRule } from './DiceRollRule';
 export { default as RollUntilRule } from './RollUntilRule';
 export { default as ChoiceRule } from './ChoiceRule';
+export { default as SkipNextMandatoryRule } from './SkipNextMandatoryRule';
