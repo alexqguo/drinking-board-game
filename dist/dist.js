@@ -303,7 +303,7 @@ var ExtraTurnRule = (function (_super) {
     }
     ExtraTurnRule.prototype.execute = function () {
         _super.prototype.execute.call(this);
-        gameInstance.playerTurns.unshift(gameInstance.currentPlayer);
+        gameInstance.currentPlayer.extraTurns++;
         gameInstance.modal.enableClose();
     };
     return ExtraTurnRule;
@@ -514,6 +514,32 @@ var SkipNextMandatoryRule = (function (_super) {
 }(Rule));
 //# sourceMappingURL=SkipNextMandatoryRule.js.map
 
+var ChallengeRule = (function (_super) {
+    __extends(ChallengeRule, _super);
+    function ChallengeRule(json) {
+        var _this = _super.call(this, json) || this;
+        _this.playerTarget = PlayerTarget.custom;
+        return _this;
+    }
+    ChallengeRule.prototype.execute = function () {
+        _super.prototype.execute.call(this);
+        this.selectPlayers()
+            .then(function (value) {
+            var challengers = [value[0], gameInstance.currentPlayer];
+            gameInstance.modal.requirePlayerSelection(challengers, 'Who won?')
+                .then(function (value) {
+                var winningPlayer = value[0];
+                var losingPlayer = challengers.find(function (p) { return p !== winningPlayer; });
+                losingPlayer.skippedTurns++;
+                winningPlayer.extraTurns++;
+                gameInstance.modal.close();
+            });
+        });
+    };
+    return ChallengeRule;
+}(Rule));
+//# sourceMappingURL=ChallengeRule.js.map
+
 var RULE_MAPPINGS = {
     MoveRule: MoveRule,
     DisplayRule: DisplayRule,
@@ -528,6 +554,7 @@ var RULE_MAPPINGS = {
     RollUntilRule: RollUntilRule,
     ChoiceRule: ChoiceRule,
     SkipNextMandatoryRule: SkipNextMandatoryRule,
+    ChallengeRule: ChallengeRule,
 };
 function createTiles(tilesJson) {
     return tilesJson.map(function (tileJson) {
@@ -565,6 +592,7 @@ var VELO = 12;
 var Player = (function () {
     function Player(name) {
         this.name = name;
+        this.extraTurns = 0;
         this.skippedTurns = 0;
         this.mandatorySkips = 0;
         this.speedModifiers = [];
@@ -686,10 +714,11 @@ var Modal = (function () {
             });
         });
     };
-    Modal.prototype.requirePlayerSelection = function (playerList) {
+    Modal.prototype.requirePlayerSelection = function (playerList, headerString) {
+        if (headerString === void 0) { headerString = 'Choose a player'; }
         if (!playerList || playerList.length === 0)
             return Promise.resolve([]);
-        var links = this.addLinks('Choose a player', playerList.map(function (p) { return p.name; }));
+        var links = this.addLinks(headerString, playerList.map(function (p) { return p.name; }));
         return new Promise(function (resolve) {
             Array.from(links).forEach(function (el) {
                 el.addEventListener('click', function (e) {
@@ -830,10 +859,6 @@ var Game = (function () {
             firstMandatoryIndex = -1;
         }
         var numSpacesToAdvance = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
-        if (this.currentPlayer.name === 'asdf' && !window.asdf) {
-            numSpacesToAdvance = 34;
-            window.asdf = true;
-        }
         if (numSpacesToAdvance > 0) {
             this.currentPlayer.moveToTile(this.currentPlayer.currentTileIndex + numSpacesToAdvance);
             gameEventsInstance.trigger(MOVE_START);
@@ -854,9 +879,13 @@ var Game = (function () {
         gameEventsInstance.trigger(TURN_END);
     };
     Game.prototype.endTurn = function (next) {
-        next();
         this.turnIndex++;
+        if (this.currentPlayer.extraTurns > 0) {
+            this.currentPlayer.extraTurns--;
+            this.playerTurns.unshift(this.currentPlayer);
+        }
         gameEventsInstance.trigger(TURN_START);
+        next();
     };
     Game.prototype.gameOver = function () {
         alert("Game over!\n\n Winner: " + this.currentPlayer.name);
@@ -870,7 +899,6 @@ var Game = (function () {
     return Game;
 }());
 var gameInstance = new Game();
-//# sourceMappingURL=Game.js.map
 
 (function () {
     function fetchImage(src, canvas) {

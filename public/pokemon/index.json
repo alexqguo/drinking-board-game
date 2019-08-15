@@ -825,7 +825,10 @@
     }, {
       "rule": {
         "displayText": "GARY. Roll a die and take that many drinks. The next time this punk hassles you will be the last.",
-        "type": "DisplayRule"
+        "type": "DiceRollRule",
+        "diceRolls": {
+          "numRequired": 1
+        }
       },
       "position": [{
         "x": 1203,
@@ -872,7 +875,7 @@
     }, {
       "rule": {
         "displayText": "Challenge someone to a chugging contest. First to finish gets an extra turn, last to finish loses a turn.",
-        "type": "TODO - Some sort of weird choice rule"
+        "type": "ChallengeRule"
       },
       "position": [{
         "x": 1577,

@@ -124,13 +124,13 @@ class Game {
     let numSpacesToAdvance: number = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
     
     // Uncomment this section for testing
-    if (this.currentPlayer.name === 'asdf' && !(window as any).asdf) {
-      numSpacesToAdvance = 34;
-      (window as any).asdf = true;
-    }
+    // if (this.currentPlayer.name === 'blah' && !(window as any).asdf) {
+    //   numSpacesToAdvance = 44;
+    //   (window as any).asdf = true;
+    // }
 
     if (numSpacesToAdvance > 0) {
-      // TODO: fix this naming. this doesn't actually move anything in the UI
+      // Consider fixing this naming. This doesn't actually move anything in the UI
       this.currentPlayer.moveToTile(this.currentPlayer.currentTileIndex + numSpacesToAdvance);
       GameEvents.trigger(MOVE_START);
     }
@@ -155,10 +155,14 @@ class Game {
   }
 
   endTurn(next: Function): void {
-    // TODO: check here if the user gets an extra turn
-    next();
     this.turnIndex++;
+    if (this.currentPlayer.extraTurns > 0) {
+      this.currentPlayer.extraTurns--;
+      this.playerTurns.unshift(this.currentPlayer);
+    }
+
     GameEvents.trigger(TURN_START);
+    next();
   }
 
   gameOver(): void {

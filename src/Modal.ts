@@ -73,10 +73,10 @@ export class Modal {
   }
 
   // TODO: implement number of players user can choose
-  requirePlayerSelection(playerList: Player[]): Promise<Player[]> {
+  requirePlayerSelection(playerList: Player[], headerString: string = 'Choose a player'): Promise<Player[]> {
     if (!playerList || playerList.length === 0) return Promise.resolve([]);
 
-    const links = this.addLinks('Choose a player', playerList.map(p => p.name));
+    const links = this.addLinks(headerString, playerList.map(p => p.name));
 
     return new Promise((resolve) => {
       Array.from(links).forEach((el: HTMLElement) => {

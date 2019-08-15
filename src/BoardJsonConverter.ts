@@ -15,6 +15,7 @@ import {
   RollUntilRule,
   ChoiceRule,
   SkipNextMandatoryRule,
+  ChallengeRule,
 } from './rules';
 
 const RULE_MAPPINGS: { 
@@ -33,6 +34,7 @@ const RULE_MAPPINGS: {
   RollUntilRule: RollUntilRule,
   ChoiceRule: ChoiceRule,
   SkipNextMandatoryRule: SkipNextMandatoryRule,
+  ChallengeRule: ChallengeRule,
 };
 
 export function createTiles(tilesJson: Array<JsonTile>): Array<Tile> {
