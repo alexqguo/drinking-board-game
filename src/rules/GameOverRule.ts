@@ -8,7 +8,7 @@ export default class GameOverRule extends Rule {
   }
 
   execute(): void {
-    alert('Game over!');
+    super.execute();
     Game.gameOver();
     Game.modal.enableClose();
   }

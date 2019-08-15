@@ -38,13 +38,13 @@ class GameEvents {
   }
 
   on(eventName: string, callback: Function): void {
-    console.log(`Setting an event: ${eventName}`);
+    // console.log(`Setting an event: ${eventName}`);
     this.validateEvent(eventName);
     this.eventHandlerMap.get(eventName).push(callback);
   }
 
   trigger(eventName: string, eventValues?: any[]): void {
-    console.log(`Triggering event: ${eventName}`);
+    // console.log(`Triggering event: ${eventName}`);
     this.validateEvent(eventName);
 
     const eventFunctions: Function[] = this.eventHandlerMap.get(eventName);

@@ -63,12 +63,10 @@ var GameEvents = (function () {
         return GameEvents.instance;
     }
     GameEvents.prototype.on = function (eventName, callback) {
-        console.log("Setting an event: " + eventName);
         this.validateEvent(eventName);
         this.eventHandlerMap.get(eventName).push(callback);
     };
     GameEvents.prototype.trigger = function (eventName, eventValues) {
-        console.log("Triggering event: " + eventName);
         this.validateEvent(eventName);
         var eventFunctions = this.eventHandlerMap.get(eventName);
         if (!eventFunctions.length)
@@ -290,7 +288,7 @@ var GameOverRule = (function (_super) {
         return _super.call(this, json) || this;
     }
     GameOverRule.prototype.execute = function () {
-        alert('Game over!');
+        _super.prototype.execute.call(this);
         gameInstance.gameOver();
         gameInstance.modal.enableClose();
     };
@@ -614,6 +612,7 @@ var Painter = (function () {
     };
     return Painter;
 }());
+//# sourceMappingURL=Painter.js.map
 
 var Modal = (function () {
     function Modal() {
@@ -744,6 +743,7 @@ var Game = (function () {
         return Game.instance;
     }
     Game.prototype.start = function (boardSrc, playerNames, canvas) {
+        var _this = this;
         this.turnIndex = 0;
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d');
@@ -755,8 +755,10 @@ var Game = (function () {
         this.players.forEach(function (p) { return p.moveToTile(0); });
         this.playerTurns = this.players.slice();
         this.painter.drawPlayers();
+        this.handleDiceRoll = this.handleDiceRoll.bind(this);
         document.querySelector('#skip a').addEventListener('click', function (e) {
             e.preventDefault();
+            _this.diceLink.removeEventListener('roll', _this.handleDiceRoll);
             gameEventsInstance.trigger(TURN_END);
             return false;
         });
@@ -775,15 +777,14 @@ var Game = (function () {
         });
     };
     Game.prototype.enableDiceRoll = function (next) {
-        var _this = this;
-        var handleRoll = function (e) {
-            var roll = e.detail.roll;
-            gameEventsInstance.trigger(ROLL_END, [roll]);
-            next();
-            _this.diceLink.removeEventListener('roll', handleRoll);
-        };
         this.diceLink.reset();
-        this.diceLink.addEventListener('roll', handleRoll);
+        this.diceLink.addEventListener('roll', this.handleDiceRoll);
+        next();
+    };
+    Game.prototype.handleDiceRoll = function (e) {
+        var roll = e.detail.roll;
+        gameEventsInstance.trigger(ROLL_END, [roll]);
+        this.diceLink.removeEventListener('roll', this.handleDiceRoll);
     };
     Game.prototype.endDiceRoll = function (next, roll) {
         if (this.currentPlayer.moveCondition) {
@@ -818,8 +819,7 @@ var Game = (function () {
     Game.prototype.triggerRule = function (next) {
         var currentTile = this.board.tiles[this.currentPlayer.currentTileIndex];
         var currentRule = currentTile.rule;
-        if (currentRule)
-            currentRule.execute();
+        currentRule.execute();
         next();
     };
     Game.prototype.endRule = function (next) {
@@ -843,7 +843,6 @@ var Game = (function () {
     return Game;
 }());
 var gameInstance = new Game();
-//# sourceMappingURL=Game.js.map
 
 (function () {
     function fetchImage(src, canvas) {

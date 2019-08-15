@@ -50,10 +50,12 @@ class Game {
     this.players.forEach((p: Player) => p.moveToTile(0));
     this.playerTurns = [...this.players];
     this.painter.drawPlayers();
+    this.handleDiceRoll = this.handleDiceRoll.bind(this);
 
     // TODO - this should be more organized. need to enable the link only sometimes
     document.querySelector('#skip a').addEventListener('click', (e: Event) => {
       e.preventDefault();
+      this.diceLink.removeEventListener('roll', this.handleDiceRoll); // hacky
       GameEvents.trigger(TURN_END);
       return false;
     });
@@ -77,15 +79,15 @@ class Game {
   }
 
   enableDiceRoll(next: Function): void {
-    const handleRoll = (e: CustomEvent) => {
-      const roll = e.detail.roll;
-      GameEvents.trigger(ROLL_END, [roll]);
-      next();
-      this.diceLink.removeEventListener('roll', handleRoll);
-    }
-
     (this.diceLink as any).reset(); // TODO: just import the component?
-    this.diceLink.addEventListener('roll', handleRoll);
+    this.diceLink.addEventListener('roll', this.handleDiceRoll);
+    next();
+  }
+
+  handleDiceRoll(e: CustomEvent): void {
+    const roll = e.detail.roll;
+    GameEvents.trigger(ROLL_END, [roll]);
+    this.diceLink.removeEventListener('roll', this.handleDiceRoll);
   }
 
   endDiceRoll(next: Function, roll: number): void {
@@ -116,7 +118,10 @@ class Game {
     let numSpacesToAdvance: number = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
     
     // uncomment this line for testing
-    // if (this.currentPlayer.name === 'asdf') numSpacesToAdvance = 43;
+    // if (this.currentPlayer.name === 'asdf' && !(window as any).asdf) {
+    //   numSpacesToAdvance = 70;
+    //   (window as any).asdf = true;
+    // }
     // if (this.currentPlayer.name === 'blah') numSpacesToAdvance = 25;
 
     if (numSpacesToAdvance > 0) {
@@ -135,9 +140,7 @@ class Game {
   triggerRule(next: Function): void {
     const currentTile = this.board.tiles[this.currentPlayer.currentTileIndex];
     const currentRule = currentTile.rule;
-    // TODO - remove if check, it's just to not NPE on the placeholders
-    if (currentRule) currentRule.execute();
-    // currentRule.execute() should trigger rule end
+    currentRule.execute(); // currentRule.execute() should trigger rule end
     next();
   }
 
