@@ -24,7 +24,7 @@ This project is not ready yet.
 * enforce name uniqueness
 
 ### M1
-* Stencil!
+* Stencil! Refactor all the modal crap
 * expand indicator in top left
   * queue of who rolled what in the corner
   * indication of who is in what zone
