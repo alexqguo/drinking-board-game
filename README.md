@@ -4,11 +4,13 @@ This project is not ready yet.
 
 ----
 ## what is this?
-(todo)
+This is a generalized engine for playing drinking board games online. 
 
 ----
 ## usage
-(todo)
+* Git pull
+* `npm i`
+* `npm start`
 
 ----
 ## milestones
@@ -36,7 +38,9 @@ This project is not ready yet.
 
 ### M2
 * track game state, store in localstorage in case someone closes the screen
+  * state holds events and then instead of listening to the events we listen to when the "current event" in the state changes
 * can load a previous game from localstorage
+* add a new game (johto?)
 
 ### M3
 * game is playable via websockets OR offline
