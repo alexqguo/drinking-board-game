@@ -5,18 +5,21 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "roll": "rollup -c",
-    "watch": "rollup -c -w",
+    "roll": "rollup -c --compact",
+    "watch": "rollup -c -w --compact",
     "start": "./node_modules/http-server/bin/http-server ./ -c-1"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
     "http-server": "^0.11.1",
+    "lit-element": "^2.2.1",
     "typescript": "^3.5.2"
   },
   "devDependencies": {
     "rollup": "^1.16.6",
+    "rollup-plugin-babel-minify": "^9.0.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
     "rollup-plugin-typescript": "^1.0.1",
     "rollup-watch": "^4.3.1",
     "tslib": "^1.10.0"
