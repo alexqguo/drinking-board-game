@@ -26,7 +26,7 @@ This is a generalized engine for playing drinking board games online.
 * enforce name uniqueness
 
 ### M1
-* Stencil! Refactor all the modal crap
+* Stencil! Refactor all the modal crap ...or LitElement since Stencil won't integrate as easily
 * expand indicator in top left
   * queue of who rolled what in the corner
   * indication of who is in what zone
