@@ -1,6 +1,12 @@
 import typescript from 'rollup-plugin-typescript';
 import resolve from 'rollup-plugin-node-resolve';
-import minify from 'rollup-plugin-babel-minify';
+import { terser } from "rollup-plugin-terser";
+
+const plugins = [
+  typescript(),
+  resolve(),
+  // terser(), // enable this just for production build once we get to that point
+];
 
 export default [{
   input: 'src/App.ts',
@@ -8,23 +14,17 @@ export default [{
     file: 'dist/dist.js',
     format: 'iife'
   },
-  plugins: [
-    typescript(),
-    minify({ comments: false }),
-  ],
+  plugins,
   watch: {
     exclude: ['node_modules/**']
   }
-}, { // todo: fix this to not be specific
+}, {
   input: 'src/wc/index.ts',
   output: {
     file: 'dist/wc.js',
     format: 'iife'
   },
-  plugins: [
-    resolve(), // to be able to source lit-element
-    minify({ comments: false }),
-  ],
+  plugins,
   watch: {
     exclude: ['node_modules/**']
   }

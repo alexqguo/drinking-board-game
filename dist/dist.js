@@ -1,1 +1,851 @@
-(function(){'use strict';function a(a,c){function b(){this.constructor=a}r(a,c),a.prototype=null===c?Object.create(c):(b.prototype=c.prototype,new b)}function b(a){return a.map(function(a){var b=a.mandatory,d=a.rule,f=a.position;return d?new e(b,c(d),f):(console.warn("No rule specified. Was this a todo?"),null)})}function c(a){var b=a.type;return G.hasOwnProperty(b)?new G[b](a):(console.warn("Invalid rule type specified: "+b),null)}var d,e=function(){function a(a,b,c){this.isMandatory=a,this.rule=b,this.currentPlayers=[],this.coordinates=c}return a.prototype.placePlayer=function(a){this.currentPlayers.push(a),a.destinationPos=this.generateCenterPosition()},a.prototype.generateCenterPosition=function(){var a=this.coordinates.reduce(function(a,b){return{x:a.x+b.x,y:a.y+b.y}},{x:0,y:0});return a.x/=this.coordinates.length,a.y/=this.coordinates.length,a},a}();(function(a){a.forward="forward",a.back="back"})(d||(d={}));var f;(function(a){a.custom="custom",a.self="self",a.allOthers="allOthers"})(f||(f={}));var g="ROLL_START",h="ROLL_END",i="MOVE_START",j="MOVE_END",k="RULE_TRIGGER",l="RULE_END",m="TURN_END",n=["TURN_START",g,h,i,j,k,l,m,"GAME_OVER","TURN_SKIP"],o=function(){function a(){var b=this;return a.instance||(a.instance=this),this.eventHandlerMap=new Map,n.forEach(function(a){b.eventHandlerMap.set(a,[])}),a.instance}return a.prototype.on=function(a,b){this.validateEvent(a),this.eventHandlerMap.get(a).push(b)},a.prototype.trigger=function(a,b){this.validateEvent(a);var c=this.eventHandlerMap.get(a);if(c.length){var d=0,e=function(){c[++d]&&f()},f=function(){c[d].apply(null,[e].concat(b))};f()}},a.prototype.validateEvent=function(a){if(!this.eventHandlerMap.has(a))throw new Error(a+" is not a valid event")},a}(),p=new o,q=function(){function a(a){var b=a.displayText,c=a.type,d=a.playerTarget,e=a.criteria;this.validateRequired(c),this.type=c,this.displayText=b,this.playerTarget=d,this.criteria=e}return a.prototype.execute=function(){N.modal.show(this.displayText),N.modal.disableClose(),N.modal.whenClosed(this.end)},a.prototype.end=function(){p.trigger(l)},a.prototype.selectPlayers=function(){var a=this,b=[];return new Promise(function(c){switch(a.playerTarget){case f.allOthers:b.push.apply(b,N.getInactivePlayers()),c(b);break;case f.custom:N.modal.requirePlayerSelection(N.getInactivePlayers()).then(function(a){c(a)});break;default:b.push(N.currentPlayer),c(b);}})},a.prototype.validateRequired=function(){for(var a=[],b=0;b<arguments.length;b++)a[b]=arguments[b];var c=a.filter(function(a){return"undefined"==typeof a||null===a||""===a});if(c.length)throw new Error("TODO - alert missing fields for whatever class this is")},a}(),r=function(a,c){return r=Object.setPrototypeOf||{__proto__:[]}instanceof Array&&function(a,c){a.__proto__=c}||function(a,c){for(var b in c)c.hasOwnProperty(b)&&(a[b]=c[b])},r(a,c)},s=function(b){function c(a){var c=b.call(this,a)||this;return c.validateRequired(a.displayText),c}return a(c,b),c.prototype.execute=function(){b.prototype.execute.call(this),N.modal.enableClose()},c}(q),t=function(b){function c(a){var c=b.call(this,a)||this,d=a.playerTarget,e=a.direction,f=a.numSpaces;return c.validateRequired(d,e,f),c.direction=e,c.numSpaces=f,c}return a(c,b),c.prototype.execute=function(){var a=this;b.prototype.execute.call(this),this.selectPlayers().then(function(b){var c=Math.max,d=b[0],e=c(0,d.currentTileIndex+a.numSpaces);d.moveToTile(e),d.currentPos=d.destinationPos,N.painter.drawPlayers(),N.modal.close()})},c}(q),u=function(b){function c(a){var c=b.call(this,a)||this,d=a.numTurns;return c.validateRequired(d),c.numTurns=d,c}return a(c,b),c.prototype.execute=function(){b.prototype.execute.call(this),N.currentPlayer.skippedTurns+=this.numTurns,N.modal.enableClose()},c}(q),v=function(b){function c(a){var c=b.call(this,a)||this,d=a.multiplier,e=a.numTurns;return c.validateRequired(d,e),c.multiplier=d,c.numTurns=e,c}return a(c,b),c.prototype.execute=function(){var a=this;b.prototype.execute.call(this),this.selectPlayers().then(function(b){b.forEach(function(b){b.speedModifiers=[];for(var c=0;c<a.numTurns;c++)b.speedModifiers.push(a.multiplier)}),N.modal.enableClose()})},c}(q),w=function(b){function c(a){var c=b.call(this,a)||this,d=a.tileIndex;return c.validateRequired(d),c.tileIndex=d,c}return a(c,b),c.prototype.execute=function(){b.prototype.execute.call(this),N.currentPlayer.moveToTile(this.tileIndex),N.currentPlayer.currentPos=N.currentPlayer.destinationPos,N.painter.drawPlayers(),N.modal.enableClose()},c}(q),x=function(b){function c(a){return b.call(this,a)||this}return a(c,b),c.prototype.execute=function(){b.prototype.execute.call(this),N.gameOver(),N.modal.enableClose()},c}(q),y=function(b){function c(a){return b.call(this,a)||this}return a(c,b),c.prototype.execute=function(){b.prototype.execute.call(this),N.currentPlayer.extraTurns++,N.modal.enableClose()},c}(q),z=function(b){function c(a){var c=b.call(this,a)||this;return c.diceRolls=a.diceRolls,c}return a(c,b),c.prototype.execute=function(){b.prototype.execute.call(this),N.modal.requireDiceRolls(this.diceRolls.numRequired,function(a){N.currentPlayer.skippedTurns+=a[0],N.modal.enableClose()})},c}(q),A=function(b){function c(a){var c=b.call(this,a)||this,d=a.condition;return c.validateRequired(d),c.successes=new Map,c.condition=d,c}return a(c,b),c.prototype.execute=function(){var a=this;b.prototype.execute.call(this),this.selectPlayers().then(function(b){b.forEach(function(b){a.successes.set(b,0);var c=function(c){if(-1===a.condition.criteria.indexOf(c))return a.condition.numSuccessesRequired||(b.moveCondition=null,a.successes.delete(b)),!1;var d=a.successes.get(b);return a.successes.set(b,d+1),(!a.condition.numSuccessesRequired||a.successes.get(b)>=a.condition.numSuccessesRequired)&&(b.moveCondition=null,a.successes.delete(b),!0)};b.moveCondition=c,a.condition.immediate&&N.modal.requireDiceRolls(1,function(a){c(a[0])})}),console.log(a.playerTarget+" "+f.custom),a.playerTarget===f.custom?N.modal.close():N.modal.enableClose()})},c}(q),B=function(b){function d(a){var d=b.call(this,a)||this;return d.diceRolls=a.diceRolls,d.outcomeRules=[],d.diceRolls.outcomes&&d.diceRolls.outcomes.length&&d.diceRolls.outcomes.forEach(function(a){d.outcomeRules.push(c(a))}),d.diceRolls.any&&(d.any=c(d.diceRolls.any)),d}return a(d,b),d.prototype.getOutcomeForRolls=function(a){var b=this,c=null;if(!this.outcomeRules&&!this.any)return null;if(this.any)for(var d=0;d<a.length;d++)if(-1!==this.any.criteria.indexOf(a[d]))return this.any;return a.forEach(function(a){b.outcomeRules.forEach(function(b){b.criteria&&b.criteria.length&&-1!==b.criteria.indexOf(a)&&(c=b)})}),c},d.prototype.execute=function(){var a=this;b.prototype.execute.call(this),N.modal.requireDiceRolls(this.diceRolls.numRequired,function(b){var c=a.getOutcomeForRolls(b);c?c.execute():N.modal.enableClose()})},d}(q),C=function(b){function c(a){var c=b.call(this,a)||this;return c.validateRequired(a.displayText),c}return a(c,b),c.prototype.execute=function(){var a=this;b.prototype.execute.call(this);var c=function(){N.modal.requireDiceRolls(1,function(b){-1===a.criteria.indexOf(b[0])?c():N.modal.enableClose()})};c()},c}(q),D=function(b){function d(a){var d=b.call(this,a)||this,e=a.choices,f=a.diceRolls;return d.validateRequired(e),d.choiceRules=[],d.diceRolls=f,e&&e.length&&e.forEach(function(a){d.choiceRules.push(c(a))}),d}return a(d,b),d.prototype.execute=function(){b.prototype.execute.call(this),this.diceRolls&&N.modal.requireDiceRolls(this.diceRolls.numRequired,function(){}),N.modal.requireChoice(this.choiceRules).then(function(a){return a?void(console.log(a),a.execute()):void N.modal.enableClose()})},d}(q),E=function(b){function c(a){var c=b.call(this,a)||this;return c.validateRequired(a.numSpaces),c.numSpaces=a.numSpaces,c}return a(c,b),c.prototype.execute=function(){b.prototype.execute.call(this),N.currentPlayer.mandatorySkips=this.numSpaces,N.modal.enableClose()},c}(q),F=function(b){function c(a){var c=b.call(this,a)||this;return c.playerTarget=f.custom,c}return a(c,b),c.prototype.execute=function(){b.prototype.execute.call(this),this.selectPlayers().then(function(a){var b=[a[0],N.currentPlayer];N.modal.requirePlayerSelection(b,"Who won?").then(function(a){var c=a[0],d=b.find(function(a){return a!==c});d.skippedTurns++,c.extraTurns++,N.modal.close()})})},c}(q),G={MoveRule:t,DisplayRule:s,TeleportRule:w,SkipTurnRule:u,SpeedModifierRule:v,GameOverRule:x,ExtraTurnRule:y,DrinkDuringLostTurnsRule:z,ApplyMoveConditionRule:A,DiceRollRule:B,RollUntilRule:C,ChoiceRule:D,SkipNextMandatoryRule:E,ChallengeRule:F},H=function(){return function(a,c){this.imgSrc=a.imgSrc,this.tiles=b(a.tiles),this.players=c}}(),I=12,J=function(){function a(a){this.name=a,this.extraTurns=0,this.skippedTurns=0,this.mandatorySkips=0,this.speedModifiers=[]}return a.prototype.canTakeTurn=function(){return!(0<this.skippedTurns)||(this.skippedTurns--,!1)},a.prototype.moveToTile=function(a){void 0===a&&(a=0),this.currentTileIndex=a,N.board.tiles[a].placePlayer(this),!this.currentPos&&this.destinationPos&&(this.currentPos=this.destinationPos)},a}(),K=function(){function a(a,b){this.canvas=a,this.ctx=b,p.on(i,this.draw.bind(this))}return a.prototype.draw=function(){var a=Math.sqrt,b=Math.abs;this.drawPlayers();var c=N.currentPlayer.currentPos.x,d=N.currentPlayer.currentPos.y,e=N.currentPlayer.destinationPos.x,f=N.currentPlayer.destinationPos.y,g=e-c,h=f-d;if(b(g)<I&&b(h)<I)return window.cancelAnimationFrame(this.raf),void p.trigger(j);var i=a(g*g+h*h),k=g/i*I,l=h/i*I;N.currentPlayer.currentPos.x+=k,N.currentPlayer.currentPos.y+=l,window.scrollBy(k,l),this.raf=window.requestAnimationFrame(this.draw.bind(this))},a.prototype.drawPlayers=function(){var a=Math.PI;this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height),this.ctx.font=20+"px \"Open Sans\"";for(var b,c=0;c<N.players.length;c++)b=N.players[c],this.ctx.fillStyle="rgba(0, 0, 0, 0.5)",this.ctx.beginPath(),this.ctx.arc(b.currentPos.x,b.currentPos.y,30,0,2*a,!0),this.ctx.closePath(),this.ctx.fill(),this.ctx.fillStyle="white",this.ctx.fillText(b.name[0].toUpperCase(),b.currentPos.x-6,b.currentPos.y+6)},a}(),L=function(){function a(){var a=this;this.triggerId="game-modal",this.trigger=document.querySelector("#"+this.triggerId),this.controls=Array.from(document.querySelectorAll("label[for=\"game-modal\"]")),this.header=document.querySelector(".modal h3"),this.content=document.querySelector(".modal .content"),this.trigger.addEventListener("change",function(){!1===a.trigger.checked&&a.closeCb&&(a.closeCb(),a.closeCb=null)})}return a.prototype.show=function(a){this.header.innerText=N.currentPlayer.name,this.content.innerText=a,this.trigger.checked=!0},a.prototype.close=function(){this.enableClose(),this.trigger.checked=!1,this.trigger.dispatchEvent(new Event("change"))},a.prototype.disableClose=function(){var a=this;this.controls.forEach(function(b){b.setAttribute("for",a.triggerId+"__DISABLED")})},a.prototype.enableClose=function(){var a=this;this.controls.forEach(function(b){b.setAttribute("for",a.triggerId)})},a.prototype.requireDiceRolls=function(a,b){for(var c=[],d=document.createDocumentFragment(),e=0;e<a;e++)d.appendChild(document.createElement("dice-roll"));this.content.appendChild(d),Array.from(this.content.querySelectorAll("dice-roll")).forEach(function(d){d.addEventListener("roll",function(d){c.push(d.detail.roll),c.length===a&&setTimeout(function(){b(c)},1e3)})})},a.prototype.requirePlayerSelection=function(a,b){if(void 0===b&&(b="Choose a player"),!a||0===a.length)return Promise.resolve([]);var c=this.addLinks(b,a.map(function(a){return a.name}));return new Promise(function(b){Array.from(c).forEach(function(c){c.addEventListener("click",function(c){c.preventDefault();var d=a.find(function(a){return a.name===c.currentTarget.dataset.name});return b([d]),!1})})})},a.prototype.requireChoice=function(a){if(!a||0===a.length)return Promise.resolve(null);var b=this.addLinks("Choose an outcome",a.map(function(a){return a.displayText}));return console.log(b),new Promise(function(c){Array.from(b).forEach(function(b){b.addEventListener("click",function(b){b.preventDefault();var d=a.find(function(a){return a.displayText===b.currentTarget.dataset.name});return c(d),!1})})})},a.prototype.addLinks=function(a,b){var c=[],d=document.createDocumentFragment(),e=document.createElement("h4");return e.innerText=a,d.appendChild(e),b.forEach(function(a){var b=document.createElement("a");b.classList.add("sm"),b.href="#",b.innerText=a,b.dataset.name=a,d.appendChild(b),d.appendChild(document.createTextNode("\xA0\xA0")),c.push(b)}),this.content.appendChild(d),c},a.prototype.whenClosed=function(a){this.closeCb=a},a}(),M=function(){function a(){return a.instance||(a.instance=this),p.on("TURN_START",this.startTurn.bind(this)),p.on(m,this.endTurn.bind(this)),p.on(g,this.enableDiceRoll.bind(this)),p.on(h,this.endDiceRoll.bind(this)),p.on(j,this.endMovement.bind(this)),p.on(k,this.triggerRule.bind(this)),p.on(l,this.endRule.bind(this)),a.instance}return a.prototype.start=function(a,b,c){var d=this;this.turnIndex=0,this.canvas=c,this.ctx=c.getContext("2d"),this.board=new H(a,this.players),this.players=b.map(function(a){return new J(a)}),this.diceLink=document.querySelector("#overlay dice-roll"),this.modal=new L,this.painter=new K(this.canvas,this.ctx),this.players.forEach(function(a){return a.moveToTile(0)}),this.playerTurns=this.players.slice(),this.painter.drawPlayers(),this.handleDiceRoll=this.handleDiceRoll.bind(this),document.querySelector("#skip a").addEventListener("click",function(a){return a.preventDefault(),d.diceLink.removeEventListener("roll",d.handleDiceRoll),p.trigger(m),!1}),p.trigger("TURN_START")},a.prototype.startTurn=function(){this.playerTurns.length||(this.playerTurns=this.players.slice()),this.currentPlayer=this.playerTurns.shift(),p.trigger(this.currentPlayer.canTakeTurn()?g:m),document.querySelector("#overlay h4").innerHTML=this.currentPlayer.name,window.scrollTo({top:this.currentPlayer.currentPos.y-window.outerHeight/2,left:this.currentPlayer.currentPos.x-window.outerWidth/2,behavior:"smooth"})},a.prototype.enableDiceRoll=function(a){this.diceLink.reset(),this.diceLink.addEventListener("roll",this.handleDiceRoll),a()},a.prototype.handleDiceRoll=function(a){var b=a.detail.roll;p.trigger(h,[b]),this.diceLink.removeEventListener("roll",this.handleDiceRoll)},a.prototype.endDiceRoll=function(a,b){var c=Math.ceil;if(this.currentPlayer.moveCondition){var d=this.currentPlayer.moveCondition(b);if(!d)return setTimeout(function(){p.trigger(m)},2e3),void a()}if(this.currentPlayer.speedModifiers.length){var e=this.currentPlayer.speedModifiers.shift();b=c(e*b)}var f=this.board.tiles.slice(this.currentPlayer.currentTileIndex+1,this.currentPlayer.currentTileIndex+1+b).findIndex(function(a){return a.isMandatory});0<this.currentPlayer.mandatorySkips&&-1!==f&&(this.currentPlayer.mandatorySkips--,f=-1);var g=-1===f?b:f+1;0<g&&(this.currentPlayer.moveToTile(this.currentPlayer.currentTileIndex+g),p.trigger(i)),a()},a.prototype.endMovement=function(){p.trigger(k)},a.prototype.triggerRule=function(a){var b=this.board.tiles[this.currentPlayer.currentTileIndex],c=b.rule;c.execute(),a()},a.prototype.endRule=function(a){a(),p.trigger(m)},a.prototype.endTurn=function(a){this.turnIndex++,0<this.currentPlayer.extraTurns&&(this.currentPlayer.extraTurns--,this.playerTurns.unshift(this.currentPlayer)),p.trigger("TURN_START"),a()},a.prototype.gameOver=function(){alert("Game over!\n\n Winner: "+this.currentPlayer.name)},a.prototype.getInactivePlayers=function(){var a=this;return this.players.filter(function(b){return b!==a.currentPlayer})},a}(),N=new M;(function(){function a(a,b){return new Promise(function(c){var d=new Image;d.src=a,d.addEventListener("load",function(){b.width=d.width,b.height=d.height,b.style.background="url("+a+")",b.style.backgroundSize="100% 100%",c()})})}function b(a){return new Promise(function(b){fetch(a).then(function(a){return a.json()}).then(function(a){return b(a)})})}function c(){var a=document.getElementById("game").value,b=Array.from(document.querySelectorAll("#player-input input")).filter(function(a){return!!a.value}).map(function(a){return a.value});return[a,b]}function d(c,d){var e=document.getElementById("canvas");Promise.all([a(c+"/index.png",e),b(c+"/index.json")]).then(function(a){N.start(a[1],d,e)}).catch(function(a){return console.error(a)})}document.getElementById("add-player").addEventListener("click",function(a){a.preventDefault();var b=document.createDocumentFragment(),c=document.createElement("input");return c.type="text",b.appendChild(c),document.getElementById("player-input").appendChild(b),!1}),document.getElementById("setup").addEventListener("submit",function(a){a.preventDefault();var b=c();return b[1].length?new Set(b[1]).size<b[1].length?void alert("Player names must be unique"):void(d(b[0],b[1]),document.getElementById("setup").style.display="none",document.getElementById("overlay").style.display="block"):void alert("You need players to play this game")})})()})();
+(function(){'use strict';class Tile {
+    constructor(isMandatory, rule, coordinates) {
+        this.isMandatory = isMandatory;
+        this.rule = rule;
+        this.currentPlayers = [];
+        this.coordinates = coordinates;
+    }
+    placePlayer(player) {
+        this.currentPlayers.push(player);
+        player.destinationPos = this.generateCenterPosition();
+    }
+    generateCenterPosition() {
+        const total = this.coordinates.reduce((prev, cur) => {
+            return { x: prev.x + cur.x, y: prev.y + cur.y };
+        }, { x: 0, y: 0 });
+        total.x /= this.coordinates.length;
+        total.y /= this.coordinates.length;
+        return total;
+    }
+}
+//# sourceMappingURL=Tile.js.map
+var Direction;
+(function (Direction) {
+    Direction["forward"] = "forward";
+    Direction["back"] = "back";
+})(Direction || (Direction = {}));
+var PlayerTarget;
+(function (PlayerTarget) {
+    PlayerTarget["custom"] = "custom";
+    PlayerTarget["self"] = "self";
+    PlayerTarget["allOthers"] = "allOthers";
+})(PlayerTarget || (PlayerTarget = {}));
+//# sourceMappingURL=index.js.map
+const TURN_START = 'TURN_START';
+const ROLL_START = 'ROLL_START';
+const ROLL_END = 'ROLL_END';
+const MOVE_START = 'MOVE_START';
+const MOVE_END = 'MOVE_END';
+const RULE_TRIGGER = 'RULE_TRIGGER';
+const RULE_END = 'RULE_END';
+const TURN_END = 'TURN_END';
+const GAME_OVER = 'GAME_OVER';
+const TURN_SKIP = 'TURN_SKIP';
+const ALL_EVENTS = [
+    TURN_START, ROLL_START, ROLL_END, MOVE_START, MOVE_END, RULE_TRIGGER, RULE_END,
+    TURN_END, GAME_OVER, TURN_SKIP,
+];
+class GameEvents {
+    constructor() {
+        if (!GameEvents.instance) {
+            GameEvents.instance = this;
+        }
+        this.eventHandlerMap = new Map();
+        ALL_EVENTS.forEach((event) => {
+            this.eventHandlerMap.set(event, []);
+        });
+        return GameEvents.instance;
+    }
+    on(eventName, callback) {
+        this.validateEvent(eventName);
+        this.eventHandlerMap.get(eventName).push(callback);
+    }
+    trigger(eventName, eventValues) {
+        this.validateEvent(eventName);
+        const eventFunctions = this.eventHandlerMap.get(eventName);
+        if (!eventFunctions.length)
+            return;
+        let functionIdx = 0;
+        const next = () => {
+            if (eventFunctions[++functionIdx]) {
+                invokeEventFunction();
+            }
+        };
+        const invokeEventFunction = () => {
+            let args = [next];
+            if (eventValues && eventValues.length) {
+                args = args.concat(eventValues);
+            }
+            eventFunctions[functionIdx].apply(null, args);
+        };
+        invokeEventFunction();
+    }
+    validateEvent(eventName) {
+        if (!this.eventHandlerMap.has(eventName)) {
+            throw new Error(`${eventName} is not a valid event`);
+        }
+    }
+}
+const gameEventsInstance = new GameEvents();
+//# sourceMappingURL=GameEvents.js.map
+class Rule {
+    constructor(json) {
+        const { displayText, type, playerTarget, criteria } = json;
+        this.validateRequired(type);
+        this.type = type;
+        this.displayText = displayText;
+        this.playerTarget = playerTarget;
+        this.criteria = criteria;
+    }
+    execute() {
+        gameInstance.modal.show(this.displayText);
+        gameInstance.modal.disableClose();
+        gameInstance.modal.whenClosed(this.end);
+    }
+    ;
+    end() {
+        gameEventsInstance.trigger(RULE_END);
+    }
+    selectPlayers() {
+        const targetPlayers = [];
+        return new Promise((resolve) => {
+            switch (this.playerTarget) {
+                case PlayerTarget.allOthers:
+                    targetPlayers.push(...gameInstance.getInactivePlayers());
+                    resolve(targetPlayers);
+                    break;
+                case PlayerTarget.custom:
+                    gameInstance.modal.requirePlayerSelection(gameInstance.getInactivePlayers())
+                        .then((playerList) => {
+                        resolve(playerList);
+                    });
+                    break;
+                default:
+                    targetPlayers.push(gameInstance.currentPlayer);
+                    resolve(targetPlayers);
+            }
+        });
+    }
+    validateRequired(...args) {
+        const errors = args
+            .filter(arg => typeof arg === 'undefined' || arg === null || arg === '');
+        if (errors.length) {
+            throw new Error('TODO - alert missing fields for whatever class this is');
+        }
+    }
+}
+//# sourceMappingURL=Rule.js.map
+class DisplayRule extends Rule {
+    constructor(json) {
+        super(json);
+        this.validateRequired(json.displayText);
+    }
+    execute() {
+        super.execute();
+        gameInstance.modal.enableClose();
+    }
+}
+//# sourceMappingURL=DisplayRule.js.map
+class MoveRule extends Rule {
+    constructor(json) {
+        super(json);
+        const { playerTarget, direction, numSpaces } = json;
+        this.validateRequired(playerTarget, direction, numSpaces);
+        this.direction = direction;
+        this.numSpaces = numSpaces;
+    }
+    execute() {
+        super.execute();
+        this.selectPlayers()
+            .then((value) => {
+            const targetPlayer = value[0];
+            const targetTileIndex = Math.max(0, targetPlayer.currentTileIndex + this.numSpaces);
+            targetPlayer.moveToTile(targetTileIndex);
+            targetPlayer.currentPos = targetPlayer.destinationPos;
+            gameInstance.painter.drawPlayers();
+            gameInstance.modal.close();
+        });
+    }
+}
+//# sourceMappingURL=MoveRule.js.map
+class SkipTurnRule extends Rule {
+    constructor(json) {
+        super(json);
+        const { numTurns } = json;
+        this.validateRequired(numTurns);
+        this.numTurns = numTurns;
+    }
+    execute() {
+        super.execute();
+        gameInstance.currentPlayer.skippedTurns += this.numTurns;
+        gameInstance.modal.enableClose();
+    }
+}
+//# sourceMappingURL=SkipTurnRule.js.map
+class SpeedModifierRule extends Rule {
+    constructor(json) {
+        super(json);
+        const { multiplier, numTurns } = json;
+        this.validateRequired(multiplier, numTurns);
+        this.multiplier = multiplier;
+        this.numTurns = numTurns;
+    }
+    execute() {
+        super.execute();
+        this.selectPlayers()
+            .then((value) => {
+            value.forEach((p) => {
+                p.speedModifiers = [];
+                for (let i = 0; i < this.numTurns; i++) {
+                    p.speedModifiers.push(this.multiplier);
+                }
+            });
+            gameInstance.modal.enableClose();
+        });
+    }
+}
+//# sourceMappingURL=SpeedModifierRule.js.map
+class TeleportRule extends Rule {
+    constructor(json) {
+        super(json);
+        const { tileIndex } = json;
+        this.validateRequired(tileIndex);
+        this.tileIndex = tileIndex;
+    }
+    execute() {
+        super.execute();
+        gameInstance.currentPlayer.moveToTile(this.tileIndex);
+        gameInstance.currentPlayer.currentPos = gameInstance.currentPlayer.destinationPos;
+        gameInstance.painter.drawPlayers();
+        gameInstance.modal.enableClose();
+    }
+}
+//# sourceMappingURL=TeleportRule.js.map
+class GameOverRule extends Rule {
+    constructor(json) {
+        super(json);
+    }
+    execute() {
+        super.execute();
+        gameInstance.gameOver();
+        gameInstance.modal.enableClose();
+    }
+}
+//# sourceMappingURL=GameOverRule.js.map
+class ExtraTurnRule extends Rule {
+    constructor(json) {
+        super(json);
+    }
+    execute() {
+        super.execute();
+        gameInstance.currentPlayer.extraTurns++;
+        gameInstance.modal.enableClose();
+    }
+}
+//# sourceMappingURL=ExtraTurnRule.js.map
+class DrinkDuringLostTurnsRule extends Rule {
+    constructor(json) {
+        super(json);
+        this.diceRolls = json.diceRolls;
+    }
+    execute() {
+        super.execute();
+        gameInstance.modal.requireDiceRolls(this.diceRolls.numRequired, (rolls) => {
+            gameInstance.currentPlayer.skippedTurns += rolls[0];
+            gameInstance.modal.enableClose();
+        });
+    }
+}
+//# sourceMappingURL=DrinkDuringLostTurnsRule.js.map
+class ApplyMoveConditionRule extends Rule {
+    constructor(json) {
+        super(json);
+        const { condition } = json;
+        this.validateRequired(condition);
+        this.successes = new Map();
+        this.condition = condition;
+    }
+    execute() {
+        super.execute();
+        this.selectPlayers()
+            .then((value) => {
+            value.forEach((p) => {
+                this.successes.set(p, 0);
+                const canPlayerMove = (roll) => {
+                    if (this.condition.criteria.indexOf(roll) === -1) {
+                        if (!this.condition.numSuccessesRequired) {
+                            p.moveCondition = null;
+                            this.successes.delete(p);
+                        }
+                        return false;
+                    }
+                    const currentSuccesses = this.successes.get(p);
+                    this.successes.set(p, currentSuccesses + 1);
+                    if (!this.condition.numSuccessesRequired ||
+                        this.successes.get(p) >= this.condition.numSuccessesRequired) {
+                        p.moveCondition = null;
+                        this.successes.delete(p);
+                        return true;
+                    }
+                    return false;
+                };
+                p.moveCondition = canPlayerMove;
+                if (this.condition.immediate) {
+                    gameInstance.modal.requireDiceRolls(1, (rolls) => {
+                        canPlayerMove(rolls[0]);
+                    });
+                }
+            });
+            console.log(`${this.playerTarget} ${PlayerTarget.custom}`);
+            if (this.playerTarget === PlayerTarget.custom) {
+                gameInstance.modal.close();
+            }
+            else {
+                gameInstance.modal.enableClose();
+            }
+        });
+    }
+}
+//# sourceMappingURL=ApplyMoveConditionRule.js.map
+class DiceRollRule extends Rule {
+    constructor(json) {
+        super(json);
+        this.diceRolls = json.diceRolls;
+        this.outcomeRules = [];
+        if (this.diceRolls.outcomes && this.diceRolls.outcomes.length) {
+            this.diceRolls.outcomes.forEach((rule) => {
+                this.outcomeRules.push(createRule(rule));
+            });
+        }
+        if (this.diceRolls.any) {
+            this.any = createRule(this.diceRolls.any);
+        }
+    }
+    getOutcomeForRolls(rolls) {
+        let outcomeRule = null;
+        if (!this.outcomeRules && !this.any)
+            return null;
+        if (this.any) {
+            for (let i = 0; i < rolls.length; i++) {
+                if (this.any.criteria.indexOf(rolls[i]) !== -1) {
+                    return this.any;
+                }
+            }
+        }
+        rolls.forEach((roll) => {
+            this.outcomeRules.forEach((rule) => {
+                if (rule.criteria && rule.criteria.length && rule.criteria.indexOf(roll) !== -1) {
+                    outcomeRule = rule;
+                }
+            });
+        });
+        return outcomeRule;
+    }
+    execute() {
+        super.execute();
+        gameInstance.modal.requireDiceRolls(this.diceRolls.numRequired, (rolls) => {
+            const outcomeRule = this.getOutcomeForRolls(rolls);
+            if (outcomeRule) {
+                outcomeRule.execute();
+            }
+            else {
+                gameInstance.modal.enableClose();
+            }
+        });
+    }
+}
+//# sourceMappingURL=DiceRollRule.js.map
+class RollUntilRule extends Rule {
+    constructor(json) {
+        super(json);
+        this.validateRequired(json.displayText);
+    }
+    execute() {
+        super.execute();
+        const rollUntilFn = () => {
+            gameInstance.modal.requireDiceRolls(1, (rolls) => {
+                if (this.criteria.indexOf(rolls[0]) !== -1) {
+                    gameInstance.modal.enableClose();
+                }
+                else {
+                    rollUntilFn();
+                }
+            });
+        };
+        rollUntilFn();
+    }
+}
+//# sourceMappingURL=RollUntilRule.js.map
+class ChoiceRule extends Rule {
+    constructor(json) {
+        super(json);
+        const { choices, diceRolls } = json;
+        this.validateRequired(choices);
+        this.choiceRules = [];
+        this.diceRolls = diceRolls;
+        if (choices && choices.length) {
+            choices.forEach((rule) => {
+                this.choiceRules.push(createRule(rule));
+            });
+        }
+    }
+    execute() {
+        super.execute();
+        if (this.diceRolls) {
+            gameInstance.modal.requireDiceRolls(this.diceRolls.numRequired, () => { });
+        }
+        gameInstance.modal.requireChoice(this.choiceRules)
+            .then((value) => {
+            if (!value) {
+                gameInstance.modal.enableClose();
+                return;
+            }
+            console.log(value);
+            value.execute();
+        });
+    }
+}
+//# sourceMappingURL=ChoiceRule.js.map
+class SkipNextMandatoryRule extends Rule {
+    constructor(json) {
+        super(json);
+        this.validateRequired(json.numSpaces);
+        this.numSpaces = json.numSpaces;
+    }
+    execute() {
+        super.execute();
+        gameInstance.currentPlayer.mandatorySkips = this.numSpaces;
+        gameInstance.modal.enableClose();
+    }
+}
+//# sourceMappingURL=SkipNextMandatoryRule.js.map
+class ChallengeRule extends Rule {
+    constructor(json) {
+        super(json);
+        this.playerTarget = PlayerTarget.custom;
+    }
+    execute() {
+        super.execute();
+        this.selectPlayers()
+            .then((value) => {
+            const challengers = [value[0], gameInstance.currentPlayer];
+            gameInstance.modal.requirePlayerSelection(challengers, 'Who won?')
+                .then((value) => {
+                const winningPlayer = value[0];
+                const losingPlayer = challengers.find((p) => p !== winningPlayer);
+                losingPlayer.skippedTurns++;
+                winningPlayer.extraTurns++;
+                gameInstance.modal.close();
+            });
+        });
+    }
+}
+//# sourceMappingURL=ChallengeRule.js.map
+const RULE_MAPPINGS = {
+    MoveRule: MoveRule,
+    DisplayRule: DisplayRule,
+    TeleportRule: TeleportRule,
+    SkipTurnRule: SkipTurnRule,
+    SpeedModifierRule: SpeedModifierRule,
+    GameOverRule: GameOverRule,
+    ExtraTurnRule: ExtraTurnRule,
+    DrinkDuringLostTurnsRule: DrinkDuringLostTurnsRule,
+    ApplyMoveConditionRule: ApplyMoveConditionRule,
+    DiceRollRule: DiceRollRule,
+    RollUntilRule: RollUntilRule,
+    ChoiceRule: ChoiceRule,
+    SkipNextMandatoryRule: SkipNextMandatoryRule,
+    ChallengeRule: ChallengeRule,
+};
+function createTiles(tilesJson) {
+    return tilesJson.map((tileJson) => {
+        const { mandatory, rule, position } = tileJson;
+        if (!rule) {
+            console.warn('No rule specified. Was this a todo?');
+            return null;
+        }
+        return new Tile(mandatory, createRule(rule), position);
+    });
+}
+function createRule(ruleJson) {
+    const { type } = ruleJson;
+    if (!RULE_MAPPINGS.hasOwnProperty(type)) {
+        console.warn(`Invalid rule type specified: ${type}`);
+        return null;
+    }
+    return new RULE_MAPPINGS[type](ruleJson);
+}
+//# sourceMappingURL=BoardJsonConverter.js.map
+class Board {
+    constructor(json, players) {
+        this.imgSrc = json.imgSrc;
+        this.tiles = createTiles(json.tiles);
+        this.players = players;
+    }
+}
+//# sourceMappingURL=Board.js.map
+const RADIUS = 30;
+const FONT_SIZE = 20;
+const VELO = 12;
+class Player {
+    constructor(name) {
+        this.name = name;
+        this.extraTurns = 0;
+        this.skippedTurns = 0;
+        this.mandatorySkips = 0;
+        this.speedModifiers = [];
+    }
+    canTakeTurn() {
+        if (this.skippedTurns > 0) {
+            this.skippedTurns--;
+            return false;
+        }
+        return true;
+    }
+    moveToTile(tileIndex = 0) {
+        this.currentTileIndex = tileIndex;
+        gameInstance.board.tiles[tileIndex].placePlayer(this);
+        if (!this.currentPos && this.destinationPos) {
+            this.currentPos = this.destinationPos;
+        }
+    }
+}
+//# sourceMappingURL=Player.js.map
+class Painter {
+    constructor(canvas, ctx) {
+        this.canvas = canvas;
+        this.ctx = ctx;
+        gameEventsInstance.on(MOVE_START, this.draw.bind(this));
+    }
+    draw() {
+        this.drawPlayers();
+        const x1 = gameInstance.currentPlayer.currentPos.x;
+        const y1 = gameInstance.currentPlayer.currentPos.y;
+        const x2 = gameInstance.currentPlayer.destinationPos.x;
+        const y2 = gameInstance.currentPlayer.destinationPos.y;
+        const dx = x2 - x1;
+        const dy = y2 - y1;
+        if (Math.abs(dx) < VELO && Math.abs(dy) < VELO) {
+            window.cancelAnimationFrame(this.raf);
+            gameEventsInstance.trigger(MOVE_END);
+            return;
+        }
+        const totalDistance = Math.sqrt(dx * dx + dy * dy);
+        const incrementX = (dx / totalDistance) * VELO;
+        const incrementY = (dy / totalDistance) * VELO;
+        gameInstance.currentPlayer.currentPos.x += incrementX;
+        gameInstance.currentPlayer.currentPos.y += incrementY;
+        window.scrollBy(incrementX, incrementY);
+        this.raf = window.requestAnimationFrame(this.draw.bind(this));
+    }
+    drawPlayers() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.font = `${FONT_SIZE}px "Open Sans"`;
+        for (let i = 0; i < gameInstance.players.length; i++) {
+            const player = gameInstance.players[i];
+            this.ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+            this.ctx.beginPath();
+            this.ctx.arc(player.currentPos.x, player.currentPos.y, RADIUS, 0, Math.PI * 2, true);
+            this.ctx.closePath();
+            this.ctx.fill();
+            this.ctx.fillStyle = 'white';
+            this.ctx.fillText(player.name[0].toUpperCase(), player.currentPos.x - 6, player.currentPos.y + 6);
+        }
+    }
+}
+//# sourceMappingURL=Painter.js.map
+class Modal {
+    constructor() {
+        this.triggerId = 'game-modal';
+        this.trigger = document.querySelector(`#${this.triggerId}`);
+        this.controls = Array.from(document.querySelectorAll('label[for="game-modal"]'));
+        this.header = document.querySelector('.modal h3');
+        this.content = document.querySelector('.modal .content');
+        this.trigger.addEventListener('change', (e) => {
+            if (this.trigger.checked === false && this.closeCb) {
+                this.closeCb();
+                this.closeCb = null;
+            }
+        });
+    }
+    show(displayText) {
+        this.header.innerText = gameInstance.currentPlayer.name;
+        this.content.innerText = displayText;
+        this.trigger.checked = true;
+    }
+    close() {
+        this.enableClose();
+        this.trigger.checked = false;
+        this.trigger.dispatchEvent(new Event('change'));
+    }
+    disableClose() {
+        this.controls.forEach((control) => {
+            control.setAttribute('for', `${this.triggerId}__DISABLED`);
+        });
+    }
+    enableClose() {
+        this.controls.forEach((control) => {
+            control.setAttribute('for', this.triggerId);
+        });
+    }
+    requireDiceRolls(n, cb) {
+        const rolls = [];
+        const frag = document.createDocumentFragment();
+        for (let i = 0; i < n; i++) {
+            frag.appendChild(document.createElement('dice-roll'));
+        }
+        this.content.appendChild(frag);
+        Array.from(this.content.querySelectorAll('dice-roll')).forEach((el) => {
+            el.addEventListener('roll', (e) => {
+                rolls.push(e.detail.roll);
+                if (rolls.length === n) {
+                    setTimeout(() => { cb(rolls); }, 1000);
+                }
+            });
+        });
+    }
+    requirePlayerSelection(playerList, headerString = 'Choose a player') {
+        if (!playerList || playerList.length === 0)
+            return Promise.resolve([]);
+        const links = this.addLinks(headerString, playerList.map(p => p.name));
+        return new Promise((resolve) => {
+            Array.from(links).forEach((el) => {
+                el.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const selectedPlayer = playerList.find((p) => {
+                        return p.name === e.currentTarget.dataset.name;
+                    });
+                    resolve([selectedPlayer]);
+                    return false;
+                });
+            });
+        });
+    }
+    requireChoice(rules) {
+        if (!rules || rules.length === 0)
+            return Promise.resolve(null);
+        const links = this.addLinks('Choose an outcome', rules.map(r => r.displayText));
+        console.log(links);
+        return new Promise((resolve) => {
+            Array.from(links).forEach((el) => {
+                el.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const selectedRule = rules.find((r) => {
+                        return r.displayText === e.currentTarget.dataset.name;
+                    });
+                    resolve(selectedRule);
+                    return false;
+                });
+            });
+        });
+    }
+    addLinks(headerText, descriptions) {
+        const links = [];
+        const frag = document.createDocumentFragment();
+        const header = document.createElement('h4');
+        header.innerText = headerText;
+        frag.appendChild(header);
+        descriptions.forEach((desc) => {
+            const playerLink = document.createElement('a');
+            playerLink.classList.add('sm');
+            playerLink.href = '#';
+            playerLink.innerText = desc;
+            playerLink.dataset.name = desc;
+            frag.appendChild(playerLink);
+            frag.appendChild(document.createTextNode('\u00A0\u00A0'));
+            links.push(playerLink);
+        });
+        this.content.appendChild(frag);
+        return links;
+    }
+    whenClosed(cb) {
+        this.closeCb = cb;
+    }
+}
+//# sourceMappingURL=Modal.js.map
+class Game {
+    constructor() {
+        if (!Game.instance) {
+            Game.instance = this;
+        }
+        gameEventsInstance.on(TURN_START, this.startTurn.bind(this));
+        gameEventsInstance.on(TURN_END, this.endTurn.bind(this));
+        gameEventsInstance.on(ROLL_START, this.enableDiceRoll.bind(this));
+        gameEventsInstance.on(ROLL_END, this.endDiceRoll.bind(this));
+        gameEventsInstance.on(MOVE_END, this.endMovement.bind(this));
+        gameEventsInstance.on(RULE_TRIGGER, this.triggerRule.bind(this));
+        gameEventsInstance.on(RULE_END, this.endRule.bind(this));
+        return Game.instance;
+    }
+    start(boardSrc, playerNames, canvas) {
+        this.turnIndex = 0;
+        this.canvas = canvas;
+        this.ctx = canvas.getContext('2d');
+        this.board = new Board(boardSrc, this.players);
+        this.players = playerNames.map((name) => new Player(name));
+        this.diceLink = document.querySelector('#overlay dice-roll');
+        this.modal = new Modal();
+        this.painter = new Painter(this.canvas, this.ctx);
+        this.players.forEach((p) => p.moveToTile(0));
+        this.playerTurns = [...this.players];
+        this.painter.drawPlayers();
+        this.handleDiceRoll = this.handleDiceRoll.bind(this);
+        document.querySelector('#skip a').addEventListener('click', (e) => {
+            e.preventDefault();
+            this.diceLink.removeEventListener('roll', this.handleDiceRoll);
+            gameEventsInstance.trigger(TURN_END);
+            return false;
+        });
+        gameEventsInstance.trigger(TURN_START);
+    }
+    startTurn() {
+        if (!this.playerTurns.length)
+            this.playerTurns = [...this.players];
+        this.currentPlayer = this.playerTurns.shift();
+        gameEventsInstance.trigger(this.currentPlayer.canTakeTurn() ? ROLL_START : TURN_END);
+        document.querySelector('#overlay h4').innerHTML = this.currentPlayer.name;
+        window.scrollTo({
+            top: this.currentPlayer.currentPos.y - (window.outerHeight / 2),
+            left: this.currentPlayer.currentPos.x - (window.outerWidth / 2),
+            behavior: 'smooth'
+        });
+    }
+    enableDiceRoll(next) {
+        this.diceLink.reset();
+        this.diceLink.addEventListener('roll', this.handleDiceRoll);
+        next();
+    }
+    handleDiceRoll(e) {
+        const roll = e.detail.roll;
+        gameEventsInstance.trigger(ROLL_END, [roll]);
+        this.diceLink.removeEventListener('roll', this.handleDiceRoll);
+    }
+    endDiceRoll(next, roll) {
+        if (this.currentPlayer.moveCondition) {
+            const canMove = this.currentPlayer.moveCondition(roll);
+            if (!canMove) {
+                setTimeout(() => {
+                    gameEventsInstance.trigger(TURN_END);
+                }, 2000);
+                next();
+                return;
+            }
+        }
+        if (this.currentPlayer.speedModifiers.length) {
+            const modifier = this.currentPlayer.speedModifiers.shift();
+            roll = Math.ceil(modifier * roll);
+        }
+        let firstMandatoryIndex = this.board.tiles
+            .slice(this.currentPlayer.currentTileIndex + 1, this.currentPlayer.currentTileIndex + 1 + roll)
+            .findIndex((tile) => {
+            return tile.isMandatory;
+        });
+        if (this.currentPlayer.mandatorySkips > 0 && firstMandatoryIndex !== -1) {
+            this.currentPlayer.mandatorySkips--;
+            firstMandatoryIndex = -1;
+        }
+        let numSpacesToAdvance = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
+        if (numSpacesToAdvance > 0) {
+            this.currentPlayer.moveToTile(this.currentPlayer.currentTileIndex + numSpacesToAdvance);
+            gameEventsInstance.trigger(MOVE_START);
+        }
+        next();
+    }
+    endMovement(next) {
+        gameEventsInstance.trigger(RULE_TRIGGER);
+    }
+    triggerRule(next) {
+        const currentTile = this.board.tiles[this.currentPlayer.currentTileIndex];
+        const currentRule = currentTile.rule;
+        currentRule.execute();
+        next();
+    }
+    endRule(next) {
+        next();
+        gameEventsInstance.trigger(TURN_END);
+    }
+    endTurn(next) {
+        this.turnIndex++;
+        if (this.currentPlayer.extraTurns > 0) {
+            this.currentPlayer.extraTurns--;
+            this.playerTurns.unshift(this.currentPlayer);
+        }
+        gameEventsInstance.trigger(TURN_START);
+        next();
+    }
+    gameOver() {
+        alert(`Game over!\n\n Winner: ${this.currentPlayer.name}`);
+    }
+    getInactivePlayers() {
+        return this.players.filter((p) => {
+            return p !== this.currentPlayer;
+        });
+    }
+}
+const gameInstance = new Game();
+//# sourceMappingURL=Game.js.map
+(function () {
+    function fetchImage(src, canvas) {
+        return new Promise(resolve => {
+            const img = new Image();
+            img.src = src;
+            img.addEventListener('load', () => {
+                canvas.width = img.width;
+                canvas.height = img.height;
+                canvas.style.background = `url(${src})`;
+                canvas.style.backgroundSize = '100% 100%';
+                resolve();
+            });
+        });
+    }
+    function fetchBoard(src) {
+        return new Promise(resolve => {
+            fetch(src)
+                .then(resp => resp.json())
+                .then(data => resolve(data));
+        });
+    }
+    function getFormValues() {
+        const boardPrefix = document.getElementById('game').value;
+        const players = Array.from(document.querySelectorAll('#player-input input'))
+            .filter((input) => !!input.value)
+            .map((input) => input.value);
+        return [boardPrefix, players];
+    }
+    function initGame(boardPrefix, players) {
+        const canvas = document.getElementById('canvas');
+        const imgSrc = `${boardPrefix}/index.png`;
+        const boardSrc = `${boardPrefix}/index.json`;
+        Promise.all([fetchImage(imgSrc, canvas), fetchBoard(boardSrc)])
+            .then((values) => {
+            gameInstance.start(values[1], players, canvas);
+        })
+            .catch(err => console.error(err));
+    }
+    document.getElementById('add-player').addEventListener('click', (e) => {
+        e.preventDefault();
+        const frag = document.createDocumentFragment();
+        const input = document.createElement('input');
+        input.type = 'text';
+        frag.appendChild(input);
+        document.getElementById('player-input').appendChild(frag);
+        return false;
+    });
+    document.getElementById('setup').addEventListener('submit', (e) => {
+        e.preventDefault();
+        const gameSetupInfo = getFormValues();
+        if (!gameSetupInfo[1].length) {
+            alert('You need players to play this game');
+            return;
+        }
+        if (new Set(gameSetupInfo[1]).size < gameSetupInfo[1].length) {
+            alert('Player names must be unique');
+            return;
+        }
+        initGame(gameSetupInfo[0], gameSetupInfo[1]);
+        document.getElementById('setup').style.display = 'none';
+        document.getElementById('overlay').style.display = 'block';
+    });
+}());
+//# sourceMappingURL=App.js.map
+}());

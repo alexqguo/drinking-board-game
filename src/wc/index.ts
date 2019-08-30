@@ -1,2 +1,1 @@
-import './Test.ts';
-import './DiceRoll.js';
+import './DiceRoll.ts';

@@ -57,7 +57,12 @@ class GameEvents {
       }
     }
     const invokeEventFunction: Function = () => {
-      eventFunctions[functionIdx].apply(null, [next, ...eventValues]);
+      let args = [next];
+      if (eventValues && eventValues.length) {
+        args = args.concat(eventValues);
+      }
+      
+      eventFunctions[functionIdx].apply(null, args);
     }
 
     invokeEventFunction();
