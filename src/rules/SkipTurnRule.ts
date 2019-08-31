@@ -14,7 +14,7 @@ class SkipTurnRule extends Rule {
 
   execute(): void {
     super.execute();
-    Game.currentPlayer.skippedTurns += this.numTurns;
+    Game.currentPlayer.effects.skippedTurns += this.numTurns;
     Game.modal.enableClose();
   }
 }

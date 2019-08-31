@@ -5,6 +5,7 @@
     "lib": ["es5", "es6", "dom"],
     "target": "es6",
     "experimentalDecorators": true,
+    "allowJs": true,
     "module": "commonjs"
   }
 }

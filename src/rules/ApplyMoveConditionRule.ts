@@ -40,7 +40,7 @@ class ApplyMoveConditionRule extends Rule {
                * So in that case we clear the condition even in a failure case.
                */
               if (!this.condition.numSuccessesRequired) {
-                p.moveCondition = null;
+                p.effects.moveCondition = null;
                 this.successes.delete(p);
               }
 
@@ -52,7 +52,7 @@ class ApplyMoveConditionRule extends Rule {
 
             if (!this.condition.numSuccessesRequired || 
               this.successes.get(p) >= this.condition.numSuccessesRequired) {
-              p.moveCondition = null;
+              p.effects.moveCondition = null;
               this.successes.delete(p);
               return true;
             }
@@ -60,7 +60,7 @@ class ApplyMoveConditionRule extends Rule {
             return false;
           };
 
-          p.moveCondition = canPlayerMove;
+          p.effects.moveCondition = canPlayerMove;
 
           // WIll fail with a custom player target as the modal will close immediately
           if (this.condition.immediate) {

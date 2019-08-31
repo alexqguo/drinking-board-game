@@ -1,5 +1,5 @@
 import Game from './Game';
-import { Position } from './interfaces';
+import { Position, PlayerEffects } from './interfaces';
 
 export const RADIUS = 30;
 export const FONT_SIZE = 20;
@@ -10,25 +10,22 @@ class Player {
   currentPos: Position;
   destinationPos: Position;
   currentTileIndex: number;
-  // TODO: consider puttting the following into a containing "effects" map or list.
-  // That can then be read super easily and displayed into a nice UI
-  mandatorySkips: number;
-  extraTurns: number;
-  skippedTurns: number;
-  speedModifiers: number[];
-  moveCondition: Function; // As of right now, player can only have one active move condition
+  effects: PlayerEffects;
   
   constructor(name: string) {
     this.name = name;
-    this.extraTurns = 0;
-    this.skippedTurns = 0;
-    this.mandatorySkips = 0;
-    this.speedModifiers = [];
+    this.effects = {
+      extraTurns: 0,
+      skippedTurns: 0,
+      speedModifiers: [],
+      mandatorySkips: 0,
+      moveCondition: null,
+    };
   }
 
   canTakeTurn(): boolean {
-    if (this.skippedTurns > 0) {
-      this.skippedTurns--;
+    if (this.effects.skippedTurns > 0) {
+      this.effects.skippedTurns--;
       return false;
     }
 

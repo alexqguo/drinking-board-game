@@ -19,9 +19,9 @@ export default [{
     exclude: ['node_modules/**']
   }
 }, {
-  input: 'src/wc/index.ts',
+  input: 'src/components/index.ts',
   output: {
-    file: 'dist/wc.js',
+    file: 'dist/comp.js',
     format: 'iife'
   },
   plugins,

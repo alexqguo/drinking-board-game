@@ -60,6 +60,10 @@ class Game {
       return false;
     });
 
+    const el = document.createElement('player-status');
+    el.setAttribute('player', JSON.stringify(this.players[0]));
+    document.querySelector('#overlay').appendChild(el);
+
     GameEvents.trigger(TURN_START);
   }
 
@@ -91,8 +95,8 @@ class Game {
   }
 
   endDiceRoll(next: Function, roll: number): void {
-    if (this.currentPlayer.moveCondition) {
-      const canMove = this.currentPlayer.moveCondition(roll);
+    if (this.currentPlayer.effects.moveCondition) {
+      const canMove = this.currentPlayer.effects.moveCondition(roll);
 
       if (!canMove) {
         // So that it doesn't jump immediately. Not sure of a good way to do this right now.
@@ -104,8 +108,8 @@ class Game {
       }
     }
 
-    if (this.currentPlayer.speedModifiers.length) {
-      const modifier: number = this.currentPlayer.speedModifiers.shift();
+    if (this.currentPlayer.effects.speedModifiers.length) {
+      const modifier: number = this.currentPlayer.effects.speedModifiers.shift();
       roll = Math.ceil(modifier * roll); // TODO - may not always be multiplication
     }
 
@@ -116,8 +120,8 @@ class Game {
         return tile.isMandatory;
       });
 
-    if (this.currentPlayer.mandatorySkips > 0 && firstMandatoryIndex !== -1) {
-      this.currentPlayer.mandatorySkips--;
+    if (this.currentPlayer.effects.mandatorySkips > 0 && firstMandatoryIndex !== -1) {
+      this.currentPlayer.effects.mandatorySkips--;
       firstMandatoryIndex = -1;
     }
 
@@ -156,8 +160,8 @@ class Game {
 
   endTurn(next: Function): void {
     this.turnIndex++;
-    if (this.currentPlayer.extraTurns > 0) {
-      this.currentPlayer.extraTurns--;
+    if (this.currentPlayer.effects.extraTurns > 0) {
+      this.currentPlayer.effects.extraTurns--;
       this.playerTurns.unshift(this.currentPlayer);
     }
 

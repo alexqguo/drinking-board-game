@@ -25,8 +25,8 @@ class ChallengeRule extends Rule {
             const winningPlayer = value[0];
             const losingPlayer = challengers.find((p: Player) => p !== winningPlayer);
 
-            losingPlayer.skippedTurns++;
-            winningPlayer.extraTurns++;
+            losingPlayer.effects.skippedTurns++;
+            winningPlayer.effects.extraTurns++;
             Game.modal.close();
           });
       });

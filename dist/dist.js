@@ -177,7 +177,7 @@ class SkipTurnRule extends Rule {
     }
     execute() {
         super.execute();
-        gameInstance.currentPlayer.skippedTurns += this.numTurns;
+        gameInstance.currentPlayer.effects.skippedTurns += this.numTurns;
         gameInstance.modal.enableClose();
     }
 }
@@ -195,9 +195,9 @@ class SpeedModifierRule extends Rule {
         this.selectPlayers()
             .then((value) => {
             value.forEach((p) => {
-                p.speedModifiers = [];
+                p.effects.speedModifiers = [];
                 for (let i = 0; i < this.numTurns; i++) {
-                    p.speedModifiers.push(this.multiplier);
+                    p.effects.speedModifiers.push(this.multiplier);
                 }
             });
             gameInstance.modal.enableClose();
@@ -238,7 +238,7 @@ class ExtraTurnRule extends Rule {
     }
     execute() {
         super.execute();
-        gameInstance.currentPlayer.extraTurns++;
+        gameInstance.currentPlayer.effects.extraTurns++;
         gameInstance.modal.enableClose();
     }
 }
@@ -251,7 +251,7 @@ class DrinkDuringLostTurnsRule extends Rule {
     execute() {
         super.execute();
         gameInstance.modal.requireDiceRolls(this.diceRolls.numRequired, (rolls) => {
-            gameInstance.currentPlayer.skippedTurns += rolls[0];
+            gameInstance.currentPlayer.effects.skippedTurns += rolls[0];
             gameInstance.modal.enableClose();
         });
     }
@@ -274,7 +274,7 @@ class ApplyMoveConditionRule extends Rule {
                 const canPlayerMove = (roll) => {
                     if (this.condition.criteria.indexOf(roll) === -1) {
                         if (!this.condition.numSuccessesRequired) {
-                            p.moveCondition = null;
+                            p.effects.moveCondition = null;
                             this.successes.delete(p);
                         }
                         return false;
@@ -283,13 +283,13 @@ class ApplyMoveConditionRule extends Rule {
                     this.successes.set(p, currentSuccesses + 1);
                     if (!this.condition.numSuccessesRequired ||
                         this.successes.get(p) >= this.condition.numSuccessesRequired) {
-                        p.moveCondition = null;
+                        p.effects.moveCondition = null;
                         this.successes.delete(p);
                         return true;
                     }
                     return false;
                 };
-                p.moveCondition = canPlayerMove;
+                p.effects.moveCondition = canPlayerMove;
                 if (this.condition.immediate) {
                     gameInstance.modal.requireDiceRolls(1, (rolls) => {
                         canPlayerMove(rolls[0]);
@@ -414,7 +414,7 @@ class SkipNextMandatoryRule extends Rule {
     }
     execute() {
         super.execute();
-        gameInstance.currentPlayer.mandatorySkips = this.numSpaces;
+        gameInstance.currentPlayer.effects.mandatorySkips = this.numSpaces;
         gameInstance.modal.enableClose();
     }
 }
@@ -433,8 +433,8 @@ class ChallengeRule extends Rule {
                 .then((value) => {
                 const winningPlayer = value[0];
                 const losingPlayer = challengers.find((p) => p !== winningPlayer);
-                losingPlayer.skippedTurns++;
-                winningPlayer.extraTurns++;
+                losingPlayer.effects.skippedTurns++;
+                winningPlayer.effects.extraTurns++;
                 gameInstance.modal.close();
             });
         });
@@ -490,14 +490,17 @@ const VELO = 12;
 class Player {
     constructor(name) {
         this.name = name;
-        this.extraTurns = 0;
-        this.skippedTurns = 0;
-        this.mandatorySkips = 0;
-        this.speedModifiers = [];
+        this.effects = {
+            extraTurns: 0,
+            skippedTurns: 0,
+            speedModifiers: [],
+            mandatorySkips: 0,
+            moveCondition: null,
+        };
     }
     canTakeTurn() {
-        if (this.skippedTurns > 0) {
-            this.skippedTurns--;
+        if (this.effects.skippedTurns > 0) {
+            this.effects.skippedTurns--;
             return false;
         }
         return true;
@@ -696,6 +699,9 @@ class Game {
             gameEventsInstance.trigger(TURN_END);
             return false;
         });
+        const el = document.createElement('player-status');
+        el.setAttribute('player', JSON.stringify(this.players[0]));
+        document.querySelector('#overlay').appendChild(el);
         gameEventsInstance.trigger(TURN_START);
     }
     startTurn() {
@@ -721,8 +727,8 @@ class Game {
         this.diceLink.removeEventListener('roll', this.handleDiceRoll);
     }
     endDiceRoll(next, roll) {
-        if (this.currentPlayer.moveCondition) {
-            const canMove = this.currentPlayer.moveCondition(roll);
+        if (this.currentPlayer.effects.moveCondition) {
+            const canMove = this.currentPlayer.effects.moveCondition(roll);
             if (!canMove) {
                 setTimeout(() => {
                     gameEventsInstance.trigger(TURN_END);
@@ -731,8 +737,8 @@ class Game {
                 return;
             }
         }
-        if (this.currentPlayer.speedModifiers.length) {
-            const modifier = this.currentPlayer.speedModifiers.shift();
+        if (this.currentPlayer.effects.speedModifiers.length) {
+            const modifier = this.currentPlayer.effects.speedModifiers.shift();
             roll = Math.ceil(modifier * roll);
         }
         let firstMandatoryIndex = this.board.tiles
@@ -740,8 +746,8 @@ class Game {
             .findIndex((tile) => {
             return tile.isMandatory;
         });
-        if (this.currentPlayer.mandatorySkips > 0 && firstMandatoryIndex !== -1) {
-            this.currentPlayer.mandatorySkips--;
+        if (this.currentPlayer.effects.mandatorySkips > 0 && firstMandatoryIndex !== -1) {
+            this.currentPlayer.effects.mandatorySkips--;
             firstMandatoryIndex = -1;
         }
         let numSpacesToAdvance = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
@@ -766,8 +772,8 @@ class Game {
     }
     endTurn(next) {
         this.turnIndex++;
-        if (this.currentPlayer.extraTurns > 0) {
-            this.currentPlayer.extraTurns--;
+        if (this.currentPlayer.effects.extraTurns > 0) {
+            this.currentPlayer.effects.extraTurns--;
             this.playerTurns.unshift(this.currentPlayer);
         }
         gameEventsInstance.trigger(TURN_START);

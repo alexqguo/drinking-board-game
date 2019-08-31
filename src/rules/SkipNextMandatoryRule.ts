@@ -13,7 +13,7 @@ class SkipNextMandatoryRule extends Rule {
 
   execute() {
     super.execute()
-    Game.currentPlayer.mandatorySkips = this.numSpaces; // Yes, overwrite any existing
+    Game.currentPlayer.effects.mandatorySkips = this.numSpaces; // Yes, overwrite any existing
     Game.modal.enableClose();
   }
 }

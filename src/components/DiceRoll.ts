@@ -1,5 +1,4 @@
-import { LitElement, html, customElement, property, css } from 'lit-element';
-
+import { LitElement, html, customElement, property } from 'lit-element';
 
 @customElement('dice-roll')
 export class DiceRoll extends LitElement {
@@ -11,10 +10,6 @@ export class DiceRoll extends LitElement {
 
   @property({ type: String })
   rollText = 'Roll';
-
-  constructor() {
-    super();
-  }
 
   // Opting out of shadow dom in order to inherit CSS for the time being
   createRenderRoot() {

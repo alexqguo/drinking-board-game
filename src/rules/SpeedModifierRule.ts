@@ -22,10 +22,10 @@ class SpeedModifierRule extends Rule {
       .then((value: Player[]) => {
         value.forEach((p: Player) => {
           // If somehow a user gets multiple modifiers on them, just cancel the original
-          p.speedModifiers = [];
+          p.effects.speedModifiers = [];
     
           for (let i = 0; i < this.numTurns; i ++) {
-            p.speedModifiers.push(this.multiplier);
+            p.effects.speedModifiers.push(this.multiplier);
           }
         });
         

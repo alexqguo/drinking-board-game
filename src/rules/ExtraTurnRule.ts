@@ -10,7 +10,7 @@ export default class ExtraTurnRule extends Rule {
 
   execute(): void {
     super.execute();
-    Game.currentPlayer.extraTurns++;
+    Game.currentPlayer.effects.extraTurns++;
     Game.modal.enableClose();
   }
 }

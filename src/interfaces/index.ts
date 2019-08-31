@@ -14,6 +14,14 @@ export enum Direction {
   back = 'back',
 }
 
+export interface PlayerEffects {
+  mandatorySkips: number,
+  extraTurns: number,
+  skippedTurns: number,
+  speedModifiers: number[],
+  moveCondition: Function,
+}
+
 export interface JsonRule {
   displayText: string;
   type: string;

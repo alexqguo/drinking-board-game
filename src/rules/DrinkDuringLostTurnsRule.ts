@@ -17,7 +17,7 @@ class DrinkDuringLostTurnsRule extends Rule {
     super.execute();
 
     Game.modal.requireDiceRolls(this.diceRolls.numRequired, (rolls: number[]) => {
-      Game.currentPlayer.skippedTurns += rolls[0]; // no-op on the second roll
+      Game.currentPlayer.effects.skippedTurns += rolls[0]; // no-op on the second roll
       Game.modal.enableClose();
     });
   }
