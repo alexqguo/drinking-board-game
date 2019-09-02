@@ -60,10 +60,6 @@ class Game {
       return false;
     });
 
-    const el = document.createElement('player-status');
-    el.setAttribute('player', JSON.stringify(this.players[0]));
-    document.querySelector('#overlay').appendChild(el);
-
     GameEvents.trigger(TURN_START);
   }
 
@@ -73,7 +69,7 @@ class Game {
 
     this.currentPlayer = this.playerTurns.shift();
     GameEvents.trigger(this.currentPlayer.canTakeTurn() ? ROLL_START : TURN_END);
-    document.querySelector('#overlay h4').innerHTML = this.currentPlayer.name;
+    this.updatePlayerStatusElement();
     
     window.scrollTo({
       top: this.currentPlayer.currentPos.y - (window.outerHeight / 2),
@@ -150,6 +146,7 @@ class Game {
     const currentTile = this.board.tiles[this.currentPlayer.currentTileIndex];
     const currentRule = currentTile.rule;
     currentRule.execute(); // currentRule.execute() should trigger rule end
+    this.updatePlayerStatusElement();
     next();
   }
 
@@ -177,6 +174,14 @@ class Game {
     return this.players.filter((p: Player) => {
       return p !== this.currentPlayer;
     });
+  }
+
+  // This will go away with state management as the element can just listen for changes
+  updatePlayerStatusElement(): void {
+    // TODO: consider saving this, it isn't changing
+    const playerStatusEl: HTMLElement = document.querySelector('#overlay player-status');
+    const args: Object = { name: this.currentPlayer.name, effects: this.currentPlayer.effects };
+    playerStatusEl.setAttribute('data', JSON.stringify(args));
   }
 }
 

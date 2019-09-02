@@ -699,9 +699,6 @@ class Game {
             gameEventsInstance.trigger(TURN_END);
             return false;
         });
-        const el = document.createElement('player-status');
-        el.setAttribute('player', JSON.stringify(this.players[0]));
-        document.querySelector('#overlay').appendChild(el);
         gameEventsInstance.trigger(TURN_START);
     }
     startTurn() {
@@ -709,7 +706,7 @@ class Game {
             this.playerTurns = [...this.players];
         this.currentPlayer = this.playerTurns.shift();
         gameEventsInstance.trigger(this.currentPlayer.canTakeTurn() ? ROLL_START : TURN_END);
-        document.querySelector('#overlay h4').innerHTML = this.currentPlayer.name;
+        this.updatePlayerStatusElement();
         window.scrollTo({
             top: this.currentPlayer.currentPos.y - (window.outerHeight / 2),
             left: this.currentPlayer.currentPos.x - (window.outerWidth / 2),
@@ -764,6 +761,7 @@ class Game {
         const currentTile = this.board.tiles[this.currentPlayer.currentTileIndex];
         const currentRule = currentTile.rule;
         currentRule.execute();
+        this.updatePlayerStatusElement();
         next();
     }
     endRule(next) {
@@ -787,10 +785,13 @@ class Game {
             return p !== this.currentPlayer;
         });
     }
+    updatePlayerStatusElement() {
+        const playerStatusEl = document.querySelector('#overlay player-status');
+        const args = { name: this.currentPlayer.name, effects: this.currentPlayer.effects };
+        playerStatusEl.setAttribute('data', JSON.stringify(args));
+    }
 }
-const gameInstance = new Game();
-//# sourceMappingURL=Game.js.map
-(function () {
+const gameInstance = new Game();(function () {
     function fetchImage(src, canvas) {
         return new Promise(resolve => {
             const img = new Image();

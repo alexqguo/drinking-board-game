@@ -21,7 +21,7 @@
       position: fixed;
       top: 0;
       left: 0;
-      width: 150px;
+      width: 200px;
       background: #fff;
       display: none;
       box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.5);
@@ -38,6 +38,15 @@
     .button.sm {
       font-size: 0.75em;
     }
+    .player-status {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      font-size: 0.75em;
+    }
+    /* .player-status li {
+
+    } */
   </style>
 </head>
 
@@ -62,7 +71,7 @@
   </form>
 
   <section id="overlay">
-    <h4></h4>
+    <player-status></player-status>
     <dice-roll></dice-roll>
     <div id="skip">
       <a class="button sm" href="#">Skip turn</a><br>

@@ -14,6 +14,11 @@ export enum Direction {
   back = 'back',
 }
 
+export interface PlayerStatusData {
+  name: string,
+  effects: PlayerEffects,
+}
+
 export interface PlayerEffects {
   mandatorySkips: number,
   extraTurns: number,
