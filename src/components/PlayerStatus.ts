@@ -13,6 +13,8 @@ export class PlayerStatus extends LitElement {
 
   // Redo this UI 
   render() {
+    if (!this.data) return null;
+
     return html`
       <h4>${this.data.name}</h4>
       <ul class="player-status">

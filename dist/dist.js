@@ -791,7 +791,9 @@ class Game {
         playerStatusEl.setAttribute('data', JSON.stringify(args));
     }
 }
-const gameInstance = new Game();(function () {
+const gameInstance = new Game();
+//# sourceMappingURL=Game.js.map
+(function () {
     function fetchImage(src, canvas) {
         return new Promise(resolve => {
             const img = new Image();
@@ -813,11 +815,19 @@ const gameInstance = new Game();(function () {
         });
     }
     function getFormValues() {
+        const formData = [];
         const boardPrefix = document.getElementById('game').value;
-        const players = Array.from(document.querySelectorAll('#player-input input'))
+        const players = Array.from(document.querySelectorAll('#player-input input[type="text"]'))
             .filter((input) => !!input.value)
             .map((input) => input.value);
-        return [boardPrefix, players];
+        const colors = Array.from(document.querySelectorAll('#player-input input[type="color"]'))
+            .filter((input) => !!input.value)
+            .map((input) => input.value);
+        players.forEach((name, idx) => {
+            const color = colors[idx] || '#000000';
+            formData.push({ name, color });
+        });
+        return [boardPrefix, formData];
     }
     function initGame(boardPrefix, players) {
         const canvas = document.getElementById('canvas');
@@ -832,8 +842,7 @@ const gameInstance = new Game();(function () {
     document.getElementById('add-player').addEventListener('click', (e) => {
         e.preventDefault();
         const frag = document.createDocumentFragment();
-        const input = document.createElement('input');
-        input.type = 'text';
+        const input = document.createElement('player-input');
         frag.appendChild(input);
         document.getElementById('player-input').appendChild(frag);
         return false;

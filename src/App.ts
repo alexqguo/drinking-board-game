@@ -1,5 +1,5 @@
 import Game from './Game';
-import { JsonBoard } from './interfaces';
+import { JsonBoard, PlayerInput } from './interfaces';
 
 /*
 fetches the game instance, tells it which source to use and gives it player names
@@ -29,16 +29,26 @@ may put an App class in here if necessary
     });
   }
 
-  function getFormValues(): [string, string[]] {
+  // Got lazy with this. Create an actual TS interface
+  function getFormValues(): [string, PlayerInput[]] {
+    const formData: PlayerInput[] = [];
     const boardPrefix = (document.getElementById('game') as HTMLInputElement).value;
-    const players = Array.from(document.querySelectorAll('#player-input input'))
+    const players = Array.from(document.querySelectorAll('#player-input input[type="text"]'))
+      .filter((input: HTMLInputElement) => !!input.value)
+      .map((input: HTMLInputElement) => input.value);
+    const colors = Array.from(document.querySelectorAll('#player-input input[type="color"]'))
       .filter((input: HTMLInputElement) => !!input.value)
       .map((input: HTMLInputElement) => input.value);
 
-    return [boardPrefix, players];
+    players.forEach((name: string, idx: number) => {
+      const color = colors[idx] || '#000000';
+      formData.push({ name, color });
+    });
+
+    return [boardPrefix, formData];
   }
 
-  function initGame(boardPrefix: string, players: string[]): void {
+  function initGame(boardPrefix: string, players: PlayerInput[]): void {
     const canvas: HTMLCanvasElement = document.getElementById('canvas') as HTMLCanvasElement;
     const imgSrc: string = `${boardPrefix}/index.png`;
     const boardSrc: any = `${boardPrefix}/index.json`;
@@ -53,8 +63,7 @@ may put an App class in here if necessary
   document.getElementById('add-player').addEventListener('click', (e: Event) => {
     e.preventDefault();
     const frag: DocumentFragment = document.createDocumentFragment();
-    const input: HTMLInputElement = document.createElement('input');
-    input.type = 'text';
+    const input: HTMLElement = document.createElement('player-input');
     frag.appendChild(input);
     document.getElementById('player-input').appendChild(frag);
     return false;
@@ -62,13 +71,14 @@ may put an App class in here if necessary
 
   document.getElementById('setup').addEventListener('submit', (e: Event) => {
     e.preventDefault();
-    const gameSetupInfo: [string, string[]] = getFormValues();
+    const gameSetupInfo: [string, PlayerInput[]] = getFormValues();
 
     if (!gameSetupInfo[1].length) {
       alert('You need players to play this game');
       return;
     }
 
+    // TODO: fix
     if (new Set(gameSetupInfo[1]).size < gameSetupInfo[1].length) {
       alert('Player names must be unique');
       return;

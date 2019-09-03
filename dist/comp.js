@@ -2505,6 +2505,8 @@ let PlayerStatus = class PlayerStatus extends LitElement {
         return this;
     }
     render() {
+        if (!this.data)
+            return null;
         return html `
       <h4>${this.data.name}</h4>
       <ul class="player-status">
@@ -2524,4 +2526,19 @@ PlayerStatus = __decorate([
     customElement('player-status')
 ], PlayerStatus);
 //# sourceMappingURL=PlayerStatus.js.map
-}());
+let PlayerInput = class PlayerInput extends LitElement {
+    createRenderRoot() {
+        return this;
+    }
+    render() {
+        return html `
+      <div class="flex">
+        <span><input class="three" type="text" placeholder="Name"></span>
+        <span><input class="one" type="color" value="#aabbcc"></span>
+      </div>
+    `;
+    }
+};
+PlayerInput = __decorate([
+    customElement('player-input')
+], PlayerInput);}());
