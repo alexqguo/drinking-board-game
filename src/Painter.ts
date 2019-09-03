@@ -47,7 +47,7 @@ export default class Painter {
 
     for (let i = 0; i < Game.players.length; i++) {
       const player: Player = Game.players[i];
-      this.ctx.fillStyle = `rgba(${player.color.r}, ${player.color.g}, ${player.color.b}, 0.5)`;
+      this.ctx.fillStyle = `rgba(${player.color.r}, ${player.color.g}, ${player.color.b}, 0.7)`;
       this.ctx.beginPath();
       this.ctx.arc(player.currentPos.x, player.currentPos.y, RADIUS, 0, Math.PI * 2, true);
       this.ctx.closePath();

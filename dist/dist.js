@@ -559,7 +559,7 @@ class Painter {
         this.ctx.font = `${FONT_SIZE}px "Open Sans"`;
         for (let i = 0; i < gameInstance.players.length; i++) {
             const player = gameInstance.players[i];
-            this.ctx.fillStyle = `rgba(${player.color.r}, ${player.color.g}, ${player.color.b}, 0.5)`;
+            this.ctx.fillStyle = `rgba(${player.color.r}, ${player.color.g}, ${player.color.b}, 0.7)`;
             this.ctx.beginPath();
             this.ctx.arc(player.currentPos.x, player.currentPos.y, RADIUS, 0, Math.PI * 2, true);
             this.ctx.closePath();
