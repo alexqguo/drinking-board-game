@@ -53,7 +53,7 @@ export default class Painter {
       this.ctx.closePath();
       this.ctx.fill();
 
-      this.ctx.fillStyle = 'white';
+      this.ctx.fillStyle = 'gray';
       this.ctx.fillText(player.name[0].toUpperCase(), player.currentPos.x - 6, player.currentPos.y + 6);
     }
   }
