@@ -1,6 +1,6 @@
 import Board from './Board';
 import Player from './Player';
-import { JsonBoard } from './interfaces';
+import { JsonBoard, PlayerInput } from './interfaces';
 import Painter from './Painter';
 import { Modal } from './Modal';
 import GameEvents, { 
@@ -37,12 +37,12 @@ class Game {
     return Game.instance;
   }
 
-  start(boardSrc: JsonBoard, playerNames: Array<string>, canvas: HTMLCanvasElement): void {
+  start(boardSrc: JsonBoard, playerNames: PlayerInput[], canvas: HTMLCanvasElement): void {
     this.turnIndex = 0;
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
     this.board = new Board(boardSrc, this.players);
-    this.players = playerNames.map((name: string) => new Player(name));
+    this.players = playerNames.map((p: PlayerInput) => new Player(p));
     this.diceLink = document.querySelector('#overlay dice-roll');
     this.modal = new Modal();
     this.painter = new Painter(this.canvas, this.ctx);

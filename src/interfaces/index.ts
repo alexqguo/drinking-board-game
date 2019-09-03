@@ -19,6 +19,12 @@ export interface PlayerInput {
   color: string;
 }
 
+export interface PlayerColor {
+  r: number;
+  g: number;
+  b: number;
+}
+
 export interface PlayerStatusData {
   name: string,
   effects: PlayerEffects,

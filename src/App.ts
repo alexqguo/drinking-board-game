@@ -73,13 +73,15 @@ may put an App class in here if necessary
     e.preventDefault();
     const gameSetupInfo: [string, PlayerInput[]] = getFormValues();
 
+    // Make sure there are players
     if (!gameSetupInfo[1].length) {
       alert('You need players to play this game');
       return;
     }
 
-    // TODO: fix
-    if (new Set(gameSetupInfo[1]).size < gameSetupInfo[1].length) {
+    // Make sure the names are unique
+    const names = gameSetupInfo[1].map((val: PlayerInput) => val.name);
+    if (new Set(names).size < gameSetupInfo[1].length) {
       alert('Player names must be unique');
       return;
     }

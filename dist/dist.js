@@ -487,9 +487,22 @@ class Board {
 const RADIUS = 30;
 const FONT_SIZE = 20;
 const VELO = 12;
+function hexToRgb(hex) {
+    var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+    hex = hex.replace(shorthandRegex, function (m, r, g, b) {
+        return r + r + g + g + b + b;
+    });
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+    } : null;
+}
 class Player {
-    constructor(name) {
-        this.name = name;
+    constructor(input) {
+        this.name = input.name;
+        this.color = hexToRgb(input.color);
         this.effects = {
             extraTurns: 0,
             skippedTurns: 0,
@@ -546,7 +559,7 @@ class Painter {
         this.ctx.font = `${FONT_SIZE}px "Open Sans"`;
         for (let i = 0; i < gameInstance.players.length; i++) {
             const player = gameInstance.players[i];
-            this.ctx.fillStyle = 'rgba(0, 0, 0, 0.5)';
+            this.ctx.fillStyle = `rgba(${player.color.r}, ${player.color.g}, ${player.color.b}, 0.5)`;
             this.ctx.beginPath();
             this.ctx.arc(player.currentPos.x, player.currentPos.y, RADIUS, 0, Math.PI * 2, true);
             this.ctx.closePath();
@@ -555,9 +568,7 @@ class Painter {
             this.ctx.fillText(player.name[0].toUpperCase(), player.currentPos.x - 6, player.currentPos.y + 6);
         }
     }
-}
-//# sourceMappingURL=Painter.js.map
-class Modal {
+}class Modal {
     constructor() {
         this.triggerId = 'game-modal';
         this.trigger = document.querySelector(`#${this.triggerId}`);
@@ -685,7 +696,7 @@ class Game {
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d');
         this.board = new Board(boardSrc, this.players);
-        this.players = playerNames.map((name) => new Player(name));
+        this.players = playerNames.map((p) => new Player(p));
         this.diceLink = document.querySelector('#overlay dice-roll');
         this.modal = new Modal();
         this.painter = new Painter(this.canvas, this.ctx);
@@ -854,7 +865,8 @@ const gameInstance = new Game();
             alert('You need players to play this game');
             return;
         }
-        if (new Set(gameSetupInfo[1]).size < gameSetupInfo[1].length) {
+        const names = gameSetupInfo[1].map((val) => val.name);
+        if (new Set(names).size < gameSetupInfo[1].length) {
             alert('Player names must be unique');
             return;
         }
