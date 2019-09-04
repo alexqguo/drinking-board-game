@@ -2,12 +2,7 @@
     constructor(isMandatory, rule, coordinates) {
         this.isMandatory = isMandatory;
         this.rule = rule;
-        this.currentPlayers = [];
         this.coordinates = coordinates;
-    }
-    placePlayer(player) {
-        this.currentPlayers.push(player);
-        player.destinationPos = this.generateCenterPosition();
     }
     generateCenterPosition() {
         const total = this.coordinates.reduce((prev, cur) => {
@@ -160,8 +155,7 @@ class MoveRule extends Rule {
             .then((value) => {
             const targetPlayer = value[0];
             const targetTileIndex = Math.max(0, targetPlayer.currentTileIndex + this.numSpaces);
-            targetPlayer.moveToTile(targetTileIndex);
-            targetPlayer.currentPos = targetPlayer.destinationPos;
+            targetPlayer.teleportToTile(targetTileIndex);
             gameInstance.painter.drawPlayers();
             gameInstance.modal.close();
         });
@@ -214,8 +208,7 @@ class TeleportRule extends Rule {
     }
     execute() {
         super.execute();
-        gameInstance.currentPlayer.moveToTile(this.tileIndex);
-        gameInstance.currentPlayer.currentPos = gameInstance.currentPlayer.destinationPos;
+        gameInstance.currentPlayer.teleportToTile(this.tileIndex);
         gameInstance.painter.drawPlayers();
         gameInstance.modal.enableClose();
     }
@@ -518,12 +511,16 @@ class Player {
         }
         return true;
     }
-    moveToTile(tileIndex = 0) {
-        this.currentTileIndex = tileIndex;
-        gameInstance.board.tiles[tileIndex].placePlayer(this);
-        if (!this.currentPos && this.destinationPos) {
-            this.currentPos = this.destinationPos;
+    moveToTile(tileIndex) {
+        this.moveQueue = [];
+        for (let i = this.currentTileIndex + 1; i <= tileIndex; i++) {
+            this.moveQueue.push(gameInstance.board.tiles[i].generateCenterPosition());
         }
+        this.currentTileIndex = tileIndex;
+    }
+    teleportToTile(tileIndex) {
+        this.currentTileIndex = tileIndex;
+        this.currentPos = gameInstance.board.tiles[tileIndex].generateCenterPosition();
     }
 }
 //# sourceMappingURL=Player.js.map
@@ -537,21 +534,26 @@ class Painter {
         this.drawPlayers();
         const x1 = gameInstance.currentPlayer.currentPos.x;
         const y1 = gameInstance.currentPlayer.currentPos.y;
-        const x2 = gameInstance.currentPlayer.destinationPos.x;
-        const y2 = gameInstance.currentPlayer.destinationPos.y;
+        const x2 = gameInstance.currentPlayer.moveQueue[0].x;
+        const y2 = gameInstance.currentPlayer.moveQueue[0].y;
         const dx = x2 - x1;
         const dy = y2 - y1;
         if (Math.abs(dx) < VELO && Math.abs(dy) < VELO) {
-            window.cancelAnimationFrame(this.raf);
-            gameEventsInstance.trigger(MOVE_END);
-            return;
+            gameInstance.currentPlayer.moveQueue.shift();
+            if (!gameInstance.currentPlayer.moveQueue.length) {
+                window.cancelAnimationFrame(this.raf);
+                gameEventsInstance.trigger(MOVE_END);
+                return;
+            }
         }
         const totalDistance = Math.sqrt(dx * dx + dy * dy);
-        const incrementX = (dx / totalDistance) * VELO;
-        const incrementY = (dy / totalDistance) * VELO;
-        gameInstance.currentPlayer.currentPos.x += incrementX;
-        gameInstance.currentPlayer.currentPos.y += incrementY;
-        window.scrollBy(incrementX, incrementY);
+        if (totalDistance > 0) {
+            const incrementX = (dx / totalDistance) * VELO;
+            const incrementY = (dy / totalDistance) * VELO;
+            gameInstance.currentPlayer.currentPos.x += incrementX;
+            gameInstance.currentPlayer.currentPos.y += incrementY;
+            window.scrollBy(incrementX, incrementY);
+        }
         this.raf = window.requestAnimationFrame(this.draw.bind(this));
     }
     drawPlayers() {
@@ -700,7 +702,7 @@ class Game {
         this.diceLink = document.querySelector('#overlay dice-roll');
         this.modal = new Modal();
         this.painter = new Painter(this.canvas, this.ctx);
-        this.players.forEach((p) => p.moveToTile(0));
+        this.players.forEach((p) => p.teleportToTile(0));
         this.playerTurns = [...this.players];
         this.painter.drawPlayers();
         this.handleDiceRoll = this.handleDiceRoll.bind(this);
@@ -805,6 +807,7 @@ class Game {
 const gameInstance = new Game();
 //# sourceMappingURL=Game.js.map
 (function () {
+    window.g = gameInstance;
     function fetchImage(src, canvas) {
         return new Promise(resolve => {
             const img = new Image();

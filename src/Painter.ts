@@ -18,31 +18,37 @@ export default class Painter {
     this.drawPlayers();
     const x1 = Game.currentPlayer.currentPos.x;
     const y1 = Game.currentPlayer.currentPos.y;
-    const x2 = Game.currentPlayer.destinationPos.x;
-    const y2 = Game.currentPlayer.destinationPos.y;
+    const x2 = Game.currentPlayer.moveQueue[0].x;
+    const y2 = Game.currentPlayer.moveQueue[0].y;
     const dx = x2 - x1;
     const dy = y2 - y1;
 
     // If the current player (and thus the only one moving) is at its destination,
     // break the raf. If multiple players end up moving at a time this will need updating
     if (Math.abs(dx) < VELO && Math.abs(dy) < VELO) { // TODO: fix
-      window.cancelAnimationFrame(this.raf);
-      GameEvents.trigger(MOVE_END);
-      return;
+      Game.currentPlayer.moveQueue.shift();
+
+      if (!Game.currentPlayer.moveQueue.length) {
+        window.cancelAnimationFrame(this.raf);
+        GameEvents.trigger(MOVE_END);
+        return;
+      }
     }
 
     const totalDistance = Math.sqrt(dx * dx + dy * dy);
-    const incrementX = (dx / totalDistance) * VELO;
-    const incrementY = (dy / totalDistance) * VELO;
-    Game.currentPlayer.currentPos.x += incrementX;
-    Game.currentPlayer.currentPos.y += incrementY;
+    if (totalDistance > 0) {
+      const incrementX = (dx / totalDistance) * VELO;
+      const incrementY = (dy / totalDistance) * VELO;
+      Game.currentPlayer.currentPos.x += incrementX;
+      Game.currentPlayer.currentPos.y += incrementY;
+      window.scrollBy(incrementX, incrementY);
+    }
 
-    window.scrollBy(incrementX, incrementY);
     this.raf = window.requestAnimationFrame(this.draw.bind(this));
   }
 
   drawPlayers(): void {
-    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height); // TODO: need to also draw the other players back in when this happens
+    this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
     this.ctx.font = `${FONT_SIZE}px "Open Sans"`;
 
     for (let i = 0; i < Game.players.length; i++) {

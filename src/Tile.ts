@@ -5,20 +5,14 @@ import { Position } from './interfaces';
 class Tile {
   isMandatory: boolean;
   rule: Rule;
-  currentPlayers: Player[];
   coordinates: Position[];
   center: Position;
+  // currentPlayers: Player[]; // Could be needed in the future to not overlap players on the same square
 
   constructor(isMandatory: boolean, rule: Rule, coordinates: Position[]) {
     this.isMandatory = isMandatory;
     this.rule = rule;
-    this.currentPlayers = [];
     this.coordinates = coordinates;
-  }
-
-  placePlayer(player: Player): void {
-    this.currentPlayers.push(player);
-    player.destinationPos = this.generateCenterPosition();
   }
 
   // Generates an average position based on the corners of the tile

@@ -24,8 +24,7 @@ class MoveRule extends Rule {
         // TODO: make sure we don't exceed either bound
         const targetTileIndex: number = Math.max(0, targetPlayer.currentTileIndex + this.numSpaces);
         
-        targetPlayer.moveToTile(targetTileIndex);
-        targetPlayer.currentPos = targetPlayer.destinationPos;
+        targetPlayer.teleportToTile(targetTileIndex);
         Game.painter.drawPlayers();
         Game.modal.close();
       });

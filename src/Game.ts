@@ -47,7 +47,7 @@ class Game {
     this.modal = new Modal();
     this.painter = new Painter(this.canvas, this.ctx);
 
-    this.players.forEach((p: Player) => p.moveToTile(0));
+    this.players.forEach((p: Player) => p.teleportToTile(0));
     this.playerTurns = [...this.players];
     this.painter.drawPlayers();
     this.handleDiceRoll = this.handleDiceRoll.bind(this);

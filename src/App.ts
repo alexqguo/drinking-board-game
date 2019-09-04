@@ -6,6 +6,8 @@ fetches the game instance, tells it which source to use and gives it player name
 may put an App class in here if necessary
 */
 (function() {
+  (window as any).g = Game; // TODO: remove
+
   function fetchImage(src: string, canvas: HTMLCanvasElement): Promise<void> {
     return new Promise(resolve => {
       const img = new Image();

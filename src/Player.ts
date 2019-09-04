@@ -25,7 +25,7 @@ class Player {
   name: string;
   color: PlayerColor;
   currentPos: Position;
-  destinationPos: Position;
+  moveQueue: Position[];
   currentTileIndex: number;
   effects: PlayerEffects;
   
@@ -50,13 +50,20 @@ class Player {
     return true;
   }
 
-  moveToTile(tileIndex: number = 0) {
-    this.currentTileIndex = tileIndex;
-    Game.board.tiles[tileIndex].placePlayer(this);
+  moveToTile(tileIndex: number) {
+    this.moveQueue = [];
 
-    if (!this.currentPos && this.destinationPos) {
-      this.currentPos = this.destinationPos;
+    // TODO: need to handle moving backwards? For now just do this
+    for (let i = this.currentTileIndex + 1; i <= tileIndex; i++) {
+      this.moveQueue.push(Game.board.tiles[i].generateCenterPosition());
     }
+    
+    this.currentTileIndex = tileIndex;
+  }
+
+  teleportToTile(tileIndex: number) {
+    this.currentTileIndex = tileIndex;
+    this.currentPos = Game.board.tiles[tileIndex].generateCenterPosition();
   }
 }
 
