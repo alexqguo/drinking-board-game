@@ -12,9 +12,7 @@
         total.y /= this.coordinates.length;
         return total;
     }
-}
-//# sourceMappingURL=Tile.js.map
-var Direction;
+}var Direction;
 (function (Direction) {
     Direction["forward"] = "forward";
     Direction["back"] = "back";
@@ -24,9 +22,7 @@ var PlayerTarget;
     PlayerTarget["custom"] = "custom";
     PlayerTarget["self"] = "self";
     PlayerTarget["allOthers"] = "allOthers";
-})(PlayerTarget || (PlayerTarget = {}));
-//# sourceMappingURL=index.js.map
-const TURN_START = 'TURN_START';
+})(PlayerTarget || (PlayerTarget = {}));const TURN_START = 'TURN_START';
 const ROLL_START = 'ROLL_START';
 const ROLL_END = 'ROLL_END';
 const MOVE_START = 'MOVE_START';
@@ -81,9 +77,7 @@ class GameEvents {
         }
     }
 }
-const gameEventsInstance = new GameEvents();
-//# sourceMappingURL=GameEvents.js.map
-class Rule {
+const gameEventsInstance = new GameEvents();class Rule {
     constructor(json) {
         const { displayText, type, playerTarget, criteria } = json;
         this.validateRequired(type);
@@ -128,9 +122,7 @@ class Rule {
             throw new Error('TODO - alert missing fields for whatever class this is');
         }
     }
-}
-//# sourceMappingURL=Rule.js.map
-class DisplayRule extends Rule {
+}class DisplayRule extends Rule {
     constructor(json) {
         super(json);
         this.validateRequired(json.displayText);
@@ -139,9 +131,7 @@ class DisplayRule extends Rule {
         super.execute();
         gameInstance.modal.enableClose();
     }
-}
-//# sourceMappingURL=DisplayRule.js.map
-class MoveRule extends Rule {
+}class MoveRule extends Rule {
     constructor(json) {
         super(json);
         const { playerTarget, direction, numSpaces } = json;
@@ -160,9 +150,7 @@ class MoveRule extends Rule {
             gameInstance.modal.close();
         });
     }
-}
-//# sourceMappingURL=MoveRule.js.map
-class SkipTurnRule extends Rule {
+}class SkipTurnRule extends Rule {
     constructor(json) {
         super(json);
         const { numTurns } = json;
@@ -174,9 +162,7 @@ class SkipTurnRule extends Rule {
         gameInstance.currentPlayer.effects.skippedTurns += this.numTurns;
         gameInstance.modal.enableClose();
     }
-}
-//# sourceMappingURL=SkipTurnRule.js.map
-class SpeedModifierRule extends Rule {
+}class SpeedModifierRule extends Rule {
     constructor(json) {
         super(json);
         const { multiplier, numTurns } = json;
@@ -197,9 +183,7 @@ class SpeedModifierRule extends Rule {
             gameInstance.modal.enableClose();
         });
     }
-}
-//# sourceMappingURL=SpeedModifierRule.js.map
-class TeleportRule extends Rule {
+}class TeleportRule extends Rule {
     constructor(json) {
         super(json);
         const { tileIndex } = json;
@@ -212,9 +196,7 @@ class TeleportRule extends Rule {
         gameInstance.painter.drawPlayers();
         gameInstance.modal.enableClose();
     }
-}
-//# sourceMappingURL=TeleportRule.js.map
-class GameOverRule extends Rule {
+}class GameOverRule extends Rule {
     constructor(json) {
         super(json);
     }
@@ -223,9 +205,7 @@ class GameOverRule extends Rule {
         gameInstance.gameOver();
         gameInstance.modal.enableClose();
     }
-}
-//# sourceMappingURL=GameOverRule.js.map
-class ExtraTurnRule extends Rule {
+}class ExtraTurnRule extends Rule {
     constructor(json) {
         super(json);
     }
@@ -234,9 +214,7 @@ class ExtraTurnRule extends Rule {
         gameInstance.currentPlayer.effects.extraTurns++;
         gameInstance.modal.enableClose();
     }
-}
-//# sourceMappingURL=ExtraTurnRule.js.map
-class DrinkDuringLostTurnsRule extends Rule {
+}class DrinkDuringLostTurnsRule extends Rule {
     constructor(json) {
         super(json);
         this.diceRolls = json.diceRolls;
@@ -248,9 +226,7 @@ class DrinkDuringLostTurnsRule extends Rule {
             gameInstance.modal.enableClose();
         });
     }
-}
-//# sourceMappingURL=DrinkDuringLostTurnsRule.js.map
-class ApplyMoveConditionRule extends Rule {
+}class ApplyMoveConditionRule extends Rule {
     constructor(json) {
         super(json);
         const { condition } = json;
@@ -297,9 +273,7 @@ class ApplyMoveConditionRule extends Rule {
             }
         });
     }
-}
-//# sourceMappingURL=ApplyMoveConditionRule.js.map
-class DiceRollRule extends Rule {
+}class DiceRollRule extends Rule {
     constructor(json) {
         super(json);
         this.diceRolls = json.diceRolls;
@@ -345,9 +319,7 @@ class DiceRollRule extends Rule {
             }
         });
     }
-}
-//# sourceMappingURL=DiceRollRule.js.map
-class RollUntilRule extends Rule {
+}class RollUntilRule extends Rule {
     constructor(json) {
         super(json);
         this.validateRequired(json.displayText);
@@ -366,9 +338,7 @@ class RollUntilRule extends Rule {
         };
         rollUntilFn();
     }
-}
-//# sourceMappingURL=RollUntilRule.js.map
-class ChoiceRule extends Rule {
+}class ChoiceRule extends Rule {
     constructor(json) {
         super(json);
         const { choices, diceRolls } = json;
@@ -395,9 +365,7 @@ class ChoiceRule extends Rule {
             value.execute();
         });
     }
-}
-//# sourceMappingURL=ChoiceRule.js.map
-class SkipNextMandatoryRule extends Rule {
+}class SkipNextMandatoryRule extends Rule {
     constructor(json) {
         super(json);
         this.validateRequired(json.numSpaces);
@@ -408,9 +376,7 @@ class SkipNextMandatoryRule extends Rule {
         gameInstance.currentPlayer.effects.mandatorySkips = this.numSpaces;
         gameInstance.modal.enableClose();
     }
-}
-//# sourceMappingURL=SkipNextMandatoryRule.js.map
-class ChallengeRule extends Rule {
+}class ChallengeRule extends Rule {
     constructor(json) {
         super(json);
         this.playerTarget = PlayerTarget.custom;
@@ -430,9 +396,7 @@ class ChallengeRule extends Rule {
             });
         });
     }
-}
-//# sourceMappingURL=ChallengeRule.js.map
-const RULE_MAPPINGS = {
+}const RULE_MAPPINGS = {
     MoveRule: MoveRule,
     DisplayRule: DisplayRule,
     TeleportRule: TeleportRule,
@@ -465,17 +429,13 @@ function createRule(ruleJson) {
         return null;
     }
     return new RULE_MAPPINGS[type](ruleJson);
-}
-//# sourceMappingURL=BoardJsonConverter.js.map
-class Board {
+}class Board {
     constructor(json, players) {
         this.imgSrc = json.imgSrc;
         this.tiles = createTiles(json.tiles);
         this.players = players;
     }
-}
-//# sourceMappingURL=Board.js.map
-const RADIUS = 30;
+}const RADIUS = 30;
 const FONT_SIZE = 20;
 const VELO = 12;
 function hexToRgb(hex) {
@@ -520,9 +480,7 @@ class Player {
         this.currentTileIndex = tileIndex;
         this.currentPos = gameInstance.board.tiles[tileIndex].generateCenterPosition();
     }
-}
-//# sourceMappingURL=Player.js.map
-class Painter {
+}class Painter {
     constructor(canvas, ctx) {
         this.canvas = canvas;
         this.ctx = ctx;
@@ -568,9 +526,7 @@ class Painter {
             this.ctx.fillText(player.name[0].toUpperCase(), player.currentPos.x - 6, player.currentPos.y + 6);
         }
     }
-}
-//# sourceMappingURL=Painter.js.map
-class Modal {
+}class Modal {
     constructor() {
         this.triggerId = 'game-modal';
         this.trigger = document.querySelector(`#${this.triggerId}`);
@@ -676,9 +632,7 @@ class Modal {
     whenClosed(cb) {
         this.closeCb = cb;
     }
-}
-//# sourceMappingURL=Modal.js.map
-class Game {
+}class Game {
     constructor() {
         if (!Game.instance) {
             Game.instance = this;
@@ -874,6 +828,4 @@ const gameInstance = new Game();(function () {
         document.getElementById('setup').style.display = 'none';
         document.getElementById('overlay').style.display = 'block';
     });
-}());
-//# sourceMappingURL=App.js.map
-}());
+}());}());
