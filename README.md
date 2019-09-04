@@ -30,10 +30,11 @@ This is a generalized engine for playing drinking board games online.
 * expand indicator in top left
   * queue of who rolled what in the corner
   * indication of who is in what zone
+  * status effects, extra/missed turns, etc.
 * players move along the board (animation should not cut corners)
 * proper positioning when two or more players are at the same space
 * can consider removing the display text from the JSON in lieu of a blown up version of the tile itself. since we have the coordinates, can probably create a new Image and use background position on it to target the current tile
-* better organization of status effects, and visual indicator on the screen
+* trainer battles/custom events
 * zones
 
 ### M2
@@ -51,7 +52,6 @@ This is a generalized engine for playing drinking board games online.
 * keep track of the drink counts throughout the game
 * alert players when they are supposed to drink
 * can designate drinks on screen
-* trainer battles/custom events
 * unit tests
 
 ### M5
