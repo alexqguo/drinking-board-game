@@ -570,7 +570,9 @@ class Painter {
             this.ctx.fillText(player.name[0].toUpperCase(), player.currentPos.x - 6, player.currentPos.y + 6);
         }
     }
-}class Modal {
+}
+//# sourceMappingURL=Painter.js.map
+class Modal {
     constructor() {
         this.triggerId = 'game-modal';
         this.trigger = document.querySelector(`#${this.triggerId}`);

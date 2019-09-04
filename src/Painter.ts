@@ -36,6 +36,7 @@ export default class Painter {
     }
 
     const totalDistance = Math.sqrt(dx * dx + dy * dy);
+    // TODO: fix this. causes an animation frame rate dip
     if (totalDistance > 0) {
       const incrementX = (dx / totalDistance) * VELO;
       const incrementY = (dy / totalDistance) * VELO;
