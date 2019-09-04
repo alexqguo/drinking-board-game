@@ -124,8 +124,8 @@ class Game {
     let numSpacesToAdvance: number = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
     
     // Uncomment this section for testing
-    // if (this.currentPlayer.name === 'blah' && !(window as any).asdf) {
-    //   numSpacesToAdvance = 44;
+    // if (this.currentPlayer.name === 'asdf' && !(window as any).asdf) {
+    //   numSpacesToAdvance = 15;
     //   (window as any).asdf = true;
     // }
 

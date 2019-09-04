@@ -96,7 +96,6 @@ export class Modal {
     if (!rules || rules.length === 0) return Promise.resolve(null);
 
     const links = this.addLinks('Choose an outcome', rules.map(r => r.displayText));
-    console.log(links);
 
     return new Promise((resolve) => {
       Array.from(links).forEach((el: HTMLElement) => {

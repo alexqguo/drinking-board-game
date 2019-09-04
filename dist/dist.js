@@ -289,7 +289,6 @@ class ApplyMoveConditionRule extends Rule {
                     });
                 }
             });
-            console.log(`${this.playerTarget} ${PlayerTarget.custom}`);
             if (this.playerTarget === PlayerTarget.custom) {
                 gameInstance.modal.close();
             }
@@ -393,7 +392,6 @@ class ChoiceRule extends Rule {
                 gameInstance.modal.enableClose();
                 return;
             }
-            console.log(value);
             value.execute();
         });
     }
@@ -643,7 +641,6 @@ class Modal {
         if (!rules || rules.length === 0)
             return Promise.resolve(null);
         const links = this.addLinks('Choose an outcome', rules.map(r => r.displayText));
-        console.log(links);
         return new Promise((resolve) => {
             Array.from(links).forEach((el) => {
                 el.addEventListener('click', (e) => {
@@ -806,9 +803,7 @@ class Game {
         playerStatusEl.setAttribute('data', JSON.stringify(args));
     }
 }
-const gameInstance = new Game();
-//# sourceMappingURL=Game.js.map
-(function () {
+const gameInstance = new Game();(function () {
     window.g = gameInstance;
     function fetchImage(src, canvas) {
         return new Promise(resolve => {

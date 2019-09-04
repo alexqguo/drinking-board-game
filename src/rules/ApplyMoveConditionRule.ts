@@ -70,7 +70,6 @@ class ApplyMoveConditionRule extends Rule {
           }
         });
 
-        console.log(`${this.playerTarget} ${PlayerTarget.custom}`)
         if (this.playerTarget === PlayerTarget.custom) {
           // If it was a click, close the modal immediately
           Game.modal.close();

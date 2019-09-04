@@ -34,7 +34,6 @@ class ChoiceRule extends Rule {
           Game.modal.enableClose();
           return;
         }
-        console.log(value);
         value.execute();
       });
   }
