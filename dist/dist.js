@@ -12,7 +12,9 @@
         total.y /= this.coordinates.length;
         return total;
     }
-}var Direction;
+}
+//# sourceMappingURL=Tile.js.map
+var Direction;
 (function (Direction) {
     Direction["forward"] = "forward";
     Direction["back"] = "back";
@@ -22,7 +24,10 @@ var PlayerTarget;
     PlayerTarget["custom"] = "custom";
     PlayerTarget["self"] = "self";
     PlayerTarget["allOthers"] = "allOthers";
-})(PlayerTarget || (PlayerTarget = {}));const TURN_START = 'TURN_START';
+})(PlayerTarget || (PlayerTarget = {}));
+//# sourceMappingURL=index.js.map
+const TURN_START = 'TURN_START';
+const LOST_TURN_START = 'LOST_TURN_START';
 const ROLL_START = 'ROLL_START';
 const ROLL_END = 'ROLL_END';
 const MOVE_START = 'MOVE_START';
@@ -34,7 +39,7 @@ const GAME_OVER = 'GAME_OVER';
 const TURN_SKIP = 'TURN_SKIP';
 const ALL_EVENTS = [
     TURN_START, ROLL_START, ROLL_END, MOVE_START, MOVE_END, RULE_TRIGGER, RULE_END,
-    TURN_END, GAME_OVER, TURN_SKIP,
+    TURN_END, GAME_OVER, TURN_SKIP, LOST_TURN_START,
 ];
 class GameEvents {
     constructor() {
@@ -77,7 +82,9 @@ class GameEvents {
         }
     }
 }
-const gameEventsInstance = new GameEvents();class Rule {
+const gameEventsInstance = new GameEvents();
+//# sourceMappingURL=GameEvents.js.map
+class Rule {
     constructor(json) {
         const { displayText, type, playerTarget, criteria } = json;
         this.validateRequired(type);
@@ -122,7 +129,9 @@ const gameEventsInstance = new GameEvents();class Rule {
             throw new Error('TODO - alert missing fields for whatever class this is');
         }
     }
-}class DisplayRule extends Rule {
+}
+//# sourceMappingURL=Rule.js.map
+class DisplayRule extends Rule {
     constructor(json) {
         super(json);
         this.validateRequired(json.displayText);
@@ -131,7 +140,9 @@ const gameEventsInstance = new GameEvents();class Rule {
         super.execute();
         gameInstance.modal.enableClose();
     }
-}class MoveRule extends Rule {
+}
+//# sourceMappingURL=DisplayRule.js.map
+class MoveRule extends Rule {
     constructor(json) {
         super(json);
         const { playerTarget, direction, numSpaces } = json;
@@ -150,7 +161,9 @@ const gameEventsInstance = new GameEvents();class Rule {
             gameInstance.modal.close();
         });
     }
-}class SkipTurnRule extends Rule {
+}
+//# sourceMappingURL=MoveRule.js.map
+class SkipTurnRule extends Rule {
     constructor(json) {
         super(json);
         const { numTurns } = json;
@@ -162,7 +175,9 @@ const gameEventsInstance = new GameEvents();class Rule {
         gameInstance.currentPlayer.effects.skippedTurns += this.numTurns;
         gameInstance.modal.enableClose();
     }
-}class SpeedModifierRule extends Rule {
+}
+//# sourceMappingURL=SkipTurnRule.js.map
+class SpeedModifierRule extends Rule {
     constructor(json) {
         super(json);
         const { multiplier, numTurns } = json;
@@ -183,7 +198,9 @@ const gameEventsInstance = new GameEvents();class Rule {
             gameInstance.modal.enableClose();
         });
     }
-}class TeleportRule extends Rule {
+}
+//# sourceMappingURL=SpeedModifierRule.js.map
+class TeleportRule extends Rule {
     constructor(json) {
         super(json);
         const { tileIndex } = json;
@@ -196,7 +213,9 @@ const gameEventsInstance = new GameEvents();class Rule {
         gameInstance.painter.drawPlayers();
         gameInstance.modal.enableClose();
     }
-}class GameOverRule extends Rule {
+}
+//# sourceMappingURL=TeleportRule.js.map
+class GameOverRule extends Rule {
     constructor(json) {
         super(json);
     }
@@ -205,7 +224,9 @@ const gameEventsInstance = new GameEvents();class Rule {
         gameInstance.gameOver();
         gameInstance.modal.enableClose();
     }
-}class ExtraTurnRule extends Rule {
+}
+//# sourceMappingURL=GameOverRule.js.map
+class ExtraTurnRule extends Rule {
     constructor(json) {
         super(json);
     }
@@ -214,7 +235,9 @@ const gameEventsInstance = new GameEvents();class Rule {
         gameInstance.currentPlayer.effects.extraTurns++;
         gameInstance.modal.enableClose();
     }
-}class DrinkDuringLostTurnsRule extends Rule {
+}
+//# sourceMappingURL=ExtraTurnRule.js.map
+class DrinkDuringLostTurnsRule extends Rule {
     constructor(json) {
         super(json);
         this.diceRolls = json.diceRolls;
@@ -226,7 +249,9 @@ const gameEventsInstance = new GameEvents();class Rule {
             gameInstance.modal.enableClose();
         });
     }
-}class ApplyMoveConditionRule extends Rule {
+}
+//# sourceMappingURL=DrinkDuringLostTurnsRule.js.map
+class ApplyMoveConditionRule extends Rule {
     constructor(json) {
         super(json);
         const { condition } = json;
@@ -273,7 +298,9 @@ const gameEventsInstance = new GameEvents();class Rule {
             }
         });
     }
-}class DiceRollRule extends Rule {
+}
+//# sourceMappingURL=ApplyMoveConditionRule.js.map
+class DiceRollRule extends Rule {
     constructor(json) {
         super(json);
         this.diceRolls = json.diceRolls;
@@ -319,7 +346,9 @@ const gameEventsInstance = new GameEvents();class Rule {
             }
         });
     }
-}class RollUntilRule extends Rule {
+}
+//# sourceMappingURL=DiceRollRule.js.map
+class RollUntilRule extends Rule {
     constructor(json) {
         super(json);
         this.validateRequired(json.displayText);
@@ -338,7 +367,9 @@ const gameEventsInstance = new GameEvents();class Rule {
         };
         rollUntilFn();
     }
-}class ChoiceRule extends Rule {
+}
+//# sourceMappingURL=RollUntilRule.js.map
+class ChoiceRule extends Rule {
     constructor(json) {
         super(json);
         const { choices, diceRolls } = json;
@@ -365,7 +396,9 @@ const gameEventsInstance = new GameEvents();class Rule {
             value.execute();
         });
     }
-}class SkipNextMandatoryRule extends Rule {
+}
+//# sourceMappingURL=ChoiceRule.js.map
+class SkipNextMandatoryRule extends Rule {
     constructor(json) {
         super(json);
         this.validateRequired(json.numSpaces);
@@ -376,7 +409,9 @@ const gameEventsInstance = new GameEvents();class Rule {
         gameInstance.currentPlayer.effects.mandatorySkips = this.numSpaces;
         gameInstance.modal.enableClose();
     }
-}class ChallengeRule extends Rule {
+}
+//# sourceMappingURL=SkipNextMandatoryRule.js.map
+class ChallengeRule extends Rule {
     constructor(json) {
         super(json);
         this.playerTarget = PlayerTarget.custom;
@@ -396,7 +431,9 @@ const gameEventsInstance = new GameEvents();class Rule {
             });
         });
     }
-}const RULE_MAPPINGS = {
+}
+//# sourceMappingURL=ChallengeRule.js.map
+const RULE_MAPPINGS = {
     MoveRule: MoveRule,
     DisplayRule: DisplayRule,
     TeleportRule: TeleportRule,
@@ -429,13 +466,17 @@ function createRule(ruleJson) {
         return null;
     }
     return new RULE_MAPPINGS[type](ruleJson);
-}class Board {
+}
+//# sourceMappingURL=BoardJsonConverter.js.map
+class Board {
     constructor(json, players) {
         this.imgSrc = json.imgSrc;
         this.tiles = createTiles(json.tiles);
         this.players = players;
     }
-}const RADIUS = 30;
+}
+//# sourceMappingURL=Board.js.map
+const RADIUS = 30;
 const FONT_SIZE = 20;
 const VELO = 12;
 function hexToRgb(hex) {
@@ -480,7 +521,9 @@ class Player {
         this.currentTileIndex = tileIndex;
         this.currentPos = gameInstance.board.tiles[tileIndex].generateCenterPosition();
     }
-}class Painter {
+}
+//# sourceMappingURL=Player.js.map
+class Painter {
     constructor(canvas, ctx) {
         this.canvas = canvas;
         this.ctx = ctx;
@@ -494,6 +537,7 @@ class Player {
         const y2 = gameInstance.currentPlayer.moveQueue[0].y;
         const dx = x2 - x1;
         const dy = y2 - y1;
+        const totalDistance = Math.sqrt(dx * dx + dy * dy);
         if (Math.abs(dx) < VELO && Math.abs(dy) < VELO) {
             gameInstance.currentPlayer.moveQueue.shift();
             if (!gameInstance.currentPlayer.moveQueue.length) {
@@ -502,7 +546,6 @@ class Player {
                 return;
             }
         }
-        const totalDistance = Math.sqrt(dx * dx + dy * dy);
         if (totalDistance > 0) {
             const incrementX = (dx / totalDistance) * VELO;
             const incrementY = (dy / totalDistance) * VELO;
@@ -632,11 +675,14 @@ class Player {
     whenClosed(cb) {
         this.closeCb = cb;
     }
-}class Game {
+}
+//# sourceMappingURL=Modal.js.map
+class Game {
     constructor() {
         if (!Game.instance) {
             Game.instance = this;
         }
+        gameEventsInstance.on(LOST_TURN_START, this.startLostTurn.bind(this));
         gameEventsInstance.on(TURN_START, this.startTurn.bind(this));
         gameEventsInstance.on(TURN_END, this.endTurn.bind(this));
         gameEventsInstance.on(ROLL_START, this.enableDiceRoll.bind(this));
@@ -671,13 +717,18 @@ class Player {
         if (!this.playerTurns.length)
             this.playerTurns = [...this.players];
         this.currentPlayer = this.playerTurns.shift();
-        gameEventsInstance.trigger(this.currentPlayer.canTakeTurn() ? ROLL_START : TURN_END);
         this.updatePlayerStatusElement();
+        gameEventsInstance.trigger(this.currentPlayer.canTakeTurn() ? ROLL_START : LOST_TURN_START);
         window.scrollTo({
             top: this.currentPlayer.currentPos.y - (window.outerHeight / 2),
             left: this.currentPlayer.currentPos.x - (window.outerWidth / 2),
             behavior: 'smooth'
         });
+    }
+    startLostTurn() {
+        setTimeout(() => {
+            gameEventsInstance.trigger(TURN_END);
+        }, 3000);
     }
     enableDiceRoll(next) {
         this.diceLink.reset();
@@ -714,6 +765,10 @@ class Player {
             firstMandatoryIndex = -1;
         }
         let numSpacesToAdvance = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
+        if (this.currentPlayer.name === 'asdf' && !window.asdf) {
+            numSpacesToAdvance = 18;
+            window.asdf = true;
+        }
         if (numSpacesToAdvance > 0) {
             this.currentPlayer.moveToTile(this.currentPlayer.currentTileIndex + numSpacesToAdvance);
             gameEventsInstance.trigger(MOVE_START);
@@ -752,12 +807,17 @@ class Player {
         });
     }
     updatePlayerStatusElement() {
+        const jsonReplacer = (key, value) => {
+            return (typeof value === 'function' ? true : value);
+        };
         const playerStatusEl = document.querySelector('#overlay player-status');
         const args = { name: this.currentPlayer.name, effects: this.currentPlayer.effects };
-        playerStatusEl.setAttribute('data', JSON.stringify(args));
+        playerStatusEl.setAttribute('data', JSON.stringify(args, jsonReplacer));
     }
 }
-const gameInstance = new Game();(function () {
+const gameInstance = new Game();
+//# sourceMappingURL=Game.js.map
+(function () {
     window.g = gameInstance;
     function fetchImage(src, canvas) {
         return new Promise(resolve => {
@@ -828,4 +888,6 @@ const gameInstance = new Game();(function () {
         document.getElementById('setup').style.display = 'none';
         document.getElementById('overlay').style.display = 'block';
     });
-}());}());
+}());
+//# sourceMappingURL=App.js.map
+}());

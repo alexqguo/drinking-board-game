@@ -4,7 +4,7 @@ import { JsonBoard, PlayerInput } from './interfaces';
 import Painter from './Painter';
 import { Modal } from './Modal';
 import GameEvents, { 
-  TURN_START, TURN_END, ROLL_START, ROLL_END, MOVE_END, RULE_TRIGGER, MOVE_START, RULE_END
+  TURN_START, TURN_END, ROLL_START, ROLL_END, MOVE_END, RULE_TRIGGER, MOVE_START, RULE_END, LOST_TURN_START
 } from './GameEvents';
 import Tile from './Tile';
 
@@ -26,6 +26,7 @@ class Game {
       Game.instance = this;
     }
 
+    GameEvents.on(LOST_TURN_START, this.startLostTurn.bind(this));
     GameEvents.on(TURN_START, this.startTurn.bind(this));
     GameEvents.on(TURN_END, this.endTurn.bind(this));
     GameEvents.on(ROLL_START, this.enableDiceRoll.bind(this));
@@ -68,14 +69,21 @@ class Game {
     if (!this.playerTurns.length) this.playerTurns = [...this.players];
 
     this.currentPlayer = this.playerTurns.shift();
-    GameEvents.trigger(this.currentPlayer.canTakeTurn() ? ROLL_START : TURN_END);
     this.updatePlayerStatusElement();
+    GameEvents.trigger(this.currentPlayer.canTakeTurn() ? ROLL_START : LOST_TURN_START);
     
     window.scrollTo({
       top: this.currentPlayer.currentPos.y - (window.outerHeight / 2),
       left: this.currentPlayer.currentPos.x - (window.outerWidth / 2),
       behavior: 'smooth'
     });
+  }
+
+  startLostTurn(): void {
+    // Basically just wait a couple seconds so the user can be reminded that they aren't allowed to do anything
+    setTimeout(() => {
+      GameEvents.trigger(TURN_END);
+    }, 3000);
   }
 
   enableDiceRoll(next: Function): void {
@@ -124,10 +132,10 @@ class Game {
     let numSpacesToAdvance: number = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
     
     // Uncomment this section for testing
-    // if (this.currentPlayer.name === 'asdf' && !(window as any).asdf) {
-    //   numSpacesToAdvance = 15;
-    //   (window as any).asdf = true;
-    // }
+    if (this.currentPlayer.name === 'asdf' && !(window as any).asdf) {
+      numSpacesToAdvance = 18;
+      (window as any).asdf = true;
+    }
 
     if (numSpacesToAdvance > 0) {
       // Consider fixing this naming. This doesn't actually move anything in the UI
@@ -178,10 +186,15 @@ class Game {
 
   // This will go away with state management as the element can just listen for changes
   updatePlayerStatusElement(): void {
+    // TODO: should tell the user what the condition is instead of just that they have one at all
+    const jsonReplacer = (key: string, value: string) => {
+      return (typeof value === 'function' ? true : value);
+    };
+
     // TODO: consider saving this, it isn't changing
     const playerStatusEl: HTMLElement = document.querySelector('#overlay player-status');
     const args: Object = { name: this.currentPlayer.name, effects: this.currentPlayer.effects };
-    playerStatusEl.setAttribute('data', JSON.stringify(args));
+    playerStatusEl.setAttribute('data', JSON.stringify(args, jsonReplacer));
   }
 }
 

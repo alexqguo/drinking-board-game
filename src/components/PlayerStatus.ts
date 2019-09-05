@@ -1,4 +1,4 @@
-import { LitElement, html, customElement, property } from 'lit-element';
+import { LitElement, html, customElement, property, css } from 'lit-element';
 import { PlayerStatusData } from '../interfaces';
 
 @customElement('player-status')
@@ -11,18 +11,24 @@ export class PlayerStatus extends LitElement {
     return this;
   }
 
-  // Redo this UI 
   render() {
     if (!this.data) return null;
+    const {
+      extraTurns,
+      skippedTurns,
+      speedModifiers,
+      moveCondition,
+      mandatorySkips
+    } = this.data.effects;
 
     return html`
       <h4>${this.data.name}</h4>
       <ul class="player-status">
-        <li>Extra turns: ${this.data.effects.extraTurns}</li>
-        <li>Lost turns: ${this.data.effects.skippedTurns}</li>
-        <li>Speed modifier: ${this.data.effects.speedModifiers[0] || 'None'}</li>
-        <li>Move condition: ${!!this.data.effects.moveCondition ? 'Yes' : 'None'}</li>
-        <li>Skip next required: ${this.data.effects.mandatorySkips > 0 ? 'Yes' : 'No'}</li>
+        ${extraTurns ? html`<li class="label success">Extra turn</li>` : null}
+        ${skippedTurns ? html`<li class="label success">Missed turn</li>` : null}
+        ${speedModifiers[0] ? html`<li class="label success">Speed modifier: ${speedModifiers[0]}</li>` : null}
+        ${!!moveCondition ? html`<li class="label success">Move condition</li>` : null}
+        ${mandatorySkips > 0 ? html`<li class="label success">Skip next mandatory space</li>` : null}
       </ul>
     `;
   }

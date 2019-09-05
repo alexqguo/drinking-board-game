@@ -1,4 +1,5 @@
 export const TURN_START = 'TURN_START';
+export const LOST_TURN_START = 'LOST_TURN_START';
 export const ROLL_START = 'ROLL_START';
 export const ROLL_END = 'ROLL_END';
 export const MOVE_START = 'MOVE_START';
@@ -11,7 +12,7 @@ export const TURN_SKIP = 'TURN_SKIP';
 
 const ALL_EVENTS = [
   TURN_START, ROLL_START, ROLL_END, MOVE_START, MOVE_END, RULE_TRIGGER, RULE_END,
-  TURN_END, GAME_OVER, TURN_SKIP,
+  TURN_END, GAME_OVER, TURN_SKIP, LOST_TURN_START,
 ];
 
 // Should next events be handled here instead? 
@@ -38,13 +39,11 @@ class GameEvents {
   }
 
   on(eventName: string, callback: Function): void {
-    // console.log(`Setting an event: ${eventName}`);
     this.validateEvent(eventName);
     this.eventHandlerMap.get(eventName).push(callback);
   }
 
   trigger(eventName: string, eventValues?: any[]): void {
-    // console.log(`Triggering event: ${eventName}`);
     this.validateEvent(eventName);
 
     const eventFunctions: Function[] = this.eventHandlerMap.get(eventName);

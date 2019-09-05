@@ -22,6 +22,7 @@ export default class Painter {
     const y2 = Game.currentPlayer.moveQueue[0].y;
     const dx = x2 - x1;
     const dy = y2 - y1;
+    const totalDistance = Math.sqrt(dx * dx + dy * dy);
 
     // If the current player (and thus the only one moving) is at its destination,
     // break the raf. If multiple players end up moving at a time this will need updating
@@ -32,10 +33,14 @@ export default class Painter {
         window.cancelAnimationFrame(this.raf);
         GameEvents.trigger(MOVE_END);
         return;
+      } else if (totalDistance === 0) {
+        // If we reached a tile but it wasn't the last one, recalculate the next movement
+        // to avoid a frame where the user doesn't move at all
+
+        // TODO
       }
     }
 
-    const totalDistance = Math.sqrt(dx * dx + dy * dy);
     // TODO: fix this. causes an animation frame rate dip
     if (totalDistance > 0) {
       const incrementX = (dx / totalDistance) * VELO;
