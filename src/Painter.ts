@@ -32,13 +32,14 @@ export default class Painter {
       if (!Game.currentPlayer.moveQueue.length) {
         window.cancelAnimationFrame(this.raf);
         GameEvents.trigger(MOVE_END);
+        return;
       } else if (totalDistance === 0) {
         // If we reached a tile but it wasn't the last one, recalculate the next movement
         // to avoid a frame where the user doesn't move at all
+        // this.raf = window.requestAnimationFrame(this.draw.bind(this));
         this.draw();
+        return;
       }
-
-      return;
     }
 
     const incrementX = (dx / totalDistance) * VELO;

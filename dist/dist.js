@@ -543,11 +543,12 @@ class Painter {
             if (!gameInstance.currentPlayer.moveQueue.length) {
                 window.cancelAnimationFrame(this.raf);
                 gameEventsInstance.trigger(MOVE_END);
+                return;
             }
             else if (totalDistance === 0) {
                 this.draw();
+                return;
             }
-            return;
         }
         const incrementX = (dx / totalDistance) * VELO;
         const incrementY = (dy / totalDistance) * VELO;
@@ -766,10 +767,6 @@ class Game {
             firstMandatoryIndex = -1;
         }
         let numSpacesToAdvance = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
-        if (this.currentPlayer.name === 'asdf' && !window.asdf) {
-            numSpacesToAdvance = 18;
-            window.asdf = true;
-        }
         if (numSpacesToAdvance > 0) {
             this.currentPlayer.moveToTile(this.currentPlayer.currentTileIndex + numSpacesToAdvance);
             gameEventsInstance.trigger(MOVE_START);

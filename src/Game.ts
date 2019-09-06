@@ -132,10 +132,10 @@ class Game {
     let numSpacesToAdvance: number = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
     
     // Uncomment this section for testing
-    if (this.currentPlayer.name === 'asdf' && !(window as any).asdf) {
-      numSpacesToAdvance = 18;
-      (window as any).asdf = true;
-    }
+    // if (this.currentPlayer.name === 'asdf' && !(window as any).asdf) {
+    //   numSpacesToAdvance = 18;
+    //   (window as any).asdf = true;
+    // }
 
     if (numSpacesToAdvance > 0) {
       // Consider fixing this naming. This doesn't actually move anything in the UI
