@@ -83,7 +83,7 @@ class Game {
     // Basically just wait a couple seconds so the user can be reminded that they aren't allowed to do anything
     setTimeout(() => {
       GameEvents.trigger(TURN_END);
-    }, 3000);
+    }, 2000);
   }
 
   enableDiceRoll(next: Function): void {

@@ -24,31 +24,28 @@ export default class Painter {
     const dy = y2 - y1;
     const totalDistance = Math.sqrt(dx * dx + dy * dy);
 
-    // If the current player (and thus the only one moving) is at its destination,
-    // break the raf. If multiple players end up moving at a time this will need updating
     if (Math.abs(dx) < VELO && Math.abs(dy) < VELO) { // TODO: fix
       Game.currentPlayer.moveQueue.shift();
 
+      // If the current player (and thus the only one moving) is at its destination,
+      // break the raf. If multiple players end up moving at a time this will need updating
       if (!Game.currentPlayer.moveQueue.length) {
         window.cancelAnimationFrame(this.raf);
         GameEvents.trigger(MOVE_END);
-        return;
       } else if (totalDistance === 0) {
         // If we reached a tile but it wasn't the last one, recalculate the next movement
         // to avoid a frame where the user doesn't move at all
-
-        // TODO
+        this.draw();
       }
+
+      return;
     }
 
-    // TODO: fix this. causes an animation frame rate dip
-    if (totalDistance > 0) {
-      const incrementX = (dx / totalDistance) * VELO;
-      const incrementY = (dy / totalDistance) * VELO;
-      Game.currentPlayer.currentPos.x += incrementX;
-      Game.currentPlayer.currentPos.y += incrementY;
-      window.scrollBy(incrementX, incrementY);
-    }
+    const incrementX = (dx / totalDistance) * VELO;
+    const incrementY = (dy / totalDistance) * VELO;
+    Game.currentPlayer.currentPos.x += incrementX;
+    Game.currentPlayer.currentPos.y += incrementY;
+    window.scrollBy(incrementX, incrementY);
 
     this.raf = window.requestAnimationFrame(this.draw.bind(this));
   }

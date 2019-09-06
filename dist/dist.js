@@ -543,16 +543,17 @@ class Painter {
             if (!gameInstance.currentPlayer.moveQueue.length) {
                 window.cancelAnimationFrame(this.raf);
                 gameEventsInstance.trigger(MOVE_END);
-                return;
             }
+            else if (totalDistance === 0) {
+                this.draw();
+            }
+            return;
         }
-        if (totalDistance > 0) {
-            const incrementX = (dx / totalDistance) * VELO;
-            const incrementY = (dy / totalDistance) * VELO;
-            gameInstance.currentPlayer.currentPos.x += incrementX;
-            gameInstance.currentPlayer.currentPos.y += incrementY;
-            window.scrollBy(incrementX, incrementY);
-        }
+        const incrementX = (dx / totalDistance) * VELO;
+        const incrementY = (dy / totalDistance) * VELO;
+        gameInstance.currentPlayer.currentPos.x += incrementX;
+        gameInstance.currentPlayer.currentPos.y += incrementY;
+        window.scrollBy(incrementX, incrementY);
         this.raf = window.requestAnimationFrame(this.draw.bind(this));
     }
     drawPlayers() {
@@ -728,7 +729,7 @@ class Game {
     startLostTurn() {
         setTimeout(() => {
             gameEventsInstance.trigger(TURN_END);
-        }, 3000);
+        }, 2000);
     }
     enableDiceRoll(next) {
         this.diceLink.reset();
