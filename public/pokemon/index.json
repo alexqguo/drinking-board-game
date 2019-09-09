@@ -447,7 +447,8 @@
     }, {
       "rule": {
         "displayText": "POKEMON TOWER. While in the Pokemon Tower, out of respect for the dead, you should not speak. Doing so results in a drink each time. Take a drink now for your fallen comrades.",
-        "type": "DisplayRule"
+        "type": "DisplayRule",
+        "zone": "POKEMON TOWER"
       },
       "position": [{
         "x": 1766,
@@ -465,7 +466,8 @@
     }, {
       "rule": {
         "displayText": "A possessed Channeler. Now you're possessed too! While you are on this space, anyone may make you get them a drink.",
-        "type": "DisplayRule"
+        "type": "DisplayRule",
+        "zone": "POKEMON TOWER"
       },
       "position": [{
         "x": 1766,
@@ -486,7 +488,8 @@
         "type": "MoveRule",
         "direction": "back",
         "numSpaces": -10,
-        "playerTarget": "custom"
+        "playerTarget": "custom",
+        "zone": "POKEMON TOWER"
       },
       "position": [{
         "x": 1577,
@@ -504,7 +507,8 @@
     }, {
       "rule": {
         "displayText": "Cubone used \"My mother is dead.\" Share a depressing story with the group. Then everyone take a drink.",
-        "type": "DisplayRule"
+        "type": "DisplayRule",
+        "zone": "POKEMON TOWER"
       },
       "position": [{
         "x": 1390,
@@ -522,7 +526,8 @@
     }, {
       "rule": {
         "displayText": "If someone is in Silph Co, you use the Silph Scope to beat the ghost and everyone else drinks. Otherwise take 3 drinks to appease the dead.",
-        "type": "DisplayRule"
+        "type": "DisplayRule",
+        "zone": "POKEMON TOWER"
       },
       "position": [{
         "x": 1203,
@@ -710,7 +715,8 @@
     }, {
       "rule": {
         "displayText": "SILPH CO. You've infiltrated the headquarters of the infamous Team Rocket! You will need all your courage to make it to their leader. Drink an extra 2 every turn to calm your nerves.",
-        "type": "DisplayRule"
+        "type": "DisplayRule",
+        "zone": "SILPH CO."
       },
       "position": [{
         "x": 453,
@@ -728,7 +734,8 @@
     }, {
       "rule": {
         "displayText": "A Scientist uses his magnet Pokemon! You magnetically attract 1 drink per player in the game.",
-        "type": "DisplayRule"
+        "type": "DisplayRule",
+        "zone": "SILPH CO."
       },
       "position": [{
         "x": 453,
@@ -750,7 +757,8 @@
         "playerTarget": "custom",
         "condition": {
           "criteria": [1, 2, 3]
-        }
+        },
+        "zone": "SILPH CO."
       },
       "position": [{
         "x": 453,
@@ -768,7 +776,8 @@
     }, {
       "rule": {
         "displayText": "It's Team Rocket! Watch them defeat themselves with incompetence, and everyone drink to them blasting off.",
-        "type": "DisplayRule"
+        "type": "DisplayRule",
+        "zone": "SILPH CO."
       },
       "position": [{
         "x": 642,
@@ -789,7 +798,8 @@
         "type": "DiceRollRule",
         "diceRolls": {
           "numRequired": 1
-        }
+        },
+        "zone": "SILPH CO."
       },
       "position": [{
         "x": 829,
@@ -947,7 +957,8 @@
     }, {
       "rule": {
         "displayText": "SAFARI ZONE. Before each turn in the Safari Zone, roll a die. 1-2: You throw bait. Give 1 drink to someone. 3-4: You throw a rock, dick. Lose your turn, drink 4. 5-6: You throw a safari ball. Drink 2 in sadness, because safari balls are just awful.",
-        "type": "DisplayRule"
+        "type": "DisplayRule",
+        "zone": "SAFARI ZONE"
       },
       "position": [{
         "x": 1579,
@@ -968,7 +979,8 @@
         "type": "DiceRollRule",
         "diceRolls": {
           "numRequired": 1
-        }
+        },
+        "zone": "SAFARI ZONE"
       },
       "position": [{
         "x": 1579,
@@ -986,7 +998,8 @@
     }, {
       "rule": {
         "displayText": "A wild Tauros appeared... but instantly fled. Drink 2 for not being quick enough.",
-        "type": "DisplayRule"
+        "type": "DisplayRule",
+        "zone": "SAFARI ZONE"
       },
       "position": [{
         "x": 1579,
@@ -1007,7 +1020,8 @@
         "type": "DiceRollRule",
         "diceRolls": {
           "numRequired": 1
-        }
+        },
+        "zone": "SAFARI ZONE"
       },
       "position": [{
         "x": 1390,

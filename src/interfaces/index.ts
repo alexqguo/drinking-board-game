@@ -56,12 +56,13 @@ export interface JsonRule {
   condition?: MoveCondition;
   criteria?: number[];
   choices?: JsonRule[];
+  zone?: string; // Key (name as of right now) to look up the zone
 }
 
 export interface JsonZone {
   name: string;
-  type: ZoneType,
-  rule: JsonRule,
+  type: ZoneType;
+  rule: JsonRule;
 }
 
 export interface MoveCondition {

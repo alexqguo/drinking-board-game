@@ -29,9 +29,7 @@ var PlayerTarget;
     PlayerTarget["custom"] = "custom";
     PlayerTarget["self"] = "self";
     PlayerTarget["allOthers"] = "allOthers";
-})(PlayerTarget || (PlayerTarget = {}));
-//# sourceMappingURL=index.js.map
-const TURN_START = 'TURN_START';
+})(PlayerTarget || (PlayerTarget = {}));const TURN_START = 'TURN_START';
 const LOST_TURN_START = 'LOST_TURN_START';
 const ROLL_START = 'ROLL_START';
 const ROLL_END = 'ROLL_END';
