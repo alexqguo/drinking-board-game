@@ -16,8 +16,8 @@ class ApplyMoveConditionRule extends Rule {
     this.condition = condition;
   }
 
-  execute(): void {
-    super.execute();
+  execute(closedCb: Function): void {
+    super.execute(closedCb);
 
     this.selectPlayers()
       .then((value: Player[]) => {

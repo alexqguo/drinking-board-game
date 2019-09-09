@@ -1,6 +1,7 @@
+import Zone from './Zone';
 import Board from './Board';
 import Player from './Player';
-import { JsonBoard, PlayerInput } from './interfaces';
+import { JsonBoard, PlayerInput, ZoneType } from './interfaces';
 import Painter from './Painter';
 import { Modal } from './Modal';
 import GameEvents, { 
@@ -35,6 +36,9 @@ class Game {
     GameEvents.on(RULE_TRIGGER, this.triggerRule.bind(this));
     GameEvents.on(RULE_END, this.endRule.bind(this));
 
+    GameEvents.on(MOVE_END, this.updatePlayerStatusElement.bind(this));
+    GameEvents.on(RULE_TRIGGER, this.updatePlayerStatusElement.bind(this));
+
     return Game.instance;
   }
 
@@ -64,19 +68,38 @@ class Game {
     GameEvents.trigger(TURN_START);
   }
 
-  startTurn(): void {
-    // Restart at the beginning 
+  startTurn(next: Function): void {
+    // Restart the sequence at the beginning 
     if (!this.playerTurns.length) this.playerTurns = [...this.players];
 
     this.currentPlayer = this.playerTurns.shift();
     this.updatePlayerStatusElement();
-    GameEvents.trigger(this.currentPlayer.canTakeTurn() ? ROLL_START : LOST_TURN_START);
+    const canMove = this.currentPlayer.canTakeTurn();
     
     window.scrollTo({
       top: this.currentPlayer.currentPos.y - (window.outerHeight / 2),
       left: this.currentPlayer.currentPos.x - (window.outerWidth / 2),
       behavior: 'smooth'
     });
+
+    if (canMove) {
+      const currentZone: Zone = this.getCurrentZone();
+
+      if (currentZone && currentZone.type === ZoneType.active) {
+        currentZone.rule.execute(() => {
+          /**
+           * Need to check this again in case the zone made the player lose a turn.
+           * If we even acted on a zone to begin with it means the player could take their turn (skippedTurns was 0)
+           * so there's no harm in checking again.
+           */
+          GameEvents.trigger(this.currentPlayer.canTakeTurn() ? ROLL_START : TURN_END);
+        });
+      } else {
+        GameEvents.trigger(ROLL_START);
+      }
+    } else {
+      GameEvents.trigger(LOST_TURN_START);
+    }
   }
 
   startLostTurn(): void {
@@ -133,7 +156,7 @@ class Game {
     
     // Uncomment this section for testing
     // if (this.currentPlayer.name === 'asdf' && !(window as any).asdf) {
-    //   numSpacesToAdvance = 18;
+    //   numSpacesToAdvance = 20;
     //   (window as any).asdf = true;
     // }
 
@@ -155,7 +178,6 @@ class Game {
     const currentTile = this.board.tiles[this.currentPlayer.currentTileIndex];
     const currentRule = currentTile.rule;
     currentRule.execute(); // currentRule.execute() should trigger rule end
-    this.updatePlayerStatusElement();
     next();
   }
 
@@ -185,17 +207,33 @@ class Game {
     });
   }
 
+  getCurrentZone(): Zone {
+    const currentTile: Tile = this.board.tiles[this.currentPlayer.currentTileIndex];
+    if (currentTile.zone) {
+      return this.board.zones.find((zone: Zone) => zone.name === currentTile.zone);
+    }
+
+    return null;
+  }
+
   // This will go away with state management as the element can just listen for changes
-  updatePlayerStatusElement(): void {
-    // TODO: should tell the user what the condition is instead of just that they have one at all
+  updatePlayerStatusElement(next: Function = () => {}): void {
+    // TODO: should tell the user what the actual move condition is instead of just that they have one at all
     const jsonReplacer = (key: string, value: string) => {
       return (typeof value === 'function' ? true : value);
     };
 
     // TODO: consider saving this, it isn't changing
+    const currentZone: Zone = this.getCurrentZone();
     const playerStatusEl: HTMLElement = document.querySelector('#overlay player-status');
-    const args: Object = { name: this.currentPlayer.name, effects: this.currentPlayer.effects };
+    const args: Object = { 
+      name: this.currentPlayer.name, 
+      effects: this.currentPlayer.effects,
+      ...(currentZone && { zoneName: currentZone.name }),
+    };
     playerStatusEl.setAttribute('data', JSON.stringify(args, jsonReplacer));
+
+    next();
   }
 }
 

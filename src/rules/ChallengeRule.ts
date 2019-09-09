@@ -13,8 +13,8 @@ class ChallengeRule extends Rule {
     this.playerTarget = PlayerTarget.custom;
   }
 
-  execute() {
-    super.execute()
+  execute(closedCb: Function) {
+    super.execute(closedCb)
 
     this.selectPlayers()
       .then((value: Player[]) => {

@@ -13,8 +13,8 @@ class DrinkDuringLostTurnsRule extends Rule {
     this.diceRolls = json.diceRolls;
   }
 
-  execute() {
-    super.execute();
+  execute(closedCb: Function) {
+    super.execute(closedCb);
 
     Game.modal.requireDiceRolls(this.diceRolls.numRequired, (rolls: number[]) => {
       Game.currentPlayer.effects.skippedTurns += rolls[0]; // no-op on the second roll

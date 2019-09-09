@@ -29,6 +29,7 @@ export class PlayerStatus extends LitElement {
         ${speedModifiers[0] ? html`<li class="label success">Speed modifier: ${speedModifiers[0]}</li>` : null}
         ${!!moveCondition ? html`<li class="label success">Move condition</li>` : null}
         ${mandatorySkips > 0 ? html`<li class="label success">Skip next mandatory space</li>` : null}
+        ${this.data.zoneName ? html`<li class="label success">Zone: ${this.data.zoneName}</li>` : null}
       </ul>
     `;
   }

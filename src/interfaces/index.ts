@@ -2,6 +2,7 @@ export interface JsonTile {
   mandatory?: boolean;
   rule: JsonRule;
   position: Position[]; // optional until I have time to fill them all out
+  zone?: string; // Key (name as of right now) to look up the zone
 }
 
 export interface Position {
@@ -33,6 +34,7 @@ export interface PlayerColor {
 export interface PlayerStatusData {
   name: string,
   effects: PlayerEffects,
+  zoneName?: string,
 }
 
 export interface PlayerEffects {
@@ -56,7 +58,6 @@ export interface JsonRule {
   condition?: MoveCondition;
   criteria?: number[];
   choices?: JsonRule[];
-  zone?: string; // Key (name as of right now) to look up the zone
 }
 
 export interface JsonZone {
@@ -86,4 +87,5 @@ export enum PlayerTarget {
 export interface JsonBoard {
   imgSrc?: string;
   tiles: JsonTile[];
+  zones: JsonZone[];
 }

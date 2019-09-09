@@ -12,8 +12,8 @@ class TeleportRule extends Rule {
     this.tileIndex = tileIndex;
   }
 
-  execute(): void {
-    super.execute();
+  execute(closedCb: Function): void {
+    super.execute(closedCb);
 
     Game.currentPlayer.teleportToTile(this.tileIndex);
     Game.painter.drawPlayers();

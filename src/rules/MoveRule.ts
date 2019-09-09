@@ -15,8 +15,8 @@ class MoveRule extends Rule {
     this.numSpaces = numSpaces;
   }
 
-  execute(): void {
-    super.execute();
+  execute(closedCb: Function): void {
+    super.execute(closedCb);
 
     this.selectPlayers()
       .then((value: Player[]) => {

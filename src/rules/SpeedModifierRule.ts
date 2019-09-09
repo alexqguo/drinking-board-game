@@ -15,8 +15,8 @@ class SpeedModifierRule extends Rule {
     this.numTurns = numTurns;
   }
 
-  execute(): void {
-    super.execute();
+  execute(closedCb: Function): void {
+    super.execute(closedCb);
 
     this.selectPlayers()
       .then((value: Player[]) => {

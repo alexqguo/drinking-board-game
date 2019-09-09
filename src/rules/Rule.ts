@@ -19,11 +19,11 @@ abstract class Rule {
     this.criteria = criteria;
   }
 
-  // Should this return a promise instead?
-  execute(): void {
+  // Should this return a promise instead? YES! Not super clean to have childen always passing through args
+  execute(closedCb: Function = this.end): void {
     Game.modal.show(this.displayText);
     Game.modal.disableClose();
-    Game.modal.whenClosed(this.end);
+    Game.modal.whenClosed(closedCb);
   };
 
   end(): void {

@@ -1,5 +1,6 @@
 import Tile from './Tile';
-import { JsonTile, JsonRule } from './interfaces';
+import Zone from './Zone';
+import { JsonTile, JsonRule, JsonZone } from './interfaces';
 import {
   Rule,
   MoveRule,
@@ -37,15 +38,15 @@ const RULE_MAPPINGS: {
   ChallengeRule: ChallengeRule,
 };
 
-export function createTiles(tilesJson: Array<JsonTile>): Array<Tile> {
+export function createTiles(tilesJson: JsonTile[]): Tile[] {
   return tilesJson.map((tileJson: JsonTile) => {
-    const { mandatory, rule, position } = tileJson;
+    const { mandatory, rule, position, zone } = tileJson;
 
     if (!rule) {
       throw 'No rule specified';
     }
 
-    return new Tile(mandatory, createRule(rule), position);
+    return new Tile(mandatory, createRule(rule), position, zone);
   });
 }
 
@@ -57,4 +58,10 @@ export function createRule(ruleJson: JsonRule): Rule {
   }
 
   return new RULE_MAPPINGS[type](ruleJson);
+}
+
+export function createZones(zonesJson: JsonZone[]): Zone[] {
+  return zonesJson.map((zoneJson: JsonZone) => {
+    return new Zone(zoneJson.name, zoneJson.type, createRule(zoneJson.rule));
+  });
 }

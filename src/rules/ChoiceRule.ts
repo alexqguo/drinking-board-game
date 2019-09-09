@@ -21,8 +21,8 @@ class ChoiceRule extends Rule {
     }
   }
 
-  execute() {
-    super.execute()
+  execute(closedCb: Function) {
+    super.execute(closedCb)
 
     if (this.diceRolls) {
       Game.modal.requireDiceRolls(this.diceRolls.numRequired, () => {});

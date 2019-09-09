@@ -8,8 +8,8 @@ export default class ExtraTurnRule extends Rule {
     // TODO - specify number of extra turns? now or later? need to involve playerTarget here
   }
 
-  execute(): void {
-    super.execute();
+  execute(closedCb: Function): void {
+    super.execute(closedCb);
     Game.currentPlayer.effects.extraTurns++;
     Game.modal.enableClose();
   }

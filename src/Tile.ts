@@ -7,12 +7,14 @@ class Tile {
   rule: Rule;
   coordinates: Position[];
   center: Position;
+  zone: string;
   // currentPlayers: Player[]; // Could be needed in the future to not overlap players on the same square
 
-  constructor(isMandatory: boolean, rule: Rule, coordinates: Position[]) {
+  constructor(isMandatory: boolean, rule: Rule, coordinates: Position[], zone: string) {
     this.isMandatory = isMandatory;
     this.rule = rule;
     this.coordinates = coordinates;
+    this.zone = zone;
   }
 
   // Generates an average position based on the corners of the tile

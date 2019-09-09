@@ -11,8 +11,8 @@ class SkipNextMandatoryRule extends Rule {
     this.numSpaces = json.numSpaces;
   }
 
-  execute() {
-    super.execute()
+  execute(closedCb: Function) {
+    super.execute(closedCb)
     Game.currentPlayer.effects.mandatorySkips = this.numSpaces; // Yes, overwrite any existing
     Game.modal.enableClose();
   }

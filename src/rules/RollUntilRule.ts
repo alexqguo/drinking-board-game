@@ -8,8 +8,8 @@ class RollUntilRule extends Rule {
     this.validateRequired(json.displayText);
   }
 
-  execute() {
-    super.execute()
+  execute(closedCb: Function) {
+    super.execute(closedCb)
 
     const rollUntilFn = () => {
       Game.modal.requireDiceRolls(1, (rolls: number[]) => {

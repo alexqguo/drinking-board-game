@@ -8,8 +8,8 @@ class DisplayRule extends Rule {
     this.validateRequired(json.displayText);
   }
 
-  execute() {
-    super.execute()
+  execute(closedCb: Function) {
+    super.execute(closedCb)
     Game.modal.enableClose(); // Nothing to do
   }
 }
