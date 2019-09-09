@@ -41,9 +41,8 @@ export function createTiles(tilesJson: Array<JsonTile>): Array<Tile> {
   return tilesJson.map((tileJson: JsonTile) => {
     const { mandatory, rule, position } = tileJson;
 
-    if (!rule) { // this is temporary
-      console.warn('No rule specified. Was this a todo?');
-      return null;
+    if (!rule) {
+      throw 'No rule specified';
     }
 
     return new Tile(mandatory, createRule(rule), position);
@@ -54,9 +53,7 @@ export function createRule(ruleJson: JsonRule): Rule {
   const { type } = ruleJson;
 
   if (!RULE_MAPPINGS.hasOwnProperty(type)) {
-    console.warn(`Invalid rule type specified: ${type}`);
-    // TODO: throw error instead of warn. warn is just for debugging
-    return null;
+    throw 'Invalid rule type specified';
   }
 
   return new RULE_MAPPINGS[type](ruleJson);

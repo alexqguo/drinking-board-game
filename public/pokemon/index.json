@@ -1421,5 +1421,38 @@
         "y": 1577
       }]
     }
+  ],
+  "zones": [
+    {
+      "name": "POKEMON TOWER",
+      "type": "passive",
+      "rule": {
+        "type": "DisplayRule",
+        "displayText": "While in the Pokemon Tower, out of respect for the dead, you should not speak. Doing so results in a drink each time."
+      }
+    }, {
+      "name": "SILPH CO.",
+      "type": "active",
+      "rule": {
+        "type": "DisplayRule",
+        "displayText": "You've infiltrated the headquarters of the infamous Team Rocket! You will need all your courage to make it to their leader. Drink an extra 2 every turn to calm your nerves."
+      }
+    }, {
+      "name": "SAFARI ZONE",
+      "type": "active",
+      "rule": {
+        "type": "DiceRollRule",
+        "displayText": "Before each turn in the Safari Zone, roll a die.\n1-2: You throw bait. Give 1 drink to someone.\n3-4: You throw a rock, dick. Lose your turn, drink 4.\n5-6: You throw a safari ball. Drink 2 in sadness, because safari balls are just awful.",
+        "diceRolls": {
+          "numRequired": 1,
+          "outcomes": [{
+            "type": "SkipTurnRule",
+            "displayText": "Lose your turn, drink 4.",
+            "numTurns": 1,
+            "criteria": [3, 4]
+          }]
+        }
+      }
+    }
   ]
 }

@@ -148,6 +148,7 @@ class Game {
 
   endMovement(next: Function): void {
     GameEvents.trigger(RULE_TRIGGER);
+    next();
   }
 
   triggerRule(next: Function): void {

@@ -1,12 +1,8 @@
 import Game from './Game';
 import { JsonBoard, PlayerInput } from './interfaces';
 
-/*
-fetches the game instance, tells it which source to use and gives it player names
-may put an App class in here if necessary
-*/
 (function() {
-  (window as any).g = Game; // TODO: remove
+  (window as any).g = Game; // TODO: remove. this is just for testing
 
   function fetchImage(src: string, canvas: HTMLCanvasElement): Promise<void> {
     return new Promise(resolve => {

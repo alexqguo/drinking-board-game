@@ -19,6 +19,11 @@ var Direction;
     Direction["forward"] = "forward";
     Direction["back"] = "back";
 })(Direction || (Direction = {}));
+var ZoneType;
+(function (ZoneType) {
+    ZoneType["passive"] = "passive";
+    ZoneType["active"] = "active";
+})(ZoneType || (ZoneType = {}));
 var PlayerTarget;
 (function (PlayerTarget) {
     PlayerTarget["custom"] = "custom";
@@ -453,8 +458,7 @@ function createTiles(tilesJson) {
     return tilesJson.map((tileJson) => {
         const { mandatory, rule, position } = tileJson;
         if (!rule) {
-            console.warn('No rule specified. Was this a todo?');
-            return null;
+            throw 'No rule specified';
         }
         return new Tile(mandatory, createRule(rule), position);
     });
@@ -462,8 +466,7 @@ function createTiles(tilesJson) {
 function createRule(ruleJson) {
     const { type } = ruleJson;
     if (!RULE_MAPPINGS.hasOwnProperty(type)) {
-        console.warn(`Invalid rule type specified: ${type}`);
-        return null;
+        throw 'Invalid rule type specified';
     }
     return new RULE_MAPPINGS[type](ruleJson);
 }
@@ -571,7 +574,9 @@ class Painter {
             this.ctx.fillText(player.name[0].toUpperCase(), player.currentPos.x - 6, player.currentPos.y + 6);
         }
     }
-}class Modal {
+}
+//# sourceMappingURL=Painter.js.map
+class Modal {
     constructor() {
         this.triggerId = 'game-modal';
         this.trigger = document.querySelector(`#${this.triggerId}`);
@@ -775,6 +780,7 @@ class Game {
     }
     endMovement(next) {
         gameEventsInstance.trigger(RULE_TRIGGER);
+        next();
     }
     triggerRule(next) {
         const currentTile = this.board.tiles[this.currentPlayer.currentTileIndex];

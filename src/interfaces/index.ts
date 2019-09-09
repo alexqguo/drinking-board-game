@@ -14,6 +14,11 @@ export enum Direction {
   back = 'back',
 }
 
+export enum ZoneType {
+  passive = 'passive',
+  active = 'active',
+}
+
 export interface PlayerInput {
   name: string;
   color: string;
@@ -51,6 +56,12 @@ export interface JsonRule {
   condition?: MoveCondition;
   criteria?: number[];
   choices?: JsonRule[];
+}
+
+export interface JsonZone {
+  name: string;
+  type: ZoneType,
+  rule: JsonRule,
 }
 
 export interface MoveCondition {
