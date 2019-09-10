@@ -496,7 +496,7 @@ class Board {
 //# sourceMappingURL=Board.js.map
 const RADIUS = 30;
 const FONT_SIZE = 20;
-const VELO = 12;
+const VELO = 30;
 function hexToRgb(hex) {
     var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
     hex = hex.replace(shorthandRegex, function (m, r, g, b) {
@@ -600,8 +600,9 @@ class Modal {
         this.content = document.querySelector('.modal .content');
         this.trigger.addEventListener('change', (e) => {
             if (this.trigger.checked === false && this.closeCb) {
-                this.closeCb();
+                const cb = this.closeCb;
                 this.closeCb = null;
+                cb();
             }
         });
     }

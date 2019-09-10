@@ -2,7 +2,7 @@ import Game from './Game';
 import Player from './Player';
 import { Rule } from './rules';
 
-// TODO: stencil
+// TODO: lit-element. this is a piece of shit
 export class Modal {
   triggerId: string;
   trigger: HTMLInputElement;
@@ -20,8 +20,11 @@ export class Modal {
 
     this.trigger.addEventListener('change', (e: Event) => {
       if (this.trigger.checked === false && this.closeCb) {
-        this.closeCb();
-        this.closeCb = null; // Immediately remove it
+        const cb = this.closeCb;
+        this.closeCb = null;
+        // Have to do it this way because the callback can trigger events which reset the closeCb
+        // Short term fix, this entire thing will be refactored soon anyway (I hope)
+        cb();
       }
     });
   }
