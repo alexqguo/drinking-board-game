@@ -3,7 +3,7 @@ import { Position, PlayerEffects, PlayerInput, PlayerColor } from './interfaces'
 
 export const RADIUS = 30;
 export const FONT_SIZE = 20;
-export const VELO = 30;
+export const VELO = 12;
 
 // https://stackoverflow.com/questions/5623838/rgb-to-hex-and-hex-to-rgb #noshame
 function hexToRgb(hex: string): PlayerColor {

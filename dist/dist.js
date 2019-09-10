@@ -496,7 +496,7 @@ class Board {
 //# sourceMappingURL=Board.js.map
 const RADIUS = 30;
 const FONT_SIZE = 20;
-const VELO = 30;
+const VELO = 12;
 function hexToRgb(hex) {
     var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
     hex = hex.replace(shorthandRegex, function (m, r, g, b) {
@@ -539,9 +539,7 @@ class Player {
         this.currentTileIndex = tileIndex;
         this.currentPos = gameInstance.board.tiles[tileIndex].generateCenterPosition();
     }
-}
-//# sourceMappingURL=Player.js.map
-class Painter {
+}class Painter {
     constructor(canvas, ctx) {
         this.canvas = canvas;
         this.ctx = ctx;
@@ -859,7 +857,9 @@ class Game {
         next();
     }
 }
-const gameInstance = new Game();(function () {
+const gameInstance = new Game();
+//# sourceMappingURL=Game.js.map
+(function () {
     window.g = gameInstance;
     function fetchImage(src, canvas) {
         return new Promise(resolve => {
