@@ -5,7 +5,7 @@ import { terser } from "rollup-plugin-terser";
 const plugins = [
   typescript(),
   resolve(),
-  // terser(), // enable this just for production build once we get to that point
+  terser(), // enable this just for production build once we get to that point
 ];
 
 export default [{
