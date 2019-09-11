@@ -13,7 +13,7 @@ export default [{
   output: {
     file: 'dist/dist.js',
     format: 'umd',
-    name: 'drinking.game',
+    name: 'drinking',
   },
   plugins,
   watch: {

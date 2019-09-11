@@ -1,4 +1,5 @@
 import Game from './Game';
+import GameEvents, * as events from './GameEvents';
 import { JsonBoard, PlayerInput } from './interfaces';
 
 function fetchImage(src: string, canvas: HTMLCanvasElement): Promise<void> {
@@ -87,4 +88,8 @@ document.getElementById('setup').addEventListener('submit', (e: Event) => {
 });
 
 // Export of the application
-export default Game;
+export {
+  Game,
+  GameEvents,
+  events,
+};
