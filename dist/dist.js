@@ -1,4 +1,4 @@
-(function(){'use strict';class Tile {
+(function(g,f){typeof exports==='object'&&typeof module!=='undefined'?module.exports=f():typeof define==='function'&&define.amd?define(f):(g=g||self,(g.drinking=g.drinking||{},g.drinking.game=f()));}(this,function(){'use strict';class Tile {
     constructor(isMandatory, rule, coordinates, zone) {
         this.isMandatory = isMandatory;
         this.rule = rule;
@@ -13,13 +13,17 @@
         total.y /= this.coordinates.length;
         return total;
     }
-}class Zone {
+}
+//# sourceMappingURL=Tile.js.map
+class Zone {
     constructor(name, type, rule) {
         this.name = name;
         this.type = type;
         this.rule = rule;
     }
-}var Direction;
+}
+//# sourceMappingURL=Zone.js.map
+var Direction;
 (function (Direction) {
     Direction["forward"] = "forward";
     Direction["back"] = "back";
@@ -34,7 +38,9 @@ var PlayerTarget;
     PlayerTarget["custom"] = "custom";
     PlayerTarget["self"] = "self";
     PlayerTarget["allOthers"] = "allOthers";
-})(PlayerTarget || (PlayerTarget = {}));const TURN_START = 'TURN_START';
+})(PlayerTarget || (PlayerTarget = {}));
+//# sourceMappingURL=index.js.map
+const TURN_START = 'TURN_START';
 const LOST_TURN_START = 'LOST_TURN_START';
 const ROLL_START = 'ROLL_START';
 const ROLL_END = 'ROLL_END';
@@ -90,7 +96,9 @@ class GameEvents {
         }
     }
 }
-const gameEventsInstance = new GameEvents();class Rule {
+const gameEventsInstance = new GameEvents();
+//# sourceMappingURL=GameEvents.js.map
+class Rule {
     constructor(json) {
         const { displayText, type, playerTarget, criteria } = json;
         this.validateRequired(type);
@@ -135,7 +143,9 @@ const gameEventsInstance = new GameEvents();class Rule {
             throw new Error('TODO - alert missing fields for whatever class this is');
         }
     }
-}class DisplayRule extends Rule {
+}
+//# sourceMappingURL=Rule.js.map
+class DisplayRule extends Rule {
     constructor(json) {
         super(json);
         this.validateRequired(json.displayText);
@@ -144,7 +154,9 @@ const gameEventsInstance = new GameEvents();class Rule {
         super.execute(closedCb);
         gameInstance.modal.enableClose();
     }
-}class MoveRule extends Rule {
+}
+//# sourceMappingURL=DisplayRule.js.map
+class MoveRule extends Rule {
     constructor(json) {
         super(json);
         const { playerTarget, direction, numSpaces } = json;
@@ -163,7 +175,9 @@ const gameEventsInstance = new GameEvents();class Rule {
             gameInstance.modal.close();
         });
     }
-}class SkipTurnRule extends Rule {
+}
+//# sourceMappingURL=MoveRule.js.map
+class SkipTurnRule extends Rule {
     constructor(json) {
         super(json);
         const { numTurns } = json;
@@ -175,7 +189,9 @@ const gameEventsInstance = new GameEvents();class Rule {
         gameInstance.currentPlayer.effects.skippedTurns += this.numTurns;
         gameInstance.modal.enableClose();
     }
-}class SpeedModifierRule extends Rule {
+}
+//# sourceMappingURL=SkipTurnRule.js.map
+class SpeedModifierRule extends Rule {
     constructor(json) {
         super(json);
         const { multiplier, numTurns } = json;
@@ -196,7 +212,9 @@ const gameEventsInstance = new GameEvents();class Rule {
             gameInstance.modal.enableClose();
         });
     }
-}class TeleportRule extends Rule {
+}
+//# sourceMappingURL=SpeedModifierRule.js.map
+class TeleportRule extends Rule {
     constructor(json) {
         super(json);
         const { tileIndex } = json;
@@ -209,7 +227,9 @@ const gameEventsInstance = new GameEvents();class Rule {
         gameInstance.painter.drawPlayers();
         gameInstance.modal.enableClose();
     }
-}class GameOverRule extends Rule {
+}
+//# sourceMappingURL=TeleportRule.js.map
+class GameOverRule extends Rule {
     constructor(json) {
         super(json);
     }
@@ -218,7 +238,9 @@ const gameEventsInstance = new GameEvents();class Rule {
         gameInstance.gameOver();
         gameInstance.modal.enableClose();
     }
-}class ExtraTurnRule extends Rule {
+}
+//# sourceMappingURL=GameOverRule.js.map
+class ExtraTurnRule extends Rule {
     constructor(json) {
         super(json);
     }
@@ -227,7 +249,9 @@ const gameEventsInstance = new GameEvents();class Rule {
         gameInstance.currentPlayer.effects.extraTurns++;
         gameInstance.modal.enableClose();
     }
-}class DrinkDuringLostTurnsRule extends Rule {
+}
+//# sourceMappingURL=ExtraTurnRule.js.map
+class DrinkDuringLostTurnsRule extends Rule {
     constructor(json) {
         super(json);
         this.diceRolls = json.diceRolls;
@@ -239,7 +263,9 @@ const gameEventsInstance = new GameEvents();class Rule {
             gameInstance.modal.enableClose();
         });
     }
-}class ApplyMoveConditionRule extends Rule {
+}
+//# sourceMappingURL=DrinkDuringLostTurnsRule.js.map
+class ApplyMoveConditionRule extends Rule {
     constructor(json) {
         super(json);
         const { condition } = json;
@@ -286,7 +312,9 @@ const gameEventsInstance = new GameEvents();class Rule {
             }
         });
     }
-}class DiceRollRule extends Rule {
+}
+//# sourceMappingURL=ApplyMoveConditionRule.js.map
+class DiceRollRule extends Rule {
     constructor(json) {
         super(json);
         this.diceRolls = json.diceRolls;
@@ -332,7 +360,9 @@ const gameEventsInstance = new GameEvents();class Rule {
             }
         });
     }
-}class RollUntilRule extends Rule {
+}
+//# sourceMappingURL=DiceRollRule.js.map
+class RollUntilRule extends Rule {
     constructor(json) {
         super(json);
         this.validateRequired(json.displayText);
@@ -351,7 +381,9 @@ const gameEventsInstance = new GameEvents();class Rule {
         };
         rollUntilFn();
     }
-}class ChoiceRule extends Rule {
+}
+//# sourceMappingURL=RollUntilRule.js.map
+class ChoiceRule extends Rule {
     constructor(json) {
         super(json);
         const { choices, diceRolls } = json;
@@ -378,7 +410,9 @@ const gameEventsInstance = new GameEvents();class Rule {
             value.execute();
         });
     }
-}class SkipNextMandatoryRule extends Rule {
+}
+//# sourceMappingURL=ChoiceRule.js.map
+class SkipNextMandatoryRule extends Rule {
     constructor(json) {
         super(json);
         this.validateRequired(json.numSpaces);
@@ -389,7 +423,9 @@ const gameEventsInstance = new GameEvents();class Rule {
         gameInstance.currentPlayer.effects.mandatorySkips = this.numSpaces;
         gameInstance.modal.enableClose();
     }
-}class ChallengeRule extends Rule {
+}
+//# sourceMappingURL=SkipNextMandatoryRule.js.map
+class ChallengeRule extends Rule {
     constructor(json) {
         super(json);
         this.playerTarget = PlayerTarget.custom;
@@ -409,7 +445,9 @@ const gameEventsInstance = new GameEvents();class Rule {
             });
         });
     }
-}const RULE_MAPPINGS = {
+}
+//# sourceMappingURL=ChallengeRule.js.map
+const RULE_MAPPINGS = {
     MoveRule: MoveRule,
     DisplayRule: DisplayRule,
     TeleportRule: TeleportRule,
@@ -445,14 +483,18 @@ function createZones(zonesJson) {
     return zonesJson.map((zoneJson) => {
         return new Zone(zoneJson.name, zoneJson.type, createRule(zoneJson.rule));
     });
-}class Board {
+}
+//# sourceMappingURL=BoardJsonConverter.js.map
+class Board {
     constructor(json, players) {
         this.imgSrc = json.imgSrc;
         this.tiles = createTiles(json.tiles);
         this.zones = createZones(json.zones);
         this.players = players;
     }
-}const RADIUS = 30;
+}
+//# sourceMappingURL=Board.js.map
+const RADIUS = 30;
 const FONT_SIZE = 20;
 const VELO = 12;
 function hexToRgb(hex) {
@@ -497,7 +539,9 @@ class Player {
         this.currentTileIndex = tileIndex;
         this.currentPos = gameInstance.board.tiles[tileIndex].generateCenterPosition();
     }
-}class Painter {
+}
+//# sourceMappingURL=Player.js.map
+class Painter {
     constructor(canvas, ctx) {
         this.canvas = canvas;
         this.ctx = ctx;
@@ -545,7 +589,9 @@ class Player {
             this.ctx.fillText(player.name[0].toUpperCase(), player.currentPos.x - 6, player.currentPos.y + 6);
         }
     }
-}class Modal {
+}
+//# sourceMappingURL=Painter.js.map
+class Modal {
     constructor() {
         this.triggerId = 'game-modal';
         this.trigger = document.querySelector(`#${this.triggerId}`);
@@ -652,7 +698,9 @@ class Player {
     whenClosed(cb) {
         this.closeCb = cb;
     }
-}class Game {
+}
+//# sourceMappingURL=Modal.js.map
+class Game {
     constructor() {
         if (!Game.instance) {
             Game.instance = this;
@@ -811,75 +859,74 @@ class Player {
         next();
     }
 }
-const gameInstance = new Game();(function () {
-    window.g = gameInstance;
-    function fetchImage(src, canvas) {
-        return new Promise(resolve => {
-            const img = new Image();
-            img.src = src;
-            img.addEventListener('load', () => {
-                canvas.width = img.width;
-                canvas.height = img.height;
-                canvas.style.background = `url(${src})`;
-                canvas.style.backgroundSize = '100% 100%';
-                resolve();
-            });
+const gameInstance = new Game();
+//# sourceMappingURL=Game.js.map
+function fetchImage(src, canvas) {
+    return new Promise(resolve => {
+        const img = new Image();
+        img.src = src;
+        img.addEventListener('load', () => {
+            canvas.width = img.width;
+            canvas.height = img.height;
+            canvas.style.background = `url(${src})`;
+            canvas.style.backgroundSize = '100% 100%';
+            resolve();
         });
-    }
-    function fetchBoard(src) {
-        return new Promise(resolve => {
-            fetch(src)
-                .then(resp => resp.json())
-                .then(data => resolve(data));
-        });
-    }
-    function getFormValues() {
-        const formData = [];
-        const boardPrefix = document.getElementById('game').value;
-        const players = Array.from(document.querySelectorAll('#player-input input[type="text"]'))
-            .filter((input) => !!input.value)
-            .map((input) => input.value);
-        const colors = Array.from(document.querySelectorAll('#player-input input[type="color"]'))
-            .filter((input) => !!input.value)
-            .map((input) => input.value);
-        players.forEach((name, idx) => {
-            const color = colors[idx] || '#000000';
-            formData.push({ name, color });
-        });
-        return [boardPrefix, formData];
-    }
-    function initGame(boardPrefix, players) {
-        const canvas = document.getElementById('canvas');
-        const imgSrc = `${boardPrefix}/index.png`;
-        const boardSrc = `${boardPrefix}/index.json`;
-        Promise.all([fetchImage(imgSrc, canvas), fetchBoard(boardSrc)])
-            .then((values) => {
-            gameInstance.start(values[1], players, canvas);
-        })
-            .catch(err => console.error(err));
-    }
-    document.getElementById('add-player').addEventListener('click', (e) => {
-        e.preventDefault();
-        const frag = document.createDocumentFragment();
-        const input = document.createElement('player-input');
-        frag.appendChild(input);
-        document.getElementById('player-input').appendChild(frag);
-        return false;
     });
-    document.getElementById('setup').addEventListener('submit', (e) => {
-        e.preventDefault();
-        const gameSetupInfo = getFormValues();
-        if (!gameSetupInfo[1].length) {
-            alert('You need players to play this game');
-            return;
-        }
-        const names = gameSetupInfo[1].map((val) => val.name);
-        if (new Set(names).size < gameSetupInfo[1].length) {
-            alert('Player names must be unique');
-            return;
-        }
-        initGame(gameSetupInfo[0], gameSetupInfo[1]);
-        document.getElementById('setup').style.display = 'none';
-        document.getElementById('overlay').style.display = 'block';
+}
+function fetchBoard(src) {
+    return new Promise(resolve => {
+        fetch(src)
+            .then(resp => resp.json())
+            .then(data => resolve(data));
     });
-}());}());
+}
+function getFormValues() {
+    const formData = [];
+    const boardPrefix = document.getElementById('game').value;
+    const players = Array.from(document.querySelectorAll('#player-input input[type="text"]'))
+        .filter((input) => !!input.value)
+        .map((input) => input.value);
+    const colors = Array.from(document.querySelectorAll('#player-input input[type="color"]'))
+        .filter((input) => !!input.value)
+        .map((input) => input.value);
+    players.forEach((name, idx) => {
+        const color = colors[idx] || '#000000';
+        formData.push({ name, color });
+    });
+    return [boardPrefix, formData];
+}
+function initGame(boardPrefix, players) {
+    const canvas = document.getElementById('canvas');
+    const imgSrc = `${boardPrefix}/index.png`;
+    const boardSrc = `${boardPrefix}/index.json`;
+    Promise.all([fetchImage(imgSrc, canvas), fetchBoard(boardSrc)])
+        .then((values) => {
+        gameInstance.start(values[1], players, canvas);
+    })
+        .catch(err => console.error(err));
+}
+document.getElementById('add-player').addEventListener('click', (e) => {
+    e.preventDefault();
+    const frag = document.createDocumentFragment();
+    const input = document.createElement('player-input');
+    frag.appendChild(input);
+    document.getElementById('player-input').appendChild(frag);
+    return false;
+});
+document.getElementById('setup').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const gameSetupInfo = getFormValues();
+    if (!gameSetupInfo[1].length || gameSetupInfo[1].length < 2) {
+        alert('You need at least two players to play this game');
+        return;
+    }
+    const names = gameSetupInfo[1].map((val) => val.name);
+    if (new Set(names).size < gameSetupInfo[1].length) {
+        alert('Player names must be unique');
+        return;
+    }
+    initGame(gameSetupInfo[0], gameSetupInfo[1]);
+    document.getElementById('setup').style.display = 'none';
+    document.getElementById('overlay').style.display = 'block';
+});return gameInstance;}));

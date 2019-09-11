@@ -12,7 +12,8 @@ export default [{
   input: 'src/App.ts',
   output: {
     file: 'dist/dist.js',
-    format: 'iife'
+    format: 'umd',
+    name: 'drinking.game',
   },
   plugins,
   watch: {
