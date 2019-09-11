@@ -1,5 +1,5 @@
 import Game from './Game';
-import { Position, PlayerEffects, PlayerInput, PlayerColor } from './interfaces';
+import { Position, PlayerEffects, PlayerInput, PlayerColor } from '../interfaces';
 
 export const RADIUS = 30;
 export const FONT_SIZE = 20;

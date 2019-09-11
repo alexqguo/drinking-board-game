@@ -1,6 +1,6 @@
-import { Rule } from './rules';
+import { Rule } from '../rules';
 import Player from './Player';
-import { Position } from './interfaces';
+import { Position } from '../interfaces';
 
 class Tile {
   isMandatory: boolean;

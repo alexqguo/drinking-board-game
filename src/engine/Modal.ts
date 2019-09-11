@@ -1,6 +1,6 @@
 import Game from './Game';
 import Player from './Player';
-import { Rule } from './rules';
+import { Rule } from '../rules';
 
 // TODO: lit-element. this is a piece of shit
 export class Modal {

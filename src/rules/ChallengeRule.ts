@@ -1,7 +1,7 @@
 import Rule from './Rule';
 import { JsonRule, PlayerTarget } from '../interfaces';
-import Player from '../Player';
-import Game from '../Game';
+import Player from '../engine/Player';
+import Game from '../engine/Game';
 
 /**
  * This is a quick shitty solution until I have enough time to implement a better

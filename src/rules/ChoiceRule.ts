@@ -1,7 +1,7 @@
 import Rule from './Rule';
 import { JsonRule, DiceRoll } from '../interfaces';
-import Game from '../Game';
-import { createRule } from '../BoardJsonConverter';
+import Game from '../engine/Game';
+import { createRule } from '../engine/BoardJsonConverter';
 
 class ChoiceRule extends Rule {
   choiceRules: Rule[];

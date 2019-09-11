@@ -1,5 +1,5 @@
 import Rule from './Rule';
-import Game from '../Game';
+import Game from '../engine/Game';
 import { JsonRule } from '../interfaces';
 
 class SkipTurnRule extends Rule {

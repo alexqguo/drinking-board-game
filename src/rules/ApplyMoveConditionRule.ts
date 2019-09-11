@@ -1,7 +1,7 @@
 import Rule from './Rule';
 import { JsonRule, MoveCondition, PlayerTarget } from '../interfaces';
-import Player from '../Player';
-import Game from '../Game';
+import Player from '../engine/Player';
+import Game from '../engine/Game';
 
 class ApplyMoveConditionRule extends Rule {
   condition: MoveCondition;

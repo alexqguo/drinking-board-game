@@ -1,7 +1,7 @@
 import Zone from './Zone';
 import Board from './Board';
 import Player from './Player';
-import { JsonBoard, PlayerInput, ZoneType } from './interfaces';
+import { JsonBoard, PlayerInput, ZoneType } from '../interfaces';
 import Painter from './Painter';
 import { Modal } from './Modal';
 import GameEvents, { 

@@ -2,7 +2,7 @@ import Tile from './Tile';
 import Zone from './Zone';
 import Player from './Player';
 import { createTiles, createZones } from './BoardJsonConverter';
-import { JsonBoard } from './interfaces';
+import { JsonBoard } from '../interfaces';
 
 class Board {
   imgSrc: string;

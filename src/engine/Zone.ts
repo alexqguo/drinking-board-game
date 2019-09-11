@@ -1,5 +1,5 @@
-import { Rule } from './rules';
-import { ZoneType } from './interfaces';
+import { Rule } from '../rules';
+import { ZoneType } from '../interfaces';
 
 class Zone {
   name: string;

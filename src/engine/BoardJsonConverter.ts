@@ -1,6 +1,6 @@
 import Tile from './Tile';
 import Zone from './Zone';
-import { JsonTile, JsonRule, JsonZone } from './interfaces';
+import { JsonTile, JsonRule, JsonZone } from '../interfaces';
 import {
   Rule,
   MoveRule,
@@ -17,7 +17,7 @@ import {
   ChoiceRule,
   SkipNextMandatoryRule,
   ChallengeRule,
-} from './rules';
+} from '../rules';
 
 const RULE_MAPPINGS: { 
   [key: string]: new (...args: any[]) => Rule 

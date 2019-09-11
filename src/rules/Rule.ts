@@ -1,7 +1,7 @@
 import { DiceRoll, PlayerTarget, JsonRule } from '../interfaces';
-import GameEvents, { RULE_END } from '../GameEvents';
-import Game from '../Game';
-import Player from '../Player';
+import GameEvents, { RULE_END } from '../engine/GameEvents';
+import Game from '../engine/Game';
+import Player from '../engine/Player';
 
 abstract class Rule {
   displayText: string;

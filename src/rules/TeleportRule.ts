@@ -1,6 +1,6 @@
 import Rule from './Rule';
 import { JsonRule } from '../interfaces';
-import Game from '../Game';
+import Game from '../engine/Game';
 
 class TeleportRule extends Rule {
   tileIndex: number;

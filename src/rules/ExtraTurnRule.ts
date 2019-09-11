@@ -1,5 +1,5 @@
 import Rule from './Rule';
-import Game from '../Game';
+import Game from '../engine/Game';
 import { JsonRule } from '../interfaces';
 
 export default class ExtraTurnRule extends Rule {

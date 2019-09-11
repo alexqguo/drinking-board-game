@@ -1,7 +1,7 @@
 import Rule from './Rule';
 import { JsonRule, Direction, PlayerTarget } from '../interfaces';
-import Game from '../Game';
-import Player from '../Player';
+import Game from '../engine/Game';
+import Player from '../engine/Player';
 
 class MoveRule extends Rule {
   direction: Direction;
