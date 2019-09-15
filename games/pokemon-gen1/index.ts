@@ -13,5 +13,11 @@ trainer battles
   - if there are more than two people...
 
 */
+const w = window as any;
 
-console.log('hello from custom pokemon code');
+if (w.drinking) {
+  w.drinking.GameEvents.on(w.drinking.events.TURN_START, (next: Function) => {
+    console.log('Pokemon!');
+    next();
+  });
+}

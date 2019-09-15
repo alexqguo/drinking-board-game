@@ -1,1 +1,1 @@
-!function(o){"function"==typeof define&&define.amd?define(o):o()}(function(){"use strict";console.log("hello from custom pokemon code")});
+!function(n){"function"==typeof define&&define.amd?define(n):n()}(function(){"use strict";const n=window;n.drinking&&n.drinking.GameEvents.on(n.drinking.events.TURN_START,n=>{console.log("Pokemon!"),n()})});
