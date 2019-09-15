@@ -10,8 +10,7 @@ export const TURN_END = 'TURN_END';
 export const GAME_OVER = 'GAME_OVER';
 export const TURN_SKIP = 'TURN_SKIP';
 
-const ALL_EVENTS = [
-  TURN_START, ROLL_START, ROLL_END, MOVE_START, MOVE_END, RULE_TRIGGER, RULE_END,
+const ALL_EVENTS = [TURN_START, ROLL_START, ROLL_END, MOVE_START, MOVE_END, RULE_TRIGGER, RULE_END,
   TURN_END, GAME_OVER, TURN_SKIP, LOST_TURN_START,
 ];
 
@@ -40,7 +39,7 @@ class GameEvents {
 
   on(eventName: string, callback: Function): void {
     this.validateEvent(eventName);
-    this.eventHandlerMap.get(eventName).push(callback);
+    this.eventHandlerMap.get(eventName).unshift(callback);
   }
 
   trigger(eventName: string, eventValues?: any[]): void {

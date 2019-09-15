@@ -22,20 +22,20 @@ import {
 const RULE_MAPPINGS: { 
   [key: string]: new (...args: any[]) => Rule 
 } = {
-  MoveRule: MoveRule,
-  DisplayRule: DisplayRule,
-  TeleportRule: TeleportRule,
-  SkipTurnRule: SkipTurnRule,
-  SpeedModifierRule: SpeedModifierRule,
-  GameOverRule: GameOverRule,
-  ExtraTurnRule: ExtraTurnRule,
-  DrinkDuringLostTurnsRule: DrinkDuringLostTurnsRule,
-  ApplyMoveConditionRule: ApplyMoveConditionRule,
-  DiceRollRule: DiceRollRule,
-  RollUntilRule: RollUntilRule,
-  ChoiceRule: ChoiceRule,
-  SkipNextMandatoryRule: SkipNextMandatoryRule,
-  ChallengeRule: ChallengeRule,
+  MoveRule,
+  DisplayRule,
+  TeleportRule,
+  SkipTurnRule,
+  SpeedModifierRule,
+  GameOverRule,
+  ExtraTurnRule,
+  DrinkDuringLostTurnsRule,
+  ApplyMoveConditionRule,
+  DiceRollRule,
+  RollUntilRule,
+  ChoiceRule,
+  SkipNextMandatoryRule,
+  ChallengeRule,
 };
 
 export function createTiles(tilesJson: JsonTile[]): Tile[] {

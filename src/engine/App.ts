@@ -25,6 +25,17 @@ function fetchBoard(src: string): Promise<JsonBoard> {
   });
 }
 
+function fetchScript(src: string): Promise<void> {
+  return new Promise(resolve => {
+    const tag: HTMLScriptElement = document.createElement('script');
+    tag.setAttribute('src', src);
+    document.body.appendChild(tag);
+    tag.addEventListener('load', () => {
+      resolve();
+    });
+  });
+}
+
 // Got lazy with this. Create an actual TS interface
 function getFormValues(): [string, PlayerInput[]] {
   const formData: PlayerInput[] = [];
@@ -47,11 +58,12 @@ function getFormValues(): [string, PlayerInput[]] {
 function initGame(boardPrefix: string, players: PlayerInput[]): void {
   const canvas: HTMLCanvasElement = document.getElementById('canvas') as HTMLCanvasElement;
   const imgSrc: string = `${boardPrefix}/index.png`;
-  const boardSrc: any = `${boardPrefix}/index.json`;
+  const boardSrc: string = `${boardPrefix}/index.json`;
+  const scriptSrc: string = `${boardPrefix}/index.js`;
   
-  Promise.all([fetchImage(imgSrc, canvas), fetchBoard(boardSrc)])
+  Promise.all([fetchBoard(boardSrc), fetchImage(imgSrc, canvas), fetchScript(scriptSrc)])
     .then((values) => {
-      Game.start(values[1], players, canvas); // values[1] is the result of the fetchBoard promise
+      Game.start(values[0], players, canvas); // values[0] is the result of the fetchBoard promise
     })
     .catch(err => console.error(err));
 }
