@@ -49,7 +49,6 @@ export class PokemonSelector extends LitElement {
         <option value="charmander">Charmander</option>
         <option value="squirtle">Squirtle</option>
         <option value="bulbasaur">Bulbasaur</option>
-        <option value="pikachu">Pikachu</option>
       </select>
 
       <br><br>
@@ -112,6 +111,12 @@ if (w.drinking) {
   });
 
   GameEvents.on(events.MOVE_END, (next: Function) => {
+    // Check if it's the pikachu space, if so switch the pokemon for the current player
+
+    if (Game.currentPlayer.currentTileIndex === 4) {
+      Game.currentPlayer.custom.pokemon = 'pikachu';
+    }
+
     console.log('Check if players are on the same space (and it\'s not a gym');
     next();
   });

@@ -163,7 +163,7 @@ class Game {
     
     // Uncomment this section for testing
     // if (this.currentPlayer.name === 'asdf' && !(window as any).asdf) {
-    //   numSpacesToAdvance = 36;
+    //   numSpacesToAdvance = 4;
     //   (window as any).asdf = true;
     // }
 
