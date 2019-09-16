@@ -35,6 +35,7 @@ export interface PlayerStatusData {
   name: string,
   effects: PlayerEffects,
   zoneName?: string,
+  custom: Object,
 }
 
 export interface PlayerEffects {

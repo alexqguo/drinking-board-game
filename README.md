@@ -37,6 +37,12 @@ This is a generalized engine for playing drinking board games online.
 * trainer battles/custom events
 * zones
 
+### M1.5 (refactor time)
+* Refactor modal into a WCs or multiple child WCs
+* Clean up other todos
+* Consider better organization of events
+* Clean up typescript in the custom game code
+
 ### M2
 * track game state, store in localstorage in case someone closes the screen
   * state holds events and then instead of listening to the events we listen to when the "current event" in the state changes

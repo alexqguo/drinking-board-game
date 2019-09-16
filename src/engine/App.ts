@@ -63,7 +63,7 @@ function initGame(boardPrefix: string, players: PlayerInput[]): void {
   
   Promise.all([fetchBoard(boardSrc), fetchImage(imgSrc, canvas), fetchScript(scriptSrc)])
     .then((values) => {
-      Game.start(values[0], players, canvas); // values[0] is the result of the fetchBoard promise
+      Game.init(values[0], players, canvas); // values[0] is the result of the fetchBoard promise
     })
     .catch(err => console.error(err));
 }

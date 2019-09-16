@@ -5,7 +5,8 @@ import { JsonBoard, PlayerInput, ZoneType } from '../interfaces';
 import Painter from './Painter';
 import { Modal } from './Modal';
 import GameEvents, { 
-  TURN_START, TURN_END, ROLL_START, ROLL_END, MOVE_END, RULE_TRIGGER, MOVE_START, RULE_END, LOST_TURN_START
+  TURN_START, TURN_END, ROLL_START, ROLL_END, MOVE_END, RULE_TRIGGER, MOVE_START, RULE_END, 
+  LOST_TURN_START, GAME_START
 } from './GameEvents';
 import Tile from './Tile';
 
@@ -27,6 +28,7 @@ class Game {
       Game.instance = this;
     }
 
+    GameEvents.on(GAME_START, this.startGame.bind(this));
     GameEvents.on(LOST_TURN_START, this.startLostTurn.bind(this));
     GameEvents.on(TURN_START, this.startTurn.bind(this));
     GameEvents.on(TURN_END, this.endTurn.bind(this));
@@ -42,7 +44,7 @@ class Game {
     return Game.instance;
   }
 
-  start(boardSrc: JsonBoard, playerNames: PlayerInput[], canvas: HTMLCanvasElement): void {
+  init(boardSrc: JsonBoard, playerNames: PlayerInput[], canvas: HTMLCanvasElement): void {
     this.turnIndex = 0;
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
@@ -65,7 +67,12 @@ class Game {
       return false;
     });
 
+    GameEvents.trigger(GAME_START);
+  }
+
+  startGame(next: Function) {
     GameEvents.trigger(TURN_START);
+    next();
   }
 
   startTurn(next: Function): void {
@@ -230,6 +237,7 @@ class Game {
       name: this.currentPlayer.name, 
       effects: this.currentPlayer.effects,
       ...(currentZone && { zoneName: currentZone.name }),
+      custom: this.currentPlayer.custom,
     };
     playerStatusEl.setAttribute('data', JSON.stringify(args, jsonReplacer));
 

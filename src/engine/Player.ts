@@ -28,10 +28,12 @@ class Player {
   moveQueue: Position[];
   currentTileIndex: number;
   effects: PlayerEffects;
+  custom: Object; // For use by any custom game logic
   
   constructor(input: PlayerInput) {
     this.name = input.name;
     this.color = hexToRgb(input.color);
+    this.custom = {};
     this.effects = {
       extraTurns: 0,
       skippedTurns: 0,

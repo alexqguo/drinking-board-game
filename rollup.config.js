@@ -3,7 +3,7 @@ import resolve from 'rollup-plugin-node-resolve';
 import { terser } from "rollup-plugin-terser";
 import copy from 'rollup-plugin-copy'
 
-const plugins = [
+const basePlugins = [
   typescript(),
   resolve(),
   terser(), // enable this just for production build once we get to that point
@@ -18,7 +18,7 @@ export default [
     format: 'umd',
     name: 'drinking',
   },
-  plugins,
+  plugins: basePlugins,
   watch: {
     exclude: ['node_modules/**']
   }
@@ -31,7 +31,7 @@ export default [
     file: 'public/comp.js',
     format: 'iife'
   },
-  plugins,
+  plugins: basePlugins,
   watch: {
     exclude: ['node_modules/**']
   }
@@ -44,9 +44,10 @@ export default [
   output: {
     file: 'public/pokemon-gen1/index.js',
     format: 'umd',
+    name: 'pokemon-gen1',
   },
   plugins: [
-    ...plugins,
+    ...basePlugins,
     copy({
       targets: [
         { src: 'games/pokemon-gen1/index.png', dest: 'public/pokemon-gen1' },

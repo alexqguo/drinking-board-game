@@ -11,6 +11,16 @@ export class PlayerStatus extends LitElement {
     return this;
   }
 
+  renderCustomProperties() {
+    if (!this.data.custom || Object.keys(this.data.custom).length === 0) return null;
+
+    return html`
+      ${Object.keys(this.data.custom).map((key: string) => {
+        return html`<li class="label success">${key}: ${(this.data.custom as any)[key]}</li>`
+      })}
+    `;
+  }
+
   render() {
     if (!this.data) return null;
     const {
@@ -30,6 +40,7 @@ export class PlayerStatus extends LitElement {
         ${!!moveCondition ? html`<li class="label success">Move condition</li>` : null}
         ${mandatorySkips > 0 ? html`<li class="label success">Skip next mandatory space</li>` : null}
         ${this.data.zoneName ? html`<li class="label success">Zone: ${this.data.zoneName}</li>` : null}
+        ${this.data.custom ? this.renderCustomProperties() : null}
       </ul>
     `;
   }
