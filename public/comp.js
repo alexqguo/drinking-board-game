@@ -11,11 +11,11 @@
       <h4>${this.data.name}</h4>
       <ul class="player-status">
         ${t?M`<li class="label success">Extra turn</li>`:null}
-        ${e?M`<li class="label success">Missed turn</li>`:null}
-        ${s[0]?M`<li class="label success">Speed modifier: ${s[0]}</li>`:null}
-        ${i?M`<li class="label success">Move condition</li>`:null}
         ${n>0?M`<li class="label success">Skip next mandatory space</li>`:null}
-        ${this.data.zoneName?M`<li class="label success">Zone: ${this.data.zoneName}</li>`:null}
+        ${s[0]?M`<li class="label success">Speed modifier: ${s[0]}</li>`:null}
+        ${e?M`<li class="label error">Missed turn</li>`:null}
+        ${i?M`<li class="label warning">Move condition</li>`:null}
+        ${this.data.zoneName?M`<li class="label info">Zone: ${this.data.zoneName}</li>`:null}
         ${this.data.custom?this.renderCustomProperties():null}
       </ul>
     `}};t([rt({type:Object})],ht.prototype,"data",void 0),ht=t([st("player-status")],ht);let dt=class extends lt{createRenderRoot(){return this}render(){return M`
