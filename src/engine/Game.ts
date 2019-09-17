@@ -9,6 +9,7 @@ import GameEvents, {
   LOST_TURN_START, GAME_START
 } from './GameEvents';
 import Tile from './Tile';
+import { DiceRoll } from '../components/DiceRoll';
 
 class Game {
   static instance: Game;
@@ -18,6 +19,7 @@ class Game {
   currentPlayer: Player;
   turnIndex: number;
   diceLink: HTMLElement;
+  freeRollDiceLink: DiceRoll;
   modal: Modal;
   canvas: HTMLCanvasElement;
   ctx: CanvasRenderingContext2D;
@@ -51,6 +53,7 @@ class Game {
     this.board = new Board(boardSrc, this.players);
     this.players = playerNames.map((p: PlayerInput) => new Player(p));
     this.diceLink = document.querySelector('#overlay dice-roll');
+    this.freeRollDiceLink = document.querySelector('#overlay .free-roll');
     this.modal = new Modal();
     this.painter = new Painter(this.canvas, this.ctx);
 
@@ -82,6 +85,7 @@ class Game {
     this.currentPlayer = this.playerTurns.shift();
     this.updatePlayerStatusElement();
     const canMove = this.currentPlayer.canTakeTurn();
+    this.freeRollDiceLink.reset();
     
     window.scrollTo({
       top: this.currentPlayer.currentPos.y - (window.outerHeight / 2),
