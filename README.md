@@ -25,7 +25,7 @@ This is a generalized engine for playing drinking board games online.
 * DiceRollRule with prompts for rules that require you to roll a die, though not necessarily take actions from it
 * enforce name uniqueness
 
-### M1
+### M1 (✅ 9/16/2019)
 * Stencil! Refactor all the modal crap ...or LitElement since Stencil won't integrate as easily
 * expand indicator in top left
   * queue of who rolled what in the corner
