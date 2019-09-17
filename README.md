@@ -2,17 +2,19 @@
 
 This is a generalized engine for playing drinking board games online. It is accessible for the time being at https://drink.alexguo.co.
 
-----
+There are two main components to this project, the *engine* and the *game*. The engine (basically everything in the `src` directory) is what's in charge of running the app and managing the players, turns and events. The game (see the `games` sub-directories) provides the board image, some metadata about the game, and any custom game logic which applies only to a particular game (like trainer battles in the Pokemon drinking board games). They are meant to live completely separately, and may eventually be moved into a separate repo. This allows the engine to be reused as multiple games are added. To add a new game, it is essentially as simple as just creating a new folder for it and adding the required metadata (along with ensuring the engine supports all required rule types). 
+
+This project utilizes Typescript, Canvas, Rollup and LitElement among other things. 
+
 ## usage
+For development:
 * Git pull
 * `npm i`
 * `npm start`
 
-----
 ## support
 This app has been tested on Chrome/FF latest versions. It "works" on the latest mobile devices.
 
-----
 ## milestones
 
 ### MVP (✅ 8/15/2019)
@@ -43,6 +45,8 @@ This app has been tested on Chrome/FF latest versions. It "works" on the latest 
 * Consider better organization of events
 * Clean up typescript in the custom game code
 * Enable or disable dice roll resetting based on a prop
+* Add description to home page
+* Make things a bit prettier
 
 ### M2
 * track game state, store in localstorage in case someone closes the screen
