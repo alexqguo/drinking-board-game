@@ -166,7 +166,6 @@ class Game {
     //   numSpacesToAdvance = 4;
     //   (window as any).asdf = true;
     // }
-    numSpacesToAdvance = 1;
 
     if (numSpacesToAdvance > 0) {
       // Consider fixing this naming. This doesn't actually move anything in the UI
