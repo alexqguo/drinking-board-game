@@ -11,6 +11,9 @@ export class DiceRoll extends LitElement {
   @property({ type: String })
   rollText = 'Roll';
 
+  @property({ type: Boolean })
+  canReset = false;
+
   // Opting out of shadow dom in order to inherit CSS for the time being
   createRenderRoot() {
     return this;
@@ -27,7 +30,7 @@ export class DiceRoll extends LitElement {
   }
 
   reset() {
-    this.result = '';
+    if (this.canReset) this.result = '';
   }
 
   renderReset() {

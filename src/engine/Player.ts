@@ -52,8 +52,15 @@ class Player {
     return true;
   }
 
+  removeFromCurrentTile() {
+    if (typeof this.currentTileIndex === 'number') {
+      Game.board.tiles[this.currentTileIndex].currentPlayers.delete(this);
+    }
+  }
+
   moveToTile(tileIndex: number) {
     this.moveQueue = [];
+    this.removeFromCurrentTile();
 
     // TODO: need to handle moving backwards? For now just do this
     for (let i = this.currentTileIndex + 1; i <= tileIndex; i++) {
@@ -61,11 +68,16 @@ class Player {
     }
     
     this.currentTileIndex = tileIndex;
+    Game.board.tiles[tileIndex].currentPlayers.add(this);
   }
 
   teleportToTile(tileIndex: number) {
+    this.removeFromCurrentTile();
+
     this.currentTileIndex = tileIndex;
     this.currentPos = Game.board.tiles[tileIndex].generateCenterPosition();
+
+    Game.board.tiles[tileIndex].currentPlayers.add(this);
   }
 }
 

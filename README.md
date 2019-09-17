@@ -42,6 +42,7 @@ This is a generalized engine for playing drinking board games online.
 * Clean up other todos
 * Consider better organization of events
 * Clean up typescript in the custom game code
+* Enable or disable dice roll resetting based on a prop
 
 ### M2
 * track game state, store in localstorage in case someone closes the screen

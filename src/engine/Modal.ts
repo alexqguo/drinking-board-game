@@ -35,9 +35,16 @@ export class Modal {
     this.trigger.checked = true;
   }
 
+  clearContent(): void {
+    while (this.content.firstChild) {
+      this.content.removeChild(this.content.firstChild);
+    }
+  }
+
   // This is what should be used going forward
   openWithFragment(headerText: string, frag: DocumentFragment): void {
     this.header.innerText = headerText;
+    this.clearContent();
     this.content.appendChild(frag);
     this.trigger.checked = true;
   }
