@@ -1,16 +1,16 @@
 # Drinking board game
 
-This project is not ready yet.
-
-----
-## what is this?
-This is a generalized engine for playing drinking board games online. 
+This is a generalized engine for playing drinking board games online. It is accessible for the time being at https://drink.alexguo.co.
 
 ----
 ## usage
 * Git pull
 * `npm i`
 * `npm start`
+
+----
+## support
+This app has been tested on Chrome/FF latest versions. It "works" on the latest mobile devices.
 
 ----
 ## milestones
