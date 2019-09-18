@@ -68,3 +68,23 @@ This app has been tested on Chrome/FF latest versions. It "works" on the latest 
 ### M5
 * can add/remove players mid game. when adding can put them somewhere custom?
 * mobile friendly
+
+## other boards
+* [Alternate gen 1](https://i.imgur.com/l8CK6ru.jpg)
+  * [custom] "Trainer" battles vs "Player" battles
+  * [custom] "Blacking out" sends you to the previous gym
+  * [engine] Pewter gym requires checking the number you rolled
+  * [engine] Viridian forest zone is basically a move condition with a bit extra
+  * [engine] Gengar changes how Saffron gym works
+  * [engine?] Fighting dojo
+  * [engine] Nidofamily, re-rolling a player's roll
+* [Gen 2](https://i.imgur.com/lkzZxfm.png)
+  * [engine] Togepi
+  * [custom] Steal player's starter
+  * [engine] Ilex forest
+  * [engine] Goldenrod gym probably supported
+  * [engine] Goldenrod game center probably mostly supported
+  * [engine] Snubble should be fairly easy
+  * [engine] Mantine, reversing turn order. Probably not a big deal
+  * [engine] Spinarak
+  * [engine] Dugtrio adds 3 to next roll. It's a todo anyway
