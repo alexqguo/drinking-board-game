@@ -1,1 +1,922 @@
-!function(e,t){"object"==typeof exports&&"undefined"!=typeof module?t(exports):"function"==typeof define&&define.amd?define(["exports"],t):t((e=e||self).drinking={})}(this,function(e){"use strict";class t{constructor(e,t,r,s){this.isMandatory=e,this.rule=t,this.coordinates=r,this.zone=s,this.currentPlayers=new Set}generateCenterPosition(){const e=this.coordinates.reduce((e,t)=>({x:e.x+t.x,y:e.y+t.y}),{x:0,y:0});return e.x/=this.coordinates.length,e.y/=this.coordinates.length,e}}class r{constructor(e,t,r){this.name=e,this.type=t,this.rule=r}}var s,n,i;!function(e){e.forward="forward",e.back="back"}(s||(s={})),function(e){e.passive="passive",e.active="active"}(n||(n={})),function(e){e.custom="custom",e.self="self",e.allOthers="allOthers"}(i||(i={}));const l="GAME_START",o="TURN_START",c="LOST_TURN_START",a="ROLL_START",u="ROLL_END",d="MOVE_START",h="MOVE_END",m="RULE_TRIGGER",p="RULE_END",y="TURN_END",f=[l,o,a,u,d,h,m,p,y,"GAME_OVER","TURN_SKIP",c];class g{constructor(){return g.instance||(g.instance=this),this.eventHandlerMap=new Map,f.forEach(e=>{this.eventHandlerMap.set(e,[])}),g.instance}on(e,t){this.validateEvent(e),this.eventHandlerMap.get(e).unshift(t)}trigger(e,t){this.validateEvent(e);const r=this.eventHandlerMap.get(e);if(!r.length)return;let s=0;const n=()=>{r[++s]&&i()},i=()=>{let e=[n];t&&t.length&&(e=e.concat(t)),r[s].apply(null,e)};i()}validateEvent(e){if(!this.eventHandlerMap.has(e))throw new Error(`${e} is not a valid event`)}}const T=new g;var x=Object.freeze({GAME_START:l,TURN_START:o,LOST_TURN_START:c,ROLL_START:a,ROLL_END:u,MOVE_START:d,MOVE_END:h,RULE_TRIGGER:m,RULE_END:p,TURN_END:y,GAME_OVER:"GAME_OVER",TURN_SKIP:"TURN_SKIP",default:T});class R{constructor(e){const{displayText:t,type:r,playerTarget:s,criteria:n}=e;this.validateRequired(r),this.type=r,this.displayText=t,this.playerTarget=s,this.criteria=n}execute(e=this.end){D.modal.show(this.displayText),D.modal.disableClose(),D.modal.whenClosed(e)}end(){T.trigger(p)}selectPlayers(){const e=[];return new Promise(t=>{switch(this.playerTarget){case i.allOthers:e.push(...D.getInactivePlayers()),t(e);break;case i.custom:D.modal.requirePlayerSelection(D.getInactivePlayers()).then(e=>{t(e)});break;default:e.push(D.currentPlayer),t(e)}})}validateRequired(...e){if(e.filter(e=>null==e||""===e).length)throw new Error("TODO - alert missing fields for whatever class this is")}}const v={MoveRule:class extends R{constructor(e){super(e);const{playerTarget:t,direction:r,numSpaces:s}=e;this.validateRequired(t,r,s),this.direction=r,this.numSpaces=s}execute(e){super.execute(e),this.selectPlayers().then(e=>{const t=e[0],r=Math.max(0,t.currentTileIndex+this.numSpaces);t.teleportToTile(r),D.painter.drawPlayers(),D.modal.close()})}},DisplayRule:class extends R{constructor(e){super(e),this.validateRequired(e.displayText)}execute(e){super.execute(e),D.modal.enableClose()}},TeleportRule:class extends R{constructor(e){super(e);const{tileIndex:t}=e;this.validateRequired(t),this.tileIndex=t}execute(e){super.execute(e),D.currentPlayer.teleportToTile(this.tileIndex),D.painter.drawPlayers(),D.modal.enableClose()}},SkipTurnRule:class extends R{constructor(e){super(e);const{numTurns:t}=e;this.validateRequired(t),this.numTurns=t}execute(e){super.execute(e),D.currentPlayer.effects.skippedTurns+=this.numTurns,D.modal.enableClose()}},SpeedModifierRule:class extends R{constructor(e){super(e);const{multiplier:t,numTurns:r}=e;this.validateRequired(t,r),this.multiplier=t,this.numTurns=r}execute(e){super.execute(e),this.selectPlayers().then(e=>{e.forEach(e=>{e.effects.speedModifiers=[];for(let t=0;t<this.numTurns;t++)e.effects.speedModifiers.push(this.multiplier)}),D.modal.enableClose()})}},GameOverRule:class extends R{constructor(e){super(e)}execute(){super.execute(),D.gameOver(),D.modal.enableClose()}},ExtraTurnRule:class extends R{constructor(e){super(e)}execute(e){super.execute(e),D.currentPlayer.effects.extraTurns++,D.modal.enableClose()}},DrinkDuringLostTurnsRule:class extends R{constructor(e){super(e),this.diceRolls=e.diceRolls}execute(e){super.execute(e),D.modal.requireDiceRolls(this.diceRolls.numRequired,e=>{D.currentPlayer.effects.skippedTurns+=e[0],D.modal.enableClose()})}},ApplyMoveConditionRule:class extends R{constructor(e){super(e);const{condition:t}=e;this.validateRequired(t),this.successes=new Map,this.condition=t}execute(e){super.execute(e),this.selectPlayers().then(e=>{e.forEach(e=>{this.successes.set(e,0);const t=t=>{if(-1===this.condition.criteria.indexOf(t))return this.condition.numSuccessesRequired||(e.effects.moveCondition=null,this.successes.delete(e)),!1;const r=this.successes.get(e);return this.successes.set(e,r+1),(!this.condition.numSuccessesRequired||this.successes.get(e)>=this.condition.numSuccessesRequired)&&(e.effects.moveCondition=null,this.successes.delete(e),!0)};e.effects.moveCondition=t,this.condition.immediate&&D.modal.requireDiceRolls(1,e=>{t(e[0])})}),this.playerTarget===i.custom?D.modal.close():D.modal.enableClose()})}},DiceRollRule:class extends R{constructor(e){super(e),this.diceRolls=e.diceRolls,this.outcomeRules=[],this.diceRolls.outcomes&&this.diceRolls.outcomes.length&&this.diceRolls.outcomes.forEach(e=>{this.outcomeRules.push(P(e))}),this.diceRolls.any&&(this.any=P(this.diceRolls.any))}getOutcomeForRolls(e){let t=null;if(!this.outcomeRules&&!this.any)return null;if(this.any)for(let t=0;t<e.length;t++)if(-1!==this.any.criteria.indexOf(e[t]))return this.any;return e.forEach(e=>{this.outcomeRules.forEach(r=>{r.criteria&&r.criteria.length&&-1!==r.criteria.indexOf(e)&&(t=r)})}),t}execute(e){super.execute(e),D.modal.requireDiceRolls(this.diceRolls.numRequired,t=>{const r=this.getOutcomeForRolls(t);r?r.execute(e):D.modal.enableClose()})}},RollUntilRule:class extends R{constructor(e){super(e),this.validateRequired(e.displayText)}execute(e){super.execute(e);const t=()=>{D.modal.requireDiceRolls(1,e=>{-1!==this.criteria.indexOf(e[0])?D.modal.enableClose():t()})};t()}},ChoiceRule:class extends R{constructor(e){super(e);const{choices:t,diceRolls:r}=e;this.validateRequired(t),this.choiceRules=[],this.diceRolls=r,t&&t.length&&t.forEach(e=>{this.choiceRules.push(P(e))})}execute(e){super.execute(e),this.diceRolls&&D.modal.requireDiceRolls(this.diceRolls.numRequired,()=>{}),D.modal.requireChoice(this.choiceRules).then(e=>{e?e.execute():D.modal.enableClose()})}},SkipNextMandatoryRule:class extends R{constructor(e){super(e),this.validateRequired(e.numSpaces),this.numSpaces=e.numSpaces}execute(e){super.execute(e),D.currentPlayer.effects.mandatorySkips=this.numSpaces,D.modal.enableClose()}},ChallengeRule:class extends R{constructor(e){super(e),this.playerTarget=i.custom}execute(e){super.execute(e),this.selectPlayers().then(e=>{const t=[e[0],D.currentPlayer];D.modal.requirePlayerSelection(t,"Who won?").then(e=>{const r=e[0];t.find(e=>e!==r).effects.skippedTurns++,r.effects.extraTurns++,D.modal.close()})})}}};function P(e){const{type:t}=e;if(!v.hasOwnProperty(t))throw"Invalid rule type specified";return new v[t](e)}class E{constructor(e,s){this.imgSrc=e.imgSrc,this.tiles=e.tiles.map(e=>{const{mandatory:r,rule:s,position:n,zone:i}=e;if(!s)throw"No rule specified";return new t(r,P(s),n,i)}),this.zones=e.zones.map(e=>new r(e.name,e.type,P(e.rule))),this.players=s}}const b=30,w=20,C=12;class S{constructor(e){this.name=e.name,this.color=function(e){e=e.replace(/^#?([a-f\d])([a-f\d])([a-f\d])$/i,function(e,t,r,s){return t+t+r+r+s+s});var t=/^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(e);return t?{r:parseInt(t[1],16),g:parseInt(t[2],16),b:parseInt(t[3],16)}:null}(e.color),this.custom={},this.effects={extraTurns:0,skippedTurns:0,speedModifiers:[],mandatorySkips:0,moveCondition:null}}canTakeTurn(){return!(this.effects.skippedTurns>0)||(this.effects.skippedTurns--,!1)}removeFromCurrentTile(){"number"==typeof this.currentTileIndex&&D.board.tiles[this.currentTileIndex].currentPlayers.delete(this)}moveToTile(e){this.moveQueue=[],this.removeFromCurrentTile();for(let t=this.currentTileIndex+1;t<=e;t++)this.moveQueue.push(D.board.tiles[t].generateCenterPosition());this.currentTileIndex=e,D.board.tiles[e].currentPlayers.add(this)}teleportToTile(e){this.removeFromCurrentTile(),this.currentTileIndex=e,this.currentPos=D.board.tiles[e].generateCenterPosition(),D.board.tiles[e].currentPlayers.add(this)}}class k{constructor(e,t){this.canvas=e,this.ctx=t,T.on(d,this.draw.bind(this))}draw(){this.drawPlayers();const e=D.currentPlayer.currentPos.x,t=D.currentPlayer.currentPos.y,r=D.currentPlayer.moveQueue[0].x-e,s=D.currentPlayer.moveQueue[0].y-t,n=Math.sqrt(r*r+s*s);if(Math.abs(r)<C&&Math.abs(s)<C){if(D.currentPlayer.moveQueue.shift(),!D.currentPlayer.moveQueue.length)return window.cancelAnimationFrame(this.raf),void T.trigger(h);if(0===n)return void this.draw()}const i=r/n*C,l=s/n*C;D.currentPlayer.currentPos.x+=i,D.currentPlayer.currentPos.y+=l,window.scrollBy(i,l),this.raf=window.requestAnimationFrame(this.draw.bind(this))}drawPlayers(){this.ctx.clearRect(0,0,this.canvas.width,this.canvas.height),this.ctx.font=`${w}px "Open Sans"`;for(let e=0;e<D.players.length;e++){const t=D.players[e];this.ctx.fillStyle=`rgba(${t.color.r}, ${t.color.g}, ${t.color.b}, 0.7)`,this.ctx.beginPath(),this.ctx.arc(t.currentPos.x,t.currentPos.y,b,0,2*Math.PI,!0),this.ctx.closePath(),this.ctx.fill(),this.ctx.fillStyle="gray",this.ctx.fillText(t.name[0].toUpperCase(),t.currentPos.x-6,t.currentPos.y+6)}}}class I{constructor(){this.triggerId="game-modal",this.trigger=document.querySelector(`#${this.triggerId}`),this.controls=Array.from(document.querySelectorAll('label[for="game-modal"]')),this.header=document.querySelector(".modal h3"),this.content=document.querySelector(".modal .content"),this.trigger.addEventListener("change",e=>{if(!1===this.trigger.checked&&this.closeCb){const e=this.closeCb;this.closeCb=null,e()}})}show(e){this.header.innerText=D.currentPlayer.name,this.content.innerText=e,this.trigger.checked=!0}clearContent(){for(;this.content.firstChild;)this.content.removeChild(this.content.firstChild)}openWithFragment(e,t){this.header.innerText=e,this.clearContent(),this.content.appendChild(t),this.trigger.checked=!0}close(){this.enableClose(),this.trigger.checked=!1,this.trigger.dispatchEvent(new Event("change"))}disableClose(){this.controls.forEach(e=>{e.setAttribute("for",`${this.triggerId}__DISABLED`)})}enableClose(){this.controls.forEach(e=>{e.setAttribute("for",this.triggerId)})}requireDiceRolls(e,t){const r=[],s=document.createDocumentFragment();for(let t=0;t<e;t++)s.appendChild(document.createElement("dice-roll"));this.content.appendChild(s),Array.from(this.content.querySelectorAll("dice-roll")).forEach(s=>{s.addEventListener("roll",s=>{r.push(s.detail.roll),r.length===e&&setTimeout(()=>{t(r)},1e3)})})}requirePlayerSelection(e,t="Choose a player"){if(!e||0===e.length)return Promise.resolve([]);const r=this.addLinks(t,e.map(e=>e.name));return new Promise(t=>{Array.from(r).forEach(r=>{r.addEventListener("click",r=>{r.preventDefault();const s=e.find(e=>e.name===r.currentTarget.dataset.name);return t([s]),!1})})})}requireChoice(e){if(!e||0===e.length)return Promise.resolve(null);const t=this.addLinks("Choose an outcome",e.map(e=>e.displayText));return new Promise(r=>{Array.from(t).forEach(t=>{t.addEventListener("click",t=>{t.preventDefault();const s=e.find(e=>e.displayText===t.currentTarget.dataset.name);return r(s),!1})})})}addLinks(e,t){const r=[],s=document.createDocumentFragment(),n=document.createElement("h4");return n.innerText=e,s.appendChild(n),t.forEach(e=>{const t=document.createElement("a");t.classList.add("sm"),t.href="#",t.innerText=e,t.dataset.name=e,s.appendChild(t),s.appendChild(document.createTextNode("  ")),r.push(t)}),this.content.appendChild(s),r}whenClosed(e){this.closeCb=e}}class q{constructor(){return q.instance||(q.instance=this),T.on(l,this.startGame.bind(this)),T.on(c,this.startLostTurn.bind(this)),T.on(o,this.startTurn.bind(this)),T.on(y,this.endTurn.bind(this)),T.on(a,this.enableDiceRoll.bind(this)),T.on(u,this.endDiceRoll.bind(this)),T.on(h,this.endMovement.bind(this)),T.on(m,this.triggerRule.bind(this)),T.on(p,this.endRule.bind(this)),T.on(h,this.updatePlayerStatusElement.bind(this)),T.on(m,this.updatePlayerStatusElement.bind(this)),q.instance}init(e,t,r){this.turnIndex=0,this.canvas=r,this.ctx=r.getContext("2d"),this.board=new E(e,this.players),this.players=t.map(e=>new S(e)),this.diceLink=document.querySelector("#overlay dice-roll"),this.freeRollDiceLink=document.querySelector("#overlay .free-roll"),this.modal=new I,this.painter=new k(this.canvas,this.ctx),this.players.forEach(e=>e.teleportToTile(0)),this.playerTurns=[...this.players],this.painter.drawPlayers(),this.handleDiceRoll=this.handleDiceRoll.bind(this),document.querySelector("#skip a").addEventListener("click",e=>(e.preventDefault(),this.diceLink.removeEventListener("roll",this.handleDiceRoll),T.trigger(y),!1)),T.trigger(l)}startGame(e){T.trigger(o),e()}startTurn(e){this.playerTurns.length||(this.playerTurns=[...this.players]),this.currentPlayer=this.playerTurns.shift(),this.updatePlayerStatusElement();const t=this.currentPlayer.canTakeTurn();if(this.freeRollDiceLink.reset(),window.scrollTo({top:this.currentPlayer.currentPos.y-window.outerHeight/2,left:this.currentPlayer.currentPos.x-window.outerWidth/2,behavior:"smooth"}),t){const e=this.getCurrentZone();e&&e.type===n.active?e.rule.execute(()=>{T.trigger(this.currentPlayer.canTakeTurn()?a:y)}):T.trigger(a)}else T.trigger(c)}startLostTurn(){setTimeout(()=>{T.trigger(y)},2e3)}enableDiceRoll(e){this.diceLink.reset(),this.diceLink.addEventListener("roll",this.handleDiceRoll),e()}handleDiceRoll(e){const t=e.detail.roll;T.trigger(u,[t]),this.diceLink.removeEventListener("roll",this.handleDiceRoll)}endDiceRoll(e,t){if(this.currentPlayer.effects.moveCondition){if(!this.currentPlayer.effects.moveCondition(t))return setTimeout(()=>{T.trigger(y)},2e3),void e()}if(this.currentPlayer.effects.speedModifiers.length){const e=this.currentPlayer.effects.speedModifiers.shift();t=Math.ceil(e*t)}let r=this.board.tiles.slice(this.currentPlayer.currentTileIndex+1,this.currentPlayer.currentTileIndex+1+t).findIndex(e=>e.isMandatory);this.currentPlayer.effects.mandatorySkips>0&&-1!==r&&(this.currentPlayer.effects.mandatorySkips--,r=-1);let s=-1===r?t:r+1;s>0&&(this.currentPlayer.moveToTile(this.currentPlayer.currentTileIndex+s),T.trigger(d)),e()}endMovement(e){T.trigger(m),e()}triggerRule(e){this.board.tiles[this.currentPlayer.currentTileIndex].rule.execute(),e()}endRule(e){e(),T.trigger(y)}endTurn(e){this.turnIndex++,this.currentPlayer.effects.extraTurns>0&&(this.currentPlayer.effects.extraTurns--,this.playerTurns.unshift(this.currentPlayer)),T.trigger(o),e()}gameOver(){alert(`Game over!\n\n Winner: ${this.currentPlayer.name}`)}getInactivePlayers(){return this.players.filter(e=>e!==this.currentPlayer)}getCurrentZone(){const e=this.board.tiles[this.currentPlayer.currentTileIndex];return e.zone?this.board.zones.find(t=>t.name===e.zone):null}updatePlayerStatusElement(e=(()=>{})){const t=this.getCurrentZone(),r=document.querySelector("#overlay player-status"),s=Object.assign({name:this.currentPlayer.name,effects:this.currentPlayer.effects},t&&{zoneName:t.name},{custom:this.currentPlayer.custom});r.setAttribute("data",JSON.stringify(s,(e,t)=>"function"==typeof t||t)),e()}}const D=new q;function L(e,t){return new Promise(r=>{const s=new Image;s.src=e,s.addEventListener("load",()=>{t.width=s.width,t.height=s.height,t.style.background=`url(${e})`,t.style.backgroundSize="100% 100%",r()})})}function M(e){return new Promise(t=>{const r=document.createElement("script");r.setAttribute("src",e),document.body.appendChild(r),r.addEventListener("load",()=>{t()})})}document.getElementById("add-player").addEventListener("click",e=>{e.preventDefault();const t=document.createDocumentFragment(),r=document.createElement("player-input");return t.appendChild(r),document.getElementById("player-input").appendChild(t),!1}),document.getElementById("setup").addEventListener("submit",e=>{e.preventDefault();const t=function(){const e=[],t=document.getElementById("game").value,r=Array.from(document.querySelectorAll('#player-input input[type="text"]')).filter(e=>!!e.value).map(e=>e.value),s=Array.from(document.querySelectorAll('#player-input input[type="color"]')).filter(e=>!!e.value).map(e=>e.value);return r.forEach((t,r)=>{const n=s[r]||"#000000";e.push({name:t,color:n})}),[t,e]}();if(!t[1].length||t[1].length<2)return void alert("You need at least two players to play this game");const r=t[1].map(e=>e.name);new Set(r).size<t[1].length?alert("Player names must be unique"):(!function(e,t){const r=document.getElementById("canvas"),s=`${e}/index.png`,n=`${e}/index.json`,i=`${e}/index.js`;var l;Promise.all([(l=n,new Promise(e=>{fetch(l).then(e=>e.json()).then(t=>e(t))})),L(s,r),M(i)]).then(e=>{D.init(e[0],t,r)}).catch(e=>console.error(e))}(t[0],t[1]),document.getElementById("setup").style.display="none",document.getElementById("overlay").style.display="block")}),e.Game=D,e.GameEvents=T,e.events=x,Object.defineProperty(e,"__esModule",{value:!0})});
+(function(g,f){typeof exports==='object'&&typeof module!=='undefined'?f(exports):typeof define==='function'&&define.amd?define(['exports'],f):(g=g||self,f(g.drinking={}));}(this,function(exports){'use strict';class Tile {
+    constructor(isMandatory, rule, coordinates, zone) {
+        this.isMandatory = isMandatory;
+        this.rule = rule;
+        this.coordinates = coordinates;
+        this.zone = zone;
+        this.currentPlayers = new Set();
+    }
+    generateCenterPosition() {
+        const total = this.coordinates.reduce((prev, cur) => {
+            return { x: prev.x + cur.x, y: prev.y + cur.y };
+        }, { x: 0, y: 0 });
+        total.x /= this.coordinates.length;
+        total.y /= this.coordinates.length;
+        return total;
+    }
+}class Zone {
+    constructor(name, type, rule) {
+        this.name = name;
+        this.type = type;
+        this.rule = rule;
+    }
+}var Direction;
+(function (Direction) {
+    Direction["forward"] = "forward";
+    Direction["back"] = "back";
+})(Direction || (Direction = {}));
+var ZoneType;
+(function (ZoneType) {
+    ZoneType["passive"] = "passive";
+    ZoneType["active"] = "active";
+})(ZoneType || (ZoneType = {}));
+var PlayerTarget;
+(function (PlayerTarget) {
+    PlayerTarget["custom"] = "custom";
+    PlayerTarget["self"] = "self";
+    PlayerTarget["allOthers"] = "allOthers";
+})(PlayerTarget || (PlayerTarget = {}));const GAME_START = 'GAME_START';
+const TURN_START = 'TURN_START';
+const LOST_TURN_START = 'LOST_TURN_START';
+const ROLL_START = 'ROLL_START';
+const ROLL_END = 'ROLL_END';
+const MOVE_START = 'MOVE_START';
+const MOVE_END = 'MOVE_END';
+const RULE_TRIGGER = 'RULE_TRIGGER';
+const RULE_END = 'RULE_END';
+const TURN_END = 'TURN_END';
+const GAME_OVER = 'GAME_OVER';
+const TURN_SKIP = 'TURN_SKIP';
+const ALL_EVENTS = [GAME_START, TURN_START, ROLL_START, ROLL_END, MOVE_START, MOVE_END, RULE_TRIGGER, RULE_END,
+    TURN_END, GAME_OVER, TURN_SKIP, LOST_TURN_START,
+];
+class GameEvents {
+    constructor() {
+        if (!GameEvents.instance) {
+            GameEvents.instance = this;
+        }
+        this.eventHandlerMap = new Map();
+        ALL_EVENTS.forEach((event) => {
+            this.eventHandlerMap.set(event, []);
+        });
+        return GameEvents.instance;
+    }
+    on(eventName, callback) {
+        this.validateEvent(eventName);
+        this.eventHandlerMap.get(eventName).unshift(callback);
+    }
+    trigger(eventName, eventValues) {
+        this.validateEvent(eventName);
+        const eventFunctions = this.eventHandlerMap.get(eventName);
+        if (!eventFunctions.length)
+            return;
+        let functionIdx = 0;
+        const next = () => {
+            if (eventFunctions[++functionIdx]) {
+                invokeEventFunction();
+            }
+        };
+        const invokeEventFunction = () => {
+            let args = [next];
+            if (eventValues && eventValues.length) {
+                args = args.concat(eventValues);
+            }
+            eventFunctions[functionIdx].apply(null, args);
+        };
+        invokeEventFunction();
+    }
+    validateEvent(eventName) {
+        if (!this.eventHandlerMap.has(eventName)) {
+            throw new Error(`${eventName} is not a valid event`);
+        }
+    }
+}
+const gameEventsInstance = new GameEvents();var GameEvents$1 = /*#__PURE__*/Object.freeze({GAME_START: GAME_START,TURN_START: TURN_START,LOST_TURN_START: LOST_TURN_START,ROLL_START: ROLL_START,ROLL_END: ROLL_END,MOVE_START: MOVE_START,MOVE_END: MOVE_END,RULE_TRIGGER: RULE_TRIGGER,RULE_END: RULE_END,TURN_END: TURN_END,GAME_OVER: GAME_OVER,TURN_SKIP: TURN_SKIP,'default': gameEventsInstance});class Rule {
+    constructor(json) {
+        const { displayText, type, playerTarget, criteria } = json;
+        this.validateRequired(type);
+        this.type = type;
+        this.displayText = displayText;
+        this.playerTarget = playerTarget;
+        this.criteria = criteria;
+    }
+    execute(closedCb = this.end) {
+        gameInstance.modal.show(this.displayText);
+        gameInstance.modal.disableClose();
+        gameInstance.modal.whenClosed(closedCb);
+    }
+    ;
+    end() {
+        gameEventsInstance.trigger(RULE_END);
+    }
+    selectPlayers() {
+        const targetPlayers = [];
+        return new Promise((resolve) => {
+            switch (this.playerTarget) {
+                case PlayerTarget.allOthers:
+                    targetPlayers.push(...gameInstance.getInactivePlayers());
+                    resolve(targetPlayers);
+                    break;
+                case PlayerTarget.custom:
+                    gameInstance.modal.requirePlayerSelection(gameInstance.getInactivePlayers())
+                        .then((playerList) => {
+                        resolve(playerList);
+                    });
+                    break;
+                default:
+                    targetPlayers.push(gameInstance.currentPlayer);
+                    resolve(targetPlayers);
+            }
+        });
+    }
+    validateRequired(...args) {
+        const errors = args
+            .filter(arg => typeof arg === 'undefined' || arg === null || arg === '');
+        if (errors.length) {
+            throw new Error('TODO - alert missing fields for whatever class this is');
+        }
+    }
+}class DisplayRule extends Rule {
+    constructor(json) {
+        super(json);
+        this.validateRequired(json.displayText);
+    }
+    execute(closedCb) {
+        super.execute(closedCb);
+        gameInstance.modal.enableClose();
+    }
+}class MoveRule extends Rule {
+    constructor(json) {
+        super(json);
+        const { playerTarget, direction, numSpaces } = json;
+        this.validateRequired(playerTarget, direction, numSpaces);
+        this.direction = direction;
+        this.numSpaces = numSpaces;
+    }
+    execute(closedCb) {
+        super.execute(closedCb);
+        this.selectPlayers()
+            .then((value) => {
+            const targetPlayer = value[0];
+            const targetTileIndex = Math.max(0, targetPlayer.currentTileIndex + this.numSpaces);
+            targetPlayer.teleportToTile(targetTileIndex);
+            gameInstance.painter.drawPlayers();
+            gameInstance.modal.close();
+        });
+    }
+}class SkipTurnRule extends Rule {
+    constructor(json) {
+        super(json);
+        const { numTurns } = json;
+        this.validateRequired(numTurns);
+        this.numTurns = numTurns;
+    }
+    execute(closedCb) {
+        super.execute(closedCb);
+        gameInstance.currentPlayer.effects.skippedTurns += this.numTurns;
+        gameInstance.modal.enableClose();
+    }
+}class SpeedModifierRule extends Rule {
+    constructor(json) {
+        super(json);
+        const { multiplier, numTurns } = json;
+        this.validateRequired(multiplier, numTurns);
+        this.multiplier = multiplier;
+        this.numTurns = numTurns;
+    }
+    execute(closedCb) {
+        super.execute(closedCb);
+        this.selectPlayers()
+            .then((value) => {
+            value.forEach((p) => {
+                p.effects.speedModifiers = [];
+                for (let i = 0; i < this.numTurns; i++) {
+                    p.effects.speedModifiers.push(this.multiplier);
+                }
+            });
+            gameInstance.modal.enableClose();
+        });
+    }
+}class TeleportRule extends Rule {
+    constructor(json) {
+        super(json);
+        const { tileIndex } = json;
+        this.validateRequired(tileIndex);
+        this.tileIndex = tileIndex;
+    }
+    execute(closedCb) {
+        super.execute(closedCb);
+        gameInstance.currentPlayer.teleportToTile(this.tileIndex);
+        gameInstance.painter.drawPlayers();
+        gameInstance.modal.enableClose();
+    }
+}class GameOverRule extends Rule {
+    constructor(json) {
+        super(json);
+    }
+    execute() {
+        super.execute();
+        gameInstance.gameOver();
+        gameInstance.modal.enableClose();
+    }
+}class ExtraTurnRule extends Rule {
+    constructor(json) {
+        super(json);
+    }
+    execute(closedCb) {
+        super.execute(closedCb);
+        gameInstance.currentPlayer.effects.extraTurns++;
+        gameInstance.modal.enableClose();
+    }
+}class DrinkDuringLostTurnsRule extends Rule {
+    constructor(json) {
+        super(json);
+        this.diceRolls = json.diceRolls;
+    }
+    execute(closedCb) {
+        super.execute(closedCb);
+        gameInstance.modal.requireDiceRolls(this.diceRolls.numRequired, (rolls) => {
+            gameInstance.currentPlayer.effects.skippedTurns += rolls[0];
+            gameInstance.modal.enableClose();
+        });
+    }
+}class ApplyMoveConditionRule extends Rule {
+    constructor(json) {
+        super(json);
+        const { condition } = json;
+        this.validateRequired(condition);
+        this.successes = new Map();
+        this.condition = condition;
+    }
+    execute(closedCb) {
+        super.execute(closedCb);
+        this.selectPlayers()
+            .then((value) => {
+            value.forEach((p) => {
+                this.successes.set(p, 0);
+                const canPlayerMove = (roll) => {
+                    if (this.condition.criteria.indexOf(roll) === -1) {
+                        if (!this.condition.numSuccessesRequired) {
+                            p.effects.moveCondition = null;
+                            this.successes.delete(p);
+                        }
+                        return false;
+                    }
+                    const currentSuccesses = this.successes.get(p);
+                    this.successes.set(p, currentSuccesses + 1);
+                    if (!this.condition.numSuccessesRequired ||
+                        this.successes.get(p) >= this.condition.numSuccessesRequired) {
+                        p.effects.moveCondition = null;
+                        this.successes.delete(p);
+                        return true;
+                    }
+                    return false;
+                };
+                p.effects.moveCondition = canPlayerMove;
+                if (this.condition.immediate) {
+                    gameInstance.modal.requireDiceRolls(1, (rolls) => {
+                        canPlayerMove(rolls[0]);
+                    });
+                }
+            });
+            if (this.playerTarget === PlayerTarget.custom) {
+                gameInstance.modal.close();
+            }
+            else {
+                gameInstance.modal.enableClose();
+            }
+        });
+    }
+}class DiceRollRule extends Rule {
+    constructor(json) {
+        super(json);
+        this.diceRolls = json.diceRolls;
+        this.outcomeRules = [];
+        if (this.diceRolls.outcomes && this.diceRolls.outcomes.length) {
+            this.diceRolls.outcomes.forEach((rule) => {
+                this.outcomeRules.push(createRule(rule));
+            });
+        }
+        if (this.diceRolls.any) {
+            this.any = createRule(this.diceRolls.any);
+        }
+    }
+    getOutcomeForRolls(rolls) {
+        let outcomeRule = null;
+        if (!this.outcomeRules && !this.any)
+            return null;
+        if (this.any) {
+            for (let i = 0; i < rolls.length; i++) {
+                if (this.any.criteria.indexOf(rolls[i]) !== -1) {
+                    return this.any;
+                }
+            }
+        }
+        rolls.forEach((roll) => {
+            this.outcomeRules.forEach((rule) => {
+                if (rule.criteria && rule.criteria.length && rule.criteria.indexOf(roll) !== -1) {
+                    outcomeRule = rule;
+                }
+            });
+        });
+        return outcomeRule;
+    }
+    execute(closedCb) {
+        super.execute(closedCb);
+        gameInstance.modal.requireDiceRolls(this.diceRolls.numRequired, (rolls) => {
+            const outcomeRule = this.getOutcomeForRolls(rolls);
+            if (outcomeRule) {
+                outcomeRule.execute(closedCb);
+            }
+            else {
+                gameInstance.modal.enableClose();
+            }
+        });
+    }
+}class RollUntilRule extends Rule {
+    constructor(json) {
+        super(json);
+        this.validateRequired(json.displayText);
+    }
+    execute(closedCb) {
+        super.execute(closedCb);
+        const rollUntilFn = () => {
+            gameInstance.modal.requireDiceRolls(1, (rolls) => {
+                if (this.criteria.indexOf(rolls[0]) !== -1) {
+                    gameInstance.modal.enableClose();
+                }
+                else {
+                    rollUntilFn();
+                }
+            });
+        };
+        rollUntilFn();
+    }
+}class ChoiceRule extends Rule {
+    constructor(json) {
+        super(json);
+        const { choices, diceRolls } = json;
+        this.validateRequired(choices);
+        this.choiceRules = [];
+        this.diceRolls = diceRolls;
+        if (choices && choices.length) {
+            choices.forEach((rule) => {
+                this.choiceRules.push(createRule(rule));
+            });
+        }
+    }
+    execute(closedCb) {
+        super.execute(closedCb);
+        if (this.diceRolls) {
+            gameInstance.modal.requireDiceRolls(this.diceRolls.numRequired, () => { });
+        }
+        gameInstance.modal.requireChoice(this.choiceRules)
+            .then((value) => {
+            if (!value) {
+                gameInstance.modal.enableClose();
+                return;
+            }
+            value.execute();
+        });
+    }
+}class SkipNextMandatoryRule extends Rule {
+    constructor(json) {
+        super(json);
+        this.validateRequired(json.numSpaces);
+        this.numSpaces = json.numSpaces;
+    }
+    execute(closedCb) {
+        super.execute(closedCb);
+        gameInstance.currentPlayer.effects.mandatorySkips = this.numSpaces;
+        gameInstance.modal.enableClose();
+    }
+}class ChallengeRule extends Rule {
+    constructor(json) {
+        super(json);
+        this.playerTarget = PlayerTarget.custom;
+    }
+    execute(closedCb) {
+        super.execute(closedCb);
+        this.selectPlayers()
+            .then((value) => {
+            const challengers = [value[0], gameInstance.currentPlayer];
+            gameInstance.modal.requirePlayerSelection(challengers, 'Who won?')
+                .then((value) => {
+                const winningPlayer = value[0];
+                const losingPlayer = challengers.find((p) => p !== winningPlayer);
+                losingPlayer.effects.skippedTurns++;
+                winningPlayer.effects.extraTurns++;
+                gameInstance.modal.close();
+            });
+        });
+    }
+}const RULE_MAPPINGS = {
+    MoveRule,
+    DisplayRule,
+    TeleportRule,
+    SkipTurnRule,
+    SpeedModifierRule,
+    GameOverRule,
+    ExtraTurnRule,
+    DrinkDuringLostTurnsRule,
+    ApplyMoveConditionRule,
+    DiceRollRule,
+    RollUntilRule,
+    ChoiceRule,
+    SkipNextMandatoryRule,
+    ChallengeRule,
+};
+function createTiles(tilesJson) {
+    return tilesJson.map((tileJson) => {
+        const { mandatory, rule, position, zone } = tileJson;
+        if (!rule) {
+            throw 'No rule specified';
+        }
+        return new Tile(mandatory, createRule(rule), position, zone);
+    });
+}
+function createRule(ruleJson) {
+    const { type } = ruleJson;
+    if (!RULE_MAPPINGS.hasOwnProperty(type)) {
+        throw `Invalid rule type specified: ${type}`;
+    }
+    return new RULE_MAPPINGS[type](ruleJson);
+}
+function createZones(zonesJson) {
+    return zonesJson.map((zoneJson) => {
+        return new Zone(zoneJson.name, zoneJson.type, createRule(zoneJson.rule));
+    });
+}class Board {
+    constructor(json, players) {
+        this.imgSrc = json.imgSrc;
+        this.tiles = createTiles(json.tiles);
+        this.zones = createZones(json.zones);
+        this.players = players;
+    }
+}const RADIUS = 30;
+const FONT_SIZE = 20;
+const VELO = 12;
+function hexToRgb(hex) {
+    var shorthandRegex = /^#?([a-f\d])([a-f\d])([a-f\d])$/i;
+    hex = hex.replace(shorthandRegex, function (m, r, g, b) {
+        return r + r + g + g + b + b;
+    });
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+    return result ? {
+        r: parseInt(result[1], 16),
+        g: parseInt(result[2], 16),
+        b: parseInt(result[3], 16)
+    } : null;
+}
+class Player {
+    constructor(input) {
+        this.name = input.name;
+        this.color = hexToRgb(input.color);
+        this.custom = {};
+        this.effects = {
+            extraTurns: 0,
+            skippedTurns: 0,
+            speedModifiers: [],
+            mandatorySkips: 0,
+            moveCondition: null,
+        };
+    }
+    canTakeTurn() {
+        if (this.effects.skippedTurns > 0) {
+            this.effects.skippedTurns--;
+            return false;
+        }
+        return true;
+    }
+    removeFromCurrentTile() {
+        if (typeof this.currentTileIndex === 'number') {
+            gameInstance.board.tiles[this.currentTileIndex].currentPlayers.delete(this);
+        }
+    }
+    moveToTile(tileIndex) {
+        this.moveQueue = [];
+        this.removeFromCurrentTile();
+        for (let i = this.currentTileIndex + 1; i <= tileIndex; i++) {
+            this.moveQueue.push(gameInstance.board.tiles[i].generateCenterPosition());
+        }
+        this.currentTileIndex = tileIndex;
+        gameInstance.board.tiles[tileIndex].currentPlayers.add(this);
+    }
+    teleportToTile(tileIndex) {
+        this.removeFromCurrentTile();
+        this.currentTileIndex = tileIndex;
+        this.currentPos = gameInstance.board.tiles[tileIndex].generateCenterPosition();
+        gameInstance.board.tiles[tileIndex].currentPlayers.add(this);
+    }
+}class Painter {
+    constructor(canvas, ctx) {
+        this.canvas = canvas;
+        this.ctx = ctx;
+        gameEventsInstance.on(MOVE_START, this.draw.bind(this));
+    }
+    draw() {
+        this.drawPlayers();
+        const x1 = gameInstance.currentPlayer.currentPos.x;
+        const y1 = gameInstance.currentPlayer.currentPos.y;
+        const x2 = gameInstance.currentPlayer.moveQueue[0].x;
+        const y2 = gameInstance.currentPlayer.moveQueue[0].y;
+        const dx = x2 - x1;
+        const dy = y2 - y1;
+        const totalDistance = Math.sqrt(dx * dx + dy * dy);
+        if (Math.abs(dx) < VELO && Math.abs(dy) < VELO) {
+            gameInstance.currentPlayer.moveQueue.shift();
+            if (!gameInstance.currentPlayer.moveQueue.length) {
+                window.cancelAnimationFrame(this.raf);
+                gameEventsInstance.trigger(MOVE_END);
+                return;
+            }
+            else if (totalDistance === 0) {
+                this.draw();
+                return;
+            }
+        }
+        const incrementX = (dx / totalDistance) * VELO;
+        const incrementY = (dy / totalDistance) * VELO;
+        gameInstance.currentPlayer.currentPos.x += incrementX;
+        gameInstance.currentPlayer.currentPos.y += incrementY;
+        window.scrollBy(incrementX, incrementY);
+        this.raf = window.requestAnimationFrame(this.draw.bind(this));
+    }
+    drawPlayers() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.ctx.font = `${FONT_SIZE}px "Open Sans"`;
+        for (let i = 0; i < gameInstance.players.length; i++) {
+            const player = gameInstance.players[i];
+            this.ctx.fillStyle = `rgba(${player.color.r}, ${player.color.g}, ${player.color.b}, 0.7)`;
+            this.ctx.beginPath();
+            this.ctx.arc(player.currentPos.x, player.currentPos.y, RADIUS, 0, Math.PI * 2, true);
+            this.ctx.closePath();
+            this.ctx.fill();
+            this.ctx.fillStyle = 'gray';
+            this.ctx.fillText(player.name[0].toUpperCase(), player.currentPos.x - 6, player.currentPos.y + 6);
+        }
+    }
+}class Modal {
+    constructor() {
+        this.triggerId = 'game-modal';
+        this.trigger = document.querySelector(`#${this.triggerId}`);
+        this.controls = Array.from(document.querySelectorAll('label[for="game-modal"]'));
+        this.header = document.querySelector('.modal h3');
+        this.content = document.querySelector('.modal .content');
+        this.trigger.addEventListener('change', (e) => {
+            if (this.trigger.checked === false && this.closeCb) {
+                const cb = this.closeCb;
+                this.closeCb = null;
+                cb();
+            }
+        });
+    }
+    show(displayText) {
+        this.header.innerText = gameInstance.currentPlayer.name;
+        this.content.innerText = displayText;
+        this.trigger.checked = true;
+    }
+    clearContent() {
+        while (this.content.firstChild) {
+            this.content.removeChild(this.content.firstChild);
+        }
+    }
+    openWithFragment(headerText, frag) {
+        this.header.innerText = headerText;
+        this.clearContent();
+        this.content.appendChild(frag);
+        this.trigger.checked = true;
+    }
+    close() {
+        this.enableClose();
+        this.trigger.checked = false;
+        this.trigger.dispatchEvent(new Event('change'));
+    }
+    disableClose() {
+        this.controls.forEach((control) => {
+            control.setAttribute('for', `${this.triggerId}__DISABLED`);
+        });
+    }
+    enableClose() {
+        this.controls.forEach((control) => {
+            control.setAttribute('for', this.triggerId);
+        });
+    }
+    requireDiceRolls(n, cb) {
+        const rolls = [];
+        const frag = document.createDocumentFragment();
+        for (let i = 0; i < n; i++) {
+            frag.appendChild(document.createElement('dice-roll'));
+        }
+        this.content.appendChild(frag);
+        Array.from(this.content.querySelectorAll('dice-roll')).forEach((el) => {
+            el.addEventListener('roll', (e) => {
+                rolls.push(e.detail.roll);
+                if (rolls.length === n) {
+                    setTimeout(() => { cb(rolls); }, 1000);
+                }
+            });
+        });
+    }
+    requirePlayerSelection(playerList, headerString = 'Choose a player') {
+        if (!playerList || playerList.length === 0)
+            return Promise.resolve([]);
+        const links = this.addLinks(headerString, playerList.map(p => p.name));
+        return new Promise((resolve) => {
+            Array.from(links).forEach((el) => {
+                el.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const selectedPlayer = playerList.find((p) => {
+                        return p.name === e.currentTarget.dataset.name;
+                    });
+                    resolve([selectedPlayer]);
+                    return false;
+                });
+            });
+        });
+    }
+    requireChoice(rules) {
+        if (!rules || rules.length === 0)
+            return Promise.resolve(null);
+        const links = this.addLinks('Choose an outcome', rules.map(r => r.displayText));
+        return new Promise((resolve) => {
+            Array.from(links).forEach((el) => {
+                el.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const selectedRule = rules.find((r) => {
+                        return r.displayText === e.currentTarget.dataset.name;
+                    });
+                    resolve(selectedRule);
+                    return false;
+                });
+            });
+        });
+    }
+    addLinks(headerText, descriptions) {
+        const links = [];
+        const frag = document.createDocumentFragment();
+        const header = document.createElement('h4');
+        header.innerText = headerText;
+        frag.appendChild(header);
+        descriptions.forEach((desc) => {
+            const playerLink = document.createElement('a');
+            playerLink.classList.add('sm');
+            playerLink.href = '#';
+            playerLink.innerText = desc;
+            playerLink.dataset.name = desc;
+            frag.appendChild(playerLink);
+            frag.appendChild(document.createTextNode('\u00A0\u00A0'));
+            links.push(playerLink);
+        });
+        this.content.appendChild(frag);
+        return links;
+    }
+    whenClosed(cb) {
+        this.closeCb = cb;
+    }
+}class Game {
+    constructor() {
+        if (!Game.instance) {
+            Game.instance = this;
+        }
+        gameEventsInstance.on(GAME_START, this.startGame.bind(this));
+        gameEventsInstance.on(LOST_TURN_START, this.startLostTurn.bind(this));
+        gameEventsInstance.on(TURN_START, this.startTurn.bind(this));
+        gameEventsInstance.on(TURN_END, this.endTurn.bind(this));
+        gameEventsInstance.on(ROLL_START, this.enableDiceRoll.bind(this));
+        gameEventsInstance.on(ROLL_END, this.endDiceRoll.bind(this));
+        gameEventsInstance.on(MOVE_END, this.endMovement.bind(this));
+        gameEventsInstance.on(RULE_TRIGGER, this.triggerRule.bind(this));
+        gameEventsInstance.on(RULE_END, this.endRule.bind(this));
+        gameEventsInstance.on(MOVE_END, this.updatePlayerStatusElement.bind(this));
+        gameEventsInstance.on(RULE_TRIGGER, this.updatePlayerStatusElement.bind(this));
+        return Game.instance;
+    }
+    init(boardSrc, playerNames, canvas) {
+        this.turnIndex = 0;
+        this.canvas = canvas;
+        this.ctx = canvas.getContext('2d');
+        this.board = new Board(boardSrc, this.players);
+        this.players = playerNames.map((p) => new Player(p));
+        this.diceLink = document.querySelector('#overlay dice-roll');
+        this.freeRollDiceLink = document.querySelector('#overlay .free-roll');
+        this.modal = new Modal();
+        this.painter = new Painter(this.canvas, this.ctx);
+        this.players.forEach((p) => p.teleportToTile(0));
+        this.playerTurns = [...this.players];
+        this.painter.drawPlayers();
+        this.handleDiceRoll = this.handleDiceRoll.bind(this);
+        document.querySelector('#skip a').addEventListener('click', (e) => {
+            e.preventDefault();
+            this.diceLink.removeEventListener('roll', this.handleDiceRoll);
+            gameEventsInstance.trigger(TURN_END);
+            return false;
+        });
+        gameEventsInstance.trigger(GAME_START);
+    }
+    startGame(next) {
+        gameEventsInstance.trigger(TURN_START);
+        next();
+    }
+    startTurn(next) {
+        if (!this.playerTurns.length)
+            this.playerTurns = [...this.players];
+        this.currentPlayer = this.playerTurns.shift();
+        this.updatePlayerStatusElement();
+        const canMove = this.currentPlayer.canTakeTurn();
+        this.freeRollDiceLink.reset();
+        window.scrollTo({
+            top: this.currentPlayer.currentPos.y - (window.outerHeight / 2),
+            left: this.currentPlayer.currentPos.x - (window.outerWidth / 2),
+            behavior: 'smooth'
+        });
+        if (canMove) {
+            const currentZone = this.getCurrentZone();
+            if (currentZone && currentZone.type === ZoneType.active) {
+                currentZone.rule.execute(() => {
+                    gameEventsInstance.trigger(this.currentPlayer.canTakeTurn() ? ROLL_START : TURN_END);
+                });
+            }
+            else {
+                gameEventsInstance.trigger(ROLL_START);
+            }
+        }
+        else {
+            gameEventsInstance.trigger(LOST_TURN_START);
+        }
+    }
+    startLostTurn() {
+        setTimeout(() => {
+            gameEventsInstance.trigger(TURN_END);
+        }, 2000);
+    }
+    enableDiceRoll(next) {
+        this.diceLink.reset();
+        this.diceLink.addEventListener('roll', this.handleDiceRoll);
+        next();
+    }
+    handleDiceRoll(e) {
+        const roll = e.detail.roll;
+        gameEventsInstance.trigger(ROLL_END, [roll]);
+        this.diceLink.removeEventListener('roll', this.handleDiceRoll);
+    }
+    endDiceRoll(next, roll) {
+        if (this.currentPlayer.effects.moveCondition) {
+            const canMove = this.currentPlayer.effects.moveCondition(roll);
+            if (!canMove) {
+                setTimeout(() => {
+                    gameEventsInstance.trigger(TURN_END);
+                }, 2000);
+                next();
+                return;
+            }
+        }
+        if (this.currentPlayer.effects.speedModifiers.length) {
+            const modifier = this.currentPlayer.effects.speedModifiers.shift();
+            roll = Math.ceil(modifier * roll);
+        }
+        let firstMandatoryIndex = this.board.tiles
+            .slice(this.currentPlayer.currentTileIndex + 1, this.currentPlayer.currentTileIndex + 1 + roll)
+            .findIndex((tile) => {
+            return tile.isMandatory;
+        });
+        if (this.currentPlayer.effects.mandatorySkips > 0 && firstMandatoryIndex !== -1) {
+            this.currentPlayer.effects.mandatorySkips--;
+            firstMandatoryIndex = -1;
+        }
+        let numSpacesToAdvance = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
+        if (numSpacesToAdvance > 0) {
+            this.currentPlayer.moveToTile(this.currentPlayer.currentTileIndex + numSpacesToAdvance);
+            gameEventsInstance.trigger(MOVE_START);
+        }
+        next();
+    }
+    endMovement(next) {
+        gameEventsInstance.trigger(RULE_TRIGGER);
+        next();
+    }
+    triggerRule(next) {
+        const currentTile = this.board.tiles[this.currentPlayer.currentTileIndex];
+        const currentRule = currentTile.rule;
+        currentRule.execute();
+        next();
+    }
+    endRule(next) {
+        next();
+        gameEventsInstance.trigger(TURN_END);
+    }
+    endTurn(next) {
+        this.turnIndex++;
+        if (this.currentPlayer.effects.extraTurns > 0) {
+            this.currentPlayer.effects.extraTurns--;
+            this.playerTurns.unshift(this.currentPlayer);
+        }
+        gameEventsInstance.trigger(TURN_START);
+        next();
+    }
+    gameOver() {
+        alert(`Game over!\n\n Winner: ${this.currentPlayer.name}`);
+    }
+    getInactivePlayers() {
+        return this.players.filter((p) => {
+            return p !== this.currentPlayer;
+        });
+    }
+    getCurrentZone() {
+        const currentTile = this.board.tiles[this.currentPlayer.currentTileIndex];
+        if (currentTile.zone) {
+            return this.board.zones.find((zone) => zone.name === currentTile.zone);
+        }
+        return null;
+    }
+    updatePlayerStatusElement(next = () => { }) {
+        const jsonReplacer = (key, value) => {
+            return (typeof value === 'function' ? true : value);
+        };
+        const currentZone = this.getCurrentZone();
+        const playerStatusEl = document.querySelector('#overlay player-status');
+        const args = Object.assign({ name: this.currentPlayer.name, effects: this.currentPlayer.effects }, (currentZone && { zoneName: currentZone.name }), { custom: this.currentPlayer.custom });
+        playerStatusEl.setAttribute('data', JSON.stringify(args, jsonReplacer));
+        next();
+    }
+}
+const gameInstance = new Game();function fetchImage(src, canvas) {
+    return new Promise(resolve => {
+        const img = new Image();
+        img.src = src;
+        img.addEventListener('load', () => {
+            canvas.width = img.width;
+            canvas.height = img.height;
+            canvas.style.background = `url(${src})`;
+            canvas.style.backgroundSize = '100% 100%';
+            resolve();
+        });
+    });
+}
+function fetchBoard(src) {
+    return new Promise(resolve => {
+        fetch(src)
+            .then(resp => resp.json())
+            .then(data => resolve(data));
+    });
+}
+function fetchScript(src) {
+    return new Promise(resolve => {
+        const tag = document.createElement('script');
+        tag.setAttribute('src', src);
+        document.body.appendChild(tag);
+        tag.addEventListener('load', () => {
+            resolve();
+        });
+    });
+}
+function getFormValues() {
+    const formData = [];
+    const boardPrefix = document.getElementById('game').value;
+    const players = Array.from(document.querySelectorAll('#player-input input[type="text"]'))
+        .filter((input) => !!input.value)
+        .map((input) => input.value);
+    const colors = Array.from(document.querySelectorAll('#player-input input[type="color"]'))
+        .filter((input) => !!input.value)
+        .map((input) => input.value);
+    players.forEach((name, idx) => {
+        const color = colors[idx] || '#000000';
+        formData.push({ name, color });
+    });
+    return [boardPrefix, formData];
+}
+function initGame(boardPrefix, players) {
+    const canvas = document.getElementById('canvas');
+    const imgSrc = `${boardPrefix}/index.png`;
+    const boardSrc = `${boardPrefix}/index.json`;
+    const scriptSrc = `${boardPrefix}/index.js`;
+    Promise.all([fetchBoard(boardSrc), fetchImage(imgSrc, canvas), fetchScript(scriptSrc)])
+        .then((values) => {
+        gameInstance.init(values[0], players, canvas);
+    })
+        .catch(err => console.error(err));
+}
+document.getElementById('add-player').addEventListener('click', (e) => {
+    e.preventDefault();
+    const frag = document.createDocumentFragment();
+    const input = document.createElement('player-input');
+    frag.appendChild(input);
+    document.getElementById('player-input').appendChild(frag);
+    return false;
+});
+document.getElementById('setup').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const gameSetupInfo = getFormValues();
+    if (!gameSetupInfo[1].length || gameSetupInfo[1].length < 2) {
+        alert('You need at least two players to play this game');
+        return;
+    }
+    const names = gameSetupInfo[1].map((val) => val.name);
+    if (new Set(names).size < gameSetupInfo[1].length) {
+        alert('Player names must be unique');
+        return;
+    }
+    initGame(gameSetupInfo[0], gameSetupInfo[1]);
+    document.getElementById('setup').style.display = 'none';
+    document.getElementById('overlay').style.display = 'block';
+});exports.Game=gameInstance;exports.GameEvents=gameEventsInstance;exports.events=GameEvents$1;Object.defineProperty(exports,'__esModule',{value:true});}));

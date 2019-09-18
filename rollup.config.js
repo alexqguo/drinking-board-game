@@ -6,56 +6,60 @@ import copy from 'rollup-plugin-copy'
 const basePlugins = [
   typescript(),
   resolve(),
-  terser(), // enable this just for production build once we get to that point
+  process.env.NODE_ENV !== 'development' ? terser() : undefined,
 ];
 
+const createCustomGameConfiguration = (prefix) => {
+  return {
+    input: `games/${prefix}/index.ts`,
+    output: {
+      file: `public/${prefix}/index.js`,
+      format: 'umd',
+      name: prefix,
+    },
+    plugins: [
+      ...basePlugins,
+      copy({
+        targets: [
+          { src: `games/${prefix}/index.png`, dest: `public/${prefix}` },
+          { src: `games/${prefix}/index.json`, dest: `public/${prefix}` }
+        ]
+      }),
+    ],
+    watch: {
+      exclude: ['node_modules/**']
+    }
+  };
+};
+
 export default [
-// Core app
-{
-  input: 'src/engine/App.ts',
-  output: {
-    file: 'public/dist.js',
-    format: 'umd',
-    name: 'drinking',
-  },
-  plugins: basePlugins,
-  watch: {
-    exclude: ['node_modules/**']
-  }
-}, 
+  // Core app
+  {
+    input: 'src/engine/App.ts',
+    output: {
+      file: 'public/dist.js',
+      format: 'umd',
+      name: 'drinking',
+    },
+    plugins: basePlugins,
+    watch: {
+      exclude: ['node_modules/**']
+    }
+  }, 
 
-// Web components
-{
-  input: 'src/components/index.ts',
-  output: {
-    file: 'public/comp.js',
-    format: 'iife'
+  // Web components
+  {
+    input: 'src/components/index.ts',
+    output: {
+      file: 'public/comp.js',
+      format: 'iife'
+    },
+    plugins: basePlugins,
+    watch: {
+      exclude: ['node_modules/**']
+    }
   },
-  plugins: basePlugins,
-  watch: {
-    exclude: ['node_modules/**']
-  }
-},
 
-// Extensions
-// TODO: loop this once we have more than 1
-{
-  input: 'games/pokemon-gen1/index.ts',
-  output: {
-    file: 'public/pokemon-gen1/index.js',
-    format: 'umd',
-    name: 'pokemon-gen1',
-  },
-  plugins: [
-    ...basePlugins,
-    copy({
-      targets: [
-        { src: 'games/pokemon-gen1/index.png', dest: 'public/pokemon-gen1' },
-        { src: 'games/pokemon-gen1/index.json', dest: 'public/pokemon-gen1' }
-      ]
-    }),
-  ],
-  watch: {
-    exclude: ['node_modules/**']
-  }
-}]
+  createCustomGameConfiguration('pokemon-gen1'),
+  createCustomGameConfiguration('pokemon-gen2'),
+];

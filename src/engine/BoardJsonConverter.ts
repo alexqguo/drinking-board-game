@@ -54,7 +54,7 @@ export function createRule(ruleJson: JsonRule): Rule {
   const { type } = ruleJson;
 
   if (!RULE_MAPPINGS.hasOwnProperty(type)) {
-    throw 'Invalid rule type specified';
+    throw `Invalid rule type specified: ${type}`;
   }
 
   return new RULE_MAPPINGS[type](ruleJson);

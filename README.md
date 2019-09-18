@@ -64,6 +64,7 @@ This app has been tested on Chrome/FF latest versions. It "works" on the latest 
 * alert players when they are supposed to drink
 * can designate drinks on screen
 * unit tests
+* some utility to create json easily
 
 ### M5
 * can add/remove players mid game. when adding can put them somewhere custom?

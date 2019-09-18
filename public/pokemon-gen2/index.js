@@ -1,0 +1,1 @@
+(function(f){typeof define==='function'&&define.amd?define(f):f();}(function(){'use strict';console.log('hello from gen2!');}));
