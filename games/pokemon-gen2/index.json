@@ -224,7 +224,7 @@
       "position": [{"x": 827,"y": 1764}, {"x": 1011,"y": 1764}, {"x": 1011,"y": 1952}, {"x": 827,"y": 1952}]
     }, {
       "rule": {
-        "displayText": "[[[TODO]]]Snubbull used Roar! Roll 2 dice and move backwards that many spaces.",
+        "displayText": "Snubbull used Roar! Roll 2 dice and move backwards that many spaces.",
         "type": "MoveRule",
         "direction": "back",
         "playerTarget": "self",
