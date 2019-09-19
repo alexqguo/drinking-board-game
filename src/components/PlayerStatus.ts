@@ -32,8 +32,6 @@ export class PlayerStatus extends LitElement {
       customMandatoryTiles,
     } = this.data.effects;
 
-
-    console.log(speedModifiers);
     return html`
       <h4>${this.data.name}</h4>
       <ul class="player-status">

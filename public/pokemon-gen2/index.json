@@ -225,7 +225,9 @@
     }, {
       "rule": {
         "displayText": "[[[TODO]]]Snubbull used Roar! Roll 2 dice and move backwards that many spaces.",
-        "type": "DiceRollRule",
+        "type": "MoveRule",
+        "direction": "back",
+        "playerTarget": "self",
         "diceRolls": {
           "numRequired": 2
         }
@@ -300,8 +302,10 @@
       "position": [{"x": 829,"y": 453}, {"x": 1013,"y": 453}, {"x": 1013,"y": 638}, {"x": 829,"y": 638}]
     }, {
       "rule": {
-        "displayText": "[[[TODO]]]Dugtrio used Dig! Drink 3 and next turn add 3 spaces to your move roll!",
-        "type": "DisplayRule"
+        "displayText": "Dugtrio used Dig! Drink 3 and next turn add 3 spaces to your move roll!",
+        "type": "SpeedModifierRule",
+        "modifier": ["+", 3],
+        "numTurns": 1
       },
       "zone": "MT. MORTAR",
       "position": [{"x": 1016,"y": 453}, {"x": 1200,"y": 453}, {"x": 1200,"y": 638}, {"x": 1016,"y": 638}]
@@ -321,8 +325,12 @@
       "position": [{"x": 1390,"y": 453}, {"x": 1574,"y": 453}, {"x": 1574,"y": 638}, {"x": 1390,"y": 638}]
     }, {
       "rule": {
-        "displayText": "[[[TODO]]]Zubats! They're back bitches! Next turn roll a die. If you roll odds, lose your turn and drink 1. You cannot leave until you roll evens.",
-        "type": "DisplayRule"
+        "displayText": "Zubats! They're back bitches! Next turn roll a die. If you roll odds, lose your turn and drink 1. You cannot leave until you roll evens.",
+        "type": "ApplyMoveConditionRule",
+        "condition": {
+          "criteria": [2, 4, 6],
+          "numSuccessesRequired": 1
+        }
       },
       "zone": "MT. MORTAR",
       "position": [{"x": 1577,"y": 453}, {"x": 1763,"y": 453}, {"x": 1763,"y": 638}, {"x": 1577,"y": 638}]

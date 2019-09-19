@@ -62,7 +62,8 @@ class ApplyMoveConditionRule extends Rule {
 
           p.effects.moveCondition = canPlayerMove;
 
-          // WIll fail with a custom player target as the modal will close immediately
+          // Will fail with a custom player target as the modal will close immediately
+          // Immediate means the condition takes effect the turn the player landed there
           if (this.condition.immediate) {
             Game.modal.requireDiceRolls(1, (rolls: number[]) => {
               canPlayerMove(rolls[0]);

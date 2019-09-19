@@ -59,8 +59,17 @@ abstract class Rule {
       .filter(arg => typeof arg === 'undefined' || arg === null || arg === '');
     
     if (errors.length) {
-      console.error(this);
       throw new Error('TODO - alert missing fields for whatever class this is');
+    }
+  }
+  
+  validateOneOf(...args: any[]): void {
+    const truthyValues = args.reduce((acc: number, cur: any) => {
+      return acc + (!!cur ? 1 : 0);
+    }, 0);
+
+    if (truthyValues < 1) {
+      throw new Error('At least one valid value is required');
     }
   }
 }

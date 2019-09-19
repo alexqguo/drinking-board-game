@@ -15,17 +15,13 @@
         total.y /= this.coordinates.length;
         return total;
     }
-}
-//# sourceMappingURL=Tile.js.map
-class Zone {
+}class Zone {
     constructor(name, type, rule) {
         this.name = name;
         this.type = type;
         this.rule = rule;
     }
-}
-//# sourceMappingURL=Zone.js.map
-var Direction;
+}var Direction;
 (function (Direction) {
     Direction["forward"] = "forward";
     Direction["back"] = "back";
@@ -45,9 +41,7 @@ var PlayerTarget;
     PlayerTarget["custom"] = "custom";
     PlayerTarget["self"] = "self";
     PlayerTarget["allOthers"] = "allOthers";
-})(PlayerTarget || (PlayerTarget = {}));
-//# sourceMappingURL=index.js.map
-const GAME_START = 'GAME_START';
+})(PlayerTarget || (PlayerTarget = {}));const GAME_START = 'GAME_START';
 const TURN_START = 'TURN_START';
 const LOST_TURN_START = 'LOST_TURN_START';
 const ROLL_START = 'ROLL_START';
@@ -103,9 +97,7 @@ class GameEvents {
         }
     }
 }
-const gameEventsInstance = new GameEvents();
-//# sourceMappingURL=GameEvents.js.map
-var GameEvents$1 = /*#__PURE__*/Object.freeze({GAME_START: GAME_START,TURN_START: TURN_START,LOST_TURN_START: LOST_TURN_START,ROLL_START: ROLL_START,ROLL_END: ROLL_END,MOVE_START: MOVE_START,MOVE_END: MOVE_END,RULE_TRIGGER: RULE_TRIGGER,RULE_END: RULE_END,TURN_END: TURN_END,GAME_OVER: GAME_OVER,TURN_SKIP: TURN_SKIP,'default': gameEventsInstance});class Rule {
+const gameEventsInstance = new GameEvents();var GameEvents$1 = /*#__PURE__*/Object.freeze({GAME_START: GAME_START,TURN_START: TURN_START,LOST_TURN_START: LOST_TURN_START,ROLL_START: ROLL_START,ROLL_END: ROLL_END,MOVE_START: MOVE_START,MOVE_END: MOVE_END,RULE_TRIGGER: RULE_TRIGGER,RULE_END: RULE_END,TURN_END: TURN_END,GAME_OVER: GAME_OVER,TURN_SKIP: TURN_SKIP,'default': gameEventsInstance});class Rule {
     constructor(json) {
         const { displayText, type, playerTarget, criteria } = json;
         this.validateRequired(type);
@@ -147,13 +139,18 @@ var GameEvents$1 = /*#__PURE__*/Object.freeze({GAME_START: GAME_START,TURN_START
         const errors = args
             .filter(arg => typeof arg === 'undefined' || arg === null || arg === '');
         if (errors.length) {
-            console.error(this);
             throw new Error('TODO - alert missing fields for whatever class this is');
         }
     }
-}
-//# sourceMappingURL=Rule.js.map
-class DisplayRule extends Rule {
+    validateOneOf(...args) {
+        const truthyValues = args.reduce((acc, cur) => {
+            return acc + (!!cur ? 1 : 0);
+        }, 0);
+        if (truthyValues < 1) {
+            throw new Error('At least one valid value is required');
+        }
+    }
+}class DisplayRule extends Rule {
     constructor(json) {
         super(json);
         this.validateRequired(json.displayText);
@@ -162,30 +159,42 @@ class DisplayRule extends Rule {
         super.execute(closedCb);
         gameInstance.modal.enableClose();
     }
-}
-//# sourceMappingURL=DisplayRule.js.map
-class MoveRule extends Rule {
+}class MoveRule extends Rule {
     constructor(json) {
         super(json);
-        const { playerTarget, direction, numSpaces } = json;
-        this.validateRequired(playerTarget, direction, numSpaces);
+        const { playerTarget, direction, numSpaces, diceRolls } = json;
+        this.validateRequired(playerTarget, direction);
+        this.validateOneOf(numSpaces, diceRolls);
         this.direction = direction;
         this.numSpaces = numSpaces;
+        this.diceRolls = diceRolls;
     }
     execute(closedCb) {
         super.execute(closedCb);
         this.selectPlayers()
             .then((value) => {
             const targetPlayer = value[0];
-            const targetTileIndex = Math.max(0, targetPlayer.currentTileIndex + this.numSpaces);
-            targetPlayer.teleportToTile(targetTileIndex);
-            gameInstance.painter.drawPlayers();
-            gameInstance.modal.close();
+            if (this.numSpaces) {
+                const targetTileIndex = Math.max(0, targetPlayer.currentTileIndex + this.numSpaces);
+                this.movePlayer(targetPlayer, targetTileIndex);
+            }
+            else if (this.diceRolls) {
+                gameInstance.modal.requireDiceRolls(this.diceRolls.numRequired, (rolls) => {
+                    let total = rolls.reduce((acc, cur) => acc + cur);
+                    if (this.direction === Direction.back)
+                        total *= -1;
+                    const targetTileIndex = Math.max(0, targetPlayer.currentTileIndex + total);
+                    this.movePlayer(targetPlayer, targetTileIndex);
+                });
+            }
         });
     }
-}
-//# sourceMappingURL=MoveRule.js.map
-class SkipTurnRule extends Rule {
+    movePlayer(targetPlayer, targetTileIndex) {
+        targetPlayer.teleportToTile(targetTileIndex);
+        gameInstance.painter.drawPlayers();
+        gameInstance.modal.close();
+    }
+}class SkipTurnRule extends Rule {
     constructor(json) {
         super(json);
         const { numTurns } = json;
@@ -197,9 +206,7 @@ class SkipTurnRule extends Rule {
         gameInstance.currentPlayer.effects.skippedTurns += this.numTurns;
         gameInstance.modal.enableClose();
     }
-}
-//# sourceMappingURL=SkipTurnRule.js.map
-class SpeedModifierRule extends Rule {
+}class SpeedModifierRule extends Rule {
     constructor(json) {
         super(json);
         const { modifier, numTurns } = json;
@@ -238,9 +245,7 @@ class SpeedModifierRule extends Rule {
                 throw `Operation ${operation} not supported.`;
         }
     }
-}
-//# sourceMappingURL=SpeedModifierRule.js.map
-class TeleportRule extends Rule {
+}class TeleportRule extends Rule {
     constructor(json) {
         super(json);
         const { tileIndex } = json;
@@ -253,9 +258,7 @@ class TeleportRule extends Rule {
         gameInstance.painter.drawPlayers();
         gameInstance.modal.enableClose();
     }
-}
-//# sourceMappingURL=TeleportRule.js.map
-class GameOverRule extends Rule {
+}class GameOverRule extends Rule {
     constructor(json) {
         super(json);
     }
@@ -264,9 +267,7 @@ class GameOverRule extends Rule {
         gameInstance.gameOver();
         gameInstance.modal.enableClose();
     }
-}
-//# sourceMappingURL=GameOverRule.js.map
-class ExtraTurnRule extends Rule {
+}class ExtraTurnRule extends Rule {
     constructor(json) {
         super(json);
     }
@@ -275,9 +276,7 @@ class ExtraTurnRule extends Rule {
         gameInstance.currentPlayer.effects.extraTurns++;
         gameInstance.modal.enableClose();
     }
-}
-//# sourceMappingURL=ExtraTurnRule.js.map
-class DrinkDuringLostTurnsRule extends Rule {
+}class DrinkDuringLostTurnsRule extends Rule {
     constructor(json) {
         super(json);
         this.diceRolls = json.diceRolls;
@@ -289,9 +288,7 @@ class DrinkDuringLostTurnsRule extends Rule {
             gameInstance.modal.enableClose();
         });
     }
-}
-//# sourceMappingURL=DrinkDuringLostTurnsRule.js.map
-class ApplyMoveConditionRule extends Rule {
+}class ApplyMoveConditionRule extends Rule {
     constructor(json) {
         super(json);
         const { condition } = json;
@@ -338,16 +335,12 @@ class ApplyMoveConditionRule extends Rule {
             }
         });
     }
-}
-//# sourceMappingURL=ApplyMoveConditionRule.js.map
-class Outcome {
+}class Outcome {
     constructor(rule, criteria) {
         this.rule = rule;
         this.criteria = criteria;
     }
-}
-//# sourceMappingURL=Outcome.js.map
-class DiceRollRule extends Rule {
+}class DiceRollRule extends Rule {
     constructor(json) {
         super(json);
         this.diceRolls = json.diceRolls;
@@ -393,9 +386,7 @@ class DiceRollRule extends Rule {
             }
         });
     }
-}
-//# sourceMappingURL=DiceRollRule.js.map
-class RollUntilRule extends Rule {
+}class RollUntilRule extends Rule {
     constructor(json) {
         super(json);
         this.validateRequired(json.displayText);
@@ -414,9 +405,7 @@ class RollUntilRule extends Rule {
         };
         rollUntilFn();
     }
-}
-//# sourceMappingURL=RollUntilRule.js.map
-class ChoiceRule extends Rule {
+}class ChoiceRule extends Rule {
     constructor(json) {
         super(json);
         const { choices, diceRolls } = json;
@@ -443,9 +432,7 @@ class ChoiceRule extends Rule {
             value.execute();
         });
     }
-}
-//# sourceMappingURL=ChoiceRule.js.map
-class SkipNextMandatoryRule extends Rule {
+}class SkipNextMandatoryRule extends Rule {
     constructor(json) {
         super(json);
         this.validateRequired(json.numSpaces);
@@ -456,9 +443,7 @@ class SkipNextMandatoryRule extends Rule {
         gameInstance.currentPlayer.effects.mandatorySkips = this.numSpaces;
         gameInstance.modal.enableClose();
     }
-}
-//# sourceMappingURL=SkipNextMandatoryRule.js.map
-class ChallengeRule extends Rule {
+}class ChallengeRule extends Rule {
     constructor(json) {
         super(json);
         this.playerTarget = PlayerTarget.custom;
@@ -478,9 +463,7 @@ class ChallengeRule extends Rule {
             });
         });
     }
-}
-//# sourceMappingURL=ChallengeRule.js.map
-class ApplyMandatoryRule extends Rule {
+}class ApplyMandatoryRule extends Rule {
     constructor(json) {
         super(json);
         this.validateRequired(json.tileIndex);
@@ -491,9 +474,7 @@ class ApplyMandatoryRule extends Rule {
         gameInstance.currentPlayer.effects.customMandatoryTiles.push(this.tileIndex);
         gameInstance.modal.enableClose();
     }
-}
-//# sourceMappingURL=AddMandatoryRule.js.map
-const RULE_MAPPINGS = {
+}const RULE_MAPPINGS = {
     MoveRule,
     DisplayRule,
     TeleportRule,
@@ -530,18 +511,14 @@ function createZones(zonesJson) {
     return zonesJson.map((zoneJson) => {
         return new Zone(zoneJson.name, zoneJson.type, createRule(zoneJson.rule));
     });
-}
-//# sourceMappingURL=BoardJsonConverter.js.map
-class Board {
+}class Board {
     constructor(json, players) {
         this.imgSrc = json.imgSrc;
         this.tiles = createTiles(json.tiles);
         this.zones = createZones(json.zones);
         this.players = players;
     }
-}
-//# sourceMappingURL=Board.js.map
-const RADIUS = 30;
+}const RADIUS = 30;
 const FONT_SIZE = 20;
 const VELO = 12;
 function hexToRgb(hex) {
@@ -597,9 +574,7 @@ class Player {
         this.currentPos = gameInstance.board.tiles[tileIndex].generateCenterPosition();
         gameInstance.board.tiles[tileIndex].currentPlayers.add(this);
     }
-}
-//# sourceMappingURL=Player.js.map
-class Painter {
+}class Painter {
     constructor(canvas, ctx) {
         this.canvas = canvas;
         this.ctx = ctx;
@@ -647,9 +622,7 @@ class Painter {
             this.ctx.fillText(player.name[0].toUpperCase(), player.currentPos.x - 6, player.currentPos.y + 6);
         }
     }
-}
-//# sourceMappingURL=Painter.js.map
-class Modal {
+}class Modal {
     constructor() {
         this.triggerId = 'game-modal';
         this.trigger = document.querySelector(`#${this.triggerId}`);
@@ -767,9 +740,7 @@ class Modal {
     whenClosed(cb) {
         this.closeCb = cb;
     }
-}
-//# sourceMappingURL=Modal.js.map
-class Game {
+}class Game {
     constructor() {
         if (!Game.instance) {
             Game.instance = this;
@@ -881,7 +852,7 @@ class Game {
         }
         let numSpacesToAdvance = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
         if (this.currentPlayer.name === 'asdf' && !window.asdf) {
-            numSpacesToAdvance = 3;
+            numSpacesToAdvance = 30;
             window.asdf = true;
         }
         if (numSpacesToAdvance > 0) {
@@ -1018,6 +989,4 @@ document.getElementById('setup').addEventListener('submit', (e) => {
     initGame(gameSetupInfo[0], gameSetupInfo[1]);
     document.getElementById('setup').style.display = 'none';
     document.getElementById('overlay').style.display = 'block';
-});
-//# sourceMappingURL=App.js.map
-exports.Game=gameInstance;exports.GameEvents=gameEventsInstance;exports.events=GameEvents$1;Object.defineProperty(exports,'__esModule',{value:true});}));
+});exports.Game=gameInstance;exports.GameEvents=gameEventsInstance;exports.events=GameEvents$1;Object.defineProperty(exports,'__esModule',{value:true});}));
