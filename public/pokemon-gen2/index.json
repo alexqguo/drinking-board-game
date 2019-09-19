@@ -145,18 +145,23 @@
     }, {
       "mandatory": true,
       "rule": {
-        "displayText": "[[[TODO]]]GOLDENROD GYM. Roll a die.\nEven: Attract; Lose a turn.\nOdd: Rollout; Roll a die until you get a 5 or 6, drink each time you don't.",
+        "displayText": "GOLDENROD GYM. Roll a die.\nEven: Attract; Lose a turn.\nOdd: Rollout; Roll a die until you get a 5 or 6, drink each time you don't.",
         "type": "DiceRollRule",
         "diceRolls": {
           "numRequired": 1,
           "outcomes": [{
-            "type": "SkipTurnRule",
-            "displayText": "Attract; Lose a turn.",
-            "numTurns": 1,
+            "rule": {
+              "type": "SkipTurnRule",
+              "displayText": "Attract; Lose a turn.",
+              "numTurns": 1
+            },
             "criteria": [2, 4, 6]
           }, {
-            "type": "RollUntilRule",
-            "displayText": "Rollout; Roll a die until you get a 5 or 6, drink each time you don't.",
+            "rule": {
+              "type": "RollUntilRule",
+              "displayText": "Rollout; Roll a die until you get a 5 or 6, drink each time you don't.",
+              "criteria": [5, 6]
+            },
             "criteria": [1, 3, 5]
           }]
         }
@@ -335,9 +340,11 @@
         "diceRolls": {
           "numRequired": 1,
           "outcomes": [{
-            "type": "SkipNextMandatoryRule",
-            "displayText": "Caught Suicune! Bypass the next gold square!",
-            "numSpaces": 1,
+            "rule": {
+              "type": "SkipNextMandatoryRule",
+              "displayText": "Caught Suicune! Bypass the next gold square!",
+              "numSpaces": 1
+            },
             "criteria": [3]
           }]
         }
@@ -419,9 +426,11 @@
         "diceRolls": {
           "numRequired": 1,
           "outcomes": [{
-            "type": "SkipNextMandatoryRule",
-            "displayText": "Caught Entei! Bypass the next gold square!",
-            "numSpaces": 1,
+            "rule": {
+              "type": "SkipNextMandatoryRule",
+              "displayText": "Caught Entei! Bypass the next gold square!",
+              "numSpaces": 1
+            },
             "criteria": [3]
           }]
         }
@@ -477,9 +486,11 @@
         "diceRolls": {
           "numRequired": 1,
           "outcomes": [{
-            "type": "SkipNextMandatoryRule",
-            "displayText": "Caught Raikou! Bypass the next gold square!",
-            "numSpaces": 1,
+            "rule": {
+              "type": "SkipNextMandatoryRule",
+              "displayText": "Caught Raikou! Bypass the next gold square!",
+              "numSpaces": 1
+            },
             "criteria": [3]
           }]
         }

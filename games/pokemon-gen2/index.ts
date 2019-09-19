@@ -11,7 +11,7 @@ const starterNames = {
 
 const w = window as any;
 
-if (w.drinking) {
+if (w.drinking && false) {
   const { Game, GameEvents, events } = w.drinking;
 
   GameEvents.on(events.GAME_START, (next: Function) => {

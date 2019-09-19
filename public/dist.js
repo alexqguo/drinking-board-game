@@ -15,13 +15,17 @@
         total.y /= this.coordinates.length;
         return total;
     }
-}class Zone {
+}
+//# sourceMappingURL=Tile.js.map
+class Zone {
     constructor(name, type, rule) {
         this.name = name;
         this.type = type;
         this.rule = rule;
     }
-}var Direction;
+}
+//# sourceMappingURL=Zone.js.map
+var Direction;
 (function (Direction) {
     Direction["forward"] = "forward";
     Direction["back"] = "back";
@@ -36,7 +40,9 @@ var PlayerTarget;
     PlayerTarget["custom"] = "custom";
     PlayerTarget["self"] = "self";
     PlayerTarget["allOthers"] = "allOthers";
-})(PlayerTarget || (PlayerTarget = {}));const GAME_START = 'GAME_START';
+})(PlayerTarget || (PlayerTarget = {}));
+//# sourceMappingURL=index.js.map
+const GAME_START = 'GAME_START';
 const TURN_START = 'TURN_START';
 const LOST_TURN_START = 'LOST_TURN_START';
 const ROLL_START = 'ROLL_START';
@@ -92,7 +98,9 @@ class GameEvents {
         }
     }
 }
-const gameEventsInstance = new GameEvents();var GameEvents$1 = /*#__PURE__*/Object.freeze({GAME_START: GAME_START,TURN_START: TURN_START,LOST_TURN_START: LOST_TURN_START,ROLL_START: ROLL_START,ROLL_END: ROLL_END,MOVE_START: MOVE_START,MOVE_END: MOVE_END,RULE_TRIGGER: RULE_TRIGGER,RULE_END: RULE_END,TURN_END: TURN_END,GAME_OVER: GAME_OVER,TURN_SKIP: TURN_SKIP,'default': gameEventsInstance});class Rule {
+const gameEventsInstance = new GameEvents();
+//# sourceMappingURL=GameEvents.js.map
+var GameEvents$1 = /*#__PURE__*/Object.freeze({GAME_START: GAME_START,TURN_START: TURN_START,LOST_TURN_START: LOST_TURN_START,ROLL_START: ROLL_START,ROLL_END: ROLL_END,MOVE_START: MOVE_START,MOVE_END: MOVE_END,RULE_TRIGGER: RULE_TRIGGER,RULE_END: RULE_END,TURN_END: TURN_END,GAME_OVER: GAME_OVER,TURN_SKIP: TURN_SKIP,'default': gameEventsInstance});class Rule {
     constructor(json) {
         const { displayText, type, playerTarget, criteria } = json;
         this.validateRequired(type);
@@ -138,7 +146,9 @@ const gameEventsInstance = new GameEvents();var GameEvents$1 = /*#__PURE__*/Obje
             throw new Error('TODO - alert missing fields for whatever class this is');
         }
     }
-}class DisplayRule extends Rule {
+}
+//# sourceMappingURL=Rule.js.map
+class DisplayRule extends Rule {
     constructor(json) {
         super(json);
         this.validateRequired(json.displayText);
@@ -147,7 +157,9 @@ const gameEventsInstance = new GameEvents();var GameEvents$1 = /*#__PURE__*/Obje
         super.execute(closedCb);
         gameInstance.modal.enableClose();
     }
-}class MoveRule extends Rule {
+}
+//# sourceMappingURL=DisplayRule.js.map
+class MoveRule extends Rule {
     constructor(json) {
         super(json);
         const { playerTarget, direction, numSpaces } = json;
@@ -166,7 +178,9 @@ const gameEventsInstance = new GameEvents();var GameEvents$1 = /*#__PURE__*/Obje
             gameInstance.modal.close();
         });
     }
-}class SkipTurnRule extends Rule {
+}
+//# sourceMappingURL=MoveRule.js.map
+class SkipTurnRule extends Rule {
     constructor(json) {
         super(json);
         const { numTurns } = json;
@@ -178,7 +192,9 @@ const gameEventsInstance = new GameEvents();var GameEvents$1 = /*#__PURE__*/Obje
         gameInstance.currentPlayer.effects.skippedTurns += this.numTurns;
         gameInstance.modal.enableClose();
     }
-}class SpeedModifierRule extends Rule {
+}
+//# sourceMappingURL=SkipTurnRule.js.map
+class SpeedModifierRule extends Rule {
     constructor(json) {
         super(json);
         const { multiplier, numTurns } = json;
@@ -199,7 +215,9 @@ const gameEventsInstance = new GameEvents();var GameEvents$1 = /*#__PURE__*/Obje
             gameInstance.modal.enableClose();
         });
     }
-}class TeleportRule extends Rule {
+}
+//# sourceMappingURL=SpeedModifierRule.js.map
+class TeleportRule extends Rule {
     constructor(json) {
         super(json);
         const { tileIndex } = json;
@@ -212,7 +230,9 @@ const gameEventsInstance = new GameEvents();var GameEvents$1 = /*#__PURE__*/Obje
         gameInstance.painter.drawPlayers();
         gameInstance.modal.enableClose();
     }
-}class GameOverRule extends Rule {
+}
+//# sourceMappingURL=TeleportRule.js.map
+class GameOverRule extends Rule {
     constructor(json) {
         super(json);
     }
@@ -221,7 +241,9 @@ const gameEventsInstance = new GameEvents();var GameEvents$1 = /*#__PURE__*/Obje
         gameInstance.gameOver();
         gameInstance.modal.enableClose();
     }
-}class ExtraTurnRule extends Rule {
+}
+//# sourceMappingURL=GameOverRule.js.map
+class ExtraTurnRule extends Rule {
     constructor(json) {
         super(json);
     }
@@ -230,7 +252,9 @@ const gameEventsInstance = new GameEvents();var GameEvents$1 = /*#__PURE__*/Obje
         gameInstance.currentPlayer.effects.extraTurns++;
         gameInstance.modal.enableClose();
     }
-}class DrinkDuringLostTurnsRule extends Rule {
+}
+//# sourceMappingURL=ExtraTurnRule.js.map
+class DrinkDuringLostTurnsRule extends Rule {
     constructor(json) {
         super(json);
         this.diceRolls = json.diceRolls;
@@ -242,7 +266,9 @@ const gameEventsInstance = new GameEvents();var GameEvents$1 = /*#__PURE__*/Obje
             gameInstance.modal.enableClose();
         });
     }
-}class ApplyMoveConditionRule extends Rule {
+}
+//# sourceMappingURL=DrinkDuringLostTurnsRule.js.map
+class ApplyMoveConditionRule extends Rule {
     constructor(json) {
         super(json);
         const { condition } = json;
@@ -289,12 +315,16 @@ const gameEventsInstance = new GameEvents();var GameEvents$1 = /*#__PURE__*/Obje
             }
         });
     }
-}class Outcome {
+}
+//# sourceMappingURL=ApplyMoveConditionRule.js.map
+class Outcome {
     constructor(rule, criteria) {
         this.rule = rule;
         this.criteria = criteria;
     }
-}class DiceRollRule extends Rule {
+}
+//# sourceMappingURL=Outcome.js.map
+class DiceRollRule extends Rule {
     constructor(json) {
         super(json);
         this.diceRolls = json.diceRolls;
@@ -340,7 +370,9 @@ const gameEventsInstance = new GameEvents();var GameEvents$1 = /*#__PURE__*/Obje
             }
         });
     }
-}class RollUntilRule extends Rule {
+}
+//# sourceMappingURL=DiceRollRule.js.map
+class RollUntilRule extends Rule {
     constructor(json) {
         super(json);
         this.validateRequired(json.displayText);
@@ -359,7 +391,9 @@ const gameEventsInstance = new GameEvents();var GameEvents$1 = /*#__PURE__*/Obje
         };
         rollUntilFn();
     }
-}class ChoiceRule extends Rule {
+}
+//# sourceMappingURL=RollUntilRule.js.map
+class ChoiceRule extends Rule {
     constructor(json) {
         super(json);
         const { choices, diceRolls } = json;
@@ -386,7 +420,9 @@ const gameEventsInstance = new GameEvents();var GameEvents$1 = /*#__PURE__*/Obje
             value.execute();
         });
     }
-}class SkipNextMandatoryRule extends Rule {
+}
+//# sourceMappingURL=ChoiceRule.js.map
+class SkipNextMandatoryRule extends Rule {
     constructor(json) {
         super(json);
         this.validateRequired(json.numSpaces);
@@ -397,7 +433,9 @@ const gameEventsInstance = new GameEvents();var GameEvents$1 = /*#__PURE__*/Obje
         gameInstance.currentPlayer.effects.mandatorySkips = this.numSpaces;
         gameInstance.modal.enableClose();
     }
-}class ChallengeRule extends Rule {
+}
+//# sourceMappingURL=SkipNextMandatoryRule.js.map
+class ChallengeRule extends Rule {
     constructor(json) {
         super(json);
         this.playerTarget = PlayerTarget.custom;
@@ -417,7 +455,9 @@ const gameEventsInstance = new GameEvents();var GameEvents$1 = /*#__PURE__*/Obje
             });
         });
     }
-}class ApplyMandatoryRule extends Rule {
+}
+//# sourceMappingURL=ChallengeRule.js.map
+class ApplyMandatoryRule extends Rule {
     constructor(json) {
         super(json);
         this.validateRequired(json.tileIndex);
@@ -428,7 +468,9 @@ const gameEventsInstance = new GameEvents();var GameEvents$1 = /*#__PURE__*/Obje
         gameInstance.currentPlayer.effects.customMandatoryTiles.push(this.tileIndex);
         gameInstance.modal.enableClose();
     }
-}const RULE_MAPPINGS = {
+}
+//# sourceMappingURL=AddMandatoryRule.js.map
+const RULE_MAPPINGS = {
     MoveRule,
     DisplayRule,
     TeleportRule,
@@ -465,14 +507,18 @@ function createZones(zonesJson) {
     return zonesJson.map((zoneJson) => {
         return new Zone(zoneJson.name, zoneJson.type, createRule(zoneJson.rule));
     });
-}class Board {
+}
+//# sourceMappingURL=BoardJsonConverter.js.map
+class Board {
     constructor(json, players) {
         this.imgSrc = json.imgSrc;
         this.tiles = createTiles(json.tiles);
         this.zones = createZones(json.zones);
         this.players = players;
     }
-}const RADIUS = 30;
+}
+//# sourceMappingURL=Board.js.map
+const RADIUS = 30;
 const FONT_SIZE = 20;
 const VELO = 12;
 function hexToRgb(hex) {
@@ -528,7 +574,9 @@ class Player {
         this.currentPos = gameInstance.board.tiles[tileIndex].generateCenterPosition();
         gameInstance.board.tiles[tileIndex].currentPlayers.add(this);
     }
-}class Painter {
+}
+//# sourceMappingURL=Player.js.map
+class Painter {
     constructor(canvas, ctx) {
         this.canvas = canvas;
         this.ctx = ctx;
@@ -576,7 +624,9 @@ class Player {
             this.ctx.fillText(player.name[0].toUpperCase(), player.currentPos.x - 6, player.currentPos.y + 6);
         }
     }
-}class Modal {
+}
+//# sourceMappingURL=Painter.js.map
+class Modal {
     constructor() {
         this.triggerId = 'game-modal';
         this.trigger = document.querySelector(`#${this.triggerId}`);
@@ -694,7 +744,9 @@ class Player {
     whenClosed(cb) {
         this.closeCb = cb;
     }
-}class Game {
+}
+//# sourceMappingURL=Modal.js.map
+class Game {
     constructor() {
         if (!Game.instance) {
             Game.instance = this;
@@ -805,10 +857,6 @@ class Player {
             firstMandatoryIndex = -1;
         }
         let numSpacesToAdvance = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
-        if (this.currentPlayer.name === 'asdf' && !window.asdf) {
-            numSpacesToAdvance = 2;
-            window.asdf = true;
-        }
         if (numSpacesToAdvance > 0) {
             this.currentPlayer.moveToTile(this.currentPlayer.currentTileIndex + numSpacesToAdvance);
             gameEventsInstance.trigger(MOVE_START);
@@ -943,4 +991,6 @@ document.getElementById('setup').addEventListener('submit', (e) => {
     initGame(gameSetupInfo[0], gameSetupInfo[1]);
     document.getElementById('setup').style.display = 'none';
     document.getElementById('overlay').style.display = 'block';
-});exports.Game=gameInstance;exports.GameEvents=gameEventsInstance;exports.events=GameEvents$1;Object.defineProperty(exports,'__esModule',{value:true});}));
+});
+//# sourceMappingURL=App.js.map
+exports.Game=gameInstance;exports.GameEvents=gameEventsInstance;exports.events=GameEvents$1;Object.defineProperty(exports,'__esModule',{value:true});}));
