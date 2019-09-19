@@ -89,3 +89,4 @@ This app has been tested on Chrome/FF latest versions. It "works" on the latest 
   * [engine] Mantine, reversing turn order. Probably not a big deal
   * [engine] Spinarak
   * [engine] Dugtrio adds 3 to next roll. It's a todo anyway
+  * [engine] Zubat is a "sticky" move condition

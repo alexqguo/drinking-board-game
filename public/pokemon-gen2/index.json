@@ -110,297 +110,256 @@
       "position": [{"x": 1390,"y": 262}, {"x": 1574,"y": 262}, {"x": 1574,"y": 450}, {"x": 1390,"y": 450}]
     }, {
       "rule": {
-        "displayText": "Bellsprout used Razor Leaf! Shred someone's dignity with a reckless callout. They drink 1 in shame.",
-        "type": "DisplayRule"
+        "displayText": "Pineco used Protect! Drink 2 and protect yourself from any incoming drinks until your next turn!",
+        "type": "DisplayRule",
+        "zone": "ILEX FOREST"
       },
       "position": [{"x": 1576,"y": 262}, {"x": 1762,"y": 262}, {"x": 1762,"y": 450}, {"x": 1576,"y": 450}]
     }, {
       "rule": {
-        "displayText": "Meowth used Pay Day! Everybody but you takes a drink.",
-        "type": "DisplayRule"
+        "displayText": "Farfetch'd got away! Drink 1 in frustration. For the remainder of the game, you are now the game's bartender. Fetch anyone a drink if they ask for it!",
+        "type": "DisplayRule",
+        "zone": "ILEX FOREST"
       },
       "position": [{"x": 1766,"y": 262}, {"x": 1950,"y": 262}, {"x": 1950,"y": 450}, {"x": 1766,"y": 450}]
     }, {
       "rule": {
-        "displayText": "Diglett used Dig! Dig deep and finish your drink.",
-        "type": "DisplayRule"
+        "displayText": "Paras used Leech Life! Give drinks to all players ahead of you. If nobody is, drink 1.",
+        "type": "DisplayRule",
+        "zone": "ILEX FOREST"
       },
       "position": [{"x": 1766,"y": 450}, {"x": 1950,"y": 450}, {"x": 1950,"y": 638}, {"x": 1766,"y": 638}]
     }, {
       "rule": {
-        "displayText": "Enjoy your cruise aboard the S.S. Anne! Roll a die, you lose that many turns aboard the luxury cruise liner. Roll again and drink that number during each lost turn.",
-        "type": "DrinkDuringLostTurnsRule",
-        "diceRolls": {
-          "numRequired": 2
-        }
+        "displayText": "Jigglypuff used Pound! Everyone pound their drinks!",
+        "type": "DisplayRule"
       },
       "position": [{"x": 1766,"y": 638}, {"x": 1950,"y": 638}, {"x": 1950,"y": 826}, {"x": 1766,"y": 826}]
     }, {
-      "mandatory": true,
       "rule": {
-        "displayText": "VERMILION GYM. Roll a die. Even, you're paralyzed; take 2 drinks and miss your next turn. Odd, take a drink.",
+        "displayText": "You visited the Daycare Center! Give a drink for each sibling you have. If you have none, drink 2.",
+        "type": "DisplayRule"
+      },
+      "position": [{"x": 1766,"y": 824}, {"x": 1950,"y": 824}, {"x": 1950,"y": 1012}, {"x": 1766,"y": 1012}]
+    }, {
+      "rule": {
+        "displayText": "GOLDENROD GYM. Roll a die.\nEven: Attract; Lose a turn.\nOdd: Rollout; Roll a die until you get a 5 or 6, drink each time you don't.",
         "type": "DiceRollRule",
         "diceRolls": {
           "numRequired": 1,
           "outcomes": [{
             "type": "SkipTurnRule",
-            "displayText": "You're paralyzed; take 2 drinks and miss your next turn",
-            "numTurns": 1,
-            "criteria": [2, 4, 6]
+            "displayText": "Attract; Lose a turn."
+          }, {
+            "type": "RollUntilRule",
+            "displayText": "Rollout; Roll a die until you get a 5 or 6, drink each time you don't.",
+            "criteria": [5, 6]
           }]
         }
-      },
-      "position": [{"x": 1766,"y": 824}, {"x": 1950,"y": 824}, {"x": 1950,"y": 1012}, {"x": 1766,"y": 1012}]
-    }, {
-      "rule": {
-        "displayText": "I want to ride my BICYCLE! BICYCLE! BICYCLE! On your next turn, roll the die and move twice that number.",
-        "type": "SpeedModifierRule",
-        "multiplier": 2,
-        "numTurns": 1
       },
       "position": [{"x": 1766,"y": 1010}, {"x": 1950,"y": 1010}, {"x": 1950,"y": 1198}, {"x": 1766,"y": 1198}]
     }, {
       "rule": {
-        "displayText": "Magikarp used Splash! ...but nothing happened...",
+        "displayText": "[[[TODO]]] The Goldenrod Game Center brings out your gambling problem. Each turn roll 2 dice. Roll 7 to give 7 and leave, otherwise drink 2. You may only leave once you've finished your drink or rolled 7.",
         "type": "DisplayRule"
       },
       "position": [{"x": 1766,"y": 1200}, {"x": 1950,"y": 1200}, {"x": 1950,"y": 1388}, {"x": 1766,"y": 1388}]
     }, {
       "rule": {
-        "displayText": "Sandshrew used Sand-Attack! Your accuracy is lowered. For the rest of the game, you may only drink with your non-dominant hand.",
+        "displayText": "[[[TODO]]] Bug Catching Contest! Everyone rolls a die to catch one!\n1-Paras: Awful, drink 1.\n2-Metapod: Give 1.\n3-Beedrill: Drink 1, give 1.\n4-Butterfree: Give 2.\n5-Pinsir: Drink 2, give 1.\n6-Scyther: Give 3.",
         "type": "DisplayRule"
       },
       "position": [{"x": 1766,"y": 1388}, {"x": 1950,"y": 1388}, {"x": 1950,"y": 1576}, {"x": 1766,"y": 1576}]
     }, {
       "rule": {
-        "displayText": "POKEMON TOWER. While in the Pokemon Tower, out of respect for the dead, you should not speak. Doing so results in a drink each time. Take a drink now for your fallen comrades.",
+        "displayText": "Wild Sudowoodo appeared! Nobody likes a fake person. Reveal an embarassing truth about yourself to avoid 2 drinks and make everyone else drink!",
         "type": "DisplayRule"
       },
-      "zone": "POKEMON TOWER",
       "position": [{"x": 1766,"y": 1574}, {"x": 1950,"y": 1574}, {"x": 1950,"y": 1762}, {"x": 1766,"y": 1762}]
     }, {
       "rule": {
-        "displayText": "A possessed Channeler. Now you're possessed too! While you are on this space, anyone may make you get them a drink.",
+        "displayText": "SILVER. This guy again? Drink for each player in the game minus 1.",
         "type": "DisplayRule"
       },
-      "zone": "POKEMON TOWER",
       "position": [{"x": 1766,"y": 1764}, {"x": 1950,"y": 1764}, {"x": 1950,"y": 1952}, {"x": 1766,"y": 1952}]
     },{
       "rule": {
-        "displayText": "Haunter used Dream Eater! Devour someone else's dreams by moving them back 10 spaces.",
-        "type": "MoveRule",
-        "direction": "back",
-        "numSpaces": -10,
-        "playerTarget": "custom"
-      },
-      "zone": "POKEMON TOWER",
-      "position": [{"x": 1577,"y": 1764}, {"x": 1761,"y": 1764}, {"x": 1761,"y": 1952}, {"x": 1577,"y": 1952}]
-    }, {
-      "rule": {
-        "displayText": "Cubone used \"My mother is dead.\" Share a depressing story with the group. Then everyone take a drink.",
+        "displayText": "BURNED TOWER. While searching through the basement you found 3 cool Pokemon... but they ran away. The first person here drinks 3. Everybody else drinks 1.",
         "type": "DisplayRule"
       },
-      "zone": "POKEMON TOWER",
+      "position": [{"x": 1577,"y": 1764}, {"x": 1761,"y": 1764}, {"x": 1761,"y": 1952}, {"x": 1577,"y": 1952}]
+    }, {
+      "mandatory": true,
+      "rule": {
+        "displayText": "ECRUTEAK GYM. Ghost Pokemon are pretty spooky. Drink 3 to calm yourself down.",
+        "type": "DisplayRule"
+      },
       "position": [{"x": 1390,"y": 1764}, {"x": 1574,"y": 1764}, {"x": 1574,"y": 1952}, {"x": 1390,"y": 1952}]
     }, {
       "rule": {
-        "displayText": "If someone is in Silph Co, you use the Silph Scope to beat the ghost and everyone else drinks. Otherwise take 3 drinks to appease the dead.",
+        "displayText": "Kimono Girls have Pokemon with style. Create a stylish new rule! Any rule violations result in a drink!",
         "type": "DisplayRule"
       },
-      "zone": "POKEMON TOWER",
       "position": [{"x": 1203,"y": 1764}, {"x": 1387,"y": 1764}, {"x": 1387,"y": 1952}, {"x": 1203,"y": 1952}]
     },{
       "rule": {
-        "displayText": "Abra used Teleport! Teleport to the other Abra.",
-        "type": "TeleportRule",
-        "tileIndex": 11
+        "displayText": "Miltank used Milk Drink! Replace your current drink with a non-alcoholic beverage and drink 2.",
+        "type": "DisplayRule"
       },
       "position": [{"x": 1014,"y": 1764}, {"x": 1198,"y": 1764}, {"x": 1198,"y": 1952}, {"x": 1014,"y": 1952}]
     }, {
       "rule": {
-        "displayText": "A sleeping Snorlax blocks your path. Belt out a song of the group's choice to wake him, or take 4 drinks.",
+        "displayText": "A Togepi hatched from the Egg! If you were given an Egg, make up a new rule! Any rule violations result in a drink! If you weren't drink 2.",
         "type": "DisplayRule"
       },
       "position": [{"x": 827,"y": 1764}, {"x": 1011,"y": 1764}, {"x": 1011,"y": 1952}, {"x": 827,"y": 1952}]
     }, {
       "rule": {
-        "displayText": "GARY. Roll a die. Drink that number minus one. Seriously though, is this dude following you or something?",
+        "displayText": "[[[TODO]]]Snubbull used Roar! Roll 2 dice and move backwards that many spaces.",
         "type": "DiceRollRule",
         "diceRolls": {
-          "numRequired": 1
+          "numRequired": 2
         }
       },
       "position": [{"x": 640,"y": 1764}, {"x": 824,"y": 1764}, {"x": 824,"y": 1952}, {"x": 640,"y": 1952}]
     }, {
       "rule": {
-        "displayText": "Eeveelution time! You choose a new rule! Any rule violations result in a drink.",
+        "displayText": "Tentacool used Constrict! Grab your drink and drink 2. You are not allowed to let go of your drink until you've finished.",
         "type": "DisplayRule"
       },
       "position": [{"x": 453,"y": 1764}, {"x": 637,"y": 1764}, {"x": 637,"y": 1952}, {"x": 453,"y": 1952}]
     }, {
       "mandatory": true,
       "rule": {
-        "displayText": "CELADON GYM. Roll a die. 1-3: Stun Spore; Lose a turn. 4-6: Mega Drain; Finish your drink.",
-        "type": "DiceRollRule",
-        "diceRolls": {
-          "numRequired": 1,
-          "outcomes": [{
-            "type": "SkipTurnRule",
-            "displayText": "Stun Spore; Lose a turn.",
-            "numTurns": 1,
-            "criteria": [1, 2, 3]
-          }, {
-            "type": "DisplayRule",
-            "displayText": "Mega Drain; Finish your drink."
-          }]
-        }
+        "displayText": "CIANNWOOD GYM. Make an open-challenge to Arm Wrestle anyone. Loser drinks 5. If nobody accepts, give 5.",
+        "type": "DisplayRule"
       },
       "position": [{"x": 453,"y": 1575}, {"x": 637,"y": 1575}, {"x": 637,"y": 1763}, {"x": 453,"y": 1763}]
     }, {
       "rule": {
-        "displayText": "Psyduck is slow. For the first one here, make up a gesture. For the rest of the game, when you do it, the last to mimic you takes a drink.",
-        "type": "DisplayRule"
+        "displayText": "Shuckle used Bide! Lose your next turn and give 4.",
+        "type": "SkipTurnRule",
+        "numTurns": 1
       },
       "position": [{"x": 453,"y": 1388}, {"x": 637,"y": 1388}, {"x": 637,"y": 1576}, {"x": 453,"y": 1576}]
     }, {
       "rule": {
-        "displayText": "What? Your Pokemon is evolving! Let it evolve: Drink 4 and skip the next gym. Stop evolution: Take an extra turn.",
-        "type": "ChoiceRule",
-        "choices": [{
-          "displayText": "Skip the next gym",
-          "type": "SkipNextMandatoryRule",
-          "numSpaces": 1
-        }, {
-          "displayText": "Take an extra turn",
-          "type": "ExtraTurnRule",
-          "numTurns": 1
-        }]
+        "displayText": "[[[TODO]]]Mantine used Whirlpool! Everyone take a drink and reverse the turn order!",
+        "type": "DisplayRule"
       },
       "position": [{"x": 453,"y": 1201}, {"x": 637,"y": 1201}, {"x": 637,"y": 1389}, {"x": 453,"y": 1389}]
     }, {
+      "mandatory": true,
       "rule": {
-        "displayText": "Porygon used Tri Attack! While on this space, for each drink you are given, the giver must drink 3.",
+        "displayText": "OLIVINE GYM. It's hardly even a gym battle to be honest. Just drink 2.",
         "type": "DisplayRule"
       },
       "position": [{"x": 453,"y": 1014}, {"x": 637,"y": 1014}, {"x": 637,"y": 1202}, {"x": 453,"y": 1202}]
     }, {
       "rule": {
-        "displayText": "SILPH CO. You've infiltrated the headquarters of the infamous Team Rocket! You will need all your courage to make it to their leader. Drink an extra 2 every turn to calm your nerves.",
+        "displayText": "Mankey used Swagger! Make up a secret handshake and teach everyone how to do it. Any time someone fails to do the handshake when posed drinks!",
         "type": "DisplayRule"
       },
-      "zone": "SILPH CO.",
       "position": [{"x": 453,"y": 827}, {"x": 637,"y": 827}, {"x": 637,"y": 1015}, {"x": 453,"y": 1015}]
     }, {
       "rule": {
-        "displayText": "A Scientist uses his magnet Pokemon! You magnetically attract 1 drink per player in the game.",
+        "displayText": "MT. MORTAR. This cave is very big and dark and scary. If nobody caught a Mareep, turn off all the lights! As long as someone is in Mt. Mortar, the lights must remain off. Since the cave is so big, only people in Mt. Mortar can give you drinks when inside. Take a drink now to prepare for this undertaking!",
         "type": "DisplayRule"
       },
-      "zone": "SILPH CO.",
+      "zone": "MT. MORTAR",
       "position": [{"x": 453,"y": 640}, {"x": 637,"y": 640}, {"x": 637,"y": 828}, {"x": 453,"y": 828}]
     }, {
       "rule": {
-        "displayText": "Lapras used Confuse Ray! Pick a player; they are now confused. Next turn, they must roll a 1-3 to stop being confused. If not, they are still confused, and lose a turn.",
-        "type": "ApplyMoveConditionRule",
-        "playerTarget": "custom",
-        "condition": {
-          "criteria": [1, 2, 3]
-        }
-      },
-      "zone": "SILPH CO.",
-      "position": [{"x": 453,"y": 453}, {"x": 637,"y": 453}, {"x": 637,"y": 638}, {"x": 453,"y": 638}]
-    }, {
-      "rule": {
-        "displayText": "It's Team Rocket! Watch them defeat themselves with incompetence, and everyone drink to them blasting off.",
+        "displayText": "[[[TODO]]]Spinarak used Spider Web! Drink 2. The next time someone passes you, they must stop at whatever square you're on.",
         "type": "DisplayRule"
       },
-      "zone": "SILPH CO.",
-      "position": [{"x": 642,"y": 453}, {"x": 826,"y": 453}, {"x": 826,"y": 638}, {"x": 642,"y": 638}]
-    }, {
-      "rule": {
-        "displayText": "GIOVANNI. Roll a die. 1-3: Give that number. 4-6: Drink that number.",
-        "type": "DiceRollRule",
-        "diceRolls": {
-          "numRequired": 1
-        }
-      },
-      "zone": "SILPH CO.",
-      "position": [{"x": 829,"y": 453}, {"x": 1013,"y": 453}, {"x": 1013,"y": 638}, {"x": 829,"y": 638}]
+      "zone": "MT. MORTAR",
+      "position": [{"x": 453,"y": 453}, {"x": 637,"y": 453}, {"x": 637,"y": 638}, {"x": 453,"y": 638}]
     }, {
       "rule": {
         "displayText": "Rare Candy - Level up! You get an extra turn.",
         "type": "ExtraTurnRule"
       },
+      "zone": "MT. MORTAR",
+      "position": [{"x": 642,"y": 453}, {"x": 826,"y": 453}, {"x": 826,"y": 638}, {"x": 642,"y": 638}]
+    }, {
+      "rule": {
+        "displayText": "Machoke used Submission! Submit to peer-pressure and do anything the group tells you to now. Otherwise, drink 4.",
+        "type": "DisplayRule"
+      },
+      "zone": "MT. MORTAR",
+      "position": [{"x": 829,"y": 453}, {"x": 1013,"y": 453}, {"x": 1013,"y": 638}, {"x": 829,"y": 638}]
+    }, {
+      "rule": {
+        "displayText": "[[[TODO]]]Dugtrio used Dig! Drink 3 and next turn add 3 spaces to your move roll!",
+        "type": "DisplayRule"
+      },
+      "zone": "MT. MORTAR",
       "position": [{"x": 1016,"y": 453}, {"x": 1200,"y": 453}, {"x": 1200,"y": 638}, {"x": 1016,"y": 638}]
     }, {
       "rule": {
-        "displayText": "GARY. Roll a die and take that many drinks. The next time this punk hassles you will be the last.",
-        "type": "DiceRollRule",
-        "diceRolls": {
-          "numRequired": 1
-        }
+        "displayText": "Geodude used Magnitude! Take as many drinks as you want, the person to the left of you must take that many minus 1. Continue this until you have gone around the table.",
+        "type": "DisplayRule",
       },
+      "zone": "MT. MORTAR",
       "position": [{"x": 1203,"y": 453}, {"x": 1387,"y": 453}, {"x": 1387,"y": 638}, {"x": 1203,"y": 638}]
     }, {
-      "mandatory": true,
       "rule": {
-        "displayText": "SAFFRON GYM. Use psychic powers to pick a number, then roll the die. If It's your number, take an extra turn. If not, drink 2.",
-        "type": "ChoiceRule",
-        "diceRolls": {
-          "numRequired": 1
-        },
-        "choices": [{
-          "type": "ExtraTurnRule",
-          "displayText": "Take an extra turn"
-        }, {
-          "type": "DisplayRule",
-          "displayText": "Drink 2"
-        }]
+        "displayText": "Marill used Rain Dance! Do a song and dance of the group's choice to make them all drink! If you don't, drink 3.",
+        "type": "DisplayRule"
       },
+      "zone": "MT. MORTAR",
       "position": [{"x": 1390,"y": 453}, {"x": 1574,"y": 453}, {"x": 1574,"y": 638}, {"x": 1390,"y": 638}]
     }, {
       "rule": {
-        "displayText": "Challenge someone to a chugging contest. First to finish gets an extra turn, last to finish loses a turn.",
-        "type": "ChallengeRule"
+        "displayText": "[[[TODO]]]Zubats! They're back bitches! Next turn roll a die. If you roll odds, lose your turn and drink 1. You cannot leave until you roll evens.",
+        "type": "DisplayRule"
       },
+      "zone": "MT. MORTAR",
       "position": [{"x": 1577,"y": 453}, {"x": 1763,"y": 453}, {"x": 1763,"y": 638}, {"x": 1577,"y": 638}]
     }, {
       "rule": {
-        "displayText": "Krabby used Crabhammer! Bring down the Crabhammer on someone; they must finish their drink.",
+        "displayText": "Raticate used Pursuit! You must now take a drink every time you leave the table for any reason.",
         "type": "DisplayRule"
       },
+      "zone": "MT. MORTAR",
       "position": [{"x": 1579,"y": 641}, {"x": 1763,"y": 641}, {"x": 1763,"y": 825}, {"x": 1579,"y": 825}]
     }, {
       "rule": {
-        "displayText": "Ditto used Transform! During the next person's turn, you must copy everything they do!",
-        "type": "DisplayRule"
+        "displayText": "The Legendary Dog SUicune! Roll a 3 to catch it and bypass the next gold square! Otherwise get blitzed and shotgun a beer!",
+        "type": "DiceRollRule",
+        "diceRolls": {
+          "numRequired": 1,
+          "outcomes": [{
+            "type": "SkipNextMandatoryRule",
+            "displayText": "Caught Suicune! Bypass the next gold square!",
+            "criteria": [3]
+          }]
+        }
       },
       "position": [{"x": 1579,"y": 830}, {"x": 1763,"y": 830}, {"x": 1763,"y": 1014}, {"x": 1579,"y": 1014}]
     }, {
       "rule": {
-        "displayText": "Doduo used Double-Edge! You give 4 drinks, but you drink 1.",
+        "displayText": "It's a Red Gyarados! Ok let's face it, this is probably the only shiny you've ever caught. If you've caught another shiny, give 4. Otherwise drink 4.",
         "type": "DisplayRule"
       },
       "position": [{"x": 1579,"y": 1017}, {"x": 1763,"y": 1017}, {"x": 1763,"y": 1201}, {"x": 1579,"y": 1201}]
     }, {
       "rule": {
-        "displayText": "SAFARI ZONE. Before each turn in the Safari Zone, roll a die. 1-2: You throw bait. Give 1 drink to someone. 3-4: You throw a rock, dick. Lose your turn, drink 4. 5-6: You throw a safari ball. Drink 2 in sadness, because safari balls are just awful.",
+        "displayText": "Electrode used Selfdestruct! Choose another player and you both finish your drinks!",
         "type": "DisplayRule"
       },
-      "zone": "SAFARI ZONE",
       "position": [{"x": 1579,"y": 1204}, {"x": 1763,"y": 1204}, {"x": 1763,"y": 1388}, {"x": 1579,"y": 1388}]
     }, {
       "rule": {
-        "displayText": "Gone fishin'... a wild Dratini appeared! Roll a 1 to catch. Otherwise, drink 1.",
-        "type": "DiceRollRule",
-        "diceRolls": {
-          "numRequired": 1
-        }
+        "displayText": "Murkrow used Mimic! Pick a player and repeat everything they say until your next turn.",
+        "type": "DisplayRule"
       },
-      "zone": "SAFARI ZONE",
       "position": [{"x": 1579,"y": 1391}, {"x": 1763,"y": 1391}, {"x": 1763,"y": 1575}, {"x": 1579,"y": 1575}]
     }, {
+      "mandatory": true,
       "rule": {
-        "displayText": "A wild Tauros appeared... but instantly fled. Drink 2 for not being quick enough.",
+        "displayText": "MAHOGANY GYM. Ice Pokemon are cool. If your drink is ice cold, drink 2, if not, drink 4.",
         "type": "DisplayRule"
       },
       "zone": "SAFARI ZONE",
@@ -583,6 +542,9 @@
         "type": "DisplayRule",
         "displayText": "This place is a little eerie. Try not to get lost! When you roll to move, if you roll a 5 or 6, drink 1 and return to the start of Ilex Forest."
       }
+    }, {
+      "name": "MT. MORTAR",
+      "type": "passive"
     }
   ]
 }

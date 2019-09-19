@@ -3,6 +3,8 @@ import resolve from 'rollup-plugin-node-resolve';
 import { terser } from "rollup-plugin-terser";
 import copy from 'rollup-plugin-copy'
 
+// TODO: minify JSON in production build
+
 const basePlugins = [
   typescript(),
   resolve(),
