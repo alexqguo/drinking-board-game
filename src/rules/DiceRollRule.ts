@@ -1,26 +1,31 @@
 import Rule from './Rule';
-import { JsonRule, DiceRoll } from '../interfaces';
+import { JsonRule, DiceRoll, JsonOutcome } from '../interfaces';
 import Game from '../engine/Game';
+import Outcome from '../engine/Outcome';
 import { createRule } from '../engine/BoardJsonConverter';
 
 class DiceRollRule extends Rule {
   diceRolls: DiceRoll;
-  outcomeRules: Rule[];
-  any: Rule;
+  outcomes: Outcome[];
+  any: Outcome;
 
   constructor(json: JsonRule) {
     super(json);
     this.diceRolls = json.diceRolls;
-    this.outcomeRules = [];
+    this.outcomes = [];
 
     if (this.diceRolls.outcomes && this.diceRolls.outcomes.length) {
-      this.diceRolls.outcomes.forEach((rule: JsonRule) => {
-        this.outcomeRules.push(createRule(rule));
+      this.diceRolls.outcomes.forEach((outcome: JsonOutcome) => {
+        this.outcomes.push(
+          new Outcome(createRule(outcome.rule), outcome.criteria)
+        );
       });
     }
 
     if (this.diceRolls.any) {
-      this.any = createRule(this.diceRolls.any);
+      this.any = new Outcome(
+        createRule(this.diceRolls.any.rule), this.diceRolls.any.criteria
+      );
     }
   }
 
@@ -28,20 +33,20 @@ class DiceRollRule extends Rule {
   getOutcomeForRolls(rolls: number[]): Rule {
     let outcomeRule: Rule = null;
 
-    if (!this.outcomeRules && !this.any) return null;
+    if (!this.outcomes && !this.any) return null;
 
     if (this.any) {
       for (let i = 0; i < rolls.length; i++) { // I'm a savage
         if (this.any.criteria.indexOf(rolls[i]) !== -1) {
-          return this.any;
+          return this.any.rule;
         }
       }
     }
 
     rolls.forEach((roll: number) => {
-      this.outcomeRules.forEach((rule: Rule) => {
-        if (rule.criteria && rule.criteria.length && rule.criteria.indexOf(roll) !== -1) {
-          outcomeRule = rule;
+      this.outcomes.forEach((outcome: Outcome) => {
+        if (outcome.criteria.length && outcome.criteria.indexOf(roll) !== -1) {
+          outcomeRule = outcome.rule;
         }
       });
     });

@@ -75,9 +75,14 @@ export interface MoveCondition {
 }
 
 export interface DiceRoll {
-  outcomes?: JsonRule[];
-  any?: JsonRule; // I got lazy. Any match on an "any" will override all other rules
+  outcomes?: JsonOutcome[];
+  any?: JsonOutcome; // I got lazy. Any match on an "any" will override all other rules
   numRequired: number;
+}
+
+export interface JsonOutcome {
+  rule: JsonRule;
+  criteria: number[];
 }
 
 export enum PlayerTarget {

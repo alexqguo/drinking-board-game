@@ -368,9 +368,11 @@
         "diceRolls": {
           "numRequired": 1,
           "outcomes": [{
-            "type": "SkipTurnRule",
-            "displayText": "You're paralyzed; take 2 drinks and miss your next turn",
-            "numTurns": 1,
+            "rule": {
+              "type": "SkipTurnRule",
+              "displayText": "You're paralyzed; take 2 drinks and miss your next turn",
+              "numTurns": 1
+            },
             "criteria": [2, 4, 6]
           }]
         }
@@ -626,13 +628,18 @@
         "diceRolls": {
           "numRequired": 1,
           "outcomes": [{
-            "type": "SkipTurnRule",
-            "displayText": "Stun Spore; Lose a turn.",
-            "numTurns": 1,
+            "rule": {
+              "type": "SkipTurnRule",
+              "displayText": "Stun Spore; Lose a turn.",
+              "numTurns": 1
+            },
             "criteria": [1, 2, 3]
           }, {
-            "type": "DisplayRule",
-            "displayText": "Mega Drain; Finish your drink."
+            "rule": {
+              "type": "DisplayRule",
+              "displayText": "Mega Drain; Finish your drink."
+            },
+            "criteria": [4, 5, 6]
           }]
         }
       },
@@ -1135,13 +1142,17 @@
         "diceRolls": {
           "numRequired": 3,
           "outcomes": [{
-            "type": "TeleportRule",
-            "tileIndex": 0,
+            "rule": {
+              "type": "TeleportRule",
+              "tileIndex": 0
+            },
             "criteria": [1, 2, 3, 4]
           }],
           "any": {
-            "type": "DisplayRule",
-            "displayText": "Phew",
+            "rule": {
+              "type": "DisplayRule",
+              "displayText": "Phew"
+            },
             "criteria": [5, 6]
           }
         }
@@ -1460,9 +1471,11 @@
         "diceRolls": {
           "numRequired": 1,
           "outcomes": [{
-            "type": "SkipTurnRule",
-            "displayText": "Lose your turn, drink 4.",
-            "numTurns": 1,
+            "rule": {
+              "type": "SkipTurnRule",
+              "displayText": "Lose your turn, drink 4.",
+              "numTurns": 1
+            },
             "criteria": [3, 4]
           }]
         }
