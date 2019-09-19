@@ -7,12 +7,13 @@ class MoveRule extends Rule {
   diceRolls: DiceRoll;
   direction: Direction;
   numSpaces: number;
+  tileIndex: number;
 
   constructor(json: JsonRule) {
     super(json);
-    const { playerTarget, direction, numSpaces, diceRolls } = json;
+    const { playerTarget, direction, numSpaces, diceRolls, tileIndex } = json;
     this.validateRequired(playerTarget, direction);
-    this.validateOneOf(numSpaces, diceRolls);
+    this.validateOneOf(numSpaces, diceRolls, tileIndex);
     this.direction = direction;
     this.numSpaces = numSpaces;
     this.diceRolls = diceRolls;
@@ -36,6 +37,8 @@ class MoveRule extends Rule {
             const targetTileIndex: number = Math.max(0, targetPlayer.currentTileIndex + total);
             this.movePlayer(targetPlayer, targetTileIndex);
           });
+        } else if (this.tileIndex) {
+          this.movePlayer(targetPlayer, this.tileIndex);
         }
       });
   }

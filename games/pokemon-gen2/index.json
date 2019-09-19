@@ -568,7 +568,7 @@
       "type": "passive",
       "rule": {
         "type": "DisplayRule",
-        "displayText": "todo"
+        "displayText": "don't think the value of this matters"
       }
     }, {
       "name": "RADIO TOWER",
