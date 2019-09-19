@@ -58,7 +58,7 @@
       "rule": {
         "displayText": "Caterpie used String Shot! It was super effective! All other players may only move 1/2 of what they roll on their next turn (round up).",
         "type": "SpeedModifierRule",
-        "multiplier": 0.5,
+        "modifier": ["*", 0.5],
         "numTurns": 1,
         "playerTarget": "allOthers"
       },
@@ -394,7 +394,7 @@
       "rule": {
         "displayText": "I want to ride my BICYCLE! BICYCLE! BICYCLE! On your next turn, roll the die and move twice that number.",
         "type": "SpeedModifierRule",
-        "multiplier": 2,
+        "modifier": ["*", 2],
         "numTurns": 1
       },
       "position": [{

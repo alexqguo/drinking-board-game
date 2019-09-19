@@ -1,17 +1,17 @@
 import Rule from './Rule';
-import { JsonRule, PlayerTarget } from '../interfaces';
+import { JsonRule, ModifierOperation, SpeedModifier } from '../interfaces';
 import Player from '../engine/Player';
 import Game from '../engine/Game';
 
 class SpeedModifierRule extends Rule {
-  multiplier: number;
+  modifier: [ModifierOperation, number];
   numTurns: number;
 
   constructor(json: JsonRule) {
     super(json);
-    const { multiplier, numTurns } = json;
-    this.validateRequired(multiplier, numTurns); // TODO: playerTarget as well?
-    this.multiplier = multiplier;
+    const { modifier, numTurns } = json;
+    this.validateRequired(modifier, numTurns); // TODO: playerTarget as well?
+    this.modifier = modifier;
     this.numTurns = numTurns;
   }
 
@@ -25,12 +25,34 @@ class SpeedModifierRule extends Rule {
           p.effects.speedModifiers = [];
     
           for (let i = 0; i < this.numTurns; i ++) {
-            p.effects.speedModifiers.push(this.multiplier);
+            p.effects.speedModifiers.push(
+              this.createSpeedModifierFn(this.modifier)
+            );
           }
         });
         
         Game.modal.enableClose();
       });
+  }
+  
+  createSpeedModifierFn(modifier: [ModifierOperation, number]): SpeedModifier {
+    const operation: ModifierOperation = modifier[0];
+    const value: number = modifier[1];
+
+    switch (operation) {
+      case ModifierOperation.addition:
+        return {
+          fn: (num: number) => num + value,
+          description: `+ ${value}`,
+        };
+      case ModifierOperation.multiplication:
+        return {
+          fn: (num: number) => Math.ceil(value * num),
+          description: `x${value}`,
+        };
+      default:
+        throw `Operation ${operation} not supported.`
+    }
   }
 }
 

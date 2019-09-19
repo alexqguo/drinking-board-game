@@ -147,8 +147,8 @@ class Game {
     }
 
     if (this.currentPlayer.effects.speedModifiers.length) {
-      const modifier: number = this.currentPlayer.effects.speedModifiers.shift();
-      roll = Math.ceil(modifier * roll); // TODO - may not always be multiplication
+      const modifier: Function = this.currentPlayer.effects.speedModifiers.shift().fn;
+      roll = modifier(roll);
     }
 
     // Check for mandatory spaces
@@ -166,10 +166,10 @@ class Game {
     let numSpacesToAdvance: number = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
     
     // Uncomment this section for testing
-    // if (this.currentPlayer.name === 'asdf' && !(window as any).asdf) {
-    //   numSpacesToAdvance = 2;
-    //   (window as any).asdf = true;
-    // }
+    if (this.currentPlayer.name === 'asdf' && !(window as any).asdf) {
+      numSpacesToAdvance = 3;
+      (window as any).asdf = true;
+    }
 
     if (numSpacesToAdvance > 0) {
       // Consider fixing this naming. This doesn't actually move anything in the UI

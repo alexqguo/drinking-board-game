@@ -105,30 +105,30 @@
     }, {
       "rule": {
         "displayText": "ILEX FOREST. This place is a little eerie. Try not to get lost! When you roll to move, if you roll a 5 or 6, drink 1 and return to the start of Ilex Forest.",
-        "type": "DisplayRule",
-        "zone": "ILEX FOREST"
+        "type": "DisplayRule"
       },
+      "zone": "ILEX FOREST",
       "position": [{"x": 1390,"y": 262}, {"x": 1574,"y": 262}, {"x": 1574,"y": 450}, {"x": 1390,"y": 450}]
     }, {
       "rule": {
         "displayText": "Pineco used Protect! Drink 2 and protect yourself from any incoming drinks until your next turn!",
-        "type": "DisplayRule",
-        "zone": "ILEX FOREST"
+        "type": "DisplayRule"
       },
+      "zone": "ILEX FOREST",
       "position": [{"x": 1576,"y": 262}, {"x": 1762,"y": 262}, {"x": 1762,"y": 450}, {"x": 1576,"y": 450}]
     }, {
       "rule": {
         "displayText": "Farfetch'd got away! Drink 1 in frustration. For the remainder of the game, you are now the game's bartender. Fetch anyone a drink if they ask for it!",
-        "type": "DisplayRule",
-        "zone": "ILEX FOREST"
+        "type": "DisplayRule"
       },
+      "zone": "ILEX FOREST",
       "position": [{"x": 1766,"y": 262}, {"x": 1950,"y": 262}, {"x": 1950,"y": 450}, {"x": 1766,"y": 450}]
     }, {
       "rule": {
         "displayText": "Paras used Leech Life! Give drinks to all players ahead of you. If nobody is, drink 1.",
-        "type": "DisplayRule",
-        "zone": "ILEX FOREST"
+        "type": "DisplayRule"
       },
+      "zone": "ILEX FOREST",
       "position": [{"x": 1766,"y": 450}, {"x": 1950,"y": 450}, {"x": 1950,"y": 638}, {"x": 1766,"y": 638}]
     }, {
       "rule": {
@@ -549,7 +549,7 @@
   ],
   "zones": [
     {
-      "name": "ILEX FOREST",
+      "name": "ILEX FOREST (todo)",
       "type": "passive",
       "rule": {
         "type": "DisplayRule",

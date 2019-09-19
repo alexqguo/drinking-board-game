@@ -20,6 +20,16 @@ export enum ZoneType {
   active = 'active',
 }
 
+export interface SpeedModifier {
+  fn: Function;
+  description: string;
+}
+
+export enum ModifierOperation {
+  addition = '+',
+  multiplication = '*',
+}
+
 export interface PlayerInput {
   name: string;
   color: string;
@@ -30,7 +40,6 @@ export interface PlayerColor {
   g: number;
   b: number;
 }
-
 export interface PlayerStatusData {
   name: string,
   effects: PlayerEffects,
@@ -43,7 +52,7 @@ export interface PlayerEffects {
   customMandatoryTiles: number[],
   extraTurns: number,
   skippedTurns: number,
-  speedModifiers: number[],
+  speedModifiers: SpeedModifier[],
   moveCondition: Function,
 }
 
@@ -55,7 +64,7 @@ export interface JsonRule {
   numSpaces?: number;
   numTurns?: number;
   playerTarget?: PlayerTarget;
-  multiplier?: number;
+  modifier?: [ModifierOperation, number];
   diceRolls?: DiceRoll;
   condition?: MoveCondition;
   criteria?: number[];

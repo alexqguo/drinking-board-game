@@ -35,6 +35,11 @@ var ZoneType;
     ZoneType["passive"] = "passive";
     ZoneType["active"] = "active";
 })(ZoneType || (ZoneType = {}));
+var ModifierOperation;
+(function (ModifierOperation) {
+    ModifierOperation["addition"] = "+";
+    ModifierOperation["multiplication"] = "*";
+})(ModifierOperation || (ModifierOperation = {}));
 var PlayerTarget;
 (function (PlayerTarget) {
     PlayerTarget["custom"] = "custom";
@@ -197,9 +202,9 @@ class SkipTurnRule extends Rule {
 class SpeedModifierRule extends Rule {
     constructor(json) {
         super(json);
-        const { multiplier, numTurns } = json;
-        this.validateRequired(multiplier, numTurns);
-        this.multiplier = multiplier;
+        const { modifier, numTurns } = json;
+        this.validateRequired(modifier, numTurns);
+        this.modifier = modifier;
         this.numTurns = numTurns;
     }
     execute(closedCb) {
@@ -209,11 +214,29 @@ class SpeedModifierRule extends Rule {
             value.forEach((p) => {
                 p.effects.speedModifiers = [];
                 for (let i = 0; i < this.numTurns; i++) {
-                    p.effects.speedModifiers.push(this.multiplier);
+                    p.effects.speedModifiers.push(this.createSpeedModifierFn(this.modifier));
                 }
             });
             gameInstance.modal.enableClose();
         });
+    }
+    createSpeedModifierFn(modifier) {
+        const operation = modifier[0];
+        const value = modifier[1];
+        switch (operation) {
+            case ModifierOperation.addition:
+                return {
+                    fn: (num) => num + value,
+                    description: `+ ${value}`,
+                };
+            case ModifierOperation.multiplication:
+                return {
+                    fn: (num) => Math.ceil(value * num),
+                    description: `x${value}`,
+                };
+            default:
+                throw `Operation ${operation} not supported.`;
+        }
     }
 }
 //# sourceMappingURL=SpeedModifierRule.js.map
@@ -844,8 +867,8 @@ class Game {
             }
         }
         if (this.currentPlayer.effects.speedModifiers.length) {
-            const modifier = this.currentPlayer.effects.speedModifiers.shift();
-            roll = Math.ceil(modifier * roll);
+            const modifier = this.currentPlayer.effects.speedModifiers.shift().fn;
+            roll = modifier(roll);
         }
         let firstMandatoryIndex = this.board.tiles
             .slice(this.currentPlayer.currentTileIndex + 1, this.currentPlayer.currentTileIndex + 1 + roll)
@@ -857,6 +880,10 @@ class Game {
             firstMandatoryIndex = -1;
         }
         let numSpacesToAdvance = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
+        if (this.currentPlayer.name === 'asdf' && !window.asdf) {
+            numSpacesToAdvance = 3;
+            window.asdf = true;
+        }
         if (numSpacesToAdvance > 0) {
             this.currentPlayer.moveToTile(this.currentPlayer.currentTileIndex + numSpacesToAdvance);
             gameEventsInstance.trigger(MOVE_START);

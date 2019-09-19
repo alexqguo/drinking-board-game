@@ -32,12 +32,14 @@ export class PlayerStatus extends LitElement {
       customMandatoryTiles,
     } = this.data.effects;
 
+
+    console.log(speedModifiers);
     return html`
       <h4>${this.data.name}</h4>
       <ul class="player-status">
         ${extraTurns ? html`<li class="label success">Extra turn</li>` : null}
         ${mandatorySkips > 0 ? html`<li class="label success">Skip next mandatory space</li>` : null}
-        ${speedModifiers[0] ? html`<li class="label success">Speed modifier: ${speedModifiers[0]}</li>` : null}
+        ${speedModifiers[0] ? html`<li class="label success">Speed modifier: ${speedModifiers[0].description}</li>` : null}
         ${skippedTurns ? html`<li class="label error">Missed turn</li>` : null}
         ${!!moveCondition ? html`<li class="label warning">Move condition</li>` : null}
         ${customMandatoryTiles.length ? html`<li class="label warning">Custom mandatory</li>` : null}
