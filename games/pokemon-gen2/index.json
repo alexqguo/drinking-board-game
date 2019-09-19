@@ -14,8 +14,9 @@
       "position": [{"x": 262,"y": 1580},{"x": 448,"y": 1580},{"x": 448,"y": 1764},{"x": 262,"y": 1764}]
     }, {
       "rule": {
-        "displayText": "[[[TODO]]] You're given an Egg! Pick a nearby object and hold it close until it hatches. Anytime you're caught without ittake a drink. Drink 1 now for responsibility. (The Togepi square is now a mandatory stop for you.)",
-        "type": "DisplayRule"
+        "displayText": "You're given an Egg! Pick a nearby object and hold it close until it hatches. Anytime you're caught without it take a drink. Drink 1 now for responsibility. (The Togepi square is now a mandatory stop for you.)",
+        "type": "AddMandatoryRule",
+        "tileIndex": 29
       },
       "position": [{"x": 262,"y": 1392},{"x": 448,"y": 1392},{"x": 448,"y": 1576},{"x": 262,"y": 1576}]
     }, {
@@ -89,10 +90,10 @@
       },
       "position": [{"x": 830,"y": 262}, {"x": 1014,"y": 262}, {"x": 1014,"y": 450}, {"x": 830,"y": 450}]
     }, {
+      "mandatory": true,
       "rule": {
         "displayText": "AZALEA GYM. Bugs are tiny. Drink 1. Everyone shorter than you drinks. If you're the shortest, drink again.",
-        "type": "DisplayRule",
-        "mandatory": true
+        "type": "DisplayRule"
       },
       "position": [{"x": 1016,"y": 262}, {"x": 1200,"y": 262}, {"x": 1200,"y": 450}, {"x": 1016,"y": 450}]
     }, {
@@ -142,18 +143,21 @@
       },
       "position": [{"x": 1766,"y": 824}, {"x": 1950,"y": 824}, {"x": 1950,"y": 1012}, {"x": 1766,"y": 1012}]
     }, {
+      "mandatory": true,
       "rule": {
-        "displayText": "GOLDENROD GYM. Roll a die.\nEven: Attract; Lose a turn.\nOdd: Rollout; Roll a die until you get a 5 or 6, drink each time you don't.",
+        "displayText": "[[[TODO]]]GOLDENROD GYM. Roll a die.\nEven: Attract; Lose a turn.\nOdd: Rollout; Roll a die until you get a 5 or 6, drink each time you don't.",
         "type": "DiceRollRule",
         "diceRolls": {
           "numRequired": 1,
           "outcomes": [{
             "type": "SkipTurnRule",
-            "displayText": "Attract; Lose a turn."
+            "displayText": "Attract; Lose a turn.",
+            "numTurns": 1,
+            "criteria": [2, 4, 6]
           }, {
             "type": "RollUntilRule",
             "displayText": "Rollout; Roll a die until you get a 5 or 6, drink each time you don't.",
-            "criteria": [5, 6]
+            "criteria": [1, 3, 5]
           }]
         }
       },
@@ -299,7 +303,7 @@
     }, {
       "rule": {
         "displayText": "Geodude used Magnitude! Take as many drinks as you want, the person to the left of you must take that many minus 1. Continue this until you have gone around the table.",
-        "type": "DisplayRule",
+        "type": "DisplayRule"
       },
       "zone": "MT. MORTAR",
       "position": [{"x": 1203,"y": 453}, {"x": 1387,"y": 453}, {"x": 1387,"y": 638}, {"x": 1203,"y": 638}]
@@ -333,6 +337,7 @@
           "outcomes": [{
             "type": "SkipNextMandatoryRule",
             "displayText": "Caught Suicune! Bypass the next gold square!",
+            "numSpaces": 1,
             "criteria": [3]
           }]
         }
@@ -416,6 +421,7 @@
           "outcomes": [{
             "type": "SkipNextMandatoryRule",
             "displayText": "Caught Entei! Bypass the next gold square!",
+            "numSpaces": 1,
             "criteria": [3]
           }]
         }
@@ -473,6 +479,7 @@
           "outcomes": [{
             "type": "SkipNextMandatoryRule",
             "displayText": "Caught Raikou! Bypass the next gold square!",
+            "numSpaces": 1,
             "criteria": [3]
           }]
         }
@@ -523,7 +530,7 @@
     }, {
       "mandatory": true,
       "rule": {
-        "displayText": "POKEMON MASTER! Throw that Master BAll and take a victory drink. All other players toast to your glory! You are a Pokemon Master!",
+        "displayText": "POKEMON MASTER! Throw that Master Ball and take a victory drink. All other players toast to your glory! You are a Pokemon Master!",
         "type": "GameOverRule"
       },
       "position": [{"x": 827,"y": 1391}, {"x": 1011,"y": 1391}, {"x": 1011,"y": 1577}, {"x": 827,"y": 1577}]
@@ -539,7 +546,11 @@
       }
     }, {
       "name": "MT. MORTAR",
-      "type": "passive"
+      "type": "passive",
+      "rule": {
+        "type": "DisplayRule",
+        "displayText": "todo"
+      }
     }, {
       "name": "RADIO TOWER",
       "type": "active",

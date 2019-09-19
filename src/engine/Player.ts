@@ -38,6 +38,7 @@ class Player {
       extraTurns: 0,
       skippedTurns: 0,
       speedModifiers: [],
+      customMandatoryTiles: [],
       mandatorySkips: 0,
       moveCondition: null,
     };

@@ -9,7 +9,7 @@ abstract class Rule {
   playerTarget: PlayerTarget;
   criteria: number[];
 
-  constructor(json: JsonRule/*displayText: string, type: string, playerTarget: PlayerTarget, diceRolls?: DiceRoll*/) {
+  constructor(json: JsonRule) {
     const { displayText, type, playerTarget, criteria } = json;
     this.validateRequired(type);
 
@@ -59,6 +59,7 @@ abstract class Rule {
       .filter(arg => typeof arg === 'undefined' || arg === null || arg === '');
     
     if (errors.length) {
+      console.error(this);
       throw new Error('TODO - alert missing fields for whatever class this is');
     }
   }

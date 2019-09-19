@@ -40,6 +40,7 @@ export interface PlayerStatusData {
 
 export interface PlayerEffects {
   mandatorySkips: number,
+  customMandatoryTiles: number[],
   extraTurns: number,
   skippedTurns: number,
   speedModifiers: number[],

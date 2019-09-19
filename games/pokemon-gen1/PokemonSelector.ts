@@ -1,5 +1,5 @@
 import { LitElement, html, customElement, property } from 'lit-element';
-import { PokemonSelection } from './constants';
+import { PokemonSelection, starterNames } from './constants';
 
 @customElement('pokemon-selector')
 export default class PokemonSelector extends LitElement {
@@ -7,6 +7,9 @@ export default class PokemonSelector extends LitElement {
 
   @property({ type: Array })
   playerNames: string[];
+
+  @property({ type: Array })
+  starterNames: string[] = Object.values(starterNames);
 
   @property({ type: Boolean })
   canSubmit: boolean;
@@ -20,14 +23,18 @@ export default class PokemonSelector extends LitElement {
     this.selectedPokemon = {};
   }
 
+  renderStarterOption(starterName: string) {
+    return html`
+      <option value="${starterName}">${starterName}</option>
+    `;
+  }
+
   renderPlayerSelection(name: string) {
     return html`
       <label for="pokemon-select-${name}">${name}</label>
       <select @change="${this.handleSelect}" id="pokemon-select-${name}" data-player-name="${name}">
         <option value="" selected disabled hidden>Choose your Pokemon!</option>
-        <option value="charmander">Charmander</option>
-        <option value="squirtle">Squirtle</option>
-        <option value="bulbasaur">Bulbasaur</option>
+        ${this.starterNames.map((val: string) => this.renderStarterOption(val))}
       </select>
 
       <br><br>

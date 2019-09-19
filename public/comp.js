@@ -34,7 +34,9 @@ function __decorate(decorators, target, key, desc) {
 const directives = new WeakMap();
 const isDirective = (o) => {
     return typeof o === 'function' && directives.has(o);
-};/**
+};
+//# sourceMappingURL=directive.js.map
+/**
  * @license
  * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
  * This code may only be used under the BSD style license found at
@@ -63,7 +65,9 @@ const removeNodes = (container, start, end = null) => {
         container.removeChild(start);
         start = n;
     }
-};/**
+};
+//# sourceMappingURL=dom.js.map
+/**
  * @license
  * Copyright (c) 2018 The Polymer Project Authors. All rights reserved.
  * This code may only be used under the BSD style license found at
@@ -84,7 +88,9 @@ const noChange = {};
 /**
  * A sentinel value that signals a NodePart to fully clear its content.
  */
-const nothing = {};/**
+const nothing = {};
+//# sourceMappingURL=part.js.map
+/**
  * @license
  * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
  * This code may only be used under the BSD style license found at
@@ -295,7 +301,9 @@ const createMarker = () => document.createComment('');
  *    * (") then any non-("), or
  *    * (') then any non-(')
  */
-const lastAttributeNameRegex = /([ \x09\x0a\x0c\x0d])([^\0-\x1F\x7F-\x9F "'>=/]+)([ \x09\x0a\x0c\x0d]*=[ \x09\x0a\x0c\x0d]*(?:[^ \x09\x0a\x0c\x0d"'`<>=]*|"[^"]*|'[^']*))$/;/**
+const lastAttributeNameRegex = /([ \x09\x0a\x0c\x0d])([^\0-\x1F\x7F-\x9F "'>=/]+)([ \x09\x0a\x0c\x0d]*=[ \x09\x0a\x0c\x0d]*(?:[^ \x09\x0a\x0c\x0d"'`<>=]*|"[^"]*|'[^']*))$/;
+//# sourceMappingURL=template.js.map
+/**
  * @license
  * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
  * This code may only be used under the BSD style license found at
@@ -425,7 +433,9 @@ class TemplateInstance {
         }
         return fragment;
     }
-}/**
+}
+//# sourceMappingURL=template-instance.js.map
+/**
  * @license
  * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
  * This code may only be used under the BSD style license found at
@@ -511,7 +521,9 @@ class TemplateResult {
         template.innerHTML = this.getHTML();
         return template;
     }
-}/**
+}
+//# sourceMappingURL=template-result.js.map
+/**
  * @license
  * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
  * This code may only be used under the BSD style license found at
@@ -948,7 +960,9 @@ class EventPart {
 const getOptions = (o) => o &&
     (eventOptionsSupported ?
         { capture: o.capture, passive: o.passive, once: o.once } :
-        o.capture);/**
+        o.capture);
+//# sourceMappingURL=parts.js.map
+/**
  * @license
  * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
  * This code may only be used under the BSD style license found at
@@ -997,7 +1011,9 @@ class DefaultTemplateProcessor {
         return new NodePart(options);
     }
 }
-const defaultTemplateProcessor = new DefaultTemplateProcessor();/**
+const defaultTemplateProcessor = new DefaultTemplateProcessor();
+//# sourceMappingURL=default-template-processor.js.map
+/**
  * @license
  * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
  * This code may only be used under the BSD style license found at
@@ -1042,7 +1058,9 @@ function templateFactory(result) {
     templateCache.stringsArray.set(result.strings, template);
     return template;
 }
-const templateCaches = new Map();/**
+const templateCaches = new Map();
+//# sourceMappingURL=template-factory.js.map
+/**
  * @license
  * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
  * This code may only be used under the BSD style license found at
@@ -1080,7 +1098,9 @@ const render = (result, container, options) => {
     }
     part.setValue(result);
     part.commit();
-};/**
+};
+//# sourceMappingURL=render.js.map
+/**
  * @license
  * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
  * This code may only be used under the BSD style license found at
@@ -1101,7 +1121,9 @@ const render = (result, container, options) => {
  * Interprets a template literal as an HTML template that can efficiently
  * render to and update a container.
  */
-const html = (strings, ...values) => new TemplateResult(strings, values, 'html', defaultTemplateProcessor);/**
+const html = (strings, ...values) => new TemplateResult(strings, values, 'html', defaultTemplateProcessor);
+//# sourceMappingURL=lit-html.js.map
+/**
  * @license
  * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
  * This code may only be used under the BSD style license found at
@@ -1223,7 +1245,9 @@ function insertNodeIntoTemplate(template, node, refNode = null) {
             partIndex = nextActiveIndexInTemplateParts(parts, partIndex);
         }
     }
-}/**
+}
+//# sourceMappingURL=modify-template.js.map
+/**
  * @license
  * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
  * This code may only be used under the BSD style license found at
@@ -1490,7 +1514,9 @@ const render$1 = (result, container, options) => {
     if (!hasRendered && needsScoping) {
         window.ShadyCSS.styleElement(container.host);
     }
-};/**
+};
+//# sourceMappingURL=shady-render.js.map
+/**
  * @license
  * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
  * This code may only be used under the BSD style license found at
@@ -2113,7 +2139,9 @@ _a = finalized;
 /**
  * Marks class as having finished creating properties.
  */
-UpdatingElement[_a] = true;/**
+UpdatingElement[_a] = true;
+//# sourceMappingURL=updating-element.js.map
+/**
  * @license
  * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
  * This code may only be used under the BSD style license found at
@@ -2210,7 +2238,9 @@ function property(options) {
     return (protoOrDescriptor, name) => (name !== undefined) ?
         legacyProperty(options, protoOrDescriptor, name) :
         standardProperty(options, protoOrDescriptor);
-}/**
+}
+//# sourceMappingURL=decorators.js.map
+/**
 @license
 Copyright (c) 2019 The Polymer Project Authors. All rights reserved.
 This code may only be used under the BSD style license found at
@@ -2221,7 +2251,9 @@ part of the polymer project is also subject to an additional IP rights grant
 found at http://polymer.github.io/PATENTS.txt
 */
 const supportsAdoptingStyleSheets = ('adoptedStyleSheets' in Document.prototype) &&
-    ('replace' in CSSStyleSheet.prototype);/**
+    ('replace' in CSSStyleSheet.prototype);
+//# sourceMappingURL=css-tag.js.map
+/**
  * @license
  * Copyright (c) 2017 The Polymer Project Authors. All rights reserved.
  * This code may only be used under the BSD style license found at
@@ -2416,7 +2448,9 @@ LitElement['finalized'] = true;
  * @param {String} Element name.
  * @nocollapse
  */
-LitElement.render = render$1;let DiceRoll = class DiceRoll extends LitElement {
+LitElement.render = render$1;
+//# sourceMappingURL=lit-element.js.map
+let DiceRoll = class DiceRoll extends LitElement {
     constructor() {
         super(...arguments);
         this.result = '';
@@ -2469,7 +2503,9 @@ __decorate([
 ], DiceRoll.prototype, "canReset", void 0);
 DiceRoll = __decorate([
     customElement('dice-roll')
-], DiceRoll);let PlayerStatus = class PlayerStatus extends LitElement {
+], DiceRoll);
+//# sourceMappingURL=DiceRoll.js.map
+let PlayerStatus = class PlayerStatus extends LitElement {
     createRenderRoot() {
         return this;
     }
@@ -2485,7 +2521,7 @@ DiceRoll = __decorate([
     render() {
         if (!this.data)
             return null;
-        const { extraTurns, skippedTurns, speedModifiers, moveCondition, mandatorySkips } = this.data.effects;
+        const { extraTurns, skippedTurns, speedModifiers, moveCondition, mandatorySkips, customMandatoryTiles, } = this.data.effects;
         return html `
       <h4>${this.data.name}</h4>
       <ul class="player-status">
@@ -2494,6 +2530,7 @@ DiceRoll = __decorate([
         ${speedModifiers[0] ? html `<li class="label success">Speed modifier: ${speedModifiers[0]}</li>` : null}
         ${skippedTurns ? html `<li class="label error">Missed turn</li>` : null}
         ${!!moveCondition ? html `<li class="label warning">Move condition</li>` : null}
+        ${customMandatoryTiles.length ? html `<li class="label warning">Custom mandatory</li>` : null}
         ${this.data.zoneName ? html `<li class="label info">Zone: ${this.data.zoneName}</li>` : null}
         ${this.data.custom ? this.renderCustomProperties() : null}
       </ul>
@@ -2520,4 +2557,6 @@ PlayerStatus = __decorate([
 };
 PlayerInput = __decorate([
     customElement('player-input')
-], PlayerInput);}());
+], PlayerInput);
+//# sourceMappingURL=PlayerInput.js.map
+}());

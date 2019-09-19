@@ -47,12 +47,14 @@ This app has been tested on Chrome/FF latest versions. It "works" on the latest 
 * Enable or disable dice roll resetting based on a prop
 * Add description to home page
 * Make things a bit prettier
+* add a new game (johto?)
 
 ### M2
 * track game state, store in localstorage in case someone closes the screen
   * state holds events and then instead of listening to the events we listen to when the "current event" in the state changes
 * can load a previous game from localstorage
-* add a new game (johto?)
+* add some sort of debug/dev mode
+  * number the tiles for instance, hardcode rolls, etc. instead of having to change it in code all the time
 
 ### M3
 * game is playable via websockets OR offline

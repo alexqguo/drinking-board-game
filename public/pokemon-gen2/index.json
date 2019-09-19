@@ -14,8 +14,9 @@
       "position": [{"x": 262,"y": 1580},{"x": 448,"y": 1580},{"x": 448,"y": 1764},{"x": 262,"y": 1764}]
     }, {
       "rule": {
-        "displayText": "[[[TODO]]] You're given an Egg! Pick a nearby object and hold it close until it hatches. Anytime you're caught without ittake a drink. Drink 1 now for responsibility. (The Togepi square is now a mandatory stop for you.)",
-        "type": "DisplayRule"
+        "displayText": "You're given an Egg! Pick a nearby object and hold it close until it hatches. Anytime you're caught without it take a drink. Drink 1 now for responsibility. (The Togepi square is now a mandatory stop for you.)",
+        "type": "AddMandatoryRule",
+        "tileIndex": 29
       },
       "position": [{"x": 262,"y": 1392},{"x": 448,"y": 1392},{"x": 448,"y": 1576},{"x": 262,"y": 1576}]
     }, {
@@ -149,7 +150,8 @@
           "numRequired": 1,
           "outcomes": [{
             "type": "SkipTurnRule",
-            "displayText": "Attract; Lose a turn."
+            "displayText": "Attract; Lose a turn.",
+            "numTurns": 1
           }, {
             "type": "RollUntilRule",
             "displayText": "Rollout; Roll a die until you get a 5 or 6, drink each time you don't.",
@@ -299,7 +301,7 @@
     }, {
       "rule": {
         "displayText": "Geodude used Magnitude! Take as many drinks as you want, the person to the left of you must take that many minus 1. Continue this until you have gone around the table.",
-        "type": "DisplayRule",
+        "type": "DisplayRule"
       },
       "zone": "MT. MORTAR",
       "position": [{"x": 1203,"y": 453}, {"x": 1387,"y": 453}, {"x": 1387,"y": 638}, {"x": 1203,"y": 638}]
@@ -333,6 +335,7 @@
           "outcomes": [{
             "type": "SkipNextMandatoryRule",
             "displayText": "Caught Suicune! Bypass the next gold square!",
+            "numSpaces": 1,
             "criteria": [3]
           }]
         }
@@ -362,92 +365,91 @@
         "displayText": "MAHOGANY GYM. Ice Pokemon are cool. If your drink is ice cold, drink 2, if not, drink 4.",
         "type": "DisplayRule"
       },
-      "zone": "SAFARI ZONE",
       "position": [{"x": 1579,"y": 1578}, {"x": 1763,"y": 1578}, {"x": 1763,"y": 1762}, {"x": 1579,"y": 1762}]
     }, {
       "rule": {
-        "displayText": "Roll the die. If it's 1-3 Chansey eludes you, drink 1. If 4-6, you capture Chansey, give 2.",
+        "displayText": "RADIO TOWER. The infamous Team Rocket has now taken control of the Radio Tower in Goldenrod! I'm not sure what their plan is, but it probably involves Nickelback. Turn on the radio now and roll a die before each turn:\n1-3: Drink that many.\n4-6: Change the station.",
+        "type": "DisplayRule"
+      },
+      "zone": "RADIO TOWER",
+      "position": [{"x": 1390,"y": 1578}, {"x": 1574,"y": 1578}, {"x": 1574,"y": 1762}, {"x": 1390,"y": 1762}]
+    }, {
+      "rule": {
+        "displayText": "Rocket Grunt challenges you to a Pokemon battle! Wait... 5 Rattata? Is this guy kidding? Just drink as many as you want.",
+        "type": "DisplayRule"
+      },
+      "zone": "RADIO TOWER",
+      "position": [{"x": 1203,"y": 1578}, {"x": 1387,"y": 1578}, {"x": 1387,"y": 1762}, {"x": 1203,"y": 1762}]
+    }, {
+      "rule": {
+        "displayText": "SILVER. I swear if I see this guy one more time it will be the last! Drink for each player in the game plus 1.",
+        "type": "DisplayRule"
+      },
+      "zone": "RADIO TOWER",
+      "position": [{"x": 1016,"y": 1578}, {"x": 1200,"y": 1578}, {"x": 1200,"y": 1762}, {"x": 1016,"y": 1762}]
+    }, {
+      "rule": {
+        "displayText": "Grimer used Sludge Bomb! Have every player combine their drinks in a glass and you finish the drink!",
+        "type": "DisplayRule"
+      },
+      "zone": "RADIO TOWER",
+      "position": [{"x": 829,"y": 1578}, {"x": 1013,"y": 1578}, {"x": 1013,"y": 1762}, {"x": 829,"y": 1762}]
+    }, {
+      "rule": {
+        "displayText": "ROCKET EXECUTIVE. This guy means business! Roll a die, drink half, give half rounded up.",
         "type": "DiceRollRule",
         "diceRolls": {
           "numRequired": 1
         }
       },
-      "zone": "SAFARI ZONE",
-      "position": [{"x": 1390,"y": 1578}, {"x": 1574,"y": 1578}, {"x": 1574,"y": 1762}, {"x": 1390,"y": 1762}]
-    }, {
-      "mandatory": true,
-      "rule": {
-        "displayText": "FUCHSIA GYM. Poison Pokemon are Toxic! Better get intoxicated! Drink 3.",
-        "type": "DisplayRule"
-      },
-      "position": [{"x": 1203,"y": 1578}, {"x": 1387,"y": 1578}, {"x": 1387,"y": 1762}, {"x": 1203,"y": 1762}]
-    }, {
-      "rule": {
-        "displayText": "Electrode used Explosion! Everybody finish their drinks.",
-        "type": "DisplayRule"
-      },
-      "position": [{"x": 1016,"y": 1578}, {"x": 1200,"y": 1578}, {"x": 1200,"y": 1762}, {"x": 1016,"y": 1762}]
-    }, {
-      "rule": {
-        "displayText": "Electabuzz used Thunder Punch! You're paralyzed; miss your next turn.",
-        "type": "SkipTurnRule",
-        "numTurns": 1
-      },
-      "position": [{"x": 829,"y": 1578}, {"x": 1013,"y": 1578}, {"x": 1013,"y": 1762}, {"x": 829,"y": 1762}]
-    }, {
-      "rule": {
-        "displayText": "Poliwag used Hydro Pump! Shotgun a beer.",
-        "type": "DisplayRule"
-      },
+      "zone": "RADIO TOWER",
       "position": [{"x": 640,"y": 1578}, {"x": 826,"y": 1578}, {"x": 826,"y": 1762}, {"x": 640,"y": 1762}]
     }, {
       "rule": {
-        "displayText": "Seaking used Waterfall! ...do a waterfall!",
+        "displayText": "Lickitung used Lick! Give 2 and stick your tongue out until your next turn.",
         "type": "DisplayRule"
       },
       "position": [{"x": 640,"y": 1389}, {"x": 824,"y": 1389}, {"x": 824,"y": 1573}, {"x": 640,"y": 1573}]
     }, {
       "rule": {
-        "displayText": "A wild Missingno! Roll 3 times. Get a 5 or 6, and you continue. If not, you glitched. Restart at Pallet Town.",
+        "displayText": "The Legendary Dog Entei! Roll a 3 to catch it and bypass the next gold square! Otherwise feel the burn and take a high-proof shot!",
         "type": "DiceRollRule",
         "diceRolls": {
-          "numRequired": 3,
+          "numRequired": 1,
           "outcomes": [{
-            "type": "TeleportRule",
-            "tileIndex": 0,
-            "criteria": [1, 2, 3, 4]
-          }],
-          "any": {
-            "type": "DisplayRule",
-            "displayText": "Phew",
-            "criteria": [5, 6]
-          }
+            "type": "SkipNextMandatoryRule",
+            "displayText": "Caught Entei! Bypass the next gold square!",
+            "numSpaces": 1,
+            "criteria": [3]
+          }]
         }
       },
       "position": [{"x": 640,"y": 1202}, {"x": 824,"y": 1202}, {"x": 824,"y": 1388}, {"x": 640,"y": 1388}]
     }, {
-      "mandatory": true,
       "rule": {
-        "displayText": "CINNABAR GYM. Roll a die. Even, roll again. Odd, drink twice as many times as you rolled evens.",
-        "type": "RollUntilRule",
-        "criteria": [1, 3, 5]
+        "displayText": "A Cooltrainer challenges you to a battle! This guy is way cooler than you, drink 3 in envy.",
+        "type": "DisplayRule"
       },
       "position": [{"x": 640,"y": 1013}, {"x": 824,"y": 1013}, {"x": 824,"y": 1200}, {"x": 640,"y": 1200}]
     }, {
       "rule": {
-        "displayText": "Koffing used Haze! If there's anything nearby to smoke, smoke it to avoid taking 2 drinks.",
+        "displayText": "Bellossum used Solar Beam! Take in up to 3 drinks this turn. Next turn give twice that many!",
         "type": "DisplayRule"
       },
       "position": [{"x": 640,"y": 826}, {"x": 824,"y": 826}, {"x": 824,"y": 1010}, {"x": 640,"y": 1010}]
     }, {
       "rule": {
-        "displayText": "You resurrected a Fossil Pokemon! Everyone older than you drinks 2.",
-        "type": "DisplayRule"
+        "displayText": "Delibird used Present! Roll a die.\n1-3: drink that many\n4-6: give that many",
+        "type": "DiceRollRule",
+        "diceRolls": {
+          "numRequired": 1
+        }
       },
       "position": [{"x": 640,"y": 639}, {"x": 824,"y": 639}, {"x": 824,"y": 823}, {"x": 640,"y": 823}]
     }, {
+      "mandatory": true,
       "rule": {
-        "displayText": "You throw a Pokeball! If your favorite Pokemon is on the board, roll a 1-3 to catch it! Roll a 4-6 and it got away, drink 3. If your favorite is not on the board, sadly drink 3.",
+        "displayText": "BLACKTHORN GYM. First, drink 2. Then, roll a die.\nEven: drink 2.\nOdd: drink 6.",
         "type": "DiceRollRule",
         "diceRolls": {
           "numRequired": 1
@@ -456,79 +458,77 @@
       "position": [{"x": 829,"y": 639}, {"x": 1013,"y": 639}, {"x": 1013,"y": 823}, {"x": 829,"y": 823}]
     }, {
       "rule": {
-        "displayText": "Persian used Fury Swipes! Roll a die, and give out that many drinks.",
-        "type": "DiceRollRule",
-        "diceRolls": {
-          "numRequired": 1
-        }
+        "displayText": "Skarmory used Steel Wing! Drink 3! All drinks you receive while here bounce to the player on your right.",
+        "type": "DisplayRule"
       },
       "position": [{"x": 1016,"y": 639}, {"x": 1200,"y": 639}, {"x": 1200,"y": 823}, {"x": 1016,"y": 823}]
     }, {
-      "mandatory": true,
       "rule": {
-        "displayText": "VIRIDIAN GYM. First, take a drink. Then, if you're a guy, guys take 3. If you're a girl, girls take 3.",
+        "displayText": "Wartortle used Skull Bash! Crush an empty beer can against your head to avoid taking 3 drinks and losing your next turn. If you can, give those 3 to one person.",
         "type": "DisplayRule"
       },
       "position": [{"x": 1203,"y": 639}, {"x": 1387,"y": 639}, {"x": 1387,"y": 823}, {"x": 1203,"y": 823}]
     }, {
       "rule": {
-        "displayText": "Fearow used Mirror Move!. Drink what the last person did during his/her turn.",
-        "type": "DisplayRule"
+        "displayText": "It's the Legendary Dog Raikou! Roll a 3 to catch it and bypass the next gold square! Otherwise get zapped with a bomb shot!",
+        "type": "DiceRollRule",
+        "diceRolls": {
+          "numRequired": 1,
+          "outcomes": [{
+            "type": "SkipNextMandatoryRule",
+            "displayText": "Caught Raikou! Bypass the next gold square!",
+            "numSpaces": 1,
+            "criteria": [3]
+          }]
+        }
       },
       "position": [{"x": 1390,"y": 639}, {"x": 1574,"y": 639}, {"x": 1574,"y": 823}, {"x": 1390,"y": 823}]
     }, {
       "rule": {
-        "displayText": "Graveler used Defense Curl! Lose two turns, but you do not have to take any drinks until you go again.",
-        "type": "SkipTurnRule",
-        "numTurns": 2
+        "displayText": "Aipom used Baton Pass! As long as you are on this square, you may pass any drinks you are given to another player.",
+        "type": "DisplayRule"
       },
       "position": [{"x": 1390,"y": 828}, {"x": 1574,"y": 828}, {"x": 1574,"y": 1012}, {"x": 1390,"y": 1012}]
     }, {
       "rule": {
-        "displayText": "Gyarados used Dragon Rage! Take 4 drinks unless you landed on magikarp, in which case you give 4 drinks.",
+        "displayText": "Ursaring woke up! And now he's pissed! Thanks asshole. Drink as many as the group decides and apologize.",
         "type": "DisplayRule"
       },
       "position": [{"x": 1390,"y": 1015}, {"x": 1574,"y": 1015}, {"x": 1574,"y": 1199}, {"x": 1390,"y": 1199}]
     }, {
       "rule": {
-        "displayText": "Dragonite used Hyper Beam! Give 5 drinks, but lose a turn to recharge.",
-        "type": "SkipTurnRule",
-        "numTurns": 1
+        "displayText": "Hitmontop used Rapid Spin! Spin in place once for each bottle, can, etc. on the table. If you don't fall over, everyone drinks!",
+        "type": "DisplayRule"
       },
       "position": [{"x": 1390,"y": 1202}, {"x": 1574,"y": 1202}, {"x": 1574,"y": 1388}, {"x": 1390,"y": 1388}]
     }, {
       "mandatory": true,
       "rule": {
-        "displayText": "Gotta catch 'em all! Roll a die. 1-3: Why are you throwing Great Balls at it? Take a drink! 4-6: You got one! You may only move on once you've caught all 3 birds.",
-        "type": "ApplyMoveConditionRule",
-        "condition": {
-          "criteria": [4, 5, 6],
-          "numSuccessesRequired": 3,
-          "immediate": true
-        }
+        "displayText": "SILVER. Time to get rid of this bastard once and for all. Drink for each player in the game times 2.",
+        "type": "DisplayRule"
       },
       "position": [{"x": 1390,"y": 1391}, {"x": 1574,"y": 1391}, {"x": 1574,"y": 1577}, {"x": 1390,"y": 1577}]
     }, {
       "mandatory": true,
       "rule": {
-        "displayText": "THE ELITE FOUR. Challenge the land's greatest trainers: the Elite Four! Roll a 4 to defeat the Elite Four! For any other number, drink 4!",
+        "displayText": "ELITE FOUR. Challenge the greatest trainers in the Land: the Elite Four! Roll 4 dice. If all dice are 4 or under you defeat the Elite Four! Otherwise, drink 4 and end your turn.",
         "type": "DiceRollRule",
         "diceRolls": {
-          "numRequired": 1
+          "numRequired": 4
         }
       },
       "position": [{"x": 1201,"y": 1391}, {"x": 1385,"y": 1391}, {"x": 1385,"y": 1577}, {"x": 1201,"y": 1577}]
     }, {
       "mandatory": true,
       "rule": {
-        "displayText": "CHAMPION GARY. Finish a full drink to take down this bastard for the last time! You cannot move on until your drink is finished.",
+        "displayText": "CHAMPION LANCE. Finish a full drink to beat this dude and take his title! You cannot move on until your drink is finished.",
         "type": "DisplayRule"
       },
       "position": [{"x": 1014,"y": 1391}, {"x": 1198,"y": 1391}, {"x": 1198,"y": 1577}, {"x": 1014,"y": 1577}]
     }, {
       "mandatory": true,
       "rule": {
-        "displayText": "POKEMON MASTER. Throw that masterball and take a victory drink. All other players toast to your glory! You are a Pokemon Master!",
+        "displayText": "POKEMON MASTER! Throw that Master Ball and take a victory drink. All other players toast to your glory! You are a Pokemon Master!",
         "type": "GameOverRule"
       },
       "position": [{"x": 827,"y": 1391}, {"x": 1011,"y": 1391}, {"x": 1011,"y": 1577}, {"x": 827,"y": 1577}]
@@ -544,7 +544,21 @@
       }
     }, {
       "name": "MT. MORTAR",
-      "type": "passive"
+      "type": "passive",
+      "rule": {
+        "type": "DisplayRule",
+        "displayText": "todo"
+      }
+    }, {
+      "name": "RADIO TOWER",
+      "type": "active",
+      "rule": {
+        "displayText": "The infamous Team Rocket has now taken control of the Radio Tower in Goldenrod! I'm not sure what their plan is, but it probably involves Nickelback. Turn on the radio now and roll a die before each turn:\n1-3: Drink that many.\n4-6: Change the station.",
+        "type": "DiceRollRule",
+        "diceRolls": {
+          "numRequired": 1
+        }
+      }
     }
   ]
 }

@@ -9,13 +9,15 @@ class Tile {
   center: Position;
   zone: string;
   currentPlayers: Set<Player>;
+  tileIndex: number;
 
-  constructor(isMandatory: boolean, rule: Rule, coordinates: Position[], zone: string) {
+  constructor(isMandatory: boolean, rule: Rule, coordinates: Position[], zone: string, tileIndex: number) {
     this.isMandatory = isMandatory;
     this.rule = rule;
     this.coordinates = coordinates;
     this.zone = zone;
     this.currentPlayers = new Set();
+    this.tileIndex = tileIndex;
   }
 
   // Generates an average position based on the corners of the tile

@@ -2416,22 +2416,37 @@ LitElement['finalized'] = true;
  * @param {String} Element name.
  * @nocollapse
  */
-LitElement.render = render$1;let PokemonSelector = class PokemonSelector extends LitElement {
+LitElement.render = render$1;const starterNames = {
+    pikachu: 'pikachu',
+    squirtle: 'squirtle',
+    charmander: 'charmander',
+    bulbasaur: 'bulbasaur',
+};
+const starterStrengths = {
+    [starterNames.pikachu]: starterNames.squirtle,
+    [starterNames.squirtle]: starterNames.charmander,
+    [starterNames.charmander]: starterNames.bulbasaur,
+    [starterNames.bulbasaur]: starterNames.squirtle,
+};let PokemonSelector = class PokemonSelector extends LitElement {
     constructor() {
         super();
+        this.starterNames = Object.values(starterNames);
         this.selectedPokemon = {};
     }
     createRenderRoot() {
         return this;
+    }
+    renderStarterOption(starterName) {
+        return html `
+      <option value="${starterName}">${starterName}</option>
+    `;
     }
     renderPlayerSelection(name) {
         return html `
       <label for="pokemon-select-${name}">${name}</label>
       <select @change="${this.handleSelect}" id="pokemon-select-${name}" data-player-name="${name}">
         <option value="" selected disabled hidden>Choose your Pokemon!</option>
-        <option value="charmander">Charmander</option>
-        <option value="squirtle">Squirtle</option>
-        <option value="bulbasaur">Bulbasaur</option>
+        ${this.starterNames.map((val) => this.renderStarterOption(val))}
       </select>
 
       <br><br>
@@ -2468,23 +2483,15 @@ __decorate([
     property({ type: Array })
 ], PokemonSelector.prototype, "playerNames", void 0);
 __decorate([
+    property({ type: Array })
+], PokemonSelector.prototype, "starterNames", void 0);
+__decorate([
     property({ type: Boolean })
 ], PokemonSelector.prototype, "canSubmit", void 0);
 PokemonSelector = __decorate([
     customElement('pokemon-selector')
 ], PokemonSelector);
-var PokemonSelector$1 = PokemonSelector;const starterNames = {
-    pikachu: 'pikachu',
-    squirtle: 'squirtle',
-    charmander: 'charmander',
-    bulbasaur: 'bulbasaur',
-};
-const starterStrengths = {
-    [starterNames.pikachu]: starterNames.squirtle,
-    [starterNames.squirtle]: starterNames.charmander,
-    [starterNames.charmander]: starterNames.bulbasaur,
-    [starterNames.bulbasaur]: starterNames.squirtle,
-};let TrainerBattle = class TrainerBattle extends LitElement {
+var PokemonSelector$1 = PokemonSelector;let TrainerBattle = class TrainerBattle extends LitElement {
     constructor() {
         super();
         this.results = {};
@@ -2582,7 +2589,9 @@ if (w.drinking) {
         const frag = document.createDocumentFragment();
         const pokemonSelector = document.createElement('pokemon-selector');
         const playerNames = Game.players.map((p) => p.name);
+        const pokemonNames = [starterNames.charmander, starterNames.bulbasaur, starterNames.squirtle];
         pokemonSelector.setAttribute('playerNames', JSON.stringify(playerNames));
+        pokemonSelector.setAttribute('starterNames', JSON.stringify(pokemonNames));
         pokemonSelector.addEventListener('pokemon-selected', (e) => {
             e.detail.pokemon.forEach((pokemon, i) => {
                 Game.players[i].custom.pokemon = pokemon;

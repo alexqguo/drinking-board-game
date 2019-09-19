@@ -17,6 +17,7 @@ import {
   ChoiceRule,
   SkipNextMandatoryRule,
   ChallengeRule,
+  AddMandatoryRule,
 } from '../rules';
 
 const RULE_MAPPINGS: { 
@@ -36,17 +37,18 @@ const RULE_MAPPINGS: {
   ChoiceRule,
   SkipNextMandatoryRule,
   ChallengeRule,
+  AddMandatoryRule,
 };
 
 export function createTiles(tilesJson: JsonTile[]): Tile[] {
-  return tilesJson.map((tileJson: JsonTile) => {
+  return tilesJson.map((tileJson: JsonTile, i: number) => {
     const { mandatory, rule, position, zone } = tileJson;
 
     if (!rule) {
       throw 'No rule specified';
     }
 
-    return new Tile(mandatory, createRule(rule), position, zone);
+    return new Tile(mandatory, createRule(rule), position, zone, i);
   });
 }
 

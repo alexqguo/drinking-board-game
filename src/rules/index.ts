@@ -13,3 +13,4 @@ export { default as RollUntilRule } from './RollUntilRule';
 export { default as ChoiceRule } from './ChoiceRule';
 export { default as SkipNextMandatoryRule } from './SkipNextMandatoryRule';
 export { default as ChallengeRule } from './ChallengeRule';
+export { default as AddMandatoryRule } from './AddMandatoryRule';

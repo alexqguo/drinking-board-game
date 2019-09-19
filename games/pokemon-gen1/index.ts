@@ -14,7 +14,9 @@ if (w.drinking) {
     const frag: DocumentFragment = document.createDocumentFragment();
     const pokemonSelector: HTMLElement = document.createElement('pokemon-selector');
     const playerNames: string[] = Game.players.map((p: any) => p.name);
+    const pokemonNames: string[] = [starterNames.charmander, starterNames.bulbasaur, starterNames.squirtle];
     pokemonSelector.setAttribute('playerNames', JSON.stringify(playerNames));
+    pokemonSelector.setAttribute('starterNames', JSON.stringify(pokemonNames));
     pokemonSelector.addEventListener('pokemon-selected', (e: CustomEvent) => {
       e.detail.pokemon.forEach((pokemon: string, i: number) => {
         Game.players[i].custom.pokemon = pokemon;

@@ -28,7 +28,8 @@ export class PlayerStatus extends LitElement {
       skippedTurns,
       speedModifiers,
       moveCondition,
-      mandatorySkips
+      mandatorySkips,
+      customMandatoryTiles,
     } = this.data.effects;
 
     return html`
@@ -39,6 +40,7 @@ export class PlayerStatus extends LitElement {
         ${speedModifiers[0] ? html`<li class="label success">Speed modifier: ${speedModifiers[0]}</li>` : null}
         ${skippedTurns ? html`<li class="label error">Missed turn</li>` : null}
         ${!!moveCondition ? html`<li class="label warning">Move condition</li>` : null}
+        ${customMandatoryTiles.length ? html`<li class="label warning">Custom mandatory</li>` : null}
         ${this.data.zoneName ? html`<li class="label info">Zone: ${this.data.zoneName}</li>` : null}
         ${this.data.custom ? this.renderCustomProperties() : null}
       </ul>
