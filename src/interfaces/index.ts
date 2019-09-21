@@ -87,6 +87,7 @@ export interface MoveCondition {
   criteria: number[];
   numSuccessesRequired: number;
   immediate?: boolean;
+  consequence?: JsonRule;
 }
 
 export interface DiceRoll {

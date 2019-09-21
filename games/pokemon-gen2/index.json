@@ -565,11 +565,19 @@
   ],
   "zones": [
     {
-      "name": "ILEX FOREST (todo)",
-      "type": "passive",
+      "name": "ILEX FOREST",
+      "type": "active",
       "rule": {
-        "type": "DisplayRule",
-        "displayText": "This place is a little eerie. Try not to get lost! When you roll to move, if you roll a 5 or 6, drink 1 and return to the start of Ilex Forest."
+        "type": "ApplyMoveConditionRule",
+        "displayText": "This place is a little eerie. Try not to get lost! When you roll to move, if you roll a 5 or 6, drink 1 and return to the start of Ilex Forest.",
+        "condition": {
+          "criteria": [1, 2, 3, 4],
+          "consequence": {
+            "type": "TeleportRule",
+            "displayText": "Drink 1 and return to the start of Ilex Forest",
+            "tileIndex": 14
+          }
+        }
       }
     }, {
       "name": "MT. MORTAR",

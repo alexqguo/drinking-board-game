@@ -48,6 +48,7 @@ This app has been tested on Chrome/FF latest versions. It "works" on the latest 
 * Add description to home page
 * Make things a bit prettier
 * add a new game (johto?)
+* small util for adding document fragments
 
 ### M2
 * track game state, store in localstorage in case someone closes the screen

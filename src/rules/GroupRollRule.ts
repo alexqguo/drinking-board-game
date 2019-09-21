@@ -17,6 +17,7 @@ export default class GroupRollRule extends Rule {
   execute(closedCb: Function) {
     super.execute(closedCb);
     const playerNames = Game.players.map((p: Player) => p.name);
+
     const frag: DocumentFragment = document.createDocumentFragment();
     const display: HTMLDivElement = document.createElement('div');
     display.innerText = this.displayText;
@@ -24,8 +25,8 @@ export default class GroupRollRule extends Rule {
     el.setAttribute('players', JSON.stringify(playerNames));
     frag.appendChild(display);
     frag.appendChild(el);
-    Game.modal.openWithFragment(Game.currentPlayer.name, frag);
 
+    Game.modal.openWithFragment(Game.currentPlayer.name, frag);
     el.addEventListener('done', () => {
       Game.modal.enableClose(); 
     });

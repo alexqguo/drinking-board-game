@@ -8,6 +8,9 @@ export class GroupRoll extends LitElement {
   @property({ type: Array })
   players: string[];
 
+  @property({ type: String })
+  displayText: string;
+
   createRenderRoot() {
     return this;
   }
@@ -25,6 +28,8 @@ export class GroupRoll extends LitElement {
 
   render() {
     return html`
+      ${this.displayText}
+
       <div style="font-size: 1rem">
         ${this.players.map((p: string) => this.renderPlayer(p))}
       </div>

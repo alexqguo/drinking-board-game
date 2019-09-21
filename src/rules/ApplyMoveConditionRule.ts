@@ -2,10 +2,13 @@ import Rule from './Rule';
 import { JsonRule, MoveCondition, PlayerTarget } from '../interfaces';
 import Player from '../engine/Player';
 import Game from '../engine/Game';
+import { createRule } from '../engine/BoardJsonConverter';
+import GameEvents, { TURN_END } from '../engine/GameEvents';
 
 class ApplyMoveConditionRule extends Rule {
   condition: MoveCondition;
   successes: Map<Player, number>;
+  consequence: Rule;
 
   constructor(json: JsonRule) {
     super(json);
@@ -14,6 +17,10 @@ class ApplyMoveConditionRule extends Rule {
     // Tracks successes per player for this particular tile/rule instance. One success = one turn
     this.successes = new Map();
     this.condition = condition;
+
+    if (condition.consequence) {
+      this.consequence = createRule(condition.consequence);
+    }
   }
 
   execute(closedCb: Function): void {
@@ -42,6 +49,12 @@ class ApplyMoveConditionRule extends Rule {
               if (!this.condition.numSuccessesRequired) {
                 p.effects.moveCondition = null;
                 this.successes.delete(p);
+              }
+
+              if (this.consequence) {
+                this.consequence.execute(() => {
+                  // Need to override the closedCb, otherwise the next player's turn will get skipped
+                });
               }
 
               return false;

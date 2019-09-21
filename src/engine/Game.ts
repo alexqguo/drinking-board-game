@@ -141,6 +141,7 @@ class Game {
       if (!canMove) {
         // So that it doesn't jump immediately. Not sure of a good way to do this right now.
         setTimeout(() => {
+          this.modal.close();
           GameEvents.trigger(TURN_END);
         }, 1200);
         next();
@@ -169,7 +170,7 @@ class Game {
     
     // Uncomment this section for testing
     if (this.currentPlayer.name === 'asdf' && !(window as any).asdf) {
-      numSpacesToAdvance = 22;
+      numSpacesToAdvance = 15;
       (window as any).asdf = true;
     }
 
