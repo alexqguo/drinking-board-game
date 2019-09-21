@@ -1,5 +1,5 @@
 import { LitElement, html, customElement, property } from 'lit-element';
-import { starterStrengths, Trainer, BattleResults } from './constants';
+import { Trainer, BattleResults } from './constants';
 
 @customElement('trainer-battle')
 export default class TrainerBattle extends LitElement {
@@ -8,8 +8,17 @@ export default class TrainerBattle extends LitElement {
   @property({ type: Object })
   data: Trainer[];
 
+  @property({ type: Object })
+  starterStrengths: { [key: string]: string };
+
   @property({ type: String })
   winners: Trainer[];
+
+  @property({ type: String })
+  battleSrc: string;
+
+  @property({ type: String })
+  victorySrc: string;
 
   constructor() {
     super();
@@ -92,6 +101,7 @@ export default class TrainerBattle extends LitElement {
 
   render() {
     return html`
+      <audio autoplay loop src="${this.winners ? this.victorySrc : this.battleSrc}"></audio>
       <div style="font-size: 1rem">
         ${this.data.map((player: Trainer) => this.renderPlayer(player))}
         ${this.winners && this.renderWinCondition()}
@@ -101,7 +111,7 @@ export default class TrainerBattle extends LitElement {
 
   firstUpdated() {
     this.data.forEach((player: Trainer) => {
-      const weakPokemon: string = starterStrengths[player.starterName];
+      const weakPokemon: string = this.starterStrengths[player.starterName];
       const hasStrength: boolean = this.data.filter((p: Trainer) => p.starterName === weakPokemon).length > 0;
       player.numRolls = hasStrength ? 2 : 1;
       this.results[player.playerName] = [];

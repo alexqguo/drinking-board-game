@@ -24,7 +24,9 @@ const createCustomGameConfiguration = (prefix) => {
       copy({
         targets: [
           { src: `games/${prefix}/index.png`, dest: `public/${prefix}` },
-          { src: `games/${prefix}/index.json`, dest: `public/${prefix}` }
+          { src: `games/${prefix}/index.json`, dest: `public/${prefix}` },
+          { src: `games/${prefix}/battle.mp3`, dest: `public/${prefix}`},
+          { src: `games/${prefix}/victory.mp3`, dest: `public/${prefix}`},
         ]
       }),
     ],

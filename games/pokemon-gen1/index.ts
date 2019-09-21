@@ -1,6 +1,6 @@
 import PokemonSelector from './PokemonSelector';
 import TrainerBattle from './TrainerBattle';
-import { starterNames } from './constants';
+import { starterNames, starterStrengths } from './constants';
 
 // Small hack to ensure they're included in the bundle without having to complicate rollup config
 console.info(`[pokemon-gen1] including web components ${PokemonSelector.name}, ${TrainerBattle.name}`);
@@ -58,7 +58,10 @@ if (w.drinking) {
           starterName: p.custom.pokemon,
         }
       });
+      battle.setAttribute('victorySrc', 'public/pokemon-gen1/victory.mp3');
+      battle.setAttribute('battleSrc', 'public/pokemon-gen1/battle.mp3');
       battle.setAttribute('data', JSON.stringify(componentArgs));
+      battle.setAttribute('starterStrengths', JSON.stringify(starterStrengths));
       battle.addEventListener('battle-ended', (e: CustomEvent) => {
         Game.modal.enableClose();
         resolve();
