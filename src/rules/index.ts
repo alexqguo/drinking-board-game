@@ -16,3 +16,4 @@ export { default as ChallengeRule } from './ChallengeRule';
 export { default as AddMandatoryRule } from './AddMandatoryRule';
 export { default as ReverseTurnOrderRule } from './ReverseTurnOrderRule';
 export { default as ProxyRule } from './ProxyRule';
+export { default as GroupRollRule } from './GroupRollRule';
