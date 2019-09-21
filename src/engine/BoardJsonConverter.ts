@@ -18,6 +18,7 @@ import {
   SkipNextMandatoryRule,
   ChallengeRule,
   AddMandatoryRule,
+  ReverseTurnOrderRule,
 } from '../rules';
 
 const RULE_MAPPINGS: { 
@@ -38,6 +39,7 @@ const RULE_MAPPINGS: {
   SkipNextMandatoryRule,
   ChallengeRule,
   AddMandatoryRule,
+  ReverseTurnOrderRule,
 };
 
 export function createTiles(tilesJson: JsonTile[]): Tile[] {

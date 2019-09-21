@@ -15,17 +15,26 @@
         total.y /= this.coordinates.length;
         return total;
     }
-}class Zone {
+}
+//# sourceMappingURL=Tile.js.map
+class Zone {
     constructor(name, type, rule) {
         this.name = name;
         this.type = type;
         this.rule = rule;
     }
-}var Direction;
+}
+//# sourceMappingURL=Zone.js.map
+var Direction;
 (function (Direction) {
     Direction["forward"] = "forward";
     Direction["back"] = "back";
 })(Direction || (Direction = {}));
+var TurnIncrementer;
+(function (TurnIncrementer) {
+    TurnIncrementer[TurnIncrementer["normal"] = 1] = "normal";
+    TurnIncrementer[TurnIncrementer["reverse"] = -1] = "reverse";
+})(TurnIncrementer || (TurnIncrementer = {}));
 var ZoneType;
 (function (ZoneType) {
     ZoneType["passive"] = "passive";
@@ -41,7 +50,9 @@ var PlayerTarget;
     PlayerTarget["custom"] = "custom";
     PlayerTarget["self"] = "self";
     PlayerTarget["allOthers"] = "allOthers";
-})(PlayerTarget || (PlayerTarget = {}));const GAME_START = 'GAME_START';
+})(PlayerTarget || (PlayerTarget = {}));
+//# sourceMappingURL=index.js.map
+const GAME_START = 'GAME_START';
 const TURN_START = 'TURN_START';
 const LOST_TURN_START = 'LOST_TURN_START';
 const ROLL_START = 'ROLL_START';
@@ -97,7 +108,9 @@ class GameEvents {
         }
     }
 }
-const gameEventsInstance = new GameEvents();var GameEvents$1 = /*#__PURE__*/Object.freeze({GAME_START: GAME_START,TURN_START: TURN_START,LOST_TURN_START: LOST_TURN_START,ROLL_START: ROLL_START,ROLL_END: ROLL_END,MOVE_START: MOVE_START,MOVE_END: MOVE_END,RULE_TRIGGER: RULE_TRIGGER,RULE_END: RULE_END,TURN_END: TURN_END,GAME_OVER: GAME_OVER,TURN_SKIP: TURN_SKIP,'default': gameEventsInstance});class Rule {
+const gameEventsInstance = new GameEvents();
+//# sourceMappingURL=GameEvents.js.map
+var GameEvents$1 = /*#__PURE__*/Object.freeze({GAME_START: GAME_START,TURN_START: TURN_START,LOST_TURN_START: LOST_TURN_START,ROLL_START: ROLL_START,ROLL_END: ROLL_END,MOVE_START: MOVE_START,MOVE_END: MOVE_END,RULE_TRIGGER: RULE_TRIGGER,RULE_END: RULE_END,TURN_END: TURN_END,GAME_OVER: GAME_OVER,TURN_SKIP: TURN_SKIP,'default': gameEventsInstance});class Rule {
     constructor(json) {
         const { displayText, type, playerTarget, criteria } = json;
         this.validateRequired(type);
@@ -150,7 +163,9 @@ const gameEventsInstance = new GameEvents();var GameEvents$1 = /*#__PURE__*/Obje
             throw new Error('At least one valid value is required');
         }
     }
-}class DisplayRule extends Rule {
+}
+//# sourceMappingURL=Rule.js.map
+class DisplayRule extends Rule {
     constructor(json) {
         super(json);
         this.validateRequired(json.displayText);
@@ -159,7 +174,9 @@ const gameEventsInstance = new GameEvents();var GameEvents$1 = /*#__PURE__*/Obje
         super.execute(closedCb);
         gameInstance.modal.enableClose();
     }
-}class MoveRule extends Rule {
+}
+//# sourceMappingURL=DisplayRule.js.map
+class MoveRule extends Rule {
     constructor(json) {
         super(json);
         const { playerTarget, direction, numSpaces, diceRolls, tileIndex } = json;
@@ -197,7 +214,9 @@ const gameEventsInstance = new GameEvents();var GameEvents$1 = /*#__PURE__*/Obje
         gameInstance.painter.drawPlayers();
         gameInstance.modal.close();
     }
-}class SkipTurnRule extends Rule {
+}
+//# sourceMappingURL=MoveRule.js.map
+class SkipTurnRule extends Rule {
     constructor(json) {
         super(json);
         const { numTurns } = json;
@@ -209,7 +228,9 @@ const gameEventsInstance = new GameEvents();var GameEvents$1 = /*#__PURE__*/Obje
         gameInstance.currentPlayer.effects.skippedTurns += this.numTurns;
         gameInstance.modal.enableClose();
     }
-}class SpeedModifierRule extends Rule {
+}
+//# sourceMappingURL=SkipTurnRule.js.map
+class SpeedModifierRule extends Rule {
     constructor(json) {
         super(json);
         const { modifier, numTurns } = json;
@@ -248,7 +269,9 @@ const gameEventsInstance = new GameEvents();var GameEvents$1 = /*#__PURE__*/Obje
                 throw `Operation ${operation} not supported.`;
         }
     }
-}class TeleportRule extends Rule {
+}
+//# sourceMappingURL=SpeedModifierRule.js.map
+class TeleportRule extends Rule {
     constructor(json) {
         super(json);
         const { tileIndex } = json;
@@ -261,7 +284,9 @@ const gameEventsInstance = new GameEvents();var GameEvents$1 = /*#__PURE__*/Obje
         gameInstance.painter.drawPlayers();
         gameInstance.modal.enableClose();
     }
-}class GameOverRule extends Rule {
+}
+//# sourceMappingURL=TeleportRule.js.map
+class GameOverRule extends Rule {
     constructor(json) {
         super(json);
     }
@@ -270,7 +295,9 @@ const gameEventsInstance = new GameEvents();var GameEvents$1 = /*#__PURE__*/Obje
         gameInstance.gameOver();
         gameInstance.modal.enableClose();
     }
-}class ExtraTurnRule extends Rule {
+}
+//# sourceMappingURL=GameOverRule.js.map
+class ExtraTurnRule extends Rule {
     constructor(json) {
         super(json);
     }
@@ -279,7 +306,9 @@ const gameEventsInstance = new GameEvents();var GameEvents$1 = /*#__PURE__*/Obje
         gameInstance.currentPlayer.effects.extraTurns++;
         gameInstance.modal.enableClose();
     }
-}class DrinkDuringLostTurnsRule extends Rule {
+}
+//# sourceMappingURL=ExtraTurnRule.js.map
+class DrinkDuringLostTurnsRule extends Rule {
     constructor(json) {
         super(json);
         this.diceRolls = json.diceRolls;
@@ -291,7 +320,9 @@ const gameEventsInstance = new GameEvents();var GameEvents$1 = /*#__PURE__*/Obje
             gameInstance.modal.enableClose();
         });
     }
-}class ApplyMoveConditionRule extends Rule {
+}
+//# sourceMappingURL=DrinkDuringLostTurnsRule.js.map
+class ApplyMoveConditionRule extends Rule {
     constructor(json) {
         super(json);
         const { condition } = json;
@@ -338,12 +369,16 @@ const gameEventsInstance = new GameEvents();var GameEvents$1 = /*#__PURE__*/Obje
             }
         });
     }
-}class Outcome {
+}
+//# sourceMappingURL=ApplyMoveConditionRule.js.map
+class Outcome {
     constructor(rule, criteria) {
         this.rule = rule;
         this.criteria = criteria;
     }
-}class DiceRollRule extends Rule {
+}
+//# sourceMappingURL=Outcome.js.map
+class DiceRollRule extends Rule {
     constructor(json) {
         super(json);
         this.diceRolls = json.diceRolls;
@@ -389,7 +424,9 @@ const gameEventsInstance = new GameEvents();var GameEvents$1 = /*#__PURE__*/Obje
             }
         });
     }
-}class RollUntilRule extends Rule {
+}
+//# sourceMappingURL=DiceRollRule.js.map
+class RollUntilRule extends Rule {
     constructor(json) {
         super(json);
         this.validateRequired(json.displayText);
@@ -408,7 +445,9 @@ const gameEventsInstance = new GameEvents();var GameEvents$1 = /*#__PURE__*/Obje
         };
         rollUntilFn();
     }
-}class ChoiceRule extends Rule {
+}
+//# sourceMappingURL=RollUntilRule.js.map
+class ChoiceRule extends Rule {
     constructor(json) {
         super(json);
         const { choices, diceRolls } = json;
@@ -435,7 +474,9 @@ const gameEventsInstance = new GameEvents();var GameEvents$1 = /*#__PURE__*/Obje
             value.execute();
         });
     }
-}class SkipNextMandatoryRule extends Rule {
+}
+//# sourceMappingURL=ChoiceRule.js.map
+class SkipNextMandatoryRule extends Rule {
     constructor(json) {
         super(json);
         this.validateRequired(json.numSpaces);
@@ -446,7 +487,9 @@ const gameEventsInstance = new GameEvents();var GameEvents$1 = /*#__PURE__*/Obje
         gameInstance.currentPlayer.effects.mandatorySkips = this.numSpaces;
         gameInstance.modal.enableClose();
     }
-}class ChallengeRule extends Rule {
+}
+//# sourceMappingURL=SkipNextMandatoryRule.js.map
+class ChallengeRule extends Rule {
     constructor(json) {
         super(json);
         this.playerTarget = PlayerTarget.custom;
@@ -466,7 +509,9 @@ const gameEventsInstance = new GameEvents();var GameEvents$1 = /*#__PURE__*/Obje
             });
         });
     }
-}class ApplyMandatoryRule extends Rule {
+}
+//# sourceMappingURL=ChallengeRule.js.map
+class ApplyMandatoryRule extends Rule {
     constructor(json) {
         super(json);
         this.validateRequired(json.tileIndex);
@@ -477,7 +522,25 @@ const gameEventsInstance = new GameEvents();var GameEvents$1 = /*#__PURE__*/Obje
         gameInstance.currentPlayer.effects.customMandatoryTiles.push(this.tileIndex);
         gameInstance.modal.enableClose();
     }
-}const RULE_MAPPINGS = {
+}
+//# sourceMappingURL=AddMandatoryRule.js.map
+class ReverseTurnOrderRule extends Rule {
+    constructor(json) {
+        super(json);
+    }
+    execute(closedCb) {
+        super.execute(closedCb);
+        if (TurnIncrementer.reverse === gameInstance.turnIncrementer) {
+            gameInstance.turnIncrementer = TurnIncrementer.normal;
+        }
+        else {
+            gameInstance.turnIncrementer = TurnIncrementer.reverse;
+        }
+        gameInstance.modal.enableClose();
+    }
+}
+//# sourceMappingURL=ReverseTurnOrderRule.js.map
+const RULE_MAPPINGS = {
     MoveRule,
     DisplayRule,
     TeleportRule,
@@ -493,6 +556,7 @@ const gameEventsInstance = new GameEvents();var GameEvents$1 = /*#__PURE__*/Obje
     SkipNextMandatoryRule,
     ChallengeRule,
     AddMandatoryRule: ApplyMandatoryRule,
+    ReverseTurnOrderRule,
 };
 function createTiles(tilesJson) {
     return tilesJson.map((tileJson, i) => {
@@ -514,14 +578,18 @@ function createZones(zonesJson) {
     return zonesJson.map((zoneJson) => {
         return new Zone(zoneJson.name, zoneJson.type, createRule(zoneJson.rule));
     });
-}class Board {
+}
+//# sourceMappingURL=BoardJsonConverter.js.map
+class Board {
     constructor(json, players) {
         this.imgSrc = json.imgSrc;
         this.tiles = createTiles(json.tiles);
         this.zones = createZones(json.zones);
         this.players = players;
     }
-}const RADIUS = 30;
+}
+//# sourceMappingURL=Board.js.map
+const RADIUS = 30;
 const FONT_SIZE = 20;
 const VELO = 12;
 function hexToRgb(hex) {
@@ -577,7 +645,9 @@ class Player {
         this.currentPos = gameInstance.board.tiles[tileIndex].generateCenterPosition();
         gameInstance.board.tiles[tileIndex].currentPlayers.add(this);
     }
-}class Painter {
+}
+//# sourceMappingURL=Player.js.map
+class Painter {
     constructor(canvas, ctx) {
         this.canvas = canvas;
         this.ctx = ctx;
@@ -625,7 +695,9 @@ class Player {
             this.ctx.fillText(player.name[0].toUpperCase(), player.currentPos.x - 6, player.currentPos.y + 6);
         }
     }
-}class Modal {
+}
+//# sourceMappingURL=Painter.js.map
+class Modal {
     constructor() {
         this.triggerId = 'game-modal';
         this.trigger = document.querySelector(`#${this.triggerId}`);
@@ -743,7 +815,9 @@ class Player {
     whenClosed(cb) {
         this.closeCb = cb;
     }
-}class Game {
+}
+//# sourceMappingURL=Modal.js.map
+class Game {
     constructor() {
         if (!Game.instance) {
             Game.instance = this;
@@ -762,7 +836,7 @@ class Player {
         return Game.instance;
     }
     init(boardSrc, playerNames, canvas) {
-        this.turnIndex = 0;
+        this.turnPosition = 0;
         this.canvas = canvas;
         this.ctx = canvas.getContext('2d');
         this.board = new Board(boardSrc, this.players);
@@ -772,9 +846,9 @@ class Player {
         this.modal = new Modal();
         this.painter = new Painter(this.canvas, this.ctx);
         this.players.forEach((p) => p.teleportToTile(0));
-        this.playerTurns = [...this.players];
         this.painter.drawPlayers();
         this.handleDiceRoll = this.handleDiceRoll.bind(this);
+        this.turnIncrementer = TurnIncrementer.normal;
         document.querySelector('#skip a').addEventListener('click', (e) => {
             e.preventDefault();
             this.diceLink.removeEventListener('roll', this.handleDiceRoll);
@@ -788,16 +862,17 @@ class Player {
         next();
     }
     startTurn(next) {
-        if (!this.playerTurns.length)
-            this.playerTurns = [...this.players];
-        this.currentPlayer = this.playerTurns.shift();
+        const pos = this.turnPosition;
+        const length = this.players.length;
+        const playerIndex = (pos < 0 ? length - (-pos % length) : pos) % length;
+        this.currentPlayer = this.players[playerIndex];
         this.updatePlayerStatusElement();
         const canMove = this.currentPlayer.canTakeTurn();
         this.freeRollDiceLink.reset();
         window.scrollTo({
             top: this.currentPlayer.currentPos.y - (window.outerHeight / 2),
             left: this.currentPlayer.currentPos.x - (window.outerWidth / 2),
-            behavior: 'smooth'
+            behavior: 'smooth',
         });
         if (canMove) {
             const currentZone = this.getCurrentZone();
@@ -875,10 +950,11 @@ class Player {
         gameEventsInstance.trigger(TURN_END);
     }
     endTurn(next) {
-        this.turnIndex++;
         if (this.currentPlayer.effects.extraTurns > 0) {
             this.currentPlayer.effects.extraTurns--;
-            this.playerTurns.unshift(this.currentPlayer);
+        }
+        else {
+            this.turnPosition += this.turnIncrementer;
         }
         gameEventsInstance.trigger(TURN_START);
         next();
@@ -988,4 +1064,6 @@ document.getElementById('setup').addEventListener('submit', (e) => {
     initGame(gameSetupInfo[0], gameSetupInfo[1]);
     document.getElementById('setup').style.display = 'none';
     document.getElementById('overlay').style.display = 'block';
-});exports.Game=gameInstance;exports.GameEvents=gameEventsInstance;exports.events=GameEvents$1;Object.defineProperty(exports,'__esModule',{value:true});}));
+});
+//# sourceMappingURL=App.js.map
+exports.Game=gameInstance;exports.GameEvents=gameEventsInstance;exports.events=GameEvents$1;Object.defineProperty(exports,'__esModule',{value:true});}));

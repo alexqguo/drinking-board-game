@@ -15,6 +15,11 @@ export enum Direction {
   back = 'back',
 }
 
+export enum TurnIncrementer {
+  normal = 1,
+  reverse = -1,
+}
+
 export enum ZoneType {
   passive = 'passive',
   active = 'active',

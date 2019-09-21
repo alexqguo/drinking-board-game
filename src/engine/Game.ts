@@ -1,7 +1,7 @@
 import Zone from './Zone';
 import Board from './Board';
 import Player from './Player';
-import { JsonBoard, PlayerInput, ZoneType } from '../interfaces';
+import { JsonBoard, PlayerInput, ZoneType, TurnIncrementer } from '../interfaces';
 import Painter from './Painter';
 import { Modal } from './Modal';
 import GameEvents, { 
@@ -15,15 +15,15 @@ class Game {
   static instance: Game;
   board: Board;
   players: Player[];
-  playerTurns: Player[];
   currentPlayer: Player;
-  turnIndex: number;
+  turnPosition: number;
   diceLink: HTMLElement;
   freeRollDiceLink: DiceRoll;
   modal: Modal;
   canvas: HTMLCanvasElement;
   ctx: CanvasRenderingContext2D;
   painter: Painter;
+  turnIncrementer: TurnIncrementer;
 
   constructor() {
     if (!Game.instance) {
@@ -47,7 +47,7 @@ class Game {
   }
 
   init(boardSrc: JsonBoard, playerNames: PlayerInput[], canvas: HTMLCanvasElement): void {
-    this.turnIndex = 0;
+    this.turnPosition = 0;
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
     this.board = new Board(boardSrc, this.players);
@@ -58,9 +58,9 @@ class Game {
     this.painter = new Painter(this.canvas, this.ctx);
 
     this.players.forEach((p: Player) => p.teleportToTile(0));
-    this.playerTurns = [...this.players];
     this.painter.drawPlayers();
     this.handleDiceRoll = this.handleDiceRoll.bind(this);
+    this.turnIncrementer = TurnIncrementer.normal;
 
     // TODO - this should be more organized. need to enable the link only sometimes
     document.querySelector('#skip a').addEventListener('click', (e: Event) => {
@@ -79,10 +79,12 @@ class Game {
   }
 
   startTurn(next: Function): void {
-    // Restart the sequence at the beginning 
-    if (!this.playerTurns.length) this.playerTurns = [...this.players];
+    const pos = this.turnPosition;
+    const length = this.players.length;
+    // Loop the turnPosition around to find the current player
+    const playerIndex = (pos < 0 ? length - (-pos % length) : pos) % length;
+    this.currentPlayer = this.players[playerIndex];
 
-    this.currentPlayer = this.playerTurns.shift();
     this.updatePlayerStatusElement();
     const canMove = this.currentPlayer.canTakeTurn();
     this.freeRollDiceLink.reset();
@@ -90,7 +92,7 @@ class Game {
     window.scrollTo({
       top: this.currentPlayer.currentPos.y - (window.outerHeight / 2),
       left: this.currentPlayer.currentPos.x - (window.outerWidth / 2),
-      behavior: 'smooth'
+      behavior: 'smooth',
     });
 
     if (canMove) {
@@ -166,8 +168,8 @@ class Game {
     let numSpacesToAdvance: number = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
     
     // Uncomment this section for testing
-    // if (this.currentPlayer.name === 'asdf' && !(window as any).asdf) {
-    //   numSpacesToAdvance = 16; // ilex forest
+    // if (this.currentPlayer.name === 'two' && !(window as any).asdf) {
+    //   numSpacesToAdvance = 34; // ilex forest
     //   (window as any).asdf = true;
     // }
 
@@ -198,10 +200,11 @@ class Game {
   }
 
   endTurn(next: Function): void {
-    this.turnIndex++;
+    // Don't increment turnPosition if the player has an extra turn
     if (this.currentPlayer.effects.extraTurns > 0) {
       this.currentPlayer.effects.extraTurns--;
-      this.playerTurns.unshift(this.currentPlayer);
+    } else {
+      this.turnPosition += this.turnIncrementer;
     }
 
     GameEvents.trigger(TURN_START);

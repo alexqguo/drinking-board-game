@@ -255,8 +255,8 @@
       "position": [{"x": 453,"y": 1388}, {"x": 637,"y": 1388}, {"x": 637,"y": 1576}, {"x": 453,"y": 1576}]
     }, {
       "rule": {
-        "displayText": "[[[TODO]]]Mantine used Whirlpool! Everyone take a drink and reverse the turn order!",
-        "type": "DisplayRule"
+        "displayText": "Mantine used Whirlpool! Everyone take a drink and reverse the turn order!",
+        "type": "ReverseTurnOrderRule"
       },
       "position": [{"x": 453,"y": 1201}, {"x": 637,"y": 1201}, {"x": 637,"y": 1389}, {"x": 453,"y": 1389}]
     }, {
