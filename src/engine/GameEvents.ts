@@ -38,8 +38,12 @@ class GameEvents {
     return GameEvents.instance;
   }
 
-  on(eventName: string, callback: Function): void {
-    this.validateEvent(eventName);
+  on(eventName: string, callback: Function, isCustomEvent: boolean = false): void {
+    this.validateEvent(eventName, isCustomEvent);
+    if (isCustomEvent) {
+      this.eventHandlerMap.set(eventName, []);
+    }
+    
     this.eventHandlerMap.get(eventName).unshift(callback);
   }
 
@@ -67,8 +71,8 @@ class GameEvents {
     invokeEventFunction();
   }
 
-  validateEvent(eventName: string) {
-    if (!this.eventHandlerMap.has(eventName)) {
+  validateEvent(eventName: string, isCustomEvent: boolean = false) {
+    if (!isCustomEvent && !this.eventHandlerMap.has(eventName)) {
       throw new Error(`${eventName} is not a valid event`);
     }
   }

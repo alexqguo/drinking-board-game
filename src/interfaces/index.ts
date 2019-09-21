@@ -74,6 +74,7 @@ export interface JsonRule {
   condition?: MoveCondition;
   criteria?: number[];
   choices?: JsonRule[];
+  proxyRuleId?: string;
 }
 
 export interface JsonZone {

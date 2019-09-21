@@ -19,6 +19,7 @@ import {
   ChallengeRule,
   AddMandatoryRule,
   ReverseTurnOrderRule,
+  ProxyRule,
 } from '../rules';
 
 const RULE_MAPPINGS: { 
@@ -40,6 +41,7 @@ const RULE_MAPPINGS: {
   ChallengeRule,
   AddMandatoryRule,
   ReverseTurnOrderRule,
+  ProxyRule,
 };
 
 export function createTiles(tilesJson: JsonTile[]): Tile[] {

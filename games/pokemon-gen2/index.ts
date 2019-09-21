@@ -11,7 +11,7 @@ const starterNames = {
 
 const w = window as any;
 
-if (w.drinking && false) {
+if (w.drinking) {
   const { Game, GameEvents, events } = w.drinking;
 
   GameEvents.on(events.GAME_START, (next: Function) => {
@@ -32,4 +32,16 @@ if (w.drinking && false) {
     Game.modal.openWithFragment('Choose your Pokemon!', frag);
     Game.modal.disableClose();
   });
+
+  GameEvents.on('StealStarterRule', () => {
+    Game.modal.requirePlayerSelection(Game.getInactivePlayers())
+      .then((playerList: Object[]) => {
+        const targetPlayer: any = playerList[0];
+        const targetStarter: string = targetPlayer.custom.pokemon;
+        targetPlayer.custom.pokemon = Game.currentPlayer.custom.pokemon;
+        Game.currentPlayer.custom.pokemon = targetStarter;
+
+        Game.modal.close();
+      });
+  }, true);
 }

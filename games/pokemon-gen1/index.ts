@@ -37,12 +37,10 @@ if (w.drinking) {
       Game.currentPlayer.custom.pokemon = starterNames.pikachu;
     }
 
-    const playersAtCurrentTile: Set<Object> = Game
-      .board
-      .tiles[Game.currentPlayer.currentTileIndex]
-      .currentPlayers;
+    const currentTile = Game.board.tiles[Game.currentPlayer.currentTileIndex];
+    const playersAtCurrentTile: Set<Object> = currentTile.currentPlayers;
 
-    if (playersAtCurrentTile.size >= 2) {
+    if (playersAtCurrentTile.size >= 2 && !currentTile.isMandatory) {
       triggerTrainerBattle(playersAtCurrentTile)
         .then(() => { next() });
     } else {

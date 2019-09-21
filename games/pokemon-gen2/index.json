@@ -21,8 +21,16 @@
       "position": [{"x": 262,"y": 1392},{"x": 448,"y": 1392},{"x": 448,"y": 1576},{"x": 262,"y": 1576}]
     }, {
       "rule": {
-        "displayText": "[[[TODO]]] If you want, drink 2 to steal another player's starter and replace it with yours. Jerk.",
-        "type": "DisplayRule"
+        "displayText": "If you want, drink 2 to steal another player's starter and replace it with yours. Jerk.",
+        "type": "ChoiceRule",
+        "choices": [{
+          "displayText": "Steal starter",
+          "type": "ProxyRule",
+          "proxyRuleId": "StealStarterRule"
+        }, {
+          "displayText": "Nah",
+          "type": "DisplayRule"
+        }]
       },
       "position": [{"x": 262,"y": 1204}, {"x": 448,"y": 1204}, {"x": 448,"y": 1388}, {"x": 262,"y": 1388}]
     }, {

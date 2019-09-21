@@ -119,7 +119,7 @@ class Game {
     // Basically just wait a couple seconds so the user can be reminded that they aren't allowed to do anything
     setTimeout(() => {
       GameEvents.trigger(TURN_END);
-    }, 2000);
+    }, 1200);
   }
 
   enableDiceRoll(next: Function): void {
@@ -142,7 +142,7 @@ class Game {
         // So that it doesn't jump immediately. Not sure of a good way to do this right now.
         setTimeout(() => {
           GameEvents.trigger(TURN_END);
-        }, 2000);
+        }, 1200);
         next();
         return;
       }
@@ -168,10 +168,10 @@ class Game {
     let numSpacesToAdvance: number = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
     
     // Uncomment this section for testing
-    // if (this.currentPlayer.name === 'two' && !(window as any).asdf) {
-    //   numSpacesToAdvance = 34; // ilex forest
-    //   (window as any).asdf = true;
-    // }
+    if (this.currentPlayer.name === 'asdf' && !(window as any).asdf) {
+      numSpacesToAdvance = 3;
+      (window as any).asdf = true;
+    }
 
     if (numSpacesToAdvance > 0) {
       // Consider fixing this naming. This doesn't actually move anything in the UI

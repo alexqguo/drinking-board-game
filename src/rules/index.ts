@@ -15,3 +15,4 @@ export { default as SkipNextMandatoryRule } from './SkipNextMandatoryRule';
 export { default as ChallengeRule } from './ChallengeRule';
 export { default as AddMandatoryRule } from './AddMandatoryRule';
 export { default as ReverseTurnOrderRule } from './ReverseTurnOrderRule';
+export { default as ProxyRule } from './ProxyRule';
