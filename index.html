@@ -28,6 +28,9 @@
       display: none;
       box-shadow: 0px 0px 8px 0px rgba(0,0,0,0.5);
     }
+    #game-input {
+      margin-bottom: 10px;
+    }
 
     /* Here begins the shitty CSS overrides */
     .modal article {
@@ -62,6 +65,8 @@
   <canvas id="canvas" style="display: block; margin: auto;"></canvas>
 
   <form id="setup">
+    <h1>Let's play a drinking game</h1>
+
     <div id="game-input">
       <label for="game">
         <strong>Select a game:</strong>
@@ -71,6 +76,7 @@
         <option value="public/pokemon-gen2">Pokemon gen. 2 (in progress)</option>
       </select>
     </div>
+
     <div id="player-input">
       <strong>Enter players:</strong> <a href="#" id="add-player">Add player</a><br>
       <player-input></player-input>
