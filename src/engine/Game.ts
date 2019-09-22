@@ -158,7 +158,9 @@ class Game {
     let firstMandatoryIndex = this.board.tiles
       .slice(this.currentPlayer.currentTileIndex + 1, this.currentPlayer.currentTileIndex + 1 + roll)
       .findIndex((tile: Tile) => {
-        return tile.isMandatory || this.currentPlayer.effects.customMandatoryTiles.includes(tile.tileIndex);
+        return tile.isMandatory || 
+          this.currentPlayer.effects.customMandatoryTiles.includes(tile.tileIndex) ||
+          [...tile.currentPlayers].find((p: Player) => p.isAnchor());
       });
 
     if (this.currentPlayer.effects.mandatorySkips > 0 && firstMandatoryIndex !== -1) {
@@ -169,10 +171,10 @@ class Game {
     let numSpacesToAdvance: number = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
     
     // Uncomment this section for testing
-    // if (this.currentPlayer.name === 'asdf' && !(window as any).asdf) {
-    //   numSpacesToAdvance = 1;
-    //   (window as any).asdf = true;
-    // }
+    if (this.currentPlayer.name === 'asdf' && !(window as any).asdf) {
+      numSpacesToAdvance = 1;
+      (window as any).asdf = true;
+    }
 
     if (numSpacesToAdvance > 0) {
       // Consider fixing this naming. This doesn't actually move anything in the UI

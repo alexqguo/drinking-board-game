@@ -289,8 +289,9 @@
       "position": [{"x": 453,"y": 640}, {"x": 637,"y": 640}, {"x": 637,"y": 828}, {"x": 453,"y": 828}]
     }, {
       "rule": {
-        "displayText": "[[[TODO]]]Spinarak used Spider Web! Drink 2. The next time someone passes you, they must stop at whatever square you're on.",
-        "type": "DisplayRule"
+        "displayText": "Spinarak used Spider Web! Drink 2. The next time someone passes you, they must stop at whatever square you're on.",
+        "type": "AnchorRule",
+        "numTurns": 1
       },
       "zone": "MT. MORTAR",
       "position": [{"x": 453,"y": 453}, {"x": 637,"y": 453}, {"x": 637,"y": 638}, {"x": 453,"y": 638}]

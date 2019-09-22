@@ -21,6 +21,7 @@ import {
   ReverseTurnOrderRule,
   ProxyRule,
   GroupRollRule,
+  AnchorRule,
 } from '../rules';
 
 const RULE_MAPPINGS: { 
@@ -44,6 +45,7 @@ const RULE_MAPPINGS: {
   ReverseTurnOrderRule,
   ProxyRule,
   GroupRollRule,
+  AnchorRule,
 };
 
 export function createTiles(tilesJson: JsonTile[]): Tile[] {

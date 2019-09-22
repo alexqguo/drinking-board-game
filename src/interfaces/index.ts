@@ -59,6 +59,7 @@ export interface PlayerEffects {
   skippedTurns: number,
   speedModifiers: SpeedModifier[],
   moveCondition: Function,
+  anchors: number,
 }
 
 export interface JsonRule {

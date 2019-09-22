@@ -41,9 +41,11 @@ class Player {
       customMandatoryTiles: [],
       mandatorySkips: 0,
       moveCondition: null,
+      anchors: 0,
     };
   }
 
+  // TODO: consolidate canTakeTurn and isAnchor. bit too lazy to do so right now
   canTakeTurn(): boolean {
     if (this.effects.skippedTurns > 0) {
       this.effects.skippedTurns--;
@@ -51,6 +53,15 @@ class Player {
     }
 
     return true;
+  }
+
+  isAnchor(): boolean {
+    if (this.effects.anchors > 0) {
+      this.effects.anchors--;
+      return true;
+    }
+
+    return false;
   }
 
   removeFromCurrentTile() {
