@@ -49,6 +49,10 @@ This app has been tested on Chrome/FF latest versions. It "works" on the latest 
 * Make things a bit prettier
 * add a new game (johto?)
 * small util for adding document fragments
+* probably would make sense to have a util function class
+  * sum numbers
+  * hex to rgb
+  * etc
 
 ### M2
 * track game state, store in localstorage in case someone closes the screen

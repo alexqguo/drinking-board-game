@@ -151,6 +151,6 @@ export class Modal {
   }
 
   whenClosed(cb: Function): void {
-    this.closeCb = cb;
+    if (!this.closeCb) this.closeCb = cb;
   }
 }

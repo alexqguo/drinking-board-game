@@ -32,18 +32,24 @@ class DiceRollRule extends Rule {
   // This function is clearly not optimized
   getOutcomeForRolls(rolls: number[]): Rule {
     let outcomeRule: Rule = null;
-
     if (!this.outcomes && !this.any) return null;
 
+    /**
+     * If it's a cumulative check, make the array contain just the sum. [7] for instance.
+     * Otherwise just use the list of rolls normally.
+     */
+    const rollsToCheck: number[] = this.diceRolls.cumulative ? 
+      [rolls.reduce((acc: number, cur: number) => acc + cur)] : rolls;
+
     if (this.any) {
-      for (let i = 0; i < rolls.length; i++) { // I'm a savage
-        if (this.any.criteria.indexOf(rolls[i]) !== -1) {
+      for (let i = 0; i < rollsToCheck.length; i++) { // I'm a savage
+        if (this.any.criteria.indexOf(rollsToCheck[i]) !== -1) {
           return this.any.rule;
         }
       }
     }
 
-    rolls.forEach((roll: number) => {
+    rollsToCheck.forEach((roll: number) => {
       this.outcomes.forEach((outcome: Outcome) => {
         if (outcome.criteria.length && outcome.criteria.indexOf(roll) !== -1) {
           outcomeRule = outcome.rule;

@@ -17,7 +17,6 @@ export class GroupRoll extends LitElement {
 
   handleRoll(e: CustomEvent) {
     if (++this.rolls >= this.players.length) {
-      console.log('finished');
       this.dispatchEvent(new CustomEvent('done'));
     }
   }

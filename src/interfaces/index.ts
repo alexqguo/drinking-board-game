@@ -95,6 +95,7 @@ export interface DiceRoll {
   outcomes?: JsonOutcome[];
   any?: JsonOutcome; // I got lazy. Any match on an "any" will override all other rules
   numRequired: number;
+  cumulative?: boolean;
 }
 
 export interface JsonOutcome {

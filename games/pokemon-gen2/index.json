@@ -177,9 +177,10 @@
       "position": [{"x": 1766,"y": 1010}, {"x": 1950,"y": 1010}, {"x": 1950,"y": 1198}, {"x": 1766,"y": 1198}]
     }, {
       "rule": {
-        "displayText": "[[[TODO]]] The Goldenrod Game Center brings out your gambling problem. Each turn roll 2 dice. Roll 7 to give 7 and leave, otherwise drink 2. You may only leave once you've finished your drink or rolled 7.",
+        "displayText": "The Goldenrod Game Center brings out your gambling problem. Each turn roll 2 dice. Roll 7 to give 7 and leave, otherwise drink 2. You may only leave once you've finished your drink or rolled 7.",
         "type": "DisplayRule"
       },
+      "zone": "GAME CENTER",
       "position": [{"x": 1766,"y": 1200}, {"x": 1950,"y": 1200}, {"x": 1950,"y": 1388}, {"x": 1766,"y": 1388}]
     }, {
       "rule": {
@@ -596,6 +597,38 @@
         "diceRolls": {
           "numRequired": 1
         }
+      }
+    }, {
+      "name": "GAME CENTER",
+      "type": "active",
+      "rule": {
+        "type": "ChoiceRule",
+        "displayText": "The Goldenrod Game Center brings out your gambling problem. Each turn roll 2 dice. Roll 7 to give 7 and leave, otherwise drink 2. You may only leave once you've finished your drink or rolled 7.",
+        "choices": [{
+          "displayText": "Roll 7 to give 7 and leave",
+          "type": "DiceRollRule",
+          "diceRolls": {
+            "numRequired": 2,
+            "cumulative": true,
+            "outcomes": [{
+              "rule": {
+                "type": "DisplayRule",
+                "displayText": "Give 7 and continue"
+              },
+              "criteria": [7]
+            }, {
+              "rule": {
+                "type": "SkipTurnRule",
+                "displayText": "Drink 2. Try again next turn!",
+                "numTurns": 1
+              },
+              "criteria": [1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12]
+            }]
+          }
+        }, {
+          "displayText": "Leave (you finished your drink)",
+          "type": "DisplayRule"
+        }]
       }
     }
   ]
