@@ -86,14 +86,3 @@ This app has been tested on Chrome/FF latest versions. It "works" on the latest 
   * [engine] Gengar changes how Saffron gym works
   * [engine?] Fighting dojo
   * [engine] Nidofamily, re-rolling a player's roll
-* [Gen 2](https://i.imgur.com/lkzZxfm.png)
-  * [engine] Togepi
-  * [custom] Steal player's starter
-  * [engine] Ilex forest
-  * [engine] Goldenrod gym probably supported
-  * [engine] Goldenrod game center probably mostly supported
-  * [engine] Snubble should be fairly easy
-  * [engine] Mantine, reversing turn order. Probably not a big deal
-  * [engine] Spinarak
-  * [engine] Dugtrio adds 3 to next roll. It's a todo anyway
-  * [engine] ~~Zubat is a "sticky" move condition.~~ jk this is already imlemented, yay me
