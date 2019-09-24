@@ -93,7 +93,7 @@
           "displayText": "Cut it off: Drink 2 and skip the next Gym. Dick."
         }, {
           "type": "DisplayRule",
-          "displayText": "Leave it: Drink 1"
+          "displayText": "Leave it: Give 1"
         }]
       },
       "position": [{"x": 830,"y": 262}, {"x": 1014,"y": 262}, {"x": 1014,"y": 450}, {"x": 830,"y": 450}]
@@ -353,7 +353,7 @@
       "position": [{"x": 1579,"y": 641}, {"x": 1763,"y": 641}, {"x": 1763,"y": 825}, {"x": 1579,"y": 825}]
     }, {
       "rule": {
-        "displayText": "The Legendary Dog SUicune! Roll a 3 to catch it and bypass the next gold square! Otherwise get blitzed and shotgun a beer!",
+        "displayText": "The Legendary Dog Suicune! Roll a 3 to catch it and bypass the next gold square! Otherwise get blitzed and shotgun a beer!",
         "type": "DiceRollRule",
         "diceRolls": {
           "numRequired": 1,
@@ -494,7 +494,15 @@
     }, {
       "rule": {
         "displayText": "Wartortle used Skull Bash! Crush an empty beer can against your head to avoid taking 3 drinks and losing your next turn. If you can, give those 3 to one person.",
-        "type": "DisplayRule"
+        "type": "ChoiceRule",
+        "choices": [{
+          "type": "DisplayRule",
+          "displayText": "Crushed it; give 3 drinks."
+        }, {
+          "type": "SkipTurnRule",
+          "numTurns": 1,
+          "displayText": "You failed; drink 3 and lose your next turn"
+        }]
       },
       "position": [{"x": 1203,"y": 639}, {"x": 1387,"y": 639}, {"x": 1387,"y": 823}, {"x": 1203,"y": 823}]
     }, {
