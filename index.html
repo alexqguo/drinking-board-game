@@ -14,10 +14,6 @@
     body {
       font-family: "Open Sans", sans-serif;
     }
-    #setup {
-      width: 300px;
-      margin: auto;
-    }
     #overlay {
       padding: 15px;
       position: fixed;
@@ -33,6 +29,9 @@
     }
 
     /* Here begins the shitty CSS overrides */
+    .sm {
+      font-size: 0.75em;
+    }
     .modal article {
       min-width: 500px;
       top: 30% !important;
@@ -42,9 +41,6 @@
     }
     .modal .overlay {
       background: rgba(15,15,15,0.5);
-    }
-    .button.sm {
-      font-size: 0.75em;
     }
     .player-status {
       margin: 0;
@@ -64,27 +60,36 @@
 <body>
   <canvas id="canvas" style="display: block; margin: auto;"></canvas>
 
-  <form id="setup">
-    <h1>Let's play a drinking game</h1>
+  <section class="flex one center">
+    <form id="setup" class="fourth-1000 four-fifth">
+      <h1>Let's play a drinking game</h1>
 
-    <div id="game-input">
-      <label for="game">
-        <strong>Select a game:</strong>
-      </label>
-      <select name="game" id="game">
-        <option value="public/pokemon-gen1">Pokemon gen. 1</option>
-        <option value="public/pokemon-gen2">Pokemon gen. 2</option>
-      </select>
+      <div id="game-input">
+        <label for="game">
+          <strong>Select a game:</strong>
+        </label>
+        <select name="game" id="game">
+          <option value="public/pokemon-gen1">Pokemon gen. 1</option>
+          <option value="public/pokemon-gen2">Pokemon gen. 2</option>
+        </select>
+      </div>
+
+      <div id="player-input">
+        <strong>Enter players:</strong> <a href="#" id="add-player">Add player</a><br>
+        <player-input></player-input>
+        <player-input></player-input>
+      </div>
+
+      <button id="submit">Go</button>
+    </form>
+  </section>
+
+  <section class="flex one center">
+    <div class="fourth-1000 four-fifth sm">
+      <br><br>
+      Wondering what this is? All of your questions can (hopefully) be answered <a href="https://github.com/alexqguo/drinking-board-game">here</a>.
     </div>
-
-    <div id="player-input">
-      <strong>Enter players:</strong> <a href="#" id="add-player">Add player</a><br>
-      <player-input></player-input>
-      <player-input></player-input>
-    </div>
-
-    <button id="submit">Go</button>
-  </form>
+  </section>
 
   <section id="overlay">
     <player-status></player-status>

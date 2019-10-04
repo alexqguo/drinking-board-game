@@ -40,14 +40,14 @@ This app has been tested on Chrome/FF latest versions. It "works" on the latest 
 * zones
 
 ### M1.5 (refactor time)
+* Clean up typescript in the custom game code
+* Enable or disable dice roll resetting based on a prop
+* add a new game (johto?)
 * Refactor modal into a WCs or multiple child WCs
 * Clean up other todos
 * Consider better organization of events
-* Clean up typescript in the custom game code
-* Enable or disable dice roll resetting based on a prop
 * Add description to home page
 * Make things a bit prettier
-* add a new game (johto?)
 * small util for adding document fragments
 * probably would make sense to have a util function class
   * sum numbers
@@ -70,7 +70,7 @@ This app has been tested on Chrome/FF latest versions. It "works" on the latest 
 * keep track of the drink counts throughout the game
 * alert players when they are supposed to drink
 * can designate drinks on screen
-* unit tests
+* unit tests (lol)
 * some utility to create json easily
 
 ### M5
@@ -86,3 +86,11 @@ This app has been tested on Chrome/FF latest versions. It "works" on the latest 
   * [engine] Gengar changes how Saffron gym works
   * [engine?] Fighting dojo
   * [engine] Nidofamily, re-rolling a player's roll
+
+## learnings
+Here I will document some of my takeaways from this project. 
+* When evaluating a CSS framework, size is not everything. I got way too focused on file size and did not put enough thought into usability of the framework. Picnic is pretty great at what it does, but honestly I probably could have made more of a compromise such that I wouldn't have to spend as much time working with Picnic to get it to do exactly what I wanted
+* Typescript will be used in every one of my major projects from now on. It may be a pain to set up (not really though), but the time is definitely made up during the dev process
+* I wish LitElement came with some sort of JSX integration. Using `html` is a bit cumbersome
+* I still have not found an elegant solution to sharing styles in web components that are using shadow DOM
+* When doing a project like this, having some idea of the design/requirements beforehand will be really beneficial (obviously). I spent (and am still spending) too much time churning on the design and behavior of the app
