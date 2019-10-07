@@ -34,7 +34,6 @@
     }
     .modal article {
       min-width: 500px;
-      top: 30% !important;
     }
     .modal .content {
       font-size: 1.5em;
@@ -60,35 +59,37 @@
 <body>
   <canvas id="canvas" style="display: block; margin: auto;"></canvas>
 
-  <section class="flex one center">
-    <form id="setup" class="fourth-1000 four-fifth">
-      <h1>Let's play a drinking game</h1>
+  <section class="setup-wrapper">
+    <section class="flex one center">
+      <form id="setup" class="fourth-1000 four-fifth">
+        <h1>Let's play a drinking game</h1>
 
-      <div id="game-input">
-        <label for="game">
-          <strong>Select a game:</strong>
-        </label>
-        <select name="game" id="game">
-          <option value="public/pokemon-gen1">Pokemon gen. 1</option>
-          <option value="public/pokemon-gen2">Pokemon gen. 2</option>
-        </select>
+        <div id="game-input">
+          <label for="game">
+            <strong>Select a game:</strong>
+          </label>
+          <select name="game" id="game">
+            <option value="public/pokemon-gen1">Pokemon gen. 1</option>
+            <option value="public/pokemon-gen2">Pokemon gen. 2</option>
+          </select>
+        </div>
+
+        <div id="player-input">
+          <strong>Enter players:</strong> <a href="#" id="add-player">Add player</a><br>
+          <player-input></player-input>
+          <player-input></player-input>
+        </div>
+
+        <button id="submit">Go</button>
+      </form>
+    </section>
+
+    <section class="flex one center">
+      <div class="fourth-1000 four-fifth sm">
+        <br><br>
+        Wondering what this is? All of your questions can (hopefully) be answered <a href="https://github.com/alexqguo/drinking-board-game">here</a>.
       </div>
-
-      <div id="player-input">
-        <strong>Enter players:</strong> <a href="#" id="add-player">Add player</a><br>
-        <player-input></player-input>
-        <player-input></player-input>
-      </div>
-
-      <button id="submit">Go</button>
-    </form>
-  </section>
-
-  <section class="flex one center">
-    <div class="fourth-1000 four-fifth sm">
-      <br><br>
-      Wondering what this is? All of your questions can (hopefully) be answered <a href="https://github.com/alexqguo/drinking-board-game">here</a>.
-    </div>
+    </section>
   </section>
 
   <section id="overlay">

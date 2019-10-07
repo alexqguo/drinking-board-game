@@ -40,20 +40,25 @@ This app has been tested on Chrome/FF latest versions. It "works" on the latest 
 * zones
 
 ### M1.5 (refactor time + usability improvements)
-* Clean up typescript in the custom game code
-* Enable or disable dice roll resetting based on a prop
-* add a new game (johto?)
-* Refactor modal into a WCs or multiple child WCs
-* Clean up other todos
-* Consider better organization of events
-* Add description to home page
-* Add a modal when skipping a turn, not just a random pause
-* Make things a bit prettier
-* small util for adding document fragments
-* probably would make sense to have a util function class
-  * sum numbers
-  * hex to rgb
-  * etc
+* Done
+  * Clean up typescript in the custom game code
+  * Enable or disable dice roll resetting based on a prop
+  * Add a new game
+  * Add description to home page
+  * Fix modal going past top of screen when there's a lot of content
+* Todo
+  * Refactor modal into a WCs or multiple child WCs
+  * Clean up other todos
+  * Consider better organization of events
+  * Loading screen while the game data is loading
+  * Refactor dice roll click event handling
+  * Add a modal when skipping a turn, not just a random pause
+  * Make things a bit prettier
+  * small util for adding document fragments
+  * probably would make sense to have a util function class
+    * sum numbers
+    * hex to rgb
+    * etc
 
 ### M2
 * track game state, store in localstorage in case someone closes the screen

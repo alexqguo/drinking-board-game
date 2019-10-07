@@ -95,7 +95,7 @@ document.getElementById('setup').addEventListener('submit', (e: Event) => {
   }
 
   initGame(gameSetupInfo[0], gameSetupInfo[1]);
-  document.getElementById('setup').style.display = 'none';
+  (document.querySelector('.setup-wrapper') as HTMLElement).style.display = 'none';
   document.getElementById('overlay').style.display = 'block';
 });
 
