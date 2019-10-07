@@ -39,7 +39,7 @@ This app has been tested on Chrome/FF latest versions. It "works" on the latest 
 * trainer battles/custom events
 * zones
 
-### M1.5 (refactor time)
+### M1.5 (refactor time + usability improvements)
 * Clean up typescript in the custom game code
 * Enable or disable dice roll resetting based on a prop
 * add a new game (johto?)
@@ -47,6 +47,7 @@ This app has been tested on Chrome/FF latest versions. It "works" on the latest 
 * Clean up other todos
 * Consider better organization of events
 * Add description to home page
+* Add a modal when skipping a turn, not just a random pause
 * Make things a bit prettier
 * small util for adding document fragments
 * probably would make sense to have a util function class

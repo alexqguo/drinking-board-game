@@ -1143,6 +1143,7 @@
           "numRequired": 3,
           "outcomes": [{
             "rule": {
+              "displayText": "You glitched! Restart at Pallet Town.",
               "type": "TeleportRule",
               "tileIndex": 0
             },
