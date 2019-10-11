@@ -63,6 +63,8 @@ function initGame(boardPrefix: string, players: PlayerInput[]): void {
   
   Promise.all([fetchBoard(boardSrc), fetchImage(imgSrc, canvas), fetchScript(scriptSrc)])
     .then((values) => {
+      // Hide loader
+      document.getElementById('game-loader').style.display = 'none';
       Game.init(values[0], players, canvas); // values[0] is the result of the fetchBoard promise
     })
     .catch(err => console.error(err));
@@ -97,6 +99,7 @@ document.getElementById('setup').addEventListener('submit', (e: Event) => {
   initGame(gameSetupInfo[0], gameSetupInfo[1]);
   (document.querySelector('.setup-wrapper') as HTMLElement).style.display = 'none';
   document.getElementById('overlay').style.display = 'block';
+  document.getElementById('game-loader').style.display = 'flex';
 });
 
 // Export of the application
