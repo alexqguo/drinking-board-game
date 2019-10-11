@@ -53,7 +53,7 @@ export default class Painter {
 
   drawPlayers(): void {
     this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-    this.ctx.font = `${FONT_SIZE}px "Open Sans"`;
+    this.ctx.font = `${FONT_SIZE}px "Barlow"`;
 
     for (let i = 0; i < Game.players.length; i++) {
       const player: Player = Game.players[i];
