@@ -117,9 +117,10 @@ class Game {
 
   startLostTurn(): void {
     // Basically just wait a couple seconds so the user can be reminded that they aren't allowed to do anything
-    setTimeout(() => {
+    this.modal.show('Missed turn');
+    this.modal.whenClosed(() => {
       GameEvents.trigger(TURN_END);
-    }, 1200);
+    });
   }
 
   enableDiceRoll(next: Function): void {
@@ -172,7 +173,7 @@ class Game {
     
     // Uncomment this section for testing
     // if (this.currentPlayer.name === 'asdf' && !(window as any).asdf) {
-    //   numSpacesToAdvance = 63;
+    //   numSpacesToAdvance = 18;
     //   (window as any).asdf = true;
     // }
 
