@@ -50,12 +50,14 @@ This app has been tested on Chrome/FF latest versions. It "works" on the latest 
   * Refactor modal into a WCs or multiple child WCs
   * Clean up other todos
   * Consider better organization of events
+  * Keyboard focus and/or keyboard controls
   * Loading screen while the game data is loading
   * Refactor dice roll click event handling
   * Add a modal when skipping a turn, not just a random pause
   * Make things a bit prettier
-  * small util for adding document fragments
-  * probably would make sense to have a util function class
+  * Make it easier to add a new rule (clean up /rules exports)
+  * Small util for adding document fragments
+  * Probably would make sense to have a util function class
     * sum numbers
     * hex to rgb
     * etc

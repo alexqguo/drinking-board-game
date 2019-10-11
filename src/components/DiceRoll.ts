@@ -2,8 +2,6 @@ import { LitElement, html, customElement, property } from 'lit-element';
 
 @customElement('dice-roll')
 export class DiceRoll extends LitElement {
-  link: HTMLAnchorElement;
-  resultContainer: HTMLSpanElement;
 
   @property({ type: String })
   result = '';
@@ -29,8 +27,13 @@ export class DiceRoll extends LitElement {
     }));
   }
 
+  handleReset(e: Event) {
+    e.preventDefault();
+    this.reset();
+  }
+
   reset() {
-    if (this.canReset) this.result = '';
+    this.result = '';
   }
 
   renderReset() {
@@ -44,7 +47,12 @@ export class DiceRoll extends LitElement {
 
   renderResult(result: string) {
     return html`
-      <div @click="${this.reset}">🎲 ${result}</div>
+      <div>
+        🎲 ${result}
+        ${this.canReset ? html`
+          <a href="#" class="sm" @click="${this.handleReset}">Reset</a>
+        ` : null}
+      </div>
     `;
   }
 

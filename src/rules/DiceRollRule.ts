@@ -3,6 +3,7 @@ import { JsonRule, DiceRoll, JsonOutcome } from '../interfaces';
 import Game from '../engine/Game';
 import Outcome from '../engine/Outcome';
 import { createRule } from '../engine/BoardJsonConverter';
+import { sumNumbers } from '../utils';
 
 class DiceRollRule extends Rule {
   diceRolls: DiceRoll;
@@ -39,7 +40,7 @@ class DiceRollRule extends Rule {
      * Otherwise just use the list of rolls normally.
      */
     const rollsToCheck: number[] = this.diceRolls.cumulative ? 
-      [rolls.reduce((acc: number, cur: number) => acc + cur)] : rolls;
+      [sumNumbers(rolls)] : rolls;
 
     if (this.any) {
       for (let i = 0; i < rollsToCheck.length; i++) { // I'm a savage

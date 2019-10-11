@@ -32,6 +32,9 @@
     .sm {
       font-size: 0.75em;
     }
+    button, .button,  .label {
+      border-radius: 0.13em !important;
+    }
     .modal article {
       min-width: 500px;
     }
@@ -87,14 +90,14 @@
     <section class="flex one center">
       <div class="fourth-1000 four-fifth sm">
         <br><br>
-        Wondering what this is? All of your questions can (hopefully) be answered <a href="https://github.com/alexqguo/drinking-board-game">here</a>.
+        Wondering what this is? All of your questions can (hopefully) be answered <a target="_blank" href="https://github.com/alexqguo/drinking-board-game">here</a>.
       </div>
     </section>
   </section>
 
   <section id="overlay">
     <player-status></player-status>
-    <dice-roll canReset></dice-roll>
+    <dice-roll></dice-roll>
     <div id="skip">
       <a class="button sm" href="#">Skip turn</a><br>
     </div>
