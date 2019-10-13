@@ -137,7 +137,7 @@ class Game {
 
   endDiceRoll(next: Function, roll: number): void {
     if (this.currentPlayer.effects.moveCondition) {
-      const canMove = this.currentPlayer.effects.moveCondition(roll);
+      const canMove = this.currentPlayer.effects.moveCondition.fn(roll);
 
       if (!canMove) {
         // So that it doesn't jump immediately. Not sure of a good way to do this right now.
@@ -173,7 +173,7 @@ class Game {
     
     // Uncomment this section for testing
     // if (this.currentPlayer.name === 'asdf' && !(window as any).asdf) {
-    //   numSpacesToAdvance = 18;
+    //   numSpacesToAdvance = 8;
     //   (window as any).asdf = true;
     // }
 

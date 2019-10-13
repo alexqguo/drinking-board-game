@@ -2,7 +2,7 @@ import Game from './Game';
 import Player from './Player';
 import { Rule } from '../rules';
 
-// TODO: lit-element. this is a piece of shit
+// TODO: make this a wrapper/interface to a wc, or just make it a wc completely
 export class Modal {
   triggerId: string;
   trigger: HTMLInputElement;

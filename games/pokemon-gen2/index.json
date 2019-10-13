@@ -339,7 +339,8 @@
         "type": "ApplyMoveConditionRule",
         "condition": {
           "criteria": [2, 4, 6],
-          "numSuccessesRequired": 1
+          "numSuccessesRequired": 1,
+          "description": "Must roll even"
         }
       },
       "zone": "MT. MORTAR",
@@ -586,7 +587,8 @@
             "type": "TeleportRule",
             "displayText": "Drink 1 and return to the start of Ilex Forest",
             "tileIndex": 14
-          }
+          },
+          "description": "Must roll 1-4"
         }
       }
     }, {

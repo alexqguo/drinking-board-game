@@ -1,11 +1,11 @@
 import Rule from './Rule';
-import { JsonRule, MoveCondition, PlayerTarget } from '../interfaces';
+import { JsonRule, JsonMoveCondition, PlayerTarget } from '../interfaces';
 import Player from '../engine/Player';
 import Game from '../engine/Game';
 import { createRule } from '../engine/BoardJsonConverter';
 
 class ApplyMoveConditionRule extends Rule {
-  condition: MoveCondition;
+  condition: JsonMoveCondition;
   successes: Map<Player, number>;
   consequence: Rule;
 
@@ -72,7 +72,10 @@ class ApplyMoveConditionRule extends Rule {
             return false;
           };
 
-          p.effects.moveCondition = canPlayerMove;
+          p.effects.moveCondition = {
+            fn: canPlayerMove,
+            description: this.condition.description,
+          };
 
           // Will fail with a custom player target as the modal will close immediately
           // Immediate means the condition takes effect the turn the player landed there

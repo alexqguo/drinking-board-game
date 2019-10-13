@@ -1,7 +1,7 @@
 export interface JsonTile {
   mandatory?: boolean;
   rule: JsonRule;
-  position: Position[]; // optional until I have time to fill them all out
+  position: Position[];
   zone?: string; // Key (name as of right now) to look up the zone
 }
 
@@ -58,7 +58,7 @@ export interface PlayerEffects {
   extraTurns: number,
   skippedTurns: number,
   speedModifiers: SpeedModifier[],
-  moveCondition: Function,
+  moveCondition: MoveCondition,
   anchors: number,
 }
 
@@ -72,7 +72,7 @@ export interface JsonRule {
   playerTarget?: PlayerTarget;
   modifier?: [ModifierOperation, number];
   diceRolls?: DiceRoll;
-  condition?: MoveCondition;
+  condition?: JsonMoveCondition;
   criteria?: number[];
   choices?: JsonRule[];
   proxyRuleId?: string;
@@ -84,11 +84,17 @@ export interface JsonZone {
   rule: JsonRule;
 }
 
-export interface MoveCondition {
+export interface JsonMoveCondition {
   criteria: number[];
   numSuccessesRequired: number;
   immediate?: boolean;
   consequence?: JsonRule;
+  description: string;
+}
+
+export interface MoveCondition {
+  fn: Function;
+  description: string;
 }
 
 export interface DiceRoll {

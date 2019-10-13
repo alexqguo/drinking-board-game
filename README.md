@@ -49,11 +49,13 @@ This app has been tested on Chrome/FF latest versions. It "works" on the latest 
   * Add a modal when skipping a turn, not just a random pause
   * Loading screen while the game data is loading
   * Make things a bit prettier
+  * Describe move condition
   * Probably would make sense to have a util function class
     * sum numbers
     * hex to rgb
     * etc
 * Todo
+  * Specific text during a missed turn
   * Refactor modal into a WCs or multiple child WCs
   * Clean up other todos
   * Consider better organization of events
