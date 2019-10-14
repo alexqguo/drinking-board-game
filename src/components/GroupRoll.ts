@@ -2,7 +2,7 @@ import { LitElement, html, customElement, property } from 'lit-element';
 
 // Should probably combine this into TrainerBattle at some point
 @customElement('group-roll')
-export class GroupRoll extends LitElement {
+export default class GroupRoll extends LitElement {
   rolls: number = 0;
 
   @property({ type: Array })

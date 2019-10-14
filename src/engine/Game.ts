@@ -9,7 +9,7 @@ import GameEvents, {
   LOST_TURN_START, GAME_START
 } from './GameEvents';
 import Tile from './Tile';
-import { DiceRoll } from '../components/DiceRoll';
+import DiceRoll from '../components/DiceRoll';
 
 class Game {
   static instance: Game;
@@ -17,7 +17,7 @@ class Game {
   players: Player[];
   currentPlayer: Player;
   turnPosition: number;
-  diceLink: HTMLElement;
+  diceLink: DiceRoll;
   freeRollDiceLink: DiceRoll;
   modal: Modal;
   canvas: HTMLCanvasElement;
@@ -124,7 +124,7 @@ class Game {
   }
 
   enableDiceRoll(next: Function): void {
-    (this.diceLink as any).reset(); // TODO: just import the component?
+    this.diceLink.reset();
     this.diceLink.addEventListener('roll', this.handleDiceRoll);
     next();
   }

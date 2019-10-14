@@ -2,7 +2,7 @@ import { LitElement, html, customElement, property } from 'lit-element';
 import { PlayerStatusData } from '../interfaces';
 
 @customElement('player-status')
-export class PlayerStatus extends LitElement {
+export default class PlayerStatus extends LitElement {
 
   @property({ type: Object })
   data: PlayerStatusData;

@@ -1,7 +1,7 @@
 import { LitElement, html, customElement } from 'lit-element';
 
 @customElement('player-input')
-export class PlayerInput extends LitElement {
+export default class PlayerInput extends LitElement {
 
   createRenderRoot() {
     return this;

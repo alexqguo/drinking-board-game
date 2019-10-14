@@ -21,7 +21,7 @@ class Tile {
   }
 
   // Generates an average position based on the corners of the tile
-  // TODO: change this when someone is already at this space
+  // Can consider making it slightly offset if a player is already there
   generateCenterPosition(): Position {
     const total: Position = this.coordinates.reduce((prev: Position, cur: Position) => {
       return {x: prev.x + cur.x, y: prev.y + cur.y};

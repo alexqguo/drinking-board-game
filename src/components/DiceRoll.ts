@@ -1,7 +1,7 @@
 import { LitElement, html, customElement, property } from 'lit-element';
 
 @customElement('dice-roll')
-export class DiceRoll extends LitElement {
+export default class DiceRoll extends LitElement {
 
   @property({ type: String })
   result = '';
