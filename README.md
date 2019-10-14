@@ -96,6 +96,9 @@ This app has been tested on Chrome/FF latest versions. It "works" on the latest 
   * [engine] Gengar changes how Saffron gym works
   * [engine?] Fighting dojo
   * [engine] Nidofamily, re-rolling a player's roll
+* Gen 3 (board in src)
+  * [engine] Need subtraction operation for Zigzagoon
+  * That's it!
 
 ## learnings
 Here I will document some of my takeaways from this project. 
