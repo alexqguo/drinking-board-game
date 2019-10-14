@@ -14,7 +14,7 @@ const starterStrengths = {
   [starterNames.chikorita]: starterNames.totodile,
   [starterNames.cyndaquil]: starterNames.chikorita,
   [starterNames.totodile]: starterNames.cyndaquil,
-}
+};
 
 const w = window as any;
 
