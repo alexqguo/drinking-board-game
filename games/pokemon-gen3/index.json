@@ -1,0 +1,584 @@
+{
+  "tiles": [
+    {
+      "rule": {
+        "displayText": "Pick one, dude.",
+        "type": "DisplayRule"
+      },
+      "position": [{"x": 262,"y": 1764},{"x": 448,"y": 1764},{"x": 448,"y": 1948},{"x": 262,"y": 1948}]
+    }, {
+      "rule": {
+        "displayText": "Seedot used Explosion! How the hell does it know that?! Choose another player and you both finish your drinks!",
+        "type": "DisplayRule"
+      },
+      "position": [{"x": 262,"y": 1580},{"x": 448,"y": 1580},{"x": 448,"y": 1764},{"x": 262,"y": 1764}]
+    }, {
+      "rule": {
+        "displayText": "Shroomish used Leech Seed! Take a drink from someone else's cup.",
+        "type": "DisplayRule"
+      },
+      "position": [{"x": 262,"y": 1392},{"x": 448,"y": 1392},{"x": 448,"y": 1576},{"x": 262,"y": 1576}]
+    }, {
+      "rule": {
+        "displayText": "WALLY\nYou help new trainer Wally catch a Ralts! Roll a 3 or 4 to catch one too or drink 2 in frustration.",
+        "type": "DiceRollRule",
+        "diceRolls": {
+          "numRequired": 1
+        }
+      },
+      "position": [{"x": 262,"y": 1204}, {"x": 448,"y": 1204}, {"x": 448,"y": 1388}, {"x": 262,"y": 1388}]
+    }, {
+      "rule": {
+        "displayText": "[TODO] Zigzagoon used Growl! Get scared and subtract 1 from your dice roll next turn. Drink 2 to calm yourself.",
+        "type": "DisplayRule"
+      },
+      "position": [{"x": 262,"y": 1016}, {"x": 448,"y": 1016}, {"x": 448,"y": 1200}, {"x": 262,"y": 1200}]
+    }, {
+      "rule": {
+        "displayText": "MAY\nThat's the professor's daughter you pervert, hands off! Drink for half the number of players (round up) for your sick mind.",
+        "type": "DisplayRule"
+      },
+      "position": [{"x": 262,"y": 828}, {"x": 448,"y": 828}, {"x": 448,"y": 1012}, {"x": 262,"y": 1012}]
+    }, {
+      "mandatory": true,
+      "rule": {
+        "displayText": "RUSTBORO GYM\nRoll a die. Even: Give a drink. Odd: Take a drink.",
+        "type": "DiceRollRule",
+        "diceRolls": {
+          "numRequired": 1
+        }
+      },
+      "position": [{"x": 262,"y": 640}, {"x": 448,"y": 640}, {"x": 448,"y": 828}, {"x": 262,"y": 828}]
+    }, {
+      "rule": {
+        "displayText": "Whismur used Uproar! All other players agree on a word or phrase. Shout this as loud as you can up to 3 times. Give that many drinks.",
+        "type": "DisplayRule"
+      },
+      "position": [{"x": 262,"y": 448}, {"x": 448,"y": 448}, {"x": 448,"y": 638}, {"x": 262,"y": 638}]
+    }, {
+      "rule": {
+        "displayText": "Take a ride with Mr. Briney and Peeko. Drink 3 and toast to altruism.",
+        "type": "DisplayRule"
+      },
+      "position": [{"x": 262,"y": 262}, {"x": 448,"y": 262}, {"x": 448,"y": 450}, {"x": 262,"y": 450}]
+    }, {
+      "rule": {
+        "displayText": "GRANITE CAVE\nThis cave is dark and annoyingly maze like. The lights must remain off while someone is inside Granite Cave. Drink 2 to prepare yourself.",
+        "type": "DisplayRule"
+      },
+      "zone": "GRANITE CAVE",
+      "position": [{"x": 450,"y": 262}, {"x": 636,"y": 262}, {"x": 636,"y": 450}, {"x": 450,"y": 450}]
+    }, {
+      "rule": {
+        "displayText": "[TODO] Zubats again? This joke isn't even funny anymore! Next turn roll a die. If you roll odds, lose your turn and drink 1. You cannot leave until you roll evens.",
+        "type": "DisplayRule"
+      },
+      "zone": "GRANITE CAVE",
+      "position": [{"x": 640,"y": 262}, {"x": 824,"y": 262}, {"x": 824,"y": 450}, {"x": 640,"y": 450}]
+    }, {
+      "rule": {
+        "displayText": "Aron used Iron Defense! Drink 2 and reduce the amount you drink by half (round up) until your next turn.",
+        "type": "DisplayRule"
+      },
+      "zone": "GRANITE CAVE",
+      "position": [{"x": 830,"y": 262}, {"x": 1014,"y": 262}, {"x": 1014,"y": 450}, {"x": 830,"y": 450}]
+    }, {
+      "mandatory": true,
+      "rule": {
+        "displayText": "DEWFORD GYM\nChoose another player. They may high five you as hard as they can. Drink for every time they do so.",
+        "type": "DisplayRule"
+      },
+      "position": [{"x": 1016,"y": 262}, {"x": 1200,"y": 262}, {"x": 1200,"y": 450}, {"x": 1016,"y": 450}]
+    }, {
+      "rule": {
+        "displayText": "[TODO] Tentacool used Supersonic! You get confused and must roll a die before every turn.\nEven: drink 2\nOdd: you snap out of confusion",
+        "type": "DisplayRule"
+      },
+      "position": [{"x": 1202,"y": 262}, {"x": 1388,"y": 262}, {"x": 1388,"y": 450}, {"x": 1202,"y": 450}]
+    }, {
+      "rule": {
+        "displayText": "Team Magma has recruited you into their ranks. Every time you drink give that many to your team to split. Drink 2 to celebrate.",
+        "type": "DisplayRule"
+      },
+      "position": [{"x": 1390,"y": 262}, {"x": 1574,"y": 262}, {"x": 1574,"y": 450}, {"x": 1390,"y": 450}]
+    }, {
+      "rule": {
+        "displayText": "You have entered the famous Hoenn Trick House! Make a tricky rule that will get everybody drinking!",
+        "type": "DisplayRule"
+      },
+      "position": [{"x": 1576,"y": 262}, {"x": 1762,"y": 262}, {"x": 1762,"y": 450}, {"x": 1576,"y": 450}]
+    }, {
+      "rule": {
+        "displayText": "Plusle and Minun used Helping Hand! Choose a player and the next time they drink, drink for them.",
+        "type": "DisplayRule"
+      },
+      "position": [{"x": 1766,"y": 262}, {"x": 1950,"y": 262}, {"x": 1950,"y": 450}, {"x": 1766,"y": 450}]
+    }, {
+      "rule": {
+        "displayText": "Team Aqua has recruited you into their ranks. Every time you drink, give that many to your team to split. Drink 2 to celebrate. Drink 5 if you are on Team Magma.",
+        "type": "DisplayRule"
+      },
+      "position": [{"x": 1766,"y": 450}, {"x": 1950,"y": 450}, {"x": 1950,"y": 638}, {"x": 1766,"y": 638}]
+    }, {
+      "rule": {
+        "displayText": "WALLY\nThis kid catches one Pokemon and now thinks he's hot shit. Roll a die, drink that many.",
+        "type": "DisplayRule"
+      },
+      "position": [{"x": 1766,"y": 638}, {"x": 1950,"y": 638}, {"x": 1950,"y": 826}, {"x": 1766,"y": 826}]
+    }, {
+      "mandatory": true,
+      "rule": {
+        "displayText": "[TODO] MAUVILLE GYM\nRoll a die.\nEven: You are paralyzed, drink 2 and you miss your next turn.\nOdd: take a drink.",
+        "type": "DisplayRule"
+      },
+      "position": [{"x": 1766,"y": 824}, {"x": 1950,"y": 824}, {"x": 1950,"y": 1012}, {"x": 1766,"y": 1012}]
+    }, {
+      "rule": {
+        "displayText": "Barboach used Mud-slap! Choose a player, until the end of the game this player at the price of finishing a full drink may slap you across the face. (This may only happen once.)",
+        "type": "DisplayRule"
+      },
+      "position": [{"x": 1766,"y": 1010}, {"x": 1950,"y": 1010}, {"x": 1950,"y": 1198}, {"x": 1766,"y": 1198}]
+    }, {
+      "rule": {
+        "displayText": "FIERY PATH\nThis narrow path through the mountains is heated by geothermal eruptions. It is getting hot in here. Take off an article of clothing for every turn you end in this fiery path. Drink 4 to stay hydrated.",
+        "type": "DisplayRule"
+      },
+      "zone": "FIERY PATH",
+      "position": [{"x": 1766,"y": 1200}, {"x": 1950,"y": 1200}, {"x": 1950,"y": 1388}, {"x": 1766,"y": 1388}]
+    }, {
+      "rule": {
+        "displayText": "Journalists Gabby and Ty want to interview you. Every player must ask you a question. Respond truthfully or drink to skip a question.",
+        "type": "DisplayRule"
+      },
+      "zone": "FIERY PATH",
+      "position": [{"x": 1766,"y": 1388}, {"x": 1950,"y": 1388}, {"x": 1950,"y": 1576}, {"x": 1766,"y": 1576}]
+    }, {
+      "rule": {
+        "displayText": "Slugma used Rock Slide! Drink up to 6 sips and give out half of what you drink (round up).",
+        "type": "DisplayRule"
+      },
+      "zone": "FIERY PATH",
+      "position": [{"x": 1766,"y": 1574}, {"x": 1950,"y": 1574}, {"x": 1950,"y": 1762}, {"x": 1766,"y": 1762}]
+    }, {
+      "rule": {
+        "displayText": "Spinda used Teeter Dance! Dance along to a song chosen by the group or drink 8 for your stage fright.",
+        "type": "DisplayRule"
+      },
+      "zone": "FIERY PATH",
+      "position": [{"x": 1766,"y": 1764}, {"x": 1950,"y": 1764}, {"x": 1950,"y": 1952}, {"x": 1766,"y": 1952}]
+    },{
+      "rule": {
+        "displayText": "You have been forced to join team Magma. If you are already a member you must talk like a nerd until your next turn. If you are a Team Aqua scumbag drink 8.",
+        "type": "DisplayRule"
+      },
+      "zone": "FIERY PATH",
+      "position": [{"x": 1577,"y": 1764}, {"x": 1761,"y": 1764}, {"x": 1761,"y": 1952}, {"x": 1577,"y": 1952}]
+    }, {
+      "rule": {
+        "displayText": "Spoink used Psychic! Guess the number of fingers behind another players back. If wrong drink that many. If right they drink that many.",
+        "type": "DisplayRule"
+      },
+      "zone": "FIERY PATH",
+      "position": [{"x": 1390,"y": 1764}, {"x": 1574,"y": 1764}, {"x": 1574,"y": 1952}, {"x": 1390,"y": 1952}]
+    }, {
+      "mandatory": true,
+      "rule": {
+        "displayText": "LAVARIDGE GYM\nRoll a die.\n1-3: Drink your roll\n4-6: Get burned and take a high proof shot",
+        "type": "DisplayRule"
+      },
+      "position": [{"x": 1203,"y": 1764}, {"x": 1387,"y": 1764}, {"x": 1387,"y": 1952}, {"x": 1203,"y": 1952}]
+    },{
+      "rule": {
+        "displayText": "Trapinch used Hyper Beam! Give out 5 drinks and miss your next turn to recharge.",
+        "type": "SkipTurnRule",
+        "numTurns": 1
+      },
+      "position": [{"x": 1014,"y": 1764}, {"x": 1198,"y": 1764}, {"x": 1198,"y": 1952}, {"x": 1014,"y": 1952}]
+    }, {
+      "rule": {
+        "displayText": "You find two fossils in the sand. Choose:\nAll players older than you drink 3.\nAll players younger than you drink 3.",
+        "type": "DisplayRule"
+      },
+      "position": [{"x": 827,"y": 1764}, {"x": 1011,"y": 1764}, {"x": 1011,"y": 1952}, {"x": 827,"y": 1952}]
+    }, {
+      "rule": {
+        "displayText": "You receive TM43 Secret Power! Choose a space on the board, any player who lands on this space must drink double that turn, you included.",
+        "type": "DisplayRule"
+      },
+      "position": [{"x": 640,"y": 1764}, {"x": 824,"y": 1764}, {"x": 824,"y": 1952}, {"x": 640,"y": 1952}]
+    }, {
+      "mandatory": true,
+      "rule": {
+        "displayText": "PETALBURG GYM\nYour deadbeat dad's a dick! You must call another player daddy for the rest of the game and drink 4, or drink 8 to keep your dignity.",
+        "type": "DisplayRule"
+      },
+      "position": [{"x": 453,"y": 1764}, {"x": 637,"y": 1764}, {"x": 637,"y": 1952}, {"x": 453,"y": 1952}]
+    }, {
+      "rule": {
+        "displayText": "Pelipper used Stockpile! Pour a little of everyone's drink into a cup. Roll a die.\nEven: Pelipper used Swallow! Drink the mixture.\nOdd: Pelipper used Spit Up! Choose someone to drink it.",
+        "type": "DisplayRule"
+      },
+      "position": [{"x": 453,"y": 1575}, {"x": 637,"y": 1575}, {"x": 637,"y": 1763}, {"x": 453,"y": 1763}]
+    }, {
+      "rule": {
+        "displayText": "Kecleon's ability Color Change changed its type! Every time you finish a drink, the next one you drink must be different from the previous.",
+        "type": "DisplayRule"
+      },
+      "position": [{"x": 453,"y": 1388}, {"x": 637,"y": 1388}, {"x": 637,"y": 1576}, {"x": 453,"y": 1576}]
+    }, {
+      "rule": {
+        "displayText": "Tropius used Sweet Scent! Until your next turn all drinks that can be given out must be given to you.",
+        "type": "DisplayRule"
+      },
+      "position": [{"x": 453,"y": 1201}, {"x": 637,"y": 1201}, {"x": 637,"y": 1389}, {"x": 453,"y": 1389}]
+    }, {
+      "rule": {
+        "displayText": "You have joined team Aqua. If you are already a member you must talk like a pirate until your next turn. If you are a Team Magma poser drink 8.",
+        "type": "DisplayRule"
+      },
+      "position": [{"x": 453,"y": 1014}, {"x": 637,"y": 1014}, {"x": 637,"y": 1202}, {"x": 453,"y": 1202}]
+    }, {
+      "rule": {
+        "displayText": "Castform used Weather Ball! Drink for the weather outside.\nClear skies: Drink 2\nCloudy: Give 2\nRain: Drink 3\nSnow: Give 3",
+        "type": "DisplayRule"
+      },
+      "position": [{"x": 453,"y": 827}, {"x": 637,"y": 827}, {"x": 637,"y": 1015}, {"x": 453,"y": 1015}]
+    }, {
+      "rule": {
+        "displayText": "MAY\nDamn this bitch is clingy! Everyone in a relationship drink 3. Everyone drink 5 if nobody is.",
+        "type": "DisplayRule"
+      },
+      "position": [{"x": 453,"y": 640}, {"x": 637,"y": 640}, {"x": 637,"y": 828}, {"x": 453,"y": 828}]
+    }, {
+      "mandatory": true,
+      "rule": {
+        "displayText": "FORTREE GYM\nFlying Pokemon battles are epic! Stand on furniture until your next turn. Drink 3 to calm your nerves.",
+        "type": "DisplayRule"
+      },
+      "position": [{"x": 453,"y": 453}, {"x": 637,"y": 453}, {"x": 637,"y": 638}, {"x": 453,"y": 638}]
+    }, {
+      "rule": {
+        "displayText": "Shuppet used Curse! Until the end of the game, every time you curse you drink.",
+        "type": "DisplayRule"
+      },
+      "position": [{"x": 642,"y": 453}, {"x": 826,"y": 453}, {"x": 826,"y": 638}, {"x": 642,"y": 638}]
+    }, {
+      "rule": {
+        "displayText": "Wailmer used Whirlpool! Give 3 drinks and reverse the turn order.",
+        "type": "ReverseTurnOrderRule"
+      },
+      "position": [{"x": 829,"y": 453}, {"x": 1013,"y": 453}, {"x": 1013,"y": 638}, {"x": 829,"y": 638}]
+    }, {
+      "rule": {
+        "displayText": "Xatu used Future Sight! Roll a die at the beginning of your next two turns. Then drink the total of the two.",
+        "type": "DisplayRule"
+      },
+      "position": [{"x": 1016,"y": 453}, {"x": 1200,"y": 453}, {"x": 1200,"y": 638}, {"x": 1016,"y": 638}]
+    }, {
+      "rule": {
+        "displayText": "Golduck used Fury Swipes! Roll a die.\nEven: Roll again\nOdd: Drink the number of times you rolled",
+        "type": "RollUntilRule",
+        "criteria": [1, 3, 5]
+      },
+      "position": [{"x": 1203,"y": 453}, {"x": 1387,"y": 453}, {"x": 1387,"y": 638}, {"x": 1203,"y": 638}]
+    }, {
+      "rule": {
+        "displayText": "Welcome to the Hoenn Pokemon Contest Hall. Choose a song and do your best model runway walk. Give out 5 drinks if you do.",
+        "type": "DisplayRule"
+      },
+      "position": [{"x": 1390,"y": 453}, {"x": 1574,"y": 453}, {"x": 1574,"y": 638}, {"x": 1390,"y": 638}]
+    }, {
+      "rule": {
+        "displayText": "MAY\nTime to end this awkward relationship once and for all! Roll 3 die and drink the total.",
+        "type": "DiceRollRule",
+        "diceRolls": {
+          "numRequired": 3
+        }
+      },
+      "position": [{"x": 1577,"y": 453}, {"x": 1763,"y": 453}, {"x": 1763,"y": 638}, {"x": 1577,"y": 638}]
+    }, {
+      "rule": {
+        "displayText": "Vulpix used Will-o-wisp! For the rest of the game add 1 to the amount you must drink.",
+        "type": "DisplayRule"
+      },
+      "position": [{"x": 1579,"y": 641}, {"x": 1763,"y": 641}, {"x": 1763,"y": 825}, {"x": 1579,"y": 825}]
+    }, {
+      "rule": {
+        "displayText": "[TODO] Chimecho used Heal Bell! Add 1 to your roll the next time you really need it. Drink 2 to thank Chimecho for being a bro.",
+        "type": "DisplayRule"
+      },
+      "position": [{"x": 1579,"y": 830}, {"x": 1763,"y": 830}, {"x": 1763,"y": 1014}, {"x": 1579,"y": 1014}]
+    }, {
+      "rule": {
+        "displayText": "Gloom used Sludge Bomb. You and the two players sitting next to you drink 4.",
+        "type": "DisplayRule"
+      },
+      "position": [{"x": 1579,"y": 1017}, {"x": 1763,"y": 1017}, {"x": 1763,"y": 1201}, {"x": 1579,"y": 1201}]
+    }, {
+      "rule": {
+        "displayText": "MOSSDEEP GYM\nDouble Battles are twice the fun! Pick another player, both roll a die. If the total is 8 or higher you win! Each give two drinks. If not, both drink 4.",
+        "type": "DiceRollRule",
+        "diceRolls": {
+          "numRequired": 2
+        }
+      },
+      "position": [{"x": 1579,"y": 1204}, {"x": 1763,"y": 1204}, {"x": 1763,"y": 1388}, {"x": 1579,"y": 1388}]
+    }, {
+      "rule": {
+        "displayText": "SHOAL CAVE\nThis cave's lakes shift with the moon's tide. To reach the exit safely you'll have to surf across. While in Shoal Cave you may not for any reason touch the floor. Drink twice for every second that you do.",
+        "type": "DisplayRule"
+      },
+      "zone": "SHOAL CAVE",
+      "position": [{"x": 1579,"y": 1391}, {"x": 1763,"y": 1391}, {"x": 1763,"y": 1575}, {"x": 1579,"y": 1575}]
+    }, {
+      "rule": {
+        "displayText": "Luvdisc used Splash! It's super effective! Everyone finish their drinks.",
+        "type": "DisplayRule"
+      },
+      "zone": "SHOAL CAVE",
+      "position": [{"x": 1579,"y": 1578}, {"x": 1763,"y": 1578}, {"x": 1763,"y": 1762}, {"x": 1579,"y": 1762}]
+    }, {
+      "rule": {
+        "displayText": "Clamperl is evolving! Choose:\nAll girls drink 3\nAll guys drink 3",
+        "type": "DisplayRule"
+      },
+      "zone": "SHOAL CAVE",
+      "position": [{"x": 1390,"y": 1578}, {"x": 1574,"y": 1578}, {"x": 1574,"y": 1762}, {"x": 1390,"y": 1762}]
+    }, {
+      "rule": {
+        "displayText": "Chinchou used Shockwave! Drink up to 6, the person to your right must drink 1 less. This shall continue until all drinks are given out.",
+        "type": "DisplayRule"
+      },
+      "zone": "SHOAL CAVE",
+      "position": [{"x": 1203,"y": 1578}, {"x": 1387,"y": 1578}, {"x": 1387,"y": 1762}, {"x": 1203,"y": 1762}]
+    }, {
+      "rule": {
+        "displayText": "Relicanth used Dive! You must kneel underneath the table until your next turn. You do not have to drink for touching the floor for this turn.",
+        "type": "DisplayRule"
+      },
+      "zone": "SHOAL CAVE",
+      "position": [{"x": 1016,"y": 1578}, {"x": 1200,"y": 1578}, {"x": 1200,"y": 1762}, {"x": 1016,"y": 1762}]
+    }, {
+      "rule": {
+        "displayText": "Spheal used Ice Ball! Drink 1, then the player to your left drinks that plus 1. Go around the table until everyone has drank.",
+        "type": "DisplayRule"
+      },
+      "zone": "SHOAL CAVE",
+      "position": [{"x": 829,"y": 1578}, {"x": 1013,"y": 1578}, {"x": 1013,"y": 1762}, {"x": 829,"y": 1762}]
+    }, {
+      "rule": {
+        "displayText": "Snorunt used Blizzard! If your drink is ice cold give 5 drinks. If not, drink 5.",
+        "type": "DisplayRule"
+      },
+      "zone": "SHOAL CAVE",
+      "position": [{"x": 640,"y": 1578}, {"x": 826,"y": 1578}, {"x": 826,"y": 1762}, {"x": 640,"y": 1762}]
+    }, {
+      "rule": {
+        "displayText": "MAXIE\nIf you are a member of Team Magma make a rule. Otherwise drink 7.",
+        "type": "DisplayRule"
+      },
+      "position": [{"x": 640,"y": 1389}, {"x": 824,"y": 1389}, {"x": 824,"y": 1573}, {"x": 640,"y": 1573}]
+    }, {
+      "rule": {
+        "displayText": "Groudon, the Legendary Continent Pokemon! Roll 4 to catch it and bypass the next gold square, or get rocked and take a high proof shot.",
+        "type": "DiceRollRule",
+        "diceRolls": {
+          "numRequired": 1,
+          "outcomes": [{
+            "rule": {
+              "type": "SkipNextMandatoryRule",
+              "displayText": "Caught Groudon! Bypass the next gold square!",
+              "numSpaces": 1
+            },
+            "criteria": [4]
+          }]
+        }
+      },
+      "position": [{"x": 640,"y": 1202}, {"x": 824,"y": 1202}, {"x": 824,"y": 1388}, {"x": 640,"y": 1388}]
+    }, {
+      "mandatory": true,
+      "rule": {
+        "displayText": "SOOTOPOLIS GYM\nRoll a die.\nEven: Chug a glass of water\nOdd: Chug your drink to completion",
+        "type": "DisplayRule"
+      },
+      "position": [{"x": 640,"y": 1013}, {"x": 824,"y": 1013}, {"x": 824,"y": 1200}, {"x": 640,"y": 1200}]
+    }, {
+      "rule": {
+        "displayText": "Gyarados used Waterfall! Start a waterfall.",
+        "type": "DisplayRule"
+      },
+      "position": [{"x": 640,"y": 826}, {"x": 824,"y": 826}, {"x": 824,"y": 1010}, {"x": 640,"y": 1010}]
+    }, {
+      "rule": {
+        "displayText": "ARCHIE\nIf you are a member of Team Aqua make a rule. Otherwise drink 7.",
+        "type": "DisplayRule"
+      },
+      "position": [{"x": 640,"y": 639}, {"x": 824,"y": 639}, {"x": 824,"y": 823}, {"x": 640,"y": 823}]
+    }, {
+      "rule": {
+        "displayText": "Kyogre, the Legendary Sea Basin Pokemon! Roll a 5 to catch it and bypass the next gold space, or get soaked and shotgun a beer.",
+        "type": "DiceRollRule",
+        "diceRolls": {
+          "numRequired": 1,
+          "outcomes": [{
+            "rule": {
+              "type": "SkipNextMandatoryRule",
+              "displayText": "Caught Kyogre! Bypass the next gold square!",
+              "numSpaces": 1
+            },
+            "criteria": [5]
+          }]
+        }
+      },
+      "position": [{"x": 829,"y": 639}, {"x": 1013,"y": 639}, {"x": 1013,"y": 823}, {"x": 829,"y": 823}]
+    }, {
+      "rule": {
+        "displayText": "Bagon used Rage! For the rest of the game drink at the bveginning of your turn. Add 1 to that amount every turn.",
+        "type": "DisplayRule"
+      },
+      "position": [{"x": 1016,"y": 639}, {"x": 1200,"y": 639}, {"x": 1200,"y": 823}, {"x": 1016,"y": 823}]
+    }, {
+      "rule": {
+        "displayText": "Medicham used Detect! Drink 3 and evade all drinks given to you until your next turn.",
+        "type": "DisplayRule"
+      },
+      "position": [{"x": 1203,"y": 639}, {"x": 1387,"y": 639}, {"x": 1387,"y": 823}, {"x": 1203,"y": 823}]
+    }, {
+      "rule": {
+        "displayText": "Mawile used Vicegrip! Until your next turn you must grab another player and squeeze them as hard as you can. Drink 4 and apologize.",
+        "type": "DisplayRule"
+      },
+      "position": [{"x": 1390,"y": 639}, {"x": 1574,"y": 639}, {"x": 1574,"y": 823}, {"x": 1390,"y": 823}]
+    }, {
+      "rule": {
+        "displayText": "Sableye used Metronome! Close your eyes and point to a space on the board. Drink that many or drink 3 if no drinks are given.",
+        "type": "DisplayRule"
+      },
+      "position": [{"x": 1390,"y": 828}, {"x": 1574,"y": 828}, {"x": 1574,"y": 1012}, {"x": 1390,"y": 1012}]
+    }, {
+      "rule": {
+        "displayText": "Claydol used Double Edge! Give as many drinks as you want to a target player, drink half in recoil damage.",
+        "type": "DisplayRule"
+      },
+      "position": [{"x": 1390,"y": 1015}, {"x": 1574,"y": 1015}, {"x": 1574,"y": 1199}, {"x": 1390,"y": 1199}]
+    }, {
+      "rule": {
+        "displayText": "Rayquaza, the Legendary Sky High Pokemon! Roll a 6 to catch it and skip the next gold space, or get dropped and take a bomb shot.",
+        "type": "DiceRollRule",
+        "diceRolls": {
+          "numRequired": 1,
+          "outcomes": [{
+            "rule": {
+              "type": "SkipNextMandatoryRule",
+              "displayText": "Caught Rayquaza! Bypass the next gold square!",
+              "numSpaces": 1
+            },
+            "criteria": [6]
+          }]
+        }
+      },
+      "position": [{"x": 1390,"y": 1202}, {"x": 1574,"y": 1202}, {"x": 1574,"y": 1388}, {"x": 1390,"y": 1388}]
+    }, {
+      "mandatory": true,
+      "rule": {
+        "displayText": "WALLY\nHow did this guy's pussy ass Pokemon get him all the way here!? Drink twice for every player to crush Wally's dreams.",
+        "type": "DisplayRule"
+      },
+      "position": [{"x": 1390,"y": 1391}, {"x": 1574,"y": 1391}, {"x": 1574,"y": 1577}, {"x": 1390,"y": 1577}]
+    }, {
+      "mandatory": true,
+      "rule": {
+        "displayText": "[todo] ELITE FOUR\nRoll 4 die, if all 4 are 4 and under you beat the Elite Four! Otherwise drink four and try again next turn.",
+        "type": "DiceRollRule",
+        "diceRolls": {
+          "numRequired": 4,
+          "numSuccessesRequired": 1,
+          "description": "All rolls must be 4 or under"
+        }
+      },
+      "position": [{"x": 1201,"y": 1391}, {"x": 1385,"y": 1391}, {"x": 1385,"y": 1577}, {"x": 1201,"y": 1577}]
+    }, {
+      "mandatory": true,
+      "rule": {
+        "displayText": "CHAMPION STEVEN\nFinish a full drink to beat this dude and take his title! You cannot move on until it's finished.",
+        "type": "DisplayRule"
+      },
+      "position": [{"x": 1014,"y": 1391}, {"x": 1198,"y": 1391}, {"x": 1198,"y": 1577}, {"x": 1014,"y": 1577}]
+    }, {
+      "mandatory": true,
+      "rule": {
+        "displayText": "POKEMON MASTER\nThrow that Master Ball and claim victory! All players toast to your skill. You truly are the very best.",
+        "type": "GameOverRule"
+      },
+      "position": [{"x": 827,"y": 1391}, {"x": 1011,"y": 1391}, {"x": 1011,"y": 1577}, {"x": 827,"y": 1577}]
+    }
+  ],
+  "zones": [
+    {
+      "name": "ILEX FOREST",
+      "type": "active",
+      "rule": {
+        "type": "ApplyMoveConditionRule",
+        "displayText": "This place is a little eerie. Try not to get lost! When you roll to move, if you roll a 5 or 6, drink 1 and return to the start of Ilex Forest.",
+        "condition": {
+          "criteria": [1, 2, 3, 4],
+          "consequence": {
+            "type": "TeleportRule",
+            "displayText": "Drink 1 and return to the start of Ilex Forest",
+            "tileIndex": 14
+          },
+          "description": "Must roll 1-4"
+        }
+      }
+    }, {
+      "name": "MT. MORTAR",
+      "type": "passive",
+      "rule": {
+        "type": "DisplayRule",
+        "displayText": "don't think the value of this matters"
+      }
+    }, {
+      "name": "RADIO TOWER",
+      "type": "active",
+      "rule": {
+        "displayText": "The infamous Team Rocket has now taken control of the Radio Tower in Goldenrod! I'm not sure what their plan is, but it probably involves Nickelback. Turn on the radio now and roll a die before each turn:\n1-3: Drink that many.\n4-6: Change the station.",
+        "type": "DiceRollRule",
+        "diceRolls": {
+          "numRequired": 1
+        }
+      }
+    }, {
+      "name": "GAME CENTER",
+      "type": "active",
+      "rule": {
+        "type": "ChoiceRule",
+        "displayText": "The Goldenrod Game Center brings out your gambling problem. Each turn roll 2 dice. Roll 7 to give 7 and leave, otherwise drink 2. You may only leave once you've finished your drink or rolled 7.",
+        "choices": [{
+          "displayText": "Roll 7 to give 7 and leave",
+          "type": "DiceRollRule",
+          "diceRolls": {
+            "numRequired": 2,
+            "cumulative": true,
+            "outcomes": [{
+              "rule": {
+                "type": "DisplayRule",
+                "displayText": "Give 7 and continue"
+              },
+              "criteria": [7]
+            }, {
+              "rule": {
+                "type": "SkipTurnRule",
+                "displayText": "Drink 2. Try again next turn!",
+                "numTurns": 1
+              },
+              "criteria": [1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12]
+            }]
+          }
+        }, {
+          "displayText": "Leave (you finished your drink)",
+          "type": "DisplayRule"
+        }]
+      }
+    }
+  ]
+}
