@@ -66,4 +66,5 @@ export default [
 
   createCustomGameConfiguration('pokemon-gen1'),
   createCustomGameConfiguration('pokemon-gen2'),
+  createCustomGameConfiguration('pokemon-gen3'),
 ];

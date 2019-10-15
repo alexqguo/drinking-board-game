@@ -50,6 +50,11 @@ class SpeedModifierRule extends Rule {
           fn: (num: number) => Math.ceil(value * num),
           description: `x${value}`,
         };
+      case ModifierOperation.subtraction:
+        return {
+          fn: (num: number) => num - value,
+          description: `- ${value}`
+        }
       default:
         throw `Operation ${operation} not supported.`
     }

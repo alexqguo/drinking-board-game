@@ -29,8 +29,10 @@
       "position": [{"x": 262,"y": 1204}, {"x": 448,"y": 1204}, {"x": 448,"y": 1388}, {"x": 262,"y": 1388}]
     }, {
       "rule": {
-        "displayText": "[TODO] Zigzagoon used Growl! Get scared and subtract 1 from your dice roll next turn. Drink 2 to calm yourself.",
-        "type": "DisplayRule"
+        "displayText": "Zigzagoon used Growl! Get scared and subtract 1 from your dice roll next turn. Drink 2 to calm yourself.",
+        "type": "SpeedModifierRule",
+        "modifier": ["-", 1],
+        "numTurns": 1
       },
       "position": [{"x": 262,"y": 1016}, {"x": 448,"y": 1016}, {"x": 448,"y": 1200}, {"x": 262,"y": 1200}]
     }, {

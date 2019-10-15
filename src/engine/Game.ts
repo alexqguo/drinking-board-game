@@ -172,15 +172,21 @@ class Game {
     let numSpacesToAdvance: number = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
     
     // Uncomment this section for testing
-    if (this.currentPlayer.name === 'asdf' && !(window as any).asdf) {
-      numSpacesToAdvance = 18;
-      (window as any).asdf = true;
-    }
+    // if (this.currentPlayer.name === 'asdf' && !(window as any).asdf) {
+    //   numSpacesToAdvance = 4;
+    //   (window as any).asdf = true;
+    // }
 
     if (numSpacesToAdvance > 0) {
       // Consider fixing this naming. This doesn't actually move anything in the UI
       this.currentPlayer.moveToTile(this.currentPlayer.currentTileIndex + numSpacesToAdvance);
       GameEvents.trigger(MOVE_START);
+    } else {
+      // If somehow you end up not moving anywhere (can happen with a speed modifier)
+      setTimeout(() => {
+        this.modal.close();
+        GameEvents.trigger(TURN_END);
+      }, 1200);
     }
 
     next();

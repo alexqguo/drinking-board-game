@@ -33,6 +33,7 @@ export interface SpeedModifier {
 export enum ModifierOperation {
   addition = '+',
   multiplication = '*',
+  subtraction = '-',
 }
 
 export interface PlayerInput {
