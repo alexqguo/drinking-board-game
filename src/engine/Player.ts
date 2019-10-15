@@ -6,6 +6,8 @@ export const RADIUS = 30;
 export const FONT_SIZE = 20;
 export const VELO = 12;
 
+const SKIPPED_TURN_TEXT = 'Missed turn';
+
 class Player {
   name: string;
   color: PlayerColor;
@@ -21,7 +23,7 @@ class Player {
     this.custom = {};
     this.effects = {
       extraTurns: 0,
-      skippedTurns: 0,
+      skippedTurns: [],
       speedModifiers: [],
       customMandatoryTiles: [],
       mandatorySkips: 0,
@@ -30,14 +32,17 @@ class Player {
     };
   }
 
-  // TODO: consolidate canTakeTurn and isAnchor. bit too lazy to do so right now
-  canTakeTurn(): boolean {
-    if (this.effects.skippedTurns > 0) {
-      this.effects.skippedTurns--;
-      return false;
+  static generateSkippedTurnText(description?: string) {
+    return `${SKIPPED_TURN_TEXT}${description ? ': ' + description : ''}`;
+  }
+
+  canTakeTurn(): [boolean, string] {
+    if (this.effects.skippedTurns.length > 0) {
+      const missedTurnDescriptor: string = this.effects.skippedTurns.shift();
+      return [false, missedTurnDescriptor];
     }
 
-    return true;
+    return [true, null];
   }
 
   isAnchor(): boolean {

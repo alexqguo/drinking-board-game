@@ -54,8 +54,9 @@ This app has been tested on Chrome/FF latest versions. It "works" on the latest 
     * sum numbers
     * hex to rgb
     * etc
-* Todo
   * Specific text during a missed turn
+* Todo
+  * Put number of successes required in player status
   * Refactor modal into a WCs or multiple child WCs
   * Clean up other todos
   * Consider better organization of events

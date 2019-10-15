@@ -19,3 +19,9 @@ export function hexToRgb(hex: string): PlayerColor {
 export function sumNumbers(nums: number[]): number {
   return nums.reduce((acc: number, cur: number) => acc + cur);
 }
+
+export function times(n: number, cb: Function) {
+  for (let i = 0; i < n; i++) {
+    cb(i);
+  }
+}

@@ -1,6 +1,8 @@
 import Rule from './Rule';
 import Game from '../engine/Game';
 import { JsonRule } from '../interfaces';
+import { times } from '../utils';
+import Player from '../engine/Player';
 
 class SkipTurnRule extends Rule {
   numTurns: number;
@@ -14,7 +16,9 @@ class SkipTurnRule extends Rule {
 
   execute(closedCb: Function): void {
     super.execute(closedCb);
-    Game.currentPlayer.effects.skippedTurns += this.numTurns;
+    times(this.numTurns, () => {
+      Game.currentPlayer.effects.skippedTurns.push(Player.generateSkippedTurnText());
+    })
     Game.modal.enableClose();
   }
 }

@@ -86,7 +86,7 @@ class Game {
     this.currentPlayer = this.players[playerIndex];
 
     this.updatePlayerStatusElement();
-    const canMove = this.currentPlayer.canTakeTurn();
+    const canMove: [boolean, string] = this.currentPlayer.canTakeTurn();
     this.freeRollDiceLink.reset();
     
     window.scrollTo({
@@ -95,29 +95,29 @@ class Game {
       behavior: 'smooth',
     });
 
-    if (canMove) {
+    if (canMove[0]) {
       const currentZone: Zone = this.getCurrentZone();
 
       if (currentZone && currentZone.type === ZoneType.active) {
         currentZone.rule.execute(() => {
           /**
            * Need to check this again in case the zone made the player lose a turn.
-           * If we even acted on a zone to begin with it means the player could take their turn (skippedTurns was 0)
+           * If we even acted on a zone to begin with it means the player could take their turn (skippedTurns was empty)
            * so there's no harm in checking again.
            */
-          GameEvents.trigger(this.currentPlayer.canTakeTurn() ? ROLL_START : TURN_END);
+          GameEvents.trigger(this.currentPlayer.canTakeTurn()[0] ? ROLL_START : TURN_END);
         });
       } else {
         GameEvents.trigger(ROLL_START);
       }
     } else {
-      GameEvents.trigger(LOST_TURN_START);
+      GameEvents.trigger(LOST_TURN_START, [canMove[1]]);
     }
   }
 
-  startLostTurn(): void {
+  startLostTurn(next: Function, descriptor: string): void {
     // Basically just wait a couple seconds so the user can be reminded that they aren't allowed to do anything
-    this.modal.show('Missed turn');
+    this.modal.show(descriptor);
     this.modal.whenClosed(() => {
       GameEvents.trigger(TURN_END);
     });
@@ -172,10 +172,10 @@ class Game {
     let numSpacesToAdvance: number = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
     
     // Uncomment this section for testing
-    // if (this.currentPlayer.name === 'asdf' && !(window as any).asdf) {
-    //   numSpacesToAdvance = 8;
-    //   (window as any).asdf = true;
-    // }
+    if (this.currentPlayer.name === 'asdf' && !(window as any).asdf) {
+      numSpacesToAdvance = 18;
+      (window as any).asdf = true;
+    }
 
     if (numSpacesToAdvance > 0) {
       // Consider fixing this naming. This doesn't actually move anything in the UI

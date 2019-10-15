@@ -56,7 +56,7 @@ export interface PlayerEffects {
   mandatorySkips: number,
   customMandatoryTiles: number[],
   extraTurns: number,
-  skippedTurns: number,
+  skippedTurns: string[],
   speedModifiers: SpeedModifier[],
   moveCondition: MoveCondition,
   anchors: number,
