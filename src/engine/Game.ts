@@ -170,12 +170,20 @@ class Game {
     }
 
     let numSpacesToAdvance: number = (firstMandatoryIndex === -1 ? roll : firstMandatoryIndex + 1);
+
+    // If the user is going to land on their custom mandatory space, clear it
+    // TODO: clean this up. Yikes
+    if (this.currentPlayer.effects.customMandatoryTiles.includes(this.currentPlayer.currentTileIndex + numSpacesToAdvance)) {
+      this.currentPlayer.effects.customMandatoryTiles.splice(
+        this.currentPlayer.effects.customMandatoryTiles.indexOf(firstMandatoryIndex), 1
+      );
+    }
     
     // Uncomment this section for testing
-    // if (this.currentPlayer.name === 'asdf' && !(window as any).asdf) {
-    //   numSpacesToAdvance = 4;
-    //   (window as any).asdf = true;
-    // }
+    if (this.currentPlayer.name === 'asdf' && !(window as any).asdf) {
+      numSpacesToAdvance = 2;
+      (window as any).asdf = true;
+    }
 
     if (numSpacesToAdvance > 0) {
       // Consider fixing this naming. This doesn't actually move anything in the UI
