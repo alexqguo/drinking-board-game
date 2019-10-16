@@ -72,8 +72,13 @@
       "position": [{"x": 450,"y": 262}, {"x": 636,"y": 262}, {"x": 636,"y": 450}, {"x": 450,"y": 450}]
     }, {
       "rule": {
-        "displayText": "[TODO] Zubats again? This joke isn't even funny anymore! Next turn roll a die. If you roll odds, lose your turn and drink 1. You cannot leave until you roll evens.",
-        "type": "DisplayRule"
+        "displayText": "Zubats again? This joke isn't even funny anymore! Next turn roll a die. If you roll odds, lose your turn and drink 1. You cannot leave until you roll evens.",
+        "type": "ApplyMoveConditionRule",
+        "condition": {
+          "criteria": [2, 4, 6],
+          "numSuccessesRequired": 1,
+          "description": "Must roll even"
+        }
       },
       "zone": "GRANITE CAVE",
       "position": [{"x": 640,"y": 262}, {"x": 824,"y": 262}, {"x": 824,"y": 450}, {"x": 640,"y": 450}]
@@ -93,8 +98,13 @@
       "position": [{"x": 1016,"y": 262}, {"x": 1200,"y": 262}, {"x": 1200,"y": 450}, {"x": 1016,"y": 450}]
     }, {
       "rule": {
-        "displayText": "[TODO] Tentacool used Supersonic! You get confused and must roll a die before every turn.\nEven: drink 2\nOdd: you snap out of confusion",
-        "type": "DisplayRule"
+        "displayText": "Tentacool used Supersonic! You get confused and must roll a die before every turn.\nEven: drink 2\nOdd: you snap out of confusion",
+        "type": "ApplyMoveConditionRule",
+        "condition": {
+          "criteria": [1, 3, 5],
+          "numSuccessesRequired": 1,
+          "description": "Must roll odd"
+        }
       },
       "position": [{"x": 1202,"y": 262}, {"x": 1388,"y": 262}, {"x": 1388,"y": 450}, {"x": 1202,"y": 450}]
     }, {
@@ -130,8 +140,19 @@
     }, {
       "mandatory": true,
       "rule": {
-        "displayText": "[TODO] MAUVILLE GYM\nRoll a die.\nEven: You are paralyzed, drink 2 and you miss your next turn.\nOdd: take a drink.",
-        "type": "DisplayRule"
+        "displayText": "MAUVILLE GYM\nRoll a die.\nEven: You are paralyzed, drink 2 and you miss your next turn.\nOdd: take a drink.",
+        "type": "DiceRollRule",
+        "diceRolls": {
+          "numRequired": 1,
+          "outcomes": [{
+            "rule": {
+              "type": "SkipTurnRule",
+              "displayText": "You're paralyzed; drink 2 and miss your next turn",
+              "numTurns": 1
+            },
+            "criteria": [2, 4, 6]
+          }]
+        }
       },
       "position": [{"x": 1766,"y": 824}, {"x": 1950,"y": 824}, {"x": 1950,"y": 1012}, {"x": 1766,"y": 1012}]
     }, {
@@ -491,11 +512,9 @@
       "mandatory": true,
       "rule": {
         "displayText": "[todo] ELITE FOUR\nRoll 4 die, if all 4 are 4 and under you beat the Elite Four! Otherwise drink four and try again next turn.",
-        "type": "DiceRollRule",
-        "diceRolls": {
-          "numRequired": 4,
-          "numSuccessesRequired": 1,
-          "description": "All rolls must be 4 or under"
+        "type": "ApplyMoveConditionRule",
+        "condition": {
+          
         }
       },
       "position": [{"x": 1201,"y": 1391}, {"x": 1385,"y": 1391}, {"x": 1385,"y": 1577}, {"x": 1201,"y": 1577}]
