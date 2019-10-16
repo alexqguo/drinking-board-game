@@ -180,10 +180,10 @@ class Game {
     }
     
     // Uncomment this section for testing
-    if (this.currentPlayer.name === 'asdf' && !(window as any).asdf) {
-      numSpacesToAdvance = 2;
-      (window as any).asdf = true;
-    }
+    // if (this.currentPlayer.name === 'asdf' && !(window as any).asdf) {
+    //   numSpacesToAdvance = 2;
+    //   (window as any).asdf = true;
+    // }
 
     if (numSpacesToAdvance > 0) {
       // Consider fixing this naming. This doesn't actually move anything in the UI
