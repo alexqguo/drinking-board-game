@@ -538,69 +538,25 @@
   ],
   "zones": [
     {
-      "name": "ILEX FOREST",
+      "name": "GRANITE CAVE",
       "type": "active",
-      "rule": {
-        "type": "ApplyMoveConditionRule",
-        "displayText": "This place is a little eerie. Try not to get lost! When you roll to move, if you roll a 5 or 6, drink 1 and return to the start of Ilex Forest.",
-        "condition": {
-          "criteria": [1, 2, 3, 4],
-          "consequence": {
-            "type": "TeleportRule",
-            "displayText": "Drink 1 and return to the start of Ilex Forest",
-            "tileIndex": 14
-          },
-          "description": "Must roll 1-4"
-        }
-      }
-    }, {
-      "name": "MT. MORTAR",
-      "type": "passive",
       "rule": {
         "type": "DisplayRule",
-        "displayText": "don't think the value of this matters"
+        "displayText": "This cave is dark and annoyingly maze like. The lights must remain off while someone is inside Granite Cave."
       }
     }, {
-      "name": "RADIO TOWER",
+      "name": "FIERY PATH",
       "type": "active",
       "rule": {
-        "displayText": "The infamous Team Rocket has now taken control of the Radio Tower in Goldenrod! I'm not sure what their plan is, but it probably involves Nickelback. Turn on the radio now and roll a die before each turn:\n1-3: Drink that many.\n4-6: Change the station.",
-        "type": "DiceRollRule",
-        "diceRolls": {
-          "numRequired": 1
-        }
+        "type": "DisplayRule",
+        "displayText": "This narrow path through the mountains is heated by geothermal eruptions. It is getting hot in here. Take off an article of clothing for every turn you end in this fiery path."
       }
     }, {
-      "name": "GAME CENTER",
+      "name": "SHOAL CAVE",
       "type": "active",
       "rule": {
-        "type": "ChoiceRule",
-        "displayText": "The Goldenrod Game Center brings out your gambling problem. Each turn roll 2 dice. Roll 7 to give 7 and leave, otherwise drink 2. You may only leave once you've finished your drink or rolled 7.",
-        "choices": [{
-          "displayText": "Roll 7 to give 7 and leave",
-          "type": "DiceRollRule",
-          "diceRolls": {
-            "numRequired": 2,
-            "cumulative": true,
-            "outcomes": [{
-              "rule": {
-                "type": "DisplayRule",
-                "displayText": "Give 7 and continue"
-              },
-              "criteria": [7]
-            }, {
-              "rule": {
-                "type": "SkipTurnRule",
-                "displayText": "Drink 2. Try again next turn!",
-                "numTurns": 1
-              },
-              "criteria": [1, 2, 3, 4, 5, 6, 8, 9, 10, 11, 12]
-            }]
-          }
-        }, {
-          "displayText": "Leave (you finished your drink)",
-          "type": "DisplayRule"
-        }]
+        "displayText": "This cave's lakes shift with the moon's tide. To reach the exit safely you'll have to surf across. While in Shoal Cave you may not for any reason touch the floor. Drink twice for every second that you do.",
+        "type": "DisplayRule"
       }
     }
   ]
