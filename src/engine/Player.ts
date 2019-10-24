@@ -29,6 +29,7 @@ class Player {
       mandatorySkips: 0,
       moveCondition: null,
       anchors: 0,
+      rollAugmentation: null,
     };
   }
 

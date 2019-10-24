@@ -31,6 +31,7 @@ export default class PlayerStatus extends LitElement {
       mandatorySkips,
       customMandatoryTiles,
       anchors,
+      rollAugmentation,
     } = this.data.effects;
 
     return html`
@@ -39,6 +40,7 @@ export default class PlayerStatus extends LitElement {
         ${extraTurns ? html`<li class="label success">Extra turn</li>` : null}
         ${mandatorySkips > 0 ? html`<li class="label success">Skip next mandatory space</li>` : null}
         ${speedModifiers[0] ? html`<li class="label success">Speed modifier: ${speedModifiers[0].description}</li>` : null}
+        ${rollAugmentation ? html`<li class="label success">${rollAugmentation.description}</li>` : null}
         ${skippedTurns.length ? html`<li class="label error">Missed turn</li>` : null}
         ${!!moveCondition ? html`<li class="label warning">${moveCondition.description}</li>` : null}
         ${customMandatoryTiles.length ? html`<li class="label warning">Custom mandatory</li>` : null}

@@ -22,6 +22,7 @@ import {
   ProxyRule,
   GroupRollRule,
   AnchorRule,
+  RollAugmentRule,
 } from '../rules';
 
 const RULE_MAPPINGS: { 
@@ -46,6 +47,7 @@ const RULE_MAPPINGS: {
   ProxyRule,
   GroupRollRule,
   AnchorRule,
+  RollAugmentRule,
 };
 
 export function createTiles(tilesJson: JsonTile[]): Tile[] {

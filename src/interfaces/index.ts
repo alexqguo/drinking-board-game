@@ -1,3 +1,5 @@
+import { RollAugmentRule } from "../rules";
+
 export interface JsonTile {
   mandatory?: boolean;
   rule: JsonRule;
@@ -46,6 +48,7 @@ export interface PlayerColor {
   g: number;
   b: number;
 }
+
 export interface PlayerStatusData {
   name: string,
   effects: PlayerEffects,
@@ -61,6 +64,7 @@ export interface PlayerEffects {
   speedModifiers: SpeedModifier[],
   moveCondition: MoveCondition,
   anchors: number,
+  rollAugmentation: RollAugmentation,
 }
 
 export interface JsonRule {
@@ -103,6 +107,11 @@ export interface DiceRoll {
   any?: JsonOutcome; // I got lazy. Any match on an "any" will override all other rules
   numRequired: number;
   cumulative?: boolean;
+}
+
+export interface RollAugmentation {
+  numSpaces: number;
+  description: string;
 }
 
 export interface JsonOutcome {

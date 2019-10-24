@@ -89,7 +89,7 @@ export class Modal {
     });
   }
 
-  // TODO: implement number of players user can choose
+  // Implement number of players user can choose?
   requirePlayerSelection(playerList: Player[], headerString: string = 'Choose a player'): Promise<Player[]> {
     if (!playerList || playerList.length === 0) return Promise.resolve([]);
 
@@ -128,7 +128,28 @@ export class Modal {
     });
   }
 
-  addLinks(headerText: string, descriptions: string[]) {
+  /**
+   * Prompts for a simple yes/no question.
+   * Consider expanding in the future for multiple choice
+   */
+  async requirePrompt(prompt: string): Promise<boolean> {
+    const options: Map<string, boolean> = new Map([['Yes', true], ['No', false]]);
+    const links: HTMLAnchorElement[] = this.addLinks(prompt, Array.from(options.keys()));
+    return new Promise((resolve) => {
+      links.forEach((el: HTMLAnchorElement) => {
+        el.addEventListener('click', (e: Event) => {
+          e.preventDefault();
+          const selectedOption: string = (e.currentTarget as HTMLElement).dataset.name;
+          const returnValue: boolean = options.get(selectedOption);
+          resolve(returnValue);
+          this.close();
+          return false;
+        });
+      });
+    });
+  }
+
+  addLinks(headerText: string, descriptions: string[]): HTMLAnchorElement[] {
     const links: HTMLAnchorElement[] = [];
     const frag: DocumentFragment = document.createDocumentFragment();
     const header: HTMLHeadingElement = document.createElement('h4');

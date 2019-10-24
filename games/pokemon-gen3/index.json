@@ -327,8 +327,9 @@
       "position": [{"x": 1579,"y": 641}, {"x": 1763,"y": 641}, {"x": 1763,"y": 825}, {"x": 1579,"y": 825}]
     }, {
       "rule": {
-        "displayText": "[TODO] Chimecho used Heal Bell! Add 1 to your roll the next time you really need it. Drink 2 to thank Chimecho for being a bro.",
-        "type": "DisplayRule"
+        "displayText": "Chimecho used Heal Bell! Add 1 to your roll the next time you really need it. Drink 2 to thank Chimecho for being a bro.",
+        "type": "RollAugmentRule",
+        "modifier": ["+", 1]
       },
       "position": [{"x": 1579,"y": 830}, {"x": 1763,"y": 830}, {"x": 1763,"y": 1014}, {"x": 1579,"y": 1014}]
     }, {
@@ -338,6 +339,7 @@
       },
       "position": [{"x": 1579,"y": 1017}, {"x": 1763,"y": 1017}, {"x": 1763,"y": 1201}, {"x": 1579,"y": 1201}]
     }, {
+      "mandatory": true,
       "rule": {
         "displayText": "MOSSDEEP GYM\nDouble Battles are twice the fun! Pick another player, both roll a die. If the total is 8 or higher you win! Each give two drinks. If not, both drink 4.",
         "type": "DiceRollRule",

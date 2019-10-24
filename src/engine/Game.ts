@@ -113,6 +113,8 @@ class Game {
     } else {
       GameEvents.trigger(LOST_TURN_START, [canMove[1]]);
     }
+
+    next();
   }
 
   startLostTurn(next: Function, descriptor: string): void {
@@ -135,7 +137,7 @@ class Game {
     this.diceLink.removeEventListener('roll', this.handleDiceRoll);
   }
 
-  endDiceRoll(next: Function, roll: number): void {
+  async endDiceRoll(next: Function, roll: number): Promise<void> {
     if (this.currentPlayer.effects.moveCondition) {
       const canMove = this.currentPlayer.effects.moveCondition.fn(roll);
 
@@ -153,6 +155,16 @@ class Game {
     if (this.currentPlayer.effects.speedModifiers.length) {
       const modifier: Function = this.currentPlayer.effects.speedModifiers.shift().fn;
       roll = modifier(roll);
+    }
+
+    if (this.currentPlayer.effects.rollAugmentation) {
+      this.modal.show(''); // Eh, just leave it empty
+      const shouldAugment: boolean = await this.modal
+        .requirePrompt(`${this.currentPlayer.effects.rollAugmentation.description}?`);
+      if (shouldAugment) {
+        roll += this.currentPlayer.effects.rollAugmentation.numSpaces;
+        this.currentPlayer.effects.rollAugmentation = null;
+      }
     }
 
     // Check for mandatory spaces
@@ -181,7 +193,7 @@ class Game {
     
     // Uncomment this section for testing
     // if (this.currentPlayer.name === 'asdf' && !(window as any).asdf) {
-    //   numSpacesToAdvance = 2;
+    //   numSpacesToAdvance = 46;
     //   (window as any).asdf = true;
     // }
 
