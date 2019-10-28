@@ -619,7 +619,7 @@
           "type": "DiceRollRule",
           "diceRolls": {
             "numRequired": 2,
-            "cumulative": true,
+            "type": "cumulative",
             "outcomes": [{
               "rule": {
                 "type": "DisplayRule",

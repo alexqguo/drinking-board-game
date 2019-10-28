@@ -1,5 +1,5 @@
 import Rule from './Rule';
-import { JsonRule, JsonMoveCondition, PlayerTarget } from '../interfaces';
+import { JsonRule, JsonMoveCondition, PlayerTarget, DiceRollType } from '../interfaces';
 import Player from '../engine/Player';
 import Game from '../engine/Game';
 import { createRule } from '../engine/BoardJsonConverter';
@@ -22,6 +22,20 @@ class ApplyMoveConditionRule extends Rule {
     }
   }
 
+  isDiceRollSuccessful(rolls: number[]): boolean {
+    const { diceRolls, criteria } = this.condition;
+
+    if (!diceRolls || diceRolls.numRequired === 1) {
+      return criteria.indexOf(rolls[0]) !== -1;
+    }
+
+    if (diceRolls && diceRolls.type === DiceRollType.allMatch) {
+      return rolls.every((roll: number) => criteria.indexOf(roll) !== -1);
+    }
+
+    return true; // Shouldn't happen, but let the player proceed if so
+  }
+
   execute(closedCb: Function): void {
     super.execute(closedCb);
 
@@ -29,6 +43,7 @@ class ApplyMoveConditionRule extends Rule {
       .then((value: Player[]) => {
 
         value.forEach((p: Player) => {
+          const numDiceRollsRequired: number = this.condition.diceRolls ? this.condition.diceRolls.numRequired : 1;
 
           // Initialize (or reset) successes for the selected player
           this.successes.set(p, 0);
@@ -38,8 +53,10 @@ class ApplyMoveConditionRule extends Rule {
            * you can move based on the number. Will probably be expanded in the future with a "type" for the condition.
            * Could be a roll type, or something else.
            */
-          const canPlayerMove: Function = (roll: number) => {
-            if (this.condition.criteria.indexOf(roll) === -1) {
+          const canPlayerMove: Function = (rolls: number[]) => {
+            const isSuccess = this.isDiceRollSuccessful(rolls);
+
+            if (!isSuccess) {
               /**
                * A bit confusing. If successes are required, you still have to achieve the criteria on your next turn.
                * However if successes are NOT required, even if you fail you will move normally on your next turn.
@@ -75,13 +92,14 @@ class ApplyMoveConditionRule extends Rule {
           p.effects.moveCondition = {
             fn: canPlayerMove,
             description: this.condition.description,
+            diceRollsRequired: numDiceRollsRequired
           };
 
           // Will fail with a custom player target as the modal will close immediately
           // Immediate means the condition takes effect the turn the player landed there
           if (this.condition.immediate) {
-            Game.modal.requireDiceRolls(1, (rolls: number[]) => {
-              canPlayerMove(rolls[0]);
+            Game.modal.requireDiceRolls(numDiceRollsRequired, (rolls: number[]) => {
+              canPlayerMove(rolls);
             });
           }
         });

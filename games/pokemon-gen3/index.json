@@ -513,10 +513,17 @@
     }, {
       "mandatory": true,
       "rule": {
-        "displayText": "[todo] ELITE FOUR\nRoll 4 die, if all 4 are 4 and under you beat the Elite Four! Otherwise drink four and try again next turn.",
+        "displayText": "ELITE FOUR\nRoll 4 die, if all 4 are 4 and under you beat the Elite Four! Otherwise drink four and try again next turn.",
         "type": "ApplyMoveConditionRule",
         "condition": {
-          
+          "criteria": [1, 2, 3, 4],
+          "numSuccessesRequired": 1,
+          "description": "Must roll 4x under 4",
+          "diceRolls": {
+            "numRequired": 4,
+            "type": "allMatch"
+          },
+          "immediate": true
         }
       },
       "position": [{"x": 1201,"y": 1391}, {"x": 1385,"y": 1391}, {"x": 1385,"y": 1577}, {"x": 1201,"y": 1577}]

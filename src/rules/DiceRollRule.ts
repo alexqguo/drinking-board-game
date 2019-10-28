@@ -1,5 +1,5 @@
 import Rule from './Rule';
-import { JsonRule, DiceRoll, JsonOutcome } from '../interfaces';
+import { JsonRule, DiceRoll, JsonOutcome, DiceRollType } from '../interfaces';
 import Game from '../engine/Game';
 import Outcome from '../engine/Outcome';
 import { createRule } from '../engine/BoardJsonConverter';
@@ -39,7 +39,7 @@ class DiceRollRule extends Rule {
      * If it's a cumulative check, make the array contain just the sum. [7] for instance.
      * Otherwise just use the list of rolls normally.
      */
-    const rollsToCheck: number[] = this.diceRolls.cumulative ? 
+    const rollsToCheck: number[] = this.diceRolls.type === DiceRollType.cumulative ? 
       [sumNumbers(rolls)] : rolls;
 
     if (this.any) {
@@ -50,6 +50,7 @@ class DiceRollRule extends Rule {
       }
     }
 
+    // TODO: check type here for allMatch
     rollsToCheck.forEach((roll: number) => {
       this.outcomes.forEach((outcome: Outcome) => {
         if (outcome.criteria.length && outcome.criteria.indexOf(roll) !== -1) {

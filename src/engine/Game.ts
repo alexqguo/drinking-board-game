@@ -96,6 +96,7 @@ class Game {
     });
 
     if (canMove[0]) {
+      const { moveCondition } = this.currentPlayer.effects;
       const currentZone: Zone = this.getCurrentZone();
 
       if (currentZone && currentZone.type === ZoneType.active) {
@@ -106,6 +107,23 @@ class Game {
            * so there's no harm in checking again.
            */
           GameEvents.trigger(this.currentPlayer.canTakeTurn()[0] ? ROLL_START : TURN_END);
+        });
+      } else if (moveCondition && moveCondition.diceRollsRequired > 1) {
+        // This all needs a major facelift
+        this.modal.show(this.board.tiles[this.currentPlayer.currentTileIndex].rule.displayText);
+        this.modal.disableClose();
+        this.modal.requireDiceRolls(moveCondition.diceRollsRequired, (rolls: number[]) => {
+          const canMove = moveCondition.fn(rolls);
+          if (!canMove) {
+            // So that it doesn't jump immediately. Not sure of a good way to do this right now.
+            setTimeout(() => {
+              this.modal.close();
+              GameEvents.trigger(TURN_END);
+            }, 1200);
+            return;
+          }
+          this.modal.close();
+          GameEvents.trigger(ROLL_START);
         });
       } else {
         GameEvents.trigger(ROLL_START);
@@ -138,8 +156,10 @@ class Game {
   }
 
   async endDiceRoll(next: Function, roll: number): Promise<void> {
-    if (this.currentPlayer.effects.moveCondition) {
-      const canMove = this.currentPlayer.effects.moveCondition.fn(roll);
+    const { moveCondition } = this.currentPlayer.effects;
+
+    if (moveCondition && moveCondition.diceRollsRequired === 1) {
+      const canMove = moveCondition.fn([roll]);
 
       if (!canMove) {
         // So that it doesn't jump immediately. Not sure of a good way to do this right now.
@@ -193,7 +213,7 @@ class Game {
     
     // Uncomment this section for testing
     // if (this.currentPlayer.name === 'asdf' && !(window as any).asdf) {
-    //   numSpacesToAdvance = 46;
+    //   numSpacesToAdvance = 68;
     //   (window as any).asdf = true;
     // }
 

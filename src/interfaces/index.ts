@@ -95,11 +95,15 @@ export interface JsonMoveCondition {
   immediate?: boolean;
   consequence?: JsonRule;
   description: string;
+  diceRolls?: DiceRoll;
 }
 
 export interface MoveCondition {
   fn: Function;
   description: string;
+  // 1 means the player's roll for their turn will trigger a check agains the move condition. >1 means a separate modal will
+// appear before their turn to check it. If they succeed they can take their roll normally
+  diceRollsRequired: number;
 }
 
 export interface DiceRoll {
@@ -107,6 +111,13 @@ export interface DiceRoll {
   any?: JsonOutcome; // I got lazy. Any match on an "any" will override all other rules
   numRequired: number;
   cumulative?: boolean;
+  type: DiceRollType;
+}
+
+export enum DiceRollType {
+  cumulative = 'cumulative',
+  default = 'default',
+  allMatch = 'allMatch',
 }
 
 export interface RollAugmentation {
