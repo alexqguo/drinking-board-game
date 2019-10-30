@@ -134,7 +134,10 @@
     }, {
       "rule": {
         "displayText": "WALLY\nThis kid catches one Pokemon and now thinks he's hot shit. Roll a die, drink that many.",
-        "type": "DisplayRule"
+        "type": "DiceRollRule",
+        "diceRolls": {
+          "numRequired": 1
+        }
       },
       "position": [{"x": 1766,"y": 638}, {"x": 1950,"y": 638}, {"x": 1950,"y": 826}, {"x": 1766,"y": 826}]
     }, {
@@ -207,7 +210,10 @@
       "mandatory": true,
       "rule": {
         "displayText": "LAVARIDGE GYM\nRoll a die.\n1-3: Drink your roll\n4-6: Get burned and take a high proof shot",
-        "type": "DisplayRule"
+        "type": "DiceRollRule",
+        "diceRolls": {
+          "numRequired": 1
+        }
       },
       "position": [{"x": 1203,"y": 1764}, {"x": 1387,"y": 1764}, {"x": 1387,"y": 1952}, {"x": 1203,"y": 1952}]
     },{
@@ -239,7 +245,10 @@
     }, {
       "rule": {
         "displayText": "Pelipper used Stockpile! Pour a little of everyone's drink into a cup. Roll a die.\nEven: Pelipper used Swallow! Drink the mixture.\nOdd: Pelipper used Spit Up! Choose someone to drink it.",
-        "type": "DisplayRule"
+        "type": "DiceRollRule",
+        "diceRolls": {
+          "numRequired": 1
+        }
       },
       "position": [{"x": 453,"y": 1575}, {"x": 637,"y": 1575}, {"x": 637,"y": 1763}, {"x": 453,"y": 1763}]
     }, {
@@ -424,7 +433,10 @@
       "mandatory": true,
       "rule": {
         "displayText": "SOOTOPOLIS GYM\nRoll a die.\nEven: Chug a glass of water\nOdd: Chug your drink to completion",
-        "type": "DisplayRule"
+        "type": "DiceRollRule",
+        "diceRolls": {
+          "numRequired": 1
+        }
       },
       "position": [{"x": 640,"y": 1013}, {"x": 824,"y": 1013}, {"x": 824,"y": 1200}, {"x": 640,"y": 1200}]
     }, {
@@ -458,7 +470,7 @@
       "position": [{"x": 829,"y": 639}, {"x": 1013,"y": 639}, {"x": 1013,"y": 823}, {"x": 829,"y": 823}]
     }, {
       "rule": {
-        "displayText": "Bagon used Rage! For the rest of the game drink at the bveginning of your turn. Add 1 to that amount every turn.",
+        "displayText": "Bagon used Rage! For the rest of the game drink at the beginning of your turn. Add 1 to that amount every turn.",
         "type": "DisplayRule"
       },
       "position": [{"x": 1016,"y": 639}, {"x": 1200,"y": 639}, {"x": 1200,"y": 823}, {"x": 1016,"y": 823}]
