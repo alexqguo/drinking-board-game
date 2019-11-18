@@ -53,7 +53,7 @@ class ApplyMoveConditionRule extends Rule {
            * you can move based on the number. Will probably be expanded in the future with a "type" for the condition.
            * Could be a roll type, or something else.
            */
-          const canPlayerMove: Function = (rolls: number[]) => {
+          const canPlayerMove: Function = (rolls: number[]): [boolean, string] => {
             const isSuccess = this.isDiceRollSuccessful(rolls);
 
             if (!isSuccess) {
@@ -73,7 +73,7 @@ class ApplyMoveConditionRule extends Rule {
                 });
               }
 
-              return false;
+              return [false, `Condition not met: ${this.condition.description}\n\nYour roll: ${rolls.join(', ')}`];
             }
 
             const currentSuccesses: number = this.successes.get(p);
@@ -83,10 +83,10 @@ class ApplyMoveConditionRule extends Rule {
               this.successes.get(p) >= this.condition.numSuccessesRequired) {
               p.effects.moveCondition = null;
               this.successes.delete(p);
-              return true;
+              return [true, ''];
             }
 
-            return false;
+            return [false, `Successful roll.\n\n${this.successes.get(p)}/${this.condition.numSuccessesRequired}`];
           };
 
           p.effects.moveCondition = {

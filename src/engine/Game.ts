@@ -159,15 +159,17 @@ class Game {
     const { moveCondition } = this.currentPlayer.effects;
 
     if (moveCondition && moveCondition.diceRollsRequired === 1) {
-      const canMove = moveCondition.fn([roll]);
+      const moveConditionResult: [boolean, string] = moveCondition.fn([roll]);
+      const canMove: boolean = moveConditionResult[0];
+      const conditionDescription: string = moveConditionResult[1];
 
       if (!canMove) {
-        // So that it doesn't jump immediately. Not sure of a good way to do this right now.
-        setTimeout(() => {
-          this.modal.close();
+        this.modal.show(conditionDescription);
+        this.modal.enableClose();
+        this.modal.whenClosed(() => {
           GameEvents.trigger(TURN_END);
-        }, 1200);
-        next();
+          next();
+        });
         return;
       }
     }
@@ -212,10 +214,7 @@ class Game {
     }
     
     // Uncomment this section for testing
-    // if (this.currentPlayer.name === 'asdf' && !(window as any).asdf) {
-    //   numSpacesToAdvance = 68;
-    //   (window as any).asdf = true;
-    // }
+    // if (this.currentPlayer.nasrc/engine/BoardJsonConverter.ts
 
     if (numSpacesToAdvance > 0) {
       // Consider fixing this naming. This doesn't actually move anything in the UI
