@@ -252,7 +252,7 @@
     }, {
       "mandatory": true,
       "rule": {
-        "displayText": "CERURLEAN GYM. Misty's water attacks caused splash damage. You drink 2, eveyone else drinks 1.",
+        "displayText": "CERULEAN GYM. Misty's water attacks caused splash damage. You drink 2, eveyone else drinks 1.",
         "type": "DisplayRule"
       },
       "position": [{

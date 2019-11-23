@@ -30,6 +30,23 @@
     #game-loader {
       display: none;
     }
+    .help-icon {
+      border-radius: 50%;
+      background-color: #ccc;
+      width: .8em;
+      height: .8em;
+      display: inline-block;
+    }
+    .help-icon::before {
+      content: "?";
+      font-size: .8em;
+      color: #fafafa;
+      display: inline-block;
+      vertical-align: top;
+      margin-top: -3px;
+      margin-left: 3px;
+      font-weight: bold;
+    }
 
     /* Here begins the shitty CSS overrides */
     .sm, .sm * {
