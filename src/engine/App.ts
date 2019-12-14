@@ -1,6 +1,26 @@
+import firebase from 'firebase/app';
+import 'firebase/analytics';
+import 'firebase/database';
 import Game from './Game';
 import GameEvents, * as events from './GameEvents';
 import { JsonBoard, PlayerInput } from '../interfaces';
+import { initRealtimeDb, initFirebaseSession } from './RealtimeDb';
+
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyDQxVG0YgF30AJq-fpclM2sdecM-umH-zw",
+  authDomain: "drink-alexguo.firebaseapp.com",
+  databaseURL: "https://drink-alexguo.firebaseio.com",
+  projectId: "drink-alexguo",
+  storageBucket: "drink-alexguo.appspot.com",
+  messagingSenderId: "891863376076",
+  appId: "1:891863376076:web:43e8380311c98693bce269",
+  measurementId: "G-EMDCRKRSE5"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+firebase.analytics();
+initRealtimeDb();
 
 function fetchImage(src: string, canvas: HTMLCanvasElement): Promise<void> {
   return new Promise(resolve => {
@@ -60,8 +80,16 @@ function initGame(boardPrefix: string, players: PlayerInput[]): void {
   const imgSrc: string = `${boardPrefix}/index.png`;
   const boardSrc: string = `${boardPrefix}/index.json`;
   const scriptSrc: string = `${boardPrefix}/index.js`;
+  // Create a 'random' string for the game ID
+  const gameId: string = Math.random().toString(36).substring(2) + Date.now().toString(36);
+  const playerNames: string[] = players.map((p: PlayerInput) => p.name);
   
-  Promise.all([fetchBoard(boardSrc), fetchImage(imgSrc, canvas), fetchScript(scriptSrc)])
+  Promise.all([
+    fetchBoard(boardSrc), 
+    fetchImage(imgSrc, canvas), 
+    fetchScript(scriptSrc),
+    initFirebaseSession(gameId, playerNames),
+  ])
     .then((values) => {
       // Hide loader
       document.getElementById('game-loader').style.display = 'none';
