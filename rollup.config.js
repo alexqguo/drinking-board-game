@@ -64,6 +64,19 @@ export default [
     }
   },
 
+  // join.js for the join game page
+  {
+    input: 'src/join/index.ts',
+    output: {
+      file: 'public/join.js',
+      format: 'iife',
+    },
+    plugins: basePlugins,
+    watch: {
+      exclude: ['node_modules/**'],
+    },
+  },
+
   createCustomGameConfiguration('pokemon-gen1'),
   createCustomGameConfiguration('pokemon-gen2'),
   createCustomGameConfiguration('pokemon-gen3'),

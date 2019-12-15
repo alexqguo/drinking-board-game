@@ -1,26 +1,9 @@
-import firebase from 'firebase/app';
-import 'firebase/analytics';
-import 'firebase/database';
 import Game from './Game';
 import GameEvents, * as events from './GameEvents';
 import { JsonBoard, PlayerInput } from '../interfaces';
-import { initRealtimeDb, initFirebaseSession } from './RealtimeDb';
+import { initPageWithFirebase, initFirebaseSession } from '../firebase';
 
-// Your web app's Firebase configuration
-const firebaseConfig = {
-  apiKey: "AIzaSyDQxVG0YgF30AJq-fpclM2sdecM-umH-zw",
-  authDomain: "drink-alexguo.firebaseapp.com",
-  databaseURL: "https://drink-alexguo.firebaseio.com",
-  projectId: "drink-alexguo",
-  storageBucket: "drink-alexguo.appspot.com",
-  messagingSenderId: "891863376076",
-  appId: "1:891863376076:web:43e8380311c98693bce269",
-  measurementId: "G-EMDCRKRSE5"
-};
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-firebase.analytics();
-initRealtimeDb();
+initPageWithFirebase();
 
 function fetchImage(src: string, canvas: HTMLCanvasElement): Promise<void> {
   return new Promise(resolve => {
