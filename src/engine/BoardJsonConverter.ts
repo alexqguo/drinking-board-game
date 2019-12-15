@@ -23,6 +23,7 @@ import {
   GroupRollRule,
   AnchorRule,
   RollAugmentRule,
+  DiceRollMoveConditionRule,
 } from '../rules';
 
 const RULE_MAPPINGS: { 
@@ -48,6 +49,7 @@ const RULE_MAPPINGS: {
   GroupRollRule,
   AnchorRule,
   RollAugmentRule,
+  DiceRollMoveConditionRule,
 };
 
 export function createTiles(tilesJson: JsonTile[]): Tile[] {

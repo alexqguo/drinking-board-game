@@ -19,3 +19,4 @@ export { default as ProxyRule } from './ProxyRule';
 export { default as GroupRollRule } from './GroupRollRule';
 export { default as AnchorRule } from './AnchorRule';
 export { default as RollAugmentRule } from './RollAugmentRule';
+export { default as DiceRollMoveConditionRule } from './DiceRollMoveConditionRule';
