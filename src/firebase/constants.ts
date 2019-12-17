@@ -13,6 +13,7 @@ export enum RemoteAction {
   roll = 'roll',
   skip = 'skip',
   connect = 'connect',
+  disconnect = 'disconnect',
 };
 
 export interface RemoteStatus {
