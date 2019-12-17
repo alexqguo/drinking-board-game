@@ -1,3 +1,4 @@
+// Hello
 export const FIREBASE_CONFIG = {
   apiKey: 'AIzaSyDQxVG0YgF30AJq-fpclM2sdecM-umH-zw',
   authDomain: 'drink-alexguo.firebaseapp.com',
@@ -24,6 +25,7 @@ export interface RemoteStatus {
 
 export interface GameData {
   id: string;
+  active: boolean;
   startDate: string;
   players: { [key: string]: RemoteStatus };
 }

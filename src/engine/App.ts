@@ -1,7 +1,7 @@
 import Game from './Game';
 import GameEvents, * as events from './GameEvents';
 import { JsonBoard, PlayerInput } from '../interfaces';
-import { initPageWithFirebase, initFirebaseSession } from '../firebase';
+import { initPageWithFirebase, initFirebaseSession, deactivateGame } from '../firebase';
 
 initPageWithFirebase();
 
@@ -63,10 +63,11 @@ function initGame(boardPrefix: string, players: PlayerInput[]): void {
   const imgSrc: string = `${boardPrefix}/index.png`;
   const boardSrc: string = `${boardPrefix}/index.json`;
   const scriptSrc: string = `${boardPrefix}/index.js`;
+  const playerNames: string[] = players.map((p: PlayerInput) => p.name);
   // Create a 'random' string for the game ID
   const gameId: string = Math.random().toString(36).substring(2) + Date.now().toString(36);
-  const playerNames: string[] = players.map((p: PlayerInput) => p.name);
-  
+  window.addEventListener('unload', () => deactivateGame(gameId));
+
   Promise.all([
     fetchBoard(boardSrc), 
     fetchImage(imgSrc, canvas), 

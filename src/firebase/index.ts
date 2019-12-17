@@ -25,6 +25,7 @@ export async function initFirebaseSession(gameId: string, players: string[]): Pr
   const gameData: GameData = {
     players: playerValues,
     id: gameId,
+    active: true,
     startDate: Date.now().toString()
   };
 
@@ -33,7 +34,7 @@ export async function initFirebaseSession(gameId: string, players: string[]): Pr
 
 export async function findSession(gameId: string): Promise<GameData> {
   const snap: firebase.database.DataSnapshot = await db.ref(`games/${gameId}`).once('value');
-  if (!(snap && snap.val() && snap.val().id === gameId)) {
+  if (!(snap && snap.val() && snap.val().id === gameId && snap.val().active)) {
     throw new Error('No game found');
   }
 
@@ -64,6 +65,10 @@ export async function connectToSession(gameId: string, playerName: string): Prom
   }
 }
 
+export function deactivateGame(gameId: string) {
+  db.ref(`games/${gameId}/active`).set(false);
+}
+
 // This performs an async operation but we will never await on it
 export function logOff(gameId: string, playerName: string) {
   const dataPath: string = `games/${gameId}/players/${playerName}`;
@@ -72,7 +77,7 @@ export function logOff(gameId: string, playerName: string) {
     lastAction: RemoteAction.disconnect,
     lastUpdated: Date.now().toString()
   };
-  
+
   db.ref().update({
     [dataPath]: newPlayerData
   });

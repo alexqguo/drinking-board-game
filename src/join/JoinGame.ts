@@ -2,6 +2,7 @@ import { LitElement, html, customElement, property } from 'lit-element';
 import { findSession, connectToSession, logOff } from '../firebase';
 import { GameData, RemoteStatus } from '../firebase/constants';
 
+// This should probably be a few different components
 @customElement('join-game')
 export default class JoinPage extends LitElement {
 
@@ -57,10 +58,9 @@ export default class JoinPage extends LitElement {
     try {
       await connectToSession(this.gameId, playerName);
       this.playerJoined = true;
-
-      window.addEventListener('unload', () => {
-        logOff(this.gameId, this.selectedPlayer);
-      });
+      this.status = 'warn'; // reset status message
+      this.statusMessage = '';
+      window.addEventListener('unload', () => logOff(this.gameId, this.selectedPlayer));
     } catch (e) {
       this.status = 'error';
       this.statusMessage = e.message;
@@ -126,15 +126,19 @@ export default class JoinPage extends LitElement {
     `;
   }
 
+  renderActions() {
+    if (!this.gameJoined || !this.playerJoined) return;
+
+    return html`
+      <h3>You're in!</h3>
+    `;
+  }
+
   render() {
     return html`
-      <div>
-        ${this.renderGameId()}
-      </div>
-
-      <div>
-        ${this.renderPlayer()}
-      </div>
+      <div>${this.renderGameId()}</div>
+      <div>${this.renderPlayer()}</div>
+      <div>${this.renderActions()}</div>
     `;
   }
 }
