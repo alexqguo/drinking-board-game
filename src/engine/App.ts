@@ -2,6 +2,7 @@ import Game from './Game';
 import GameEvents, * as events from './GameEvents';
 import { JsonBoard, PlayerInput } from '../interfaces';
 import { initPageWithFirebase, initFirebaseSession, deactivateGame } from '../firebase';
+import { createId } from '../utils';
 
 initPageWithFirebase();
 
@@ -64,8 +65,7 @@ function initGame(boardPrefix: string, players: PlayerInput[]): void {
   const boardSrc: string = `${boardPrefix}/index.json`;
   const scriptSrc: string = `${boardPrefix}/index.js`;
   const playerNames: string[] = players.map((p: PlayerInput) => p.name);
-  // Create a 'random' string for the game ID
-  const gameId: string = Math.random().toString(36).substring(2) + Date.now().toString(36);
+  const gameId: string = createId('Game');
   window.addEventListener('unload', () => deactivateGame(gameId));
 
   Promise.all([
@@ -77,7 +77,7 @@ function initGame(boardPrefix: string, players: PlayerInput[]): void {
     .then((values) => {
       // Hide loader
       document.getElementById('game-loader').style.display = 'none';
-      Game.init(values[0], players, canvas); // values[0] is the result of the fetchBoard promise
+      Game.init(gameId, values[0], players, canvas); // values[0] is the result of the fetchBoard promise
     })
     .catch(err => console.error(err));
 }

@@ -10,17 +10,23 @@ export const FIREBASE_CONFIG = {
   measurementId: 'G-EMDCRKRSE5',
 };
 
-export enum RemoteAction {
-  roll = 'roll',
-  skip = 'skip',
-  connect = 'connect',
-  disconnect = 'disconnect',
-};
+export interface Action {
+  id: string;
+  name: string;
+  fn: Function;
+  path: string;
+}
+
+export interface RemoteAction {
+  id: string;
+  name: string;
+}
 
 export interface RemoteStatus {
   active: boolean;
-  lastAction: RemoteAction;
+  lastAction: string;
   lastUpdated: string;
+  actions?: { [key: string]: string };
 };
 
 export interface GameData {

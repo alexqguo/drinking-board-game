@@ -25,3 +25,7 @@ export function times(n: number, cb: Function) {
     cb(i);
   }
 }
+
+export function createId(prefix?: string): string {
+  return `${prefix ? prefix + '__' : ''}${Math.random().toString(36).substring(2)}${Date.now().toString(36)}`;
+}

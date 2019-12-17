@@ -10,9 +10,11 @@ import GameEvents, {
 } from './GameEvents';
 import Tile from './Tile';
 import DiceRoll from '../components/DiceRoll';
+import ActionManager from '../firebase/ActionManager';
 
 class Game {
   static instance: Game;
+  id: string;
   board: Board;
   players: Player[];
   currentPlayer: Player;
@@ -24,6 +26,7 @@ class Game {
   ctx: CanvasRenderingContext2D;
   painter: Painter;
   turnIncrementer: TurnIncrementer;
+  actionManager: ActionManager;
 
   constructor() {
     if (!Game.instance) {
@@ -46,7 +49,8 @@ class Game {
     return Game.instance;
   }
 
-  init(boardSrc: JsonBoard, playerNames: PlayerInput[], canvas: HTMLCanvasElement): void {
+  init(id: string, boardSrc: JsonBoard, playerNames: PlayerInput[], canvas: HTMLCanvasElement): void {
+    this.id = id;
     this.turnPosition = 0;
     this.canvas = canvas;
     this.ctx = canvas.getContext('2d');
@@ -61,6 +65,7 @@ class Game {
     this.painter.drawPlayers();
     this.handleDiceRoll = this.handleDiceRoll.bind(this);
     this.turnIncrementer = TurnIncrementer.normal;
+    this.actionManager = new ActionManager();
 
     // TODO - this should be more organized. need to enable the link only sometimes
     document.querySelector('#skip a').addEventListener('click', (e: Event) => {
@@ -79,10 +84,10 @@ class Game {
   }
 
   startTurn(next: Function): void {
-    const pos = this.turnPosition;
-    const length = this.players.length;
+    const pos: number = this.turnPosition;
+    const length: number = this.players.length;
     // Loop the turnPosition around to find the current player
-    const playerIndex = (pos < 0 ? length - (-pos % length) : pos) % length;
+    const playerIndex: number = (pos < 0 ? length - (-pos % length) : pos) % length;
     this.currentPlayer = this.players[playerIndex];
 
     this.updatePlayerStatusElement();
@@ -146,6 +151,8 @@ class Game {
   enableDiceRoll(next: Function): void {
     this.diceLink.reset();
     this.diceLink.addEventListener('roll', this.handleDiceRoll);
+    // Tell firebase about the possible events
+    this.actionManager.createAction('Roll', () => {}, this.id, this.currentPlayer);
     next();
   }
 
@@ -153,6 +160,7 @@ class Game {
     const roll = e.detail.roll;
     GameEvents.trigger(ROLL_END, [roll]);
     this.diceLink.removeEventListener('roll', this.handleDiceRoll);
+    // remove events for current user
   }
 
   async endDiceRoll(next: Function, roll: number): Promise<void> {
@@ -255,6 +263,8 @@ class Game {
     } else {
       this.turnPosition += this.turnIncrementer;
     }
+
+    this.actionManager.clear();
 
     GameEvents.trigger(TURN_START);
     next();

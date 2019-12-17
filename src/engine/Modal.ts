@@ -27,6 +27,14 @@ export class Modal {
         cb();
       }
     });
+
+    /**
+     * TODO: add a mutation observer here
+     * - any time an element with a particular class is added within this modal, tell firebase about it
+     * - if we get a response from firebase, trigger a click on that element
+     * - when the modal becomes closeable, have an action for that too
+     * - clear the available actions when the modal closes 
+     */
   }
 
   show(displayText: string): void {
@@ -53,6 +61,7 @@ export class Modal {
     this.enableClose();
     this.trigger.checked = false;
     this.trigger.dispatchEvent(new Event('change'));
+    this.clearContent();
   }
 
   disableClose(): void {

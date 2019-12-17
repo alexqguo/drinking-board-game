@@ -1,7 +1,7 @@
 import firebase from 'firebase/app';
 import 'firebase/analytics';
 import 'firebase/database';
-import { FIREBASE_CONFIG, RemoteStatus, RemoteAction, GameData } from './constants';
+import { FIREBASE_CONFIG, RemoteStatus, Action, GameData } from './constants';
 
 let db: firebase.database.Database;
 
@@ -32,6 +32,17 @@ export async function initFirebaseSession(gameId: string, players: string[]): Pr
   await db.ref(`games/${gameId}`).set(gameData);
 }
 
+export async function addAction(action: Action): Promise<void> {
+  await db.ref(action.path).set({
+    id: action.id,
+    name: action.name,
+  });
+}
+
+export async function removeAction(action: Action): Promise<void> {
+  await db.ref(action.path).remove();
+}
+
 export async function findSession(gameId: string): Promise<GameData> {
   const snap: firebase.database.DataSnapshot = await db.ref(`games/${gameId}`).once('value');
   if (!(snap && snap.val() && snap.val().id === gameId && snap.val().active)) {
@@ -52,7 +63,7 @@ export async function connectToSession(gameId: string, playerName: string): Prom
   const updates: { [key: string]: RemoteStatus } = {};
   const newPlayerData: RemoteStatus = {
     active: true,
-    lastAction: RemoteAction.connect,
+    lastAction: 'connect',
     lastUpdated: Date.now().toString(),
   };
 
@@ -74,7 +85,7 @@ export function logOff(gameId: string, playerName: string) {
   const dataPath: string = `games/${gameId}/players/${playerName}`;
   const newPlayerData: RemoteStatus = {
     active: false,
-    lastAction: RemoteAction.disconnect,
+    lastAction: 'disconnect',
     lastUpdated: Date.now().toString()
   };
 
