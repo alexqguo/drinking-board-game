@@ -58,16 +58,10 @@ export class Modal {
     };
     this.observer = new MutationObserver(mutationCallback);
     this.observer.observe(this.content, mutationConfig);
-    /**
-     * TODO: add a mutation observer here
-     * - any time an element with a particular class is added within this modal, tell firebase about it
-     * - if we get a response from firebase, trigger a click on that element
-     * - when the modal becomes closeable, have an action for that too
-     * - clear the available actions when the modal closes 
-     */
   }
 
   show(displayText: string): void {
+    Game.actionManager.clear();
     this.header.innerText = Game.currentPlayer.name;
     this.content.innerText = displayText;
     this.trigger.checked = true;
@@ -81,6 +75,7 @@ export class Modal {
 
   // This is what should be used going forward
   openWithFragment(headerText: string, frag: DocumentFragment): void {
+    Game.actionManager.clear();
     this.header.innerText = headerText;
     this.clearContent();
     this.content.appendChild(frag);
@@ -105,6 +100,11 @@ export class Modal {
     this.controls.forEach((control: HTMLLabelElement) => {
       control.setAttribute('for', this.triggerId);
     });
+    if (Game.currentPlayer) {
+      Game.actionManager.createAction('Close modal', Game.id, Game.currentPlayer, () => {
+        this.close();
+      });
+    }
   }
 
   // TODO: change to promise in case a rule needs more than one player action

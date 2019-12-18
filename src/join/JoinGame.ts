@@ -33,6 +33,9 @@ export default class JoinPage extends LitElement {
   @property({ type: Object })
   selectedAction: RemoteAction = null;
 
+  @property({ type: Boolean })
+  isPaused: boolean = false;
+
   createRenderRoot() {
     return this;
   }
@@ -81,8 +84,12 @@ export default class JoinPage extends LitElement {
     this.selectedAction = action;
     await setPlayerAction(this.gameId, this.selectedPlayer, action.id);
     this.selectedAction = null;
+    this.isPaused = true;
     // Remove this action from the list
     this.availableActions = this.availableActions.filter((a: RemoteAction) => a !== action);
+
+    // Prevent users from accidentally double tapping
+    setTimeout(() => this.isPaused = true, 500);
   }
 
   renderStatusMessage() {
@@ -151,7 +158,7 @@ export default class JoinPage extends LitElement {
       <h3>You're in!</h3>
       ${this.availableActions.length ? this.availableActions.map((a: RemoteAction) => {
         return html`
-          <button @click="${() => { this.sendAction(a) }}" ?disabled="${a === this.selectedAction}">
+          <button @click="${() => { this.sendAction(a) }}" ?disabled="${a === this.selectedAction || this.isPaused}">
             ${a.name}
           </button>
         `;

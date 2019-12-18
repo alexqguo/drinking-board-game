@@ -77,6 +77,7 @@ function initGame(boardPrefix: string, players: PlayerInput[]): void {
     .then((values) => {
       // Hide loader
       document.getElementById('game-loader').style.display = 'none';
+      window.location.hash = gameId;
       Game.init(gameId, values[0], players, canvas); // values[0] is the result of the fetchBoard promise
     })
     .catch(err => console.error(err));

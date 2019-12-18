@@ -155,6 +155,9 @@ class Game {
     this.actionManager.createAction('Roll', this.id, this.currentPlayer, () => {
       this.diceLink.roll();
     });
+    this.actionManager.createAction('Skip turn', this.id, this.currentPlayer, () => {
+      (document.querySelector('#skip a') as HTMLElement).click();
+    });
     next();
   }
 
@@ -162,7 +165,7 @@ class Game {
     const roll = e.detail.roll;
     GameEvents.trigger(ROLL_END, [roll]);
     this.diceLink.removeEventListener('roll', this.handleDiceRoll);
-    // remove events for current user
+    this.actionManager.clear();
   }
 
   async endDiceRoll(next: Function, roll: number): Promise<void> {
