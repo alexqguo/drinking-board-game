@@ -22,6 +22,10 @@ export default class DiceRoll extends LitElement {
     this.roll();
   }
 
+  click() {
+    this.roll();
+  }
+
   roll() {
     const roll = Math.floor(Math.random() * 6) + 1;
     this.result = roll.toString();

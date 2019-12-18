@@ -1,6 +1,10 @@
 import Game from './Game';
 import Player from './Player';
 import { Rule } from '../rules';
+import { Action } from '../firebase/constants';
+import DiceRoll from '../components/DiceRoll';
+
+const ACTIONABLE: string = 'actionable';
 
 // TODO: make this a wrapper/interface to a wc, or just make it a wc completely
 export class Modal {
@@ -10,6 +14,7 @@ export class Modal {
   header: HTMLHeadingElement;
   content: HTMLElement;
   closeCb: Function;
+  observer: MutationObserver;
 
   constructor() {
     this.triggerId = 'game-modal';
@@ -28,6 +33,31 @@ export class Modal {
       }
     });
 
+    // TODO: the observer can probably be optimized to look for only certain types of nodes
+    const mutationConfig = { childList: true, subtree: true }
+    const mutationCallback: MutationCallback = (mutationList: MutationRecord[]) => {
+      for (let mutation of mutationList) {
+        if (mutation.type === 'childList') {
+          const validEls: Node[] = Array.from(mutation.addedNodes).filter((n: HTMLElement) => {
+            return n && n.classList && n.classList.contains(ACTIONABLE);
+          })
+
+          if (validEls.length) {
+            validEls.forEach((el: HTMLElement) => {
+              const action: Action = Game.actionManager.createAction(
+                (el as DiceRoll).rollText || el.innerText, Game.id, Game.currentPlayer, () => {
+                  el.click();
+              });
+              el.addEventListener('click', () => {
+                Game.actionManager.remove(action);
+              });
+            });
+          }
+        }
+      }
+    };
+    this.observer = new MutationObserver(mutationCallback);
+    this.observer.observe(this.content, mutationConfig);
     /**
      * TODO: add a mutation observer here
      * - any time an element with a particular class is added within this modal, tell firebase about it
@@ -62,6 +92,7 @@ export class Modal {
     this.trigger.checked = false;
     this.trigger.dispatchEvent(new Event('change'));
     this.clearContent();
+    Game.actionManager.clear();
   }
 
   disableClose(): void {
@@ -82,7 +113,9 @@ export class Modal {
     const frag: DocumentFragment = document.createDocumentFragment();
 
     for (let i = 0; i < n; i++) {
-      frag.appendChild(document.createElement('dice-roll'));
+      const diceRollElement: HTMLElement = document.createElement('dice-roll');
+      diceRollElement.classList.add(ACTIONABLE);
+      frag.appendChild(diceRollElement);
     }
     this.content.appendChild(frag);
 
@@ -91,7 +124,7 @@ export class Modal {
         rolls.push(e.detail.roll);
         
         if (rolls.length === n) {
-          // bad
+          // Wait one second before doing anything so the user has time to understand what happened
           setTimeout(() => { cb(rolls) }, 1000);
         }
       });
@@ -168,6 +201,7 @@ export class Modal {
     descriptions.forEach((desc: string) => {
       const playerLink: HTMLAnchorElement = document.createElement('a');
       playerLink.classList.add('sm');
+      playerLink.classList.add(ACTIONABLE);
       playerLink.href = '#';
       playerLink.innerText = desc;
       playerLink.dataset.name = desc;

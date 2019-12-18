@@ -19,7 +19,7 @@ export default class ActionManager {
     });
   }
 
-  createAction(name: string, gameId: string, player: Player, actionFn: Function): void {
+  createAction(name: string, gameId: string, player: Player, actionFn: Function): Action {
     const actionId: string = createId(name);
     const path: string = `games/${gameId}/players/${player.name}/actions/${actionId}`;
     const action: Action = {
@@ -34,6 +34,7 @@ export default class ActionManager {
     this.actions.set(actionId, action);
     
     addAction(action); // Add reference to firebase
+    return action;
   }
 
   remove(action: Action) {
