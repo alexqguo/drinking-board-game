@@ -1,6 +1,6 @@
 import { LitElement, html, customElement, property } from 'lit-element';
-import { findSession, connectToSession, logOff } from '../firebase';
-import { GameData, RemoteStatus } from '../firebase/constants';
+import { findSession, connectToSession, logOff, subscribeToPlayerActions, setPlayerAction } from '../firebase';
+import { GameData, RemoteStatus, RemoteAction } from '../firebase/constants';
 
 // This should probably be a few different components
 @customElement('join-game')
@@ -18,9 +18,6 @@ export default class JoinPage extends LitElement {
   @property({ type: Boolean })
   gameJoined = false;
 
-  @property({ type: String })
-  currentPlayer = '';
-
   @property({ type: Boolean })
   playerJoined = false;
 
@@ -29,6 +26,12 @@ export default class JoinPage extends LitElement {
 
   @property({ type: String })
   selectedPlayer = '';
+
+  @property({ type: Array })
+  availableActions: RemoteAction[] = [];
+
+  @property({ type: Object })
+  selectedAction: RemoteAction = null;
 
   createRenderRoot() {
     return this;
@@ -60,11 +63,26 @@ export default class JoinPage extends LitElement {
       this.playerJoined = true;
       this.status = 'warn'; // reset status message
       this.statusMessage = '';
+      subscribeToPlayerActions(this.gameId, playerName, (snap: firebase.database.DataSnapshot) => {
+        if (snap && snap.val()) {
+          this.availableActions = Object.values(snap.val());
+        } else {
+          this.availableActions = [];
+        }
+      });
       window.addEventListener('unload', () => logOff(this.gameId, this.selectedPlayer));
     } catch (e) {
       this.status = 'error';
       this.statusMessage = e.message;
     }
+  }
+
+  async sendAction(action: RemoteAction) {
+    this.selectedAction = action;
+    await setPlayerAction(this.gameId, this.selectedPlayer, action.id);
+    this.selectedAction = null;
+    // Remove this action from the list
+    this.availableActions = this.availableActions.filter((a: RemoteAction) => a !== action);
   }
 
   renderStatusMessage() {
@@ -131,6 +149,14 @@ export default class JoinPage extends LitElement {
 
     return html`
       <h3>You're in!</h3>
+      ${this.availableActions.length ? this.availableActions.map((a: RemoteAction) => {
+        return html`
+          <button @click="${() => { this.sendAction(a) }}" ?disabled="${a === this.selectedAction}">
+            ${a.name}
+          </button>
+        `;
+      }) : 'Please wait...'}
+      ${this.renderStatusMessage()}
     `;
   }
 

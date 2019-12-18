@@ -39,6 +39,19 @@ export async function addAction(action: Action): Promise<void> {
   });
 }
 
+export function subscribeToPlayerActions(gameId: string, playerName: string, cb: any) {
+  db.ref(`games/${gameId}/players/${playerName}/actions`).on('value', cb);
+}
+
+export async function setPlayerAction(gameId: string, playerName: string, actionId: string): Promise<void> {
+  const basePath: string = `games/${gameId}/players/${playerName}`;
+  const updates: { [key: string]: any } = {};
+  updates[`${basePath}/lastAction`] = actionId;
+  updates[`${basePath}/lastUpdated`] = Date.now().toString();
+  
+  await db.ref().update(updates);
+}
+
 export async function removeAction(action: Action): Promise<void> {
   await db.ref(action.path).remove();
 }
@@ -60,14 +73,11 @@ export async function connectToSession(gameId: string, playerName: string): Prom
     throw new Error('No player found');
   }
 
-  const updates: { [key: string]: RemoteStatus } = {};
-  const newPlayerData: RemoteStatus = {
-    active: true,
-    lastAction: 'connect',
-    lastUpdated: Date.now().toString(),
-  };
+  const updates: { [key: string]: any } = {};
+  updates[`${dataPath}/active`] = true;
+  updates[`${dataPath}/lastAction`] = 'connect';
+  updates[`${dataPath}/lastUpdated`] = Date.now().toString();
 
-  updates[dataPath] = newPlayerData;
   try {
     await db.ref().update(updates);
     return true;
@@ -83,13 +93,10 @@ export function deactivateGame(gameId: string) {
 // This performs an async operation but we will never await on it
 export function logOff(gameId: string, playerName: string) {
   const dataPath: string = `games/${gameId}/players/${playerName}`;
-  const newPlayerData: RemoteStatus = {
-    active: false,
-    lastAction: 'disconnect',
-    lastUpdated: Date.now().toString()
-  };
+  const updates: { [key: string]: any } = {};
+  updates[`${dataPath}/active`] = false;
+  updates[`${dataPath}/lastAction`] = 'disconnect';
+  updates[`${dataPath}/lastUpdated`] = Date.now().toString();
 
-  db.ref().update({
-    [dataPath]: newPlayerData
-  });
+  db.ref().update(updates);
 }
