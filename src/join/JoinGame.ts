@@ -63,7 +63,7 @@ export default class JoinPage extends LitElement {
       this.playerJoined = true;
       this.status = 'warn'; // reset status message
       this.statusMessage = '';
-      subscribeToPlayerActions(this.gameId, playerName, (snap: firebase.database.DataSnapshot) => {
+      subscribeToPlayerActions(this.gameId, playerName, 'actions', (snap: firebase.database.DataSnapshot) => {
         if (snap && snap.val()) {
           this.availableActions = Object.values(snap.val());
         } else {

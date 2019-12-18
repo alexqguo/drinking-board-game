@@ -1,17 +1,25 @@
 import { createId } from '../utils';
 import { Action } from './constants';
 import Player from '../engine/Player';
-import { addAction, removeAction } from '.';
+import { addAction, removeAction, subscribeToPlayerActions } from '.';
 
 export default class ActionManager {
   actions: Map<string, Action>;
 
-  constructor() {
+  constructor(gameId: string, players: Player[]) {
     this.actions = new Map();
-    // todo- set up listen on firebase
+
+    players.forEach((p: Player) => {
+      subscribeToPlayerActions(gameId, p.name, 'lastAction', (snap: firebase.database.DataSnapshot) => {
+        const actionId: string = snap && snap.val();
+        if (actionId && this.actions.has(actionId)) {
+          this.actions.get(actionId).fn();
+        }
+      });
+    });
   }
 
-  createAction(name: string, actionFn: Function, gameId: string, player: Player): void {
+  createAction(name: string, gameId: string, player: Player, actionFn: Function): void {
     const actionId: string = createId(name);
     const path: string = `games/${gameId}/players/${player.name}/actions/${actionId}`;
     const action: Action = {

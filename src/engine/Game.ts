@@ -65,7 +65,7 @@ class Game {
     this.painter.drawPlayers();
     this.handleDiceRoll = this.handleDiceRoll.bind(this);
     this.turnIncrementer = TurnIncrementer.normal;
-    this.actionManager = new ActionManager();
+    this.actionManager = new ActionManager(this.id, this.players);
 
     // TODO - this should be more organized. need to enable the link only sometimes
     document.querySelector('#skip a').addEventListener('click', (e: Event) => {
@@ -152,7 +152,9 @@ class Game {
     this.diceLink.reset();
     this.diceLink.addEventListener('roll', this.handleDiceRoll);
     // Tell firebase about the possible events
-    this.actionManager.createAction('Roll', () => {}, this.id, this.currentPlayer);
+    this.actionManager.createAction('Roll', this.id, this.currentPlayer, () => {
+      this.diceLink.roll();
+    });
     next();
   }
 

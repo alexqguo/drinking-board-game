@@ -39,8 +39,8 @@ export async function addAction(action: Action): Promise<void> {
   });
 }
 
-export function subscribeToPlayerActions(gameId: string, playerName: string, cb: any) {
-  db.ref(`games/${gameId}/players/${playerName}/actions`).on('value', cb);
+export function subscribeToPlayerActions(gameId: string, playerName: string, actionPath: string, cb: any) {
+  db.ref(`games/${gameId}/players/${playerName}/${actionPath}`).on('value', cb);
 }
 
 export async function setPlayerAction(gameId: string, playerName: string, actionId: string): Promise<void> {
