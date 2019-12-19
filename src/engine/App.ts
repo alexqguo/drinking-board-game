@@ -78,6 +78,7 @@ function initGame(boardPrefix: string, players: PlayerInput[]): void {
       // Hide loader
       document.getElementById('game-loader').style.display = 'none';
       window.location.hash = gameId;
+      document.querySelector('.join-link').setAttribute('href', `/join/#${gameId}`)
       Game.init(gameId, values[0], players, canvas); // values[0] is the result of the fetchBoard promise
     })
     .catch(err => console.error(err));

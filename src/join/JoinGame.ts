@@ -1,5 +1,5 @@
 import { LitElement, html, customElement, property } from 'lit-element';
-import { findSession, connectToSession, logOff, subscribeToPlayerActions, setPlayerAction } from '../firebase';
+import { findSession, connectToSession, logOff, subscribeToPlayerActions, setPlayerAction, subscribeToGamePlayers } from '../firebase';
 import { GameData, RemoteStatus, RemoteAction } from '../firebase/constants';
 
 // This should probably be a few different components
@@ -40,6 +40,11 @@ export default class JoinPage extends LitElement {
     return this;
   }
 
+  constructor() {
+    super();
+    this.gameId = window.location.hash.substring(1);
+  }
+
   async findGame(e: Event) {
     e.preventDefault();
     const gameId: string = (e.target as HTMLElement).querySelector('input').value;
@@ -50,7 +55,13 @@ export default class JoinPage extends LitElement {
       this.gameJoined = true;
       this.gameId = gameId;
       this.gameData = gameData;
-      console.log('Connected to Firebase DB --', gameData);
+
+      subscribeToGamePlayers(gameId, (snap: firebase.database.DataSnapshot) => {
+        if (snap && snap.val()) {
+          this.gameData.players = snap.val();
+          this.requestUpdate();
+        }
+      })
     } catch (e) {
       this.status = 'error';
       this.statusMessage = `Could not find game with id ${gameId}.`;
@@ -85,11 +96,11 @@ export default class JoinPage extends LitElement {
     await setPlayerAction(this.gameId, this.selectedPlayer, action.id);
     this.selectedAction = null;
     this.isPaused = true;
+    // Prevent users from accidentally double tapping
+    setTimeout(() => this.isPaused = false, 500);
+
     // Remove this action from the list
     this.availableActions = this.availableActions.filter((a: RemoteAction) => a !== action);
-
-    // Prevent users from accidentally double tapping
-    setTimeout(() => this.isPaused = true, 500);
   }
 
   renderStatusMessage() {
@@ -105,7 +116,7 @@ export default class JoinPage extends LitElement {
     }
     return html`
       <form @submit="${this.findGame}">
-        <input class="three" type="text" placeholder="Game ID">
+        <input class="three" type="text" placeholder="Game ID" value="${this.gameId}">
         <button>Join</button>
         ${this.renderStatusMessage()}
       </form>

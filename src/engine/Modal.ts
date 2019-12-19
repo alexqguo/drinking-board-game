@@ -40,24 +40,35 @@ export class Modal {
         if (mutation.type === 'childList') {
           const validEls: Node[] = Array.from(mutation.addedNodes).filter((n: HTMLElement) => {
             return n && n.classList && n.classList.contains(ACTIONABLE);
-          })
+          });
 
           if (validEls.length) {
-            validEls.forEach((el: HTMLElement) => {
-              const action: Action = Game.actionManager.createAction(
-                (el as DiceRoll).rollText || el.innerText, Game.id, Game.currentPlayer, () => {
-                  el.click();
-              });
-              el.addEventListener('click', () => {
-                Game.actionManager.remove(action);
-              });
-            });
+            validEls.forEach((el: HTMLElement) => this.createActionForElement(el));
           }
         }
       }
     };
     this.observer = new MutationObserver(mutationCallback);
     this.observer.observe(this.content, mutationConfig);
+  }
+
+  searchForBattleActions() {
+    this.content.querySelectorAll(`.trainer-battle-${ACTIONABLE}`).forEach((el: HTMLElement) => {
+      this.createActionForElement(el);
+    });
+  }
+
+  createActionForElement(el: HTMLElement) {
+    const action: Action = Game.actionManager.createAction(
+      (el as DiceRoll).rollText || el.innerText, 
+      Game.id, 
+      // <dice-roll> tags from trainer battles come with data-player-name. If that property exists, use it as the player
+      // for the action instead of the Game's current player
+      el.dataset.playerName ? ({ name: el.dataset.playerName } as Player) : Game.currentPlayer, 
+      () => el.click()
+    );
+
+    el.addEventListener('click', () => Game.actionManager.remove(action));
   }
 
   show(displayText: string): void {
@@ -87,7 +98,6 @@ export class Modal {
     this.trigger.checked = false;
     this.trigger.dispatchEvent(new Event('change'));
     this.clearContent();
-    Game.actionManager.clear();
   }
 
   disableClose(): void {
@@ -101,7 +111,7 @@ export class Modal {
       control.setAttribute('for', this.triggerId);
     });
     if (Game.currentPlayer) {
-      Game.actionManager.createAction('Close modal', Game.id, Game.currentPlayer, () => {
+      Game.actionManager.createAction('Close', Game.id, Game.currentPlayer, () => {
         this.close();
       });
     }

@@ -39,6 +39,10 @@ export async function addAction(action: Action): Promise<void> {
   });
 }
 
+export function subscribeToGamePlayers(gameId: string, cb: any) {
+  db.ref(`games/${gameId}/players`).on('value', cb);
+}
+
 export function subscribeToPlayerActions(gameId: string, playerName: string, actionPath: string, cb: any) {
   db.ref(`games/${gameId}/players/${playerName}/${actionPath}`).on('value', cb);
 }

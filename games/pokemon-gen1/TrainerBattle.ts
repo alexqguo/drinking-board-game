@@ -1,5 +1,6 @@
-import { LitElement, html, customElement, property, TemplateResult } from 'lit-element';
+import { LitElement, html, customElement, property } from 'lit-element';
 import { Trainer, BattleResults } from './constants';
+import { DrinkDuringLostTurnsRule } from '../../src/rules';
 
 @customElement('trainer-battle')
 export default class TrainerBattle extends LitElement {
@@ -85,9 +86,13 @@ export default class TrainerBattle extends LitElement {
   renderPlayer(player: Trainer) {
     return html`
       ${player.playerName}: ${player.starterName}
-      ${new Array(player.numRolls).fill(null).map(() => {
+      ${new Array(player.numRolls).fill(null).map((x: number, i: number) => {
         // Hacky way to do numRoll.times. Rendering logic in lit-element isn't great
-        return html`<dice-roll @roll="${this.handleRoll}" data-player-name="${player.playerName}"></dice-roll>`;
+
+        // For some reason adding "actionable" to these doesn't work, as the Modal's MutationObserver can't pick them up
+        // This is a short term hack until a better solution is found
+        return html`<dice-roll @roll="${this.handleRoll}" data-player-name="${player.playerName}"
+          class="trainer-battle-actionable actionable" data-idx="${i}"></dice-roll>`;
       })}
       <br>
     `;
@@ -101,7 +106,7 @@ export default class TrainerBattle extends LitElement {
       .map((loser: Trainer) => loser.playerName)
       .join(', ');
 
-    const doneButton = html`<button @click="${this.done}">Done</button>`;
+    const doneButton = html`<button class="actionable" @click="${this.done}">Done</button>`;
     if (this.winners.length > 1 && this.losers.length === 0) {
       return html`
         Tie: ${winnerNames}. Each drink one.
@@ -141,5 +146,11 @@ export default class TrainerBattle extends LitElement {
     });
 
     this.requestUpdate();
+
+    // As mentioned above, for some reason adding "actionable" to the <dice-roll> els above doesn't work, as the 
+    // modal's MutationObserver can't pick them up when the fragment renders. This is sort of a force update.
+    // However, this only will pick up the first of a possible two dice roll links for a given player. Keeping "actionable"
+    // ensures only the second link gets picked up for some reason and it just ends up working somehow. No fucking clue why
+    (window as any).drinking.Game.modal.searchForBattleActions();
   }
 }

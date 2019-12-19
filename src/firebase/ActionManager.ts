@@ -26,8 +26,8 @@ export default class ActionManager {
       name,
       path,
       id: actionId,
-      fn: () => {
-        this.remove(action);
+      fn: async () => {
+        await this.remove(action);
         actionFn();
       },
     };
@@ -37,15 +37,15 @@ export default class ActionManager {
     return action;
   }
 
-  remove(action: Action) {
+  async remove(action: Action) {
     this.actions.delete(action.id);
-    removeAction(action); // Remove reference from firebase
+    await removeAction(action); // Remove reference from firebase
   }
 
-  clear() {
-    this.actions.forEach((value: Action) => {
+  async clear() {
+    this.actions.forEach(async (value: Action) => {
       // Call remove explicitly to remove the reference from Firebase as well
-      this.remove(value);
+      await this.remove(value);
     });
   }
 }

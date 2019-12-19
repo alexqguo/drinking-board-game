@@ -141,8 +141,10 @@ class Game {
   }
 
   startLostTurn(next: Function, descriptor: string): void {
-    // Basically just wait a couple seconds so the user can be reminded that they aren't allowed to do anything
     this.modal.show(descriptor);
+    this.actionManager.createAction('Close', this.id, this.currentPlayer, () => {
+      this.modal.close();
+    });
     this.modal.whenClosed(() => {
       GameEvents.trigger(TURN_END);
     });
@@ -231,6 +233,7 @@ class Game {
     //   numSpacesToAdvance = 43;
     //   (window as any).asdf = true;
     // }
+    numSpacesToAdvance = 3;
 
     if (numSpacesToAdvance > 0) {
       // Consider fixing this naming. This doesn't actually move anything in the UI
@@ -272,10 +275,10 @@ class Game {
       this.turnPosition += this.turnIncrementer;
     }
 
-    this.actionManager.clear();
-
-    GameEvents.trigger(TURN_START);
-    next();
+    this.actionManager.clear().then(() => {
+      GameEvents.trigger(TURN_START);
+      next();
+    });
   }
 
   gameOver(): void {
