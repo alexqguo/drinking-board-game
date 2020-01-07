@@ -6,6 +6,8 @@ There are two main components to this project, the *engine* and the *game*. The 
 
 This project utilizes Typescript, Canvas, Rollup and LitElement among other things. 
 
+**IMPORTANT: This is a side project, and I have not adhered to any sort of coding standards.**
+
 ## usage
 For development:
 * Git pull
@@ -55,8 +57,8 @@ This app has been tested on Chrome/FF latest versions. It "works" on the latest 
     * hex to rgb
     * etc
   * Specific text during a missed turn
-* Todo
   * Put number of successes required in player status
+* Todo
   * Refactor modal into a WCs or multiple child WCs
   * Clean up other todos
   * Consider better organization of events
