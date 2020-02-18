@@ -40,11 +40,19 @@ function fetchScript(src: string): Promise<void> {
   });
 }
 
-// Got lazy with this. Create an actual TS interface
+// Got lazy with this. This should all be baked into a form input component which App.ts can listen for
+// a submit event on. TODO
 function getFormValues(): [string, PlayerInput[]] {
   const formData: PlayerInput[] = [];
   const boardPrefix = (document.getElementById('game') as HTMLInputElement).value;
-  const players = Array.from(document.querySelectorAll('#player-input input[type="text"]'))
+  const playerInputs: HTMLInputElement[] = Array.from(document.querySelectorAll('#player-input input[type="text"]'));
+
+  if (playerInputs.some((input: HTMLInputElement) => input.dataset.valid === 'false')) {
+    alert('Invalid names! Names cannot contain ".", "#", "$", "/", "[", or "]"');
+    return null;
+  }
+
+  const players = playerInputs
     .filter((input: HTMLInputElement) => !!input.value)
     .map((input: HTMLInputElement) => input.value);
   const colors = Array.from(document.querySelectorAll('#player-input input[type="color"]'))
@@ -96,6 +104,7 @@ document.getElementById('add-player').addEventListener('click', (e: Event) => {
 document.getElementById('setup').addEventListener('submit', (e: Event) => {
   e.preventDefault();
   const gameSetupInfo: [string, PlayerInput[]] = getFormValues();
+  if (!gameSetupInfo) return; // Means there was an invalid input
 
   // Make sure there are players
   if (!gameSetupInfo[1].length || gameSetupInfo[1].length < 2) {
