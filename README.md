@@ -23,26 +23,35 @@ This app has been tested on Chrome/FF latest versions. It "works" on the latest 
 * Zelda board
 
 ### todo
+Roughly sorted by priority.
+
+#### high
 * Refactor initial game form
-* Refactor modal into a WCs or multiple child WCs
-* Clean up other todos
-* Consider better organization of events
+* Set up dist and public folders properly so that the entire repo source isn't exposed through Netlify 🤦‍♂️
 * Keyboard focus and/or keyboard controls
+
+#### med
+* unit tests
+* mobile friendliness improvements
+* some utility to create json easily (partially started at /coordinates)
 * Refactor dice roll click event handling
-* Make it easier to add a new rule (clean up /rules exports)
-* Small util for adding document fragments
+* Refactor modal into a WCs or multiple child WCs
+* can add/remove players mid game. when adding can put them somewhere custom?
 * State refactor
   * Manage game state properly. Store in localStorage (and later in firebase)
   * Enable "drafts"
+* Clean up other todos
 * Debug/dev mode
   * number the tiles for instance, hardcode rolls, etc. instead of having to change it in code all the time
-* keep track of the drink counts throughout the game
-* alert players when they are supposed to drink
-* can designate drinks on screen
-* unit tests (lol)
-* some utility to create json easily
-* can add/remove players mid game. when adding can put them somewhere custom?
-* mobile friendly
+
+#### low
+* Consider better organization of events
+* Make it easier to add a new rule (clean up /rules exports)
+* Small util for adding document fragments
+* drink counts
+  * keep track of the drink counts throughout the game
+  * alert players when they are supposed to drink
+  * can designate drinks on screen
 
 ### done
 * game is playable offline with multiple people at the same computer
