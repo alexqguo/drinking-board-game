@@ -67,9 +67,14 @@ function getFormValues(): [string, PlayerInput[]] {
   return [boardPrefix, formData];
 }
 
+// TODO: remove this once the game form is refactored
+function getExtension(boardPrefix: string): string {
+  return boardPrefix.indexOf('zelda') > -1 ? 'jpg' : 'png';
+}
+
 function initGame(boardPrefix: string, players: PlayerInput[]): void {
   const canvas: HTMLCanvasElement = document.getElementById('canvas') as HTMLCanvasElement;
-  const imgSrc: string = `${boardPrefix}/index.png`;
+  const imgSrc: string = `${boardPrefix}/index.${getExtension(boardPrefix)}`;
   const boardSrc: string = `${boardPrefix}/index.json`;
   const scriptSrc: string = `${boardPrefix}/index.js`;
   const playerNames: string[] = players.map((p: PlayerInput) => p.name);
