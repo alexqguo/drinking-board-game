@@ -79,6 +79,7 @@ function initGame(boardPrefix: string, players: PlayerInput[]): void {
   const scriptSrc: string = `${boardPrefix}/index.js`;
   const playerNames: string[] = players.map((p: PlayerInput) => p.name);
   const gameId: string = createId('Game');
+  window.onbeforeunload = () => 'Are you sure you want to leave? Your progress will NOT be saved.';
   window.addEventListener('unload', () => deactivateGame(gameId));
 
   Promise.all([

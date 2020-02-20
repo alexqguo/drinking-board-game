@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>Generate coordinates</title>
+  <meta charset="utf-8">
+  <link rel="icon" href="../favicon.png">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Barlow:400,700&display=swap">
+  <link rel="stylesheet" href="https://unpkg.com/picnic@6.5.0/picnic.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+
+  <style>
+    body {
+      font-family: "Barlow", sans-serif;
+    }
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="overlay">Check the console to get started</div>
+  <img src="/public/zelda/index.jpg">
+
+  <script>
+    console.log(`Instructions:
+      - change image source appropriately
+      - click on corners of a tile
+      - press enter to move save and move to the next tile
+      - results will be available on window.tiles`);
+    const tiles = [];
+    
+    (function() {
+      let active = resetActive();
+
+      function resetActive() {
+        return {
+          position: [],
+        };
+      }
+
+      document.body.addEventListener('click', (e) => {
+        console.log(`Recorded ${e.pageX}, ${e.pageY}`);
+        active.position.push({ x: e.pageX, y: e.pageY });
+      });
+
+      document.body.addEventListener('keydown', (e) => {
+        if (e.keyCode === 13) {
+          tiles.push(active);
+          active = resetActive();
+          console.log(tiles);
+        }
+      });
+
+    })();
+  </script>
+</body>
+</html>
