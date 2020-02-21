@@ -36,6 +36,7 @@ export enum ModifierOperation {
   addition = '+',
   multiplication = '*',
   subtraction = '-',
+  equal = '=',
 }
 
 export interface PlayerInput {

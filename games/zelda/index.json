@@ -366,8 +366,9 @@
     "position": [{ "x": 1648, "y": 790 }, { "x": 1796, "y": 537 }, { "x": 1944, "y": 790 }]
   }, {
     "rule": {
-      "displayText": "Where am I again? You get terribly lost in the Water Temple. Miss your next turn. [[[skip turn]]]",
-      "type": "DisplayRule"
+      "displayText": "Where am I again? You get terribly lost in the Water Temple. Miss your next turn.",
+      "type": "SkipTurnRule",
+      "numTurns": 1
     },
     "position": [{ "x": 1797, "y": 537 }, { "x": 1647, "y": 789 }, { "x": 1500, "y": 535 }]
   }, {
@@ -389,9 +390,19 @@
     },
     "position": [{ "x": 1500, "y": 1047 }, { "x": 1351, "y": 793 }, { "x": 1203, "y": 1045 }]
   }, {
+    "mandatory": true,
     "rule": {
-      "displayText": "MORPHA\nMorpha swallows you. Either take one shot and break free or finish a glass of water and miss your next turn. [[[choice]]]",
-      "type": "DisplayRule"
+      "displayText": "MORPHA\nMorpha swallows you. Either take one shot and break free or finish a glass of water and miss your next turn.",
+      "type": "ChoiceRule",
+      "choices": [{
+        "type": "DisplayRule",
+        "displayText": "Take a shot and break free"
+      }, {
+        "type": "SkipTurnRule",
+        "numTurns": 1,
+        "displayText": "Finish a glass of water and miss your next turn"
+      }]
+
     },
     "position": [{ "x": 1203, "y": 1045 }, { "x": 1499, "y": 1046 }, { "x": 1349, "y": 1301 }]
   }, {
@@ -415,16 +426,21 @@
   }, {
     "rule": {
       "displayText": "A pot comes flying at you. Roll a die.\n3-6: You dodge the pot and the person to your left T4D.\nOtherwise you T4D.",
-      "type": "DisplayRule"
+      "type": "DiceRollRule",
+      "diceRolls": {
+        "numRequired": 1
+      }
     },
     "position": [{ "x": 907, "y": 2070 }, { "x": 761, "y": 1819 }, { "x": 612, "y": 2074 }]
   }, {
     "rule": {
       "displayText": "Hover right over Bongo Bongo. You do not have to stop. If you roll a 1 you're a sorry sack of shit and still have to fight him. [[[skip mandatory]]]",
-      "type": "DisplayRule"
+      "type": "SkipNextMandatoryRule",
+      "numSpaces": 1
     },
     "position": [{ "x": 612, "y": 2074 }, { "x": 910, "y": 2072 }, { "x": 758, "y": 2326 }]
   }, {
+    "mandatory": true,
     "rule": {
       "displayText": "BONGO BONGO\nGo around the table performing the previous beats and adding your own. First person to fail T4D.",
       "type": "DisplayRule"

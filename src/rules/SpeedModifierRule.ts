@@ -55,6 +55,11 @@ class SpeedModifierRule extends Rule {
           fn: (num: number) => num - value,
           description: `- ${value}`
         }
+      case ModifierOperation.equal:
+        return {
+          fn: () => value,
+          description: `= ${value}`
+        }
       default:
         throw `Operation ${operation} not supported.`
     }
