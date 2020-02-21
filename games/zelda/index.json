@@ -454,8 +454,11 @@
     "position": [{ "x": 1056, "y": 2328 }, { "x": 1202, "y": 2072 }, { "x": 909, "y": 2075 }]
   }, {
     "rule": {
-      "displayText": "You prove yourself at the Gerudo Training Grounds and earned the Ice Arrow. Pick a player, next turn they only move one. [[[item get, roll modification]]]",
-      "type": "DisplayRule"
+      "displayText": "You prove yourself at the Gerudo Training Grounds and earned the Ice Arrow. Pick a player, next turn they only move one. [[[item get]]]",
+      "type": "SpeedModifierRule",
+      "modifier": ["=", 1],
+      "numTurns": 1,
+      "playerTarget": "custom"
     },
     "position": [{ "x": 1056, "y": 2326 }, { "x": 1202, "y": 2077 }, { "x": 1352, "y": 2326 }]
   }, {
@@ -483,9 +486,26 @@
     },
     "position": [{ "x": 2240, "y": 2329 }, { "x": 2093, "y": 2073 }, { "x": 2387, "y": 2071 }]
   }, {
+    "mandatory": true,
     "rule": {
-      "displayText": "TWINROVA\nRoll a die.\n1: Microwave your drink and finish it.\n5-6: Either sprinkle some hot sauce into your drink or fill your drink with ice and finish it. [[[dice roll]]]",
-      "type": "DisplayRule"
+      "displayText": "TWINROVA\nRoll a die.\n1: Microwave your drink and finish it.\n5-6: Either sprinkle some hot sauce into your drink or fill your drink with ice and finish it.",
+      "type": "DiceRollRule",
+      "diceRolls": {
+        "numRequired": 1,
+        "outcomes": [{
+          "rule": {
+            "type": "DisplayRule",
+            "displayText": "Microwave your drink and finish it"
+          },
+          "criteria": [1]
+        }, {
+          "rule": {
+            "type": "DisplayRule",
+            "displayText": "Either sprinkle some hot sauce into your drink or fill your drink with ice and finish it"
+          },
+          "criteria": [5, 6]
+        }]
+      }
     },
     "position": [{ "x": 2387, "y": 2072 }, { "x": 2236, "y": 1818 }, { "x": 2093, "y": 2067 }]
   }, {
