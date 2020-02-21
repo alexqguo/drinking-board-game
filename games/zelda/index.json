@@ -4,1006 +4,474 @@
       "displayText": "START\nRoll the die mother fucker!",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 1500,
-      "y": 28
-    }, {
-      "x": 1357,
-      "y": 275
-    }, {
-      "x": 1642,
-      "y": 274
-    }]
+    "position": [{ "x": 1500, "y": 28 }, { "x": 1357, "y": 275 }, { "x": 1642, "y": 274 }]
   }, {
     "rule": {
       "displayText": "Wait you seriously rolled a 1? Crawl to the other side of the table in shame and T1D.",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 1355,
-      "y": 279
-    }, {
-      "x": 1639,
-      "y": 278
-    }, {
-      "x": 1497,
-      "y": 528
-    }]
+    "position": [{ "x": 1355, "y": 279 }, { "x": 1639, "y": 278 }, { "x": 1497, "y": 528 }]
   }, {
     "rule": {
-      "displayText": "Hey listen!!! You listen!!! You go insane, roll a die and take that many drinks [[[dice roll rule]]]",
-      "type": "DisplayRule"
+      "displayText": "Hey listen!!! You listen!!! You go insane, roll a die and take that many drinks.",
+      "type": "DiceRollRule",
+      "diceRolls": {
+        "numRequired": 1
+      }
     },
-    "position": [{
-      "x": 1352,
-      "y": 281
-    }, {
-      "x": 1497,
-      "y": 532
-    }, {
-      "x": 1206,
-      "y": 531
-    }]
+    "position": [{ "x": 1352, "y": 281 }, { "x": 1497, "y": 532 }, { "x": 1206, "y": 531 }]
   }, {
     "rule": {
-      "displayText": "You suck, you actually lost to a Deku Baba. Go back to start! [[[teleport rule]]]",
-      "type": "DisplayRule"
+      "displayText": "You suck, you actually lost to a Deku Baba. Go back to start!",
+      "type": "TeleportRule",
+      "tileIndex": 0
     },
-    "position": [{
-      "x": 1205,
-      "y": 533
-    }, {
-      "x": 1495,
-      "y": 536
-    }, {
-      "x": 1348,
-      "y": 783
-    }]
+    "position": [{ "x": 1205, "y": 533 }, { "x": 1495, "y": 536 }, { "x": 1348, "y": 783 }]
   }, {
     "rule": {
       "displayText": "Roll a die.\nEven, you kicked its ass.\nOdd, why did you attack while it was facing you?! T1D dumbass.",
-      "type": "DisplayRule"
+      "type": "DiceRollRule",
+      "diceRolls": {
+        "numRequired": 1
+      }
     },
-    "position": [{
-      "x": 1348,
-      "y": 783
-    }, {
-      "x": 1203,
-      "y": 540
-    }, {
-      "x": 1059,
-      "y": 791
-    }]
+    "position": [{ "x": 1348, "y": 783 }, { "x": 1203, "y": 540 }, { "x": 1059, "y": 791 }]
   }, {
     "rule": {
-      "displayText": "Choose one person to pelt with your Fairly Slingshot. Give one drink.",
+      "displayText": "Choose one person to pelt with your Fairy Slingshot. Give one drink.",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 1059,
-      "y": 791
-    }, {
-      "x": 1347,
-      "y": 790
-    }, {
-      "x": 1202,
-      "y": 1044
-    }]
+    "position": [{ "x": 1059, "y": 791 }, { "x": 1347, "y": 790 }, { "x": 1202, "y": 1044 }]
   }, {
+    "mandatory": true,
     "rule": {
-      "displayText": "GOHMA\nIf you have played Zelda OoT, T2D nerd! Otherwise, you may either T1D, or go back 4 spaces and roll again, skipping Gohma. [[[fancy]]]",
-      "type": "DisplayRule"
+      "displayText": "GOHMA\nIf you have played Zelda OoT, T2D nerd! Otherwise, you may either T1D, or go back 4 spaces and roll again, skipping Gohma.",
+      "type": "ChoiceRule",
+      "choices": [{
+        "displayText": "Played OoT (T2D)",
+        "type": "DisplayRule"
+      }, {
+        "displayText": "Haven't played OoT (T1D)",
+        "type": "DisplayRule"
+      }, {
+        "displayText": "Go back 4 spaces and roll again [todo- teleport rule with param to also gain an extra turn]",
+        "type": "DisplayRule"
+      }]
     },
-    "position": [{
-      "x": 1202,
-      "y": 1044
-    }, {
-      "x": 1055,
-      "y": 797
-    }, {
-      "x": 910,
-      "y": 1050
-    }]
+    "position": [{ "x": 1202, "y": 1044 }, { "x": 1055, "y": 797 }, { "x": 910, "y": 1050 }]
   }, {
     "rule": {
       "displayText": "HYRULE CASTLE\nRoll a die.\n1-5: You've been caught, T1D.\n6: You found Zelda! Take an immediate turn. [[[todo]]]",
-      "type": "DisplayRule"
+      "type": "DiceRollRule",
+        "diceRolls": {
+          "numRequired": 1,
+          "outcomes": [{
+            "rule": {
+              "type": "DisplayRule",
+              "displayText": "You've been caught, T1D"
+            },
+            "criteria": [1, 2, 3, 4, 5]
+          }, {
+            "rule": {
+              "type": "ExtraTurnRule",
+              "displayText": "You found Zelda! Take an immediate turn."
+            },
+            "criteria": [6]
+          }]
+        }
     },
-    "position": [{
-      "x": 909,
-      "y": 1050
-    }, {
-      "x": 1201,
-      "y": 1049
-    }, {
-      "x": 1053,
-      "y": 1303
-    }]
+    "position": [{ "x": 909, "y": 1050 }, { "x": 1201, "y": 1049 }, { "x": 1053, "y": 1303 }]
   }, {
     "rule": {
-      "displayText": "You're in heaven! Roll a die, you break that many pots and give out that many drinks. [[[dice roll]]]",
-      "type": "DisplayRule"
+      "displayText": "You're in heaven! Roll a die, you break that many pots and give out that many drinks.",
+      "type": "DiceRollRule",
+      "diceRolls": {
+        "numRequired": 1
+      }
     },
-    "position": [{
-      "x": 1053,
-      "y": 1303
-    }, {
-      "x": 908,
-      "y": 1051
-    }, {
-      "x": 763,
-      "y": 1303
-    }]
+    "position": [{ "x": 1053, "y": 1303 }, { "x": 908, "y": 1051 }, { "x": 763, "y": 1303 }]
   }, {
     "rule": {
       "displayText": "Take 1 drink and add 1 to your next roll, you speedy bastard.",
-      "type": "DisplayRule"
+      "type": "SpeedModifierRule",
+      "modifier": ["+", 1],
+      "numTurns": 1
     },
-    "position": [{
-      "x": 760,
-      "y": 1307
-    }, {
-      "x": 903,
-      "y": 1555
-    }, {
-      "x": 615,
-      "y": 1556
-    }]
+    "position": [{ "x": 760, "y": 1307 }, { "x": 903, "y": 1555 }, { "x": 615, "y": 1556 }]
   }, {
     "rule": {
       "displayText": "You bought a Hylian Shield! Wear it and give the person to your left a piggyback ride around the room. Otherwise, T1D. [[[item get]]]",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 612,
-      "y": 1557
-    }, {
-      "x": 904,
-      "y": 1557
-    }, {
-      "x": 759,
-      "y": 1809
-    }]
+    "position": [{ "x": 612, "y": 1557 }, { "x": 904, "y": 1557 }, { "x": 759, "y": 1809 }]
   }, {
     "rule": {
-      "displayText": "First person to hum Saria's Song can take an immediate turn. Otherwise, you actually have a life, everyone T1D.",
+      "displayText": "First person to hum Saria's Song can take an immediate turn. Otherwise, you actually have a life, everyone T1D. [[[todo- custom player target with extraturnrule]]]",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 759,
-      "y": 1809
-    }, {
-      "x": 611,
-      "y": 1561
-    }, {
-      "x": 465,
-      "y": 1815
-    }]
+    "position": [{ "x": 759, "y": 1809 }, { "x": 611, "y": 1561 }, { "x": 465, "y": 1815 }]
   }, {
     "rule": {
-      "displayText": "CLIMBING DEATH MOUNTAIN\nRoll a die 3 times.\n1-3: A boulder hits you, T1D.\n4-6: You are nimble like a gazelle and evade. [[[dice roll]]]",
-      "type": "DisplayRule"
+      "displayText": "CLIMBING DEATH MOUNTAIN\nRoll a die 3 times.\n1-3: A boulder hits you, T1D.\n4-6: You are nimble like a gazelle and evade.",
+      "type": "DiceRollRule",
+      "diceRolls": {
+        "numRequired": 3
+      }
     },
-    "position": [{
-      "x": 465,
-      "y": 1815
-    }, {
-      "x": 756,
-      "y": 1816
-    }, {
-      "x": 610,
-      "y": 2071
-    }]
+    "position": [{ "x": 465, "y": 1815 }, { "x": 756, "y": 1816 }, { "x": 610, "y": 2071 }]
   }, {
     "rule": {
       "displayText": "Pick one person to T3D and dance for 10 seconds.",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 610,
-      "y": 2071
-    }, {
-      "x": 463,
-      "y": 1820
-    }, {
-      "x": 317,
-      "y": 2070
-    }]
+    "position": [{ "x": 610, "y": 2071 }, { "x": 463, "y": 1820 }, { "x": 317, "y": 2070 }]
   }, {
     "rule": {
       "displayText": "If you have the Hylian Shield, nothing happens. Otherwise, roll a die, that many people must remove 1 article of clothing. [[[item use]]]",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 315,
-      "y": 2073
-    }, {
-      "x": 609,
-      "y": 2073
-    }, {
-      "x": 461,
-      "y": 2329
-    }]
+    "position": [{ "x": 315, "y": 2073 }, { "x": 609, "y": 2073 }, { "x": 461, "y": 2329 }]
   }, {
     "rule": {
-      "displayText": "Roll a die.\n1-4: Pick someone to finish their drink.\n5-6: You hold the Bomb too long, finish your own drink. [[[dice roll, item get]]]",
-      "type": "DisplayRule"
+      "displayText": "Roll a die.\n1-4: Pick someone to finish their drink.\n5-6: You hold the Bomb too long, finish your own drink.",
+      "type": "DiceRollRule",
+      "diceRolls": {
+        "numRequired": 1,
+        "outcomes": [{
+          "rule": {
+            "type": "DisplayRule",
+            "displayText": "Pick someone to finish their drink."
+          },
+          "criteria": [1, 2, 3, 4]
+        }, {
+          "rule": {
+            "type": "DisplayRule",
+            "displayText": "You hold the Bomb too long, finish your own drink."
+          },
+          "criteria": [5, 6]
+        }]
+
+      }
     },
-    "position": [{
-      "x": 461,
-      "y": 2329
-    }, {
-      "x": 315,
-      "y": 2073
-    }, {
-      "x": 169,
-      "y": 2327
-    }]
+    "position": [{ "x": 461, "y": 2329 }, { "x": 315, "y": 2073 }, { "x": 169, "y": 2327 }]
   }, {
+    "mandatory": true,
     "rule": {
       "displayText": "KING DODONGO\nT1D, or T2D and G1D. If you have the Bomb, instead roll a die. Count around the table to your right, drop a shot in that person's drink. [[[item use]]]",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 169,
-      "y": 2327
-    }, {
-      "x": 462,
-      "y": 2331
-    }, {
-      "x": 317,
-      "y": 2578
-    }]
+    "position": [{ "x": 169, "y": 2327 }, { "x": 462, "y": 2331 }, { "x": 317, "y": 2578 }]
   }, {
     "rule": {
-      "displayText": "You killed a Cucco, you fool! The Cucco brethren slay you in vengeance. Take one drink and miss your next turn. [[[lose turn]]]",
-      "type": "DisplayRule"
+      "displayText": "You killed a Cucco, you fool! The Cucco brethren slay you in vengeance. Take one drink and miss your next turn.",
+      "type": "SkipTurnRule",
+      "numTurns": 1
     },
-    "position": [{
-      "x": 317,
-      "y": 2581
-    }, {
-      "x": 464,
-      "y": 2332
-    }, {
-      "x": 609,
-      "y": 2581
-    }]
+    "position": [{ "x": 317, "y": 2581 }, { "x": 464, "y": 2332 }, { "x": 609, "y": 2581 }]
   }, {
     "rule": {
-      "displayText": "Your future self placed a warp zone. Move your piece immediately onto another Farore's Wind. Skip any bosses you have already defeated. [[[teleport]]]",
-      "type": "DisplayRule"
+      "displayText": "Your future self placed a warp zone. Move your piece immediately onto another Farore's Wind. Skip any bosses you have already defeated.",
+      "type": "TeleportRule",
+      "tileIndex": 27
     },
-    "position": [{
-      "x": 609,
-      "y": 2581
-    }, {
-      "x": 464,
-      "y": 2333
-    }, {
-      "x": 757,
-      "y": 2333
-    }]
+    "position": [{ "x": 609, "y": 2581 }, { "x": 464, "y": 2333 }, { "x": 757, "y": 2333 }]
   }, {
     "rule": {
-      "displayText": "Plug your nose and hold your breath for 25 seconds. If you succeed, you win the Silver Scale, take an immediate turn. [[[item get]]]",
-      "type": "DisplayRule"
+      "displayText": "Plug your nose and hold your breath for 25 seconds. If you succeed, you win the Silver Scale, take an immediate turn.",
+      "type": "ChoiceRule",
+      "choices": [{
+        "displayText": "Succeed [[item get]]",
+        "type": "ExtraTurnRule",
+        "numTurns": 1
+      }, {
+        "displayText": "Fail",
+        "type": "DisplayRule"
+      }]
     },
-    "position": [{
-      "x": 757,
-      "y": 2333
-    }, {
-      "x": 613,
-      "y": 2584
-    }, {
-      "x": 906,
-      "y": 2583
-    }]
+    "position": [{ "x": 757, "y": 2333 }, { "x": 613, "y": 2584 }, { "x": 906, "y": 2583 }]
   }, {
     "rule": {
       "displayText": "You find a Golden Skulltula and gain a Heart Piece. Skip your next drinks. [[[item get?]]]",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 906,
-      "y": 2583
-    }, {
-      "x": 762,
-      "y": 2333
-    }, {
-      "x": 1056,
-      "y": 2332
-    }]
+    "position": [{ "x": 906, "y": 2583 }, { "x": 762, "y": 2333 }, { "x": 1056, "y": 2332 }]
   }, {
     "rule": {
       "displayText": "Go to Barinade and battle, then come back to this space. You may now skip over the boss. [[[teleport?]]]",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 1056,
-      "y": 2332
-    }, {
-      "x": 908,
-      "y": 2587
-    }, {
-      "x": 1204,
-      "y": 2584
-    }]
+    "position": [{ "x": 1056, "y": 2332 }, { "x": 908, "y": 2587 }, { "x": 1204, "y": 2584 }]
   }, {
     "rule": {
       "displayText": "Bigocto steals Princess Ruto, all girls T2D.",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 1204,
-      "y": 2584
-    }, {
-      "x": 1058,
-      "y": 2334
-    }, {
-      "x": 1352,
-      "y": 2333
-    }]
+    "position": [{ "x": 1204, "y": 2584 }, { "x": 1058, "y": 2334 }, { "x": 1352, "y": 2333 }]
   }, {
     "rule": {
       "displayText": "BARINADE\nFill your drink and finish it to double your next roll, or T2D and half your next roll (round up). [[[choice]]]",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 1351,
-      "y": 2334
-    }, {
-      "x": 1496,
-      "y": 2583
-    }, {
-      "x": 1205,
-      "y": 2583
-    }]
+    "position": [{ "x": 1351, "y": 2334 }, { "x": 1496, "y": 2583 }, { "x": 1205, "y": 2583 }]
   }, {
     "rule": {
       "displayText": "You fall into a 7 year slumber. Bounce a quarter into a glass 7 times. If you make 3 or less, miss your next turn. [[[off screen outcome]]]",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 1500,
-      "y": 2582
-    }, {
-      "x": 1648,
-      "y": 2333
-    }, {
-      "x": 1796,
-      "y": 2578
-    }]
+    "position": [{ "x": 1500, "y": 2582 }, { "x": 1648, "y": 2333 }, { "x": 1796, "y": 2578 }]
   }, {
     "rule": {
       "displayText": "A Redead starts gnawing on your head, leaving you braindead. Until your next turn you may only speak in moans.",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 1796,
-      "y": 2578
-    }, {
-      "x": 1646,
-      "y": 2330
-    }, {
-      "x": 1942,
-      "y": 2330
-    }]
+    "position": [{ "x": 1796, "y": 2578 }, { "x": 1646, "y": 2330 }, { "x": 1942, "y": 2330 }]
   }, {
     "rule": {
       "displayText": "It's a race! If you are the first one here, illustrate a simple action. From now on, the last person to mimic that action must T1D.",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 1942,
-      "y": 2330
-    }, {
-      "x": 2091,
-      "y": 2584
-    }, {
-      "x": 1797,
-      "y": 2586
-    }]
+    "position": [{ "x": 1942, "y": 2330 }, { "x": 2091, "y": 2584 }, { "x": 1797, "y": 2586 }]
   }, {
     "rule": {
-      "displayText": "Your past self placed a warp zone. Move your piece immediately onto another Farore's Wind. Skip any bosses you have already defeated. [[[teleport]]]",
-      "type": "DisplayRule"
+      "displayText": "Your past self placed a warp zone. Move your piece immediately onto another Farore's Wind. Skip any bosses you have already defeated.",
+      "type": "TeleportRule",
+      "tileIndex": 18
     },
-    "position": [{
-      "x": 2092,
-      "y": 2582
-    }, {
-      "x": 1946,
-      "y": 2331
-    }, {
-      "x": 2238,
-      "y": 2333
-    }]
+    "position": [{ "x": 2092, "y": 2582 }, { "x": 1946, "y": 2331 }, { "x": 2238, "y": 2333 }]
   }, {
     "rule": {
       "displayText": "You race the Gravekeeper's Ghost and win the Hookshot! Pull everyone else within 4 spaces back to this triangle. [[[move other people, item get]]]",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 2238,
-      "y": 2333
-    }, {
-      "x": 2094,
-      "y": 2583
-    }, {
-      "x": 2386,
-      "y": 2585
-    }]
+    "position": [{ "x": 2238, "y": 2333 }, { "x": 2094, "y": 2583 }, { "x": 2386, "y": 2585 }]
   }, {
     "rule": {
       "displayText": "The Stalfos leaps into the air and cuts off your dominant arm... For the rest of the game you may only use your least dominant hand.",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 2386,
-      "y": 2585
-    }, {
-      "x": 2244,
-      "y": 2333
-    }, {
-      "x": 2534,
-      "y": 2329
-    }]
+    "position": [{ "x": 2386, "y": 2585 }, { "x": 2244, "y": 2333 }, { "x": 2534, "y": 2329 }]
   }, {
     "rule": {
       "displayText": "You found the Fairy Bow! Whoever landed on the Fairy Slingshot must take 3 drinks in jealousy. [[[item use]]]",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 2534,
-      "y": 2329
-    }, {
-      "x": 2387,
-      "y": 2586
-    }, {
-      "x": 2687,
-      "y": 2583
-    }]
+    "position": [{ "x": 2534, "y": 2329 }, { "x": 2387, "y": 2586 }, { "x": 2687, "y": 2583 }]
   }, {
     "rule": {
       "displayText": "You must defeat all 4 of the Poe Sisters to move on. If you defeat one, roll again. Otherwise T1D and continue next turn. To win, roll higher than a 1 four times. [[[weird dice roll]]]",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 2685,
-      "y": 2582
-    }, {
-      "x": 2832,
-      "y": 2330
-    }, {
-      "x": 2537,
-      "y": 2330
-    }]
+    "position": [{ "x": 2685, "y": 2582 }, { "x": 2832, "y": 2330 }, { "x": 2537, "y": 2330 }]
   }, {
     "rule": {
       "displayText": "You get snatched up and thrown back to the Stalfos, T1D.",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 2537,
-      "y": 2330
-    }, {
-      "x": 2685,
-      "y": 2075
-    }, {
-      "x": 2834,
-      "y": 2326
-    }]
+    "position": [{ "x": 2537, "y": 2330 }, { "x": 2685, "y": 2075 }, { "x": 2834, "y": 2326 }]
   }, {
     "rule": {
       "displayText": "PHANTOM GANON\nYou can either T3D, or T5D and reverse the turn order. [[[choice, reverse turn]]]",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 2684,
-      "y": 2073
-    }, {
-      "x": 2536,
-      "y": 2328
-    }, {
-      "x": 2391,
-      "y": 2073
-    }]
+    "position": [{ "x": 2684, "y": 2073 }, { "x": 2536, "y": 2328 }, { "x": 2391, "y": 2073 }]
   }, {
     "rule": {
       "displayText": "You stop the rolling Goron by stepping in front of him, T3D. If you landed on the Bomb, instead G3D. You receive the Goron Tunic. [[[item get, item use]]]",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 2391,
-      "y": 2073
-    }, {
-      "x": 2538,
-      "y": 1820
-    }, {
-      "x": 2683,
-      "y": 2071
-    }]
+    "position": [{ "x": 2391, "y": 2073 }, { "x": 2538, "y": 1820 }, { "x": 2683, "y": 2071 }]
   }, {
     "rule": {
       "displayText": "You try and hide from the enemies. Have someone draw a mustache on you for disguise.",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 2537,
-      "y": 1819
-    }, {
-      "x": 2386,
-      "y": 2071
-    }, {
-      "x": 2241,
-      "y": 1816
-    }]
+    "position": [{ "x": 2537, "y": 1819 }, { "x": 2386, "y": 2071 }, { "x": 2241, "y": 1816 }]
   }, {
     "rule": {
       "displayText": "Play rock, paper, scissors with someone. Loser must T3D. Then the Fire Dancer explodes, you both T1D.",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 2241,
-      "y": 1816
-    }, {
-      "x": 2389,
-      "y": 1561
-    }, {
-      "x": 2535,
-      "y": 1813
-    }]
+    "position": [{ "x": 2241, "y": 1816 }, { "x": 2389, "y": 1561 }, { "x": 2535, "y": 1813 }]
   }, {
     "rule": {
       "displayText": "You smash the ground, causing an earthquake. Pick one person to remove an article of clothing without their hands. ",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 2239,
-      "y": 1813
-    }, {
-      "x": 2387,
-      "y": 1559
-    }, {
-      "x": 2093,
-      "y": 1561
-    }]
+    "position": [{ "x": 2239, "y": 1813 }, { "x": 2387, "y": 1559 }, { "x": 2093, "y": 1561 }]
   }, {
     "rule": {
       "displayText": "The Like Like eats your tunic, now you must buy a new one. Remove your shirt and go back 4 spaces. [[[teleport]]]",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 2094,
-      "y": 1558
-    }, {
-      "x": 2241,
-      "y": 1308
-    }, {
-      "x": 2384,
-      "y": 1556
-    }]
+    "position": [{ "x": 2094, "y": 1558 }, { "x": 2241, "y": 1308 }, { "x": 2384, "y": 1556 }]
   }, {
     "rule": {
       "displayText": "VOLVAGIA\nTake a shot to slay the dragon. Someone may offer to take the shot instead and receive an immediate turn as a reward. [[[immediate turn]]]",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 1945,
-      "y": 1301
-    }, {
-      "x": 2092,
-      "y": 1052
-    }, {
-      "x": 2237,
-      "y": 1302
-    }]
+    "position": [{ "x": 1945, "y": 1301 }, { "x": 2092, "y": 1052 }, { "x": 2237, "y": 1302 }]
   }, {
     "rule": {
       "displayText": "You erupt in fire and need to cool off. Lay on your belly and have an ice cube set on your back for 10 seconds.",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 1944,
-      "y": 1302
-    }, {
-      "x": 2092,
-      "y": 1049
-    }, {
-      "x": 1796,
-      "y": 1049
-    }]
+    "position": [{ "x": 1944, "y": 1302 }, { "x": 2092, "y": 1049 }, { "x": 1796, "y": 1049 }]
   }, {
     "rule": {
       "displayText": "Zora's Domain is frozen! The person to your right must pick a pose for you to hold until your next turn.",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 1796,
-      "y": 1049
-    }, {
-      "x": 1944,
-      "y": 794
-    }, {
-      "x": 2091,
-      "y": 1048
-    }]
+    "position": [{ "x": 1796, "y": 1049 }, { "x": 1944, "y": 794 }, { "x": 2091, "y": 1048 }]
   }, {
     "rule": {
       "displayText": "You desperately try to run eyedrops up the mountain. You give up and return in shame. You are now the beer wench.",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 1944,
-      "y": 792
-    }, {
-      "x": 1796,
-      "y": 1046
-    }, {
-      "x": 1648,
-      "y": 790
-    }]
+    "position": [{ "x": 1944, "y": 792 }, { "x": 1796, "y": 1046 }, { "x": 1648, "y": 790 }]
   }, {
     "rule": {
       "displayText": "Thaw the Zora King with Blue Fire. Eat a spoon full of hot sauce. You receive the Zora Tunic! [[[item get]]]",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 1648,
-      "y": 790
-    }, {
-      "x": 1796,
-      "y": 537
-    }, {
-      "x": 1944,
-      "y": 790
-    }]
+    "position": [{ "x": 1648, "y": 790 }, { "x": 1796, "y": 537 }, { "x": 1944, "y": 790 }]
   }, {
     "rule": {
       "displayText": "Where am I again? You get terribly lost in the Water Temple. Miss your next turn. [[[skip turn]]]",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 1797,
-      "y": 537
-    }, {
-      "x": 1647,
-      "y": 789
-    }, {
-      "x": 1500,
-      "y": 535
-    }]
+    "position": [{ "x": 1797, "y": 537 }, { "x": 1647, "y": 789 }, { "x": 1500, "y": 535 }]
   }, {
     "rule": {
       "displayText": "You play a song and the whole level changes. Switch places with any other player in the Water Temple. [[[Weird teleport switching]]]",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 1500,
-      "y": 536
-    }, {
-      "x": 1648,
-      "y": 791
-    }, {
-      "x": 1353,
-      "y": 787
-    }]
+    "position": [{ "x": 1500, "y": 536 }, { "x": 1648, "y": 791 }, { "x": 1353, "y": 787 }]
   }, {
     "rule": {
       "displayText": "Are you seeing double?? You must be drunk. Take a shot to clear your head and defeat Dark Link.",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 1351,
-      "y": 790
-    }, {
-      "x": 1647,
-      "y": 793
-    }, {
-      "x": 1500,
-      "y": 1047
-    }]
+    "position": [{ "x": 1351, "y": 790 }, { "x": 1647, "y": 793 }, { "x": 1500, "y": 1047 }]
   }, {
     "rule": {
       "displayText": "You found the Longshot! Pull the nearest player ahead of you back to this space. Skip any bosses you have already defeated. [[[item get, pull people back]]]",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 1500,
-      "y": 1047
-    }, {
-      "x": 1351,
-      "y": 793
-    }, {
-      "x": 1203,
-      "y": 1045
-    }]
+    "position": [{ "x": 1500, "y": 1047 }, { "x": 1351, "y": 793 }, { "x": 1203, "y": 1045 }]
   }, {
     "rule": {
       "displayText": "MORPHA\nMorpha swallows you. Either take one shot and break free or finish a glass of water and miss your next turn. [[[choice]]]",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 1203,
-      "y": 1045
-    }, {
-      "x": 1499,
-      "y": 1046
-    }, {
-      "x": 1349,
-      "y": 1301
-    }]
+    "position": [{ "x": 1203, "y": 1045 }, { "x": 1499, "y": 1046 }, { "x": 1349, "y": 1301 }]
   }, {
     "rule": {
       "displayText": "You fire an arrow at the rising sun... You're now partially blind. Until your next turn you must keep your eyes closed. T1D for every time you open your eyes.",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 1349,
-      "y": 1301
-    }, {
-      "x": 1202,
-      "y": 1051
-    }, {
-      "x": 1056,
-      "y": 1301
-    }]
+    "position": [{ "x": 1349, "y": 1301 }, { "x": 1202, "y": 1051 }, { "x": 1056, "y": 1301 }]
   }, {
     "rule": {
       "displayText": "Hum the Song of Storms to change the weather. If you fail, choose an article of clothing to swap with another player.",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 909,
-      "y": 1566
-    }, {
-      "x": 1052,
-      "y": 1814
-    }, {
-      "x": 761,
-      "y": 1815
-    }]
+    "position": [{ "x": 909, "y": 1566 }, { "x": 1052, "y": 1814 }, { "x": 761, "y": 1815 }]
   }, {
     "rule": {
       "displayText": "You fight your way to the Lens of Truth. If you're the first one here everyone must share an embarrassing story. [[[item get]]]",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 761,
-      "y": 1815
-    }, {
-      "x": 1052,
-      "y": 1815
-    }, {
-      "x": 907,
-      "y": 2070
-    }]
+    "position": [{ "x": 761, "y": 1815 }, { "x": 1052, "y": 1815 }, { "x": 907, "y": 2070 }]
   }, {
     "rule": {
       "displayText": "A pot comes flying at you. Roll a die.\n3-6: You dodge the pot and the person to your left T4D.\nOtherwise you T4D.",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 907,
-      "y": 2070
-    }, {
-      "x": 761,
-      "y": 1819
-    }, {
-      "x": 612,
-      "y": 2074
-    }]
+    "position": [{ "x": 907, "y": 2070 }, { "x": 761, "y": 1819 }, { "x": 612, "y": 2074 }]
   }, {
     "rule": {
       "displayText": "Hover right over Bongo Bongo. You do not have to stop. If you roll a 1 you're a sorry sack of shit and still have to fight him. [[[skip mandatory]]]",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 612,
-      "y": 2074
-    }, {
-      "x": 910,
-      "y": 2072
-    }, {
-      "x": 758,
-      "y": 2326
-    }]
+    "position": [{ "x": 612, "y": 2074 }, { "x": 910, "y": 2072 }, { "x": 758, "y": 2326 }]
   }, {
     "rule": {
       "displayText": "BONGO BONGO\nGo around the table performing the previous beats and adding your own. First person to fail T4D.",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 758,
-      "y": 2326
-    }, {
-      "x": 907,
-      "y": 2075
-    }, {
-      "x": 1056,
-      "y": 2328
-    }]
+    "position": [{ "x": 758, "y": 2326 }, { "x": 907, "y": 2075 }, { "x": 1056, "y": 2328 }]
   }, {
     "rule": {
       "displayText": "You must sneak in and save the 4 carpenters. Steal the next player's drinks.",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 1056,
-      "y": 2328
-    }, {
-      "x": 1202,
-      "y": 2072
-    }, {
-      "x": 909,
-      "y": 2075
-    }]
+    "position": [{ "x": 1056, "y": 2328 }, { "x": 1202, "y": 2072 }, { "x": 909, "y": 2075 }]
   }, {
     "rule": {
       "displayText": "You prove yourself at the Gerudo Training Grounds and earned the Ice Arrow. Pick a player, next turn they only move one. [[[item get, roll modification]]]",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 1056,
-      "y": 2326
-    }, {
-      "x": 1202,
-      "y": 2077
-    }, {
-      "x": 1352,
-      "y": 2326
-    }]
+    "position": [{ "x": 1056, "y": 2326 }, { "x": 1202, "y": 2077 }, { "x": 1352, "y": 2326 }]
   }, {
     "rule": {
       "displayText": "You are impenetrable. No one may give you drinks for the rest of the game.",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 1647,
-      "y": 2329
-    }, {
-      "x": 1797,
-      "y": 2074
-    }, {
-      "x": 1942,
-      "y": 2328
-    }]
+    "position": [{ "x": 1647, "y": 2329 }, { "x": 1797, "y": 2074 }, { "x": 1942, "y": 2328 }]
   }, {
     "rule": {
       "displayText": "You equipped the Silver Gauntlets. Challenge someone to an arm wrestling match. You both T3D. [[[item get]]]",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 1942,
-      "y": 2328
-    }, {
-      "x": 1798,
-      "y": 2075
-    }, {
-      "x": 2091,
-      "y": 2074
-    }]
+    "position": [{ "x": 1942, "y": 2328 }, { "x": 1798, "y": 2075 }, { "x": 2091, "y": 2074 }]
   }, {
     "rule": {
       "displayText": "You are forced to fight your friend. Pick one player and G4D. If they land on this triangle, they instantly give you 6 drinks.",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 2091,
-      "y": 2074
-    }, {
-      "x": 1944,
-      "y": 2328
-    }, {
-      "x": 2240,
-      "y": 2329
-    }]
+    "position": [{ "x": 2091, "y": 2074 }, { "x": 1944, "y": 2328 }, { "x": 2240, "y": 2329 }]
   }, {
     "rule": {
       "displayText": "You must mimic everything the next player does for his/her whole turn.",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 2240,
-      "y": 2329
-    }, {
-      "x": 2093,
-      "y": 2073
-    }, {
-      "x": 2387,
-      "y": 2071
-    }]
+    "position": [{ "x": 2240, "y": 2329 }, { "x": 2093, "y": 2073 }, { "x": 2387, "y": 2071 }]
   }, {
     "rule": {
       "displayText": "TWINROVA\nRoll a die.\n1: Microwave your drink and finish it.\n5-6: Either sprinkle some hot sauce into your drink or fill your drink with ice and finish it. [[[dice roll]]]",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 2387,
-      "y": 2072
-    }, {
-      "x": 2236,
-      "y": 1818
-    }, {
-      "x": 2093,
-      "y": 2067
-    }]
+    "position": [{ "x": 2387, "y": 2072 }, { "x": 2236, "y": 1818 }, { "x": 2093, "y": 2067 }]
   }, {
     "rule": {
       "displayText": "You blind yourself with the Light Arrow. Close your eyes and pick a triangle, do what it says.",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 2093,
-      "y": 2067
-    }, {
-      "x": 2237,
-      "y": 1820
-    }, {
-      "x": 1947,
-      "y": 1817
-    }]
+    "position": [{ "x": 2093, "y": 2067 }, { "x": 2237, "y": 1820 }, { "x": 1947, "y": 1817 }]
   }, {
     "rule": {
       "displayText": "T2D, then roll a die and move back that many spaces. Skip any bosses you have already defeated. [[[move rule]]]",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 1947,
-      "y": 1817
-    }, {
-      "x": 2091,
-      "y": 1565
-    }, {
-      "x": 2235,
-      "y": 1814
-    }]
+    "position": [{ "x": 1947, "y": 1817 }, { "x": 2091, "y": 1565 }, { "x": 2235, "y": 1814 }]
   }, {
     "rule": {
       "displayText": "SIX BARRIERS\nClose your eyes and have someone spin you. Now point to a space and battle the colored area's boss. If there is none, try again.",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 1938,
-      "y": 1303
-    }, {
-      "x": 1794,
-      "y": 1054
-    }, {
-      "x": 1650,
-      "y": 1300
-    }]
+    "position": [{ "x": 1938, "y": 1303 }, { "x": 1794, "y": 1054 }, { "x": 1650, "y": 1300 }]
   }, {
     "rule": {
       "displayText": "GANONDORF\nYou juggle lightning with Ganondorf. Roll the die until you get the same number twice in a row. Take that many drinks. After every roll take 1 drink. [[[roll until]]]",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 1650,
-      "y": 1300
-    }, {
-      "x": 1795,
-      "y": 1050
-    }, {
-      "x": 1503,
-      "y": 1048
-    }]
+    "position": [{ "x": 1650, "y": 1300 }, { "x": 1795, "y": 1050 }, { "x": 1503, "y": 1048 }]
   }, {
     "rule": {
       "displayText": "GANON\nFirst escape the castle! Finish your drink. Now your sword is gone, roll a die.\nIf it's a 1, go back 2 spaces.\nOtherwise it's time to resort to unconventional methods. Shotgun a beer and save Hyrule!!! [[[dice roll with game over outcome]]]",
       "type": "DisplayRule"
     },
-    "position": [{
-      "x": 1503,
-      "y": 1048
-    }, {
-      "x": 1647,
-      "y": 802
-    }, {
-      "x": 1793,
-      "y": 1049
-    }]
+    "position": [{ "x": 1503, "y": 1048 }, { "x": 1647, "y": 802 }, { "x": 1793, "y": 1049 }]
   }],
   "zones": []
 }
