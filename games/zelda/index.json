@@ -208,15 +208,35 @@
     },
     "position": [{ "x": 1204, "y": 2584 }, { "x": 1058, "y": 2334 }, { "x": 1352, "y": 2333 }]
   }, {
+    "mandatory": true,
     "rule": {
-      "displayText": "BARINADE\nFill your drink and finish it to double your next roll, or T2D and half your next roll (round up). [[[choice]]]",
-      "type": "DisplayRule"
+      "displayText": "BARINADE\nFill your drink and finish it to double your next roll, or T2D and half your next roll (round up).",
+      "type": "ChoiceRule",
+      "choices":[{
+        "displayText": "Finish your drink, double your next roll",
+        "type": "SpeedModifierRule",
+        "modifier": ["*", 2],
+        "numTurns": 1
+      }, {
+        "displayText": "T2D, half your next roll",
+        "type": "SpeedModifierRule",
+        "modifier": ["*", 0.5],
+        "numTurns": 1
+      }]
     },
     "position": [{ "x": 1351, "y": 2334 }, { "x": 1496, "y": 2583 }, { "x": 1205, "y": 2583 }]
   }, {
     "rule": {
-      "displayText": "You fall into a 7 year slumber. Bounce a quarter into a glass 7 times. If you make 3 or less, miss your next turn. [[[off screen outcome]]]",
-      "type": "DisplayRule"
+      "displayText": "You fall into a 7 year slumber. Bounce a quarter into a glass 7 times. If you make 3 or less, miss your next turn.",
+      "type": "ChoiceRule",
+      "choices":[{
+        "displayText": "3 or less",
+        "type": "SkipTurnRule",
+        "numTurns": 1
+      }, {
+        "displayText": "4 or more",
+        "type": "DisplayRule"
+      }]
     },
     "position": [{ "x": 1500, "y": 2582 }, { "x": 1648, "y": 2333 }, { "x": 1796, "y": 2578 }]
   }, {
@@ -258,7 +278,7 @@
     "position": [{ "x": 2534, "y": 2329 }, { "x": 2387, "y": 2586 }, { "x": 2687, "y": 2583 }]
   }, {
     "rule": {
-      "displayText": "You must defeat all 4 of the Poe Sisters to move on. If you defeat one, roll again. Otherwise T1D and continue next turn. To win, roll higher than a 1 four times. [[[weird dice roll]]]",
+      "displayText": "You must defeat all 4 of the Poe Sisters to move on. If you defeat one, roll again. Otherwise T1D and continue next turn. To win, roll higher than a 1 four times. [[[todo- modify rolluntil rule to include a max rolls? or, move condition rule]]]",
       "type": "DisplayRule"
     },
     "position": [{ "x": 2685, "y": 2582 }, { "x": 2832, "y": 2330 }, { "x": 2537, "y": 2330 }]
@@ -269,9 +289,17 @@
     },
     "position": [{ "x": 2537, "y": 2330 }, { "x": 2685, "y": 2075 }, { "x": 2834, "y": 2326 }]
   }, {
+    "mandatory": true,
     "rule": {
-      "displayText": "PHANTOM GANON\nYou can either T3D, or T5D and reverse the turn order. [[[choice, reverse turn]]]",
-      "type": "DisplayRule"
+      "displayText": "PHANTOM GANON\nYou can either T3D, or T5D and reverse the turn order.",
+      "type": "ChoiceRule",
+      "choices": [{
+        "type": "DisplayRule",
+        "displayText": "T3D"
+      }, {
+        "type": "ReverseTurnOrderRule",
+        "displayText": "T5D and reverse the turn order"
+      }]
     },
     "position": [{ "x": 2684, "y": 2073 }, { "x": 2536, "y": 2328 }, { "x": 2391, "y": 2073 }]
   }, {
@@ -301,10 +329,12 @@
   }, {
     "rule": {
       "displayText": "The Like Like eats your tunic, now you must buy a new one. Remove your shirt and go back 4 spaces. [[[teleport]]]",
-      "type": "DisplayRule"
+      "type": "TeleportRule",
+      "tileIndex": 34
     },
     "position": [{ "x": 2094, "y": 1558 }, { "x": 2241, "y": 1308 }, { "x": 2384, "y": 1556 }]
   }, {
+    "mandatory": true,
     "rule": {
       "displayText": "VOLVAGIA\nTake a shot to slay the dragon. Someone may offer to take the shot instead and receive an immediate turn as a reward. [[[immediate turn]]]",
       "type": "DisplayRule"
