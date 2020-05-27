@@ -516,8 +516,13 @@
     "position": [{ "x": 2093, "y": 2067 }, { "x": 2237, "y": 1820 }, { "x": 1947, "y": 1817 }]
   }, {
     "rule": {
-      "displayText": "T2D, then roll a die and move back that many spaces. Skip any bosses you have already defeated. [[[move rule]]]",
-      "type": "DisplayRule"
+      "displayText": "T2D, then roll a die and move back that many spaces. Skip any bosses you have already defeated.",
+      "type": "MoveRule",
+      "direction": "back",
+      "playerTarget": "self",
+      "diceRolls": {
+        "numRequired": 1
+      }
     },
     "position": [{ "x": 1947, "y": 1817 }, { "x": 2091, "y": 1565 }, { "x": 2235, "y": 1814 }]
   }, {
