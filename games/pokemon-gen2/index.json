@@ -65,7 +65,7 @@
     }, {
       "rule": {
         "displayText": "Wild Mareep appeared! Roll evens to catch it! If not, drink 1 and give 1 in sadness.",
-        "type": "DisplayRule",
+        "type": "DiceRollRule",
         "diceRolls": {
           "numRequired": 1
         }
