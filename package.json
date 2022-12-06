@@ -13,7 +13,7 @@
   "license": "ISC",
   "dependencies": {
     "firebase": "^7.6.0",
-    "http-server": "^0.11.1",
+    "http-server": "^0.11.2",
     "lit-element": "^2.2.1",
     "typescript": "^3.5.2"
   },
