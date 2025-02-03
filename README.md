@@ -1,4 +1,6 @@
-# Drinking board game
+# [Deprecated] Drinking board game
+
+**NOTE:** This project is deprecated. See https://github.com/alexqguo/drinking-board-game-v3.
 
 This is a generalized engine for playing drinking board games online. It is accessible for the time being at https://drink.alexguo.co.
 
